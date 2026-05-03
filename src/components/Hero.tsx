@@ -1,7 +1,7 @@
 "use client";
 
+import Image from "next/image";
 import { motion } from "motion/react";
-import { Logo } from "./Logo";
 import Link from "next/link";
 
 export function Hero() {
@@ -11,21 +11,32 @@ export function Hero() {
       <Decorations />
 
       <div className="relative mx-auto flex min-h-[100svh] max-w-[1600px] flex-col items-center justify-center px-6 pb-20 pt-32 text-center md:px-10">
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9, rotate: -6 }}
-          animate={{ opacity: 1, scale: 1, rotate: 0 }}
-          transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-        >
-          <Logo variant="white" size={160} withLink={false} />
-        </motion.div>
-
         <motion.h1
           initial={{ opacity: 0, y: 28 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9, delay: 0.2, ease: [0.21, 0.6, 0.35, 1] }}
-          className="mt-12 max-w-[20ch] text-[clamp(3rem,9vw,9.5rem)] font-normal leading-[0.9] tracking-tight"
+          className="relative max-w-[20ch] text-[clamp(3rem,9vw,9.5rem)] font-normal leading-[0.9] tracking-tight"
           style={{ fontFamily: "var(--font-bagel)" }}
         >
+          {/* Muñeco apoyado en la "c" de creative — sale por arriba del texto */}
+          <motion.div
+            initial={{ opacity: 0, y: 30, rotate: -8 }}
+            animate={{ opacity: 1, y: 0, rotate: 0 }}
+            transition={{ duration: 1.1, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
+            className="pointer-events-none absolute -top-[60%] left-[-2%] z-20 md:-top-[55%] md:left-[2%]"
+            aria-hidden
+          >
+            <Image
+              src="/logos/muffment-icon.svg"
+              alt=""
+              width={240}
+              height={257}
+              priority
+              unoptimized
+              className="h-auto w-[110px] md:w-[200px] lg:w-[240px]"
+              style={{ filter: "brightness(0) invert(1)" }}
+            />
+          </motion.div>
           creative signs <br /> for creative <br /> businesses
         </motion.h1>
 

@@ -6,6 +6,7 @@ import { Logo } from "./Logo";
 import { cn } from "@/lib/utils";
 
 const NAV = [
+  { href: "/", label: "Inicio" },
   { href: "/avisos", label: "Catálogo" },
   { href: "/clientes", label: "Clientes" },
   { href: "/manifiesto", label: "Manifiesto" },
