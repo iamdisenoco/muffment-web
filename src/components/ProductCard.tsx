@@ -36,7 +36,7 @@ export function ProductCard({
         data-cursor="hover"
         className="group block overflow-hidden rounded-3xl bg-white"
       >
-        <div className={cn("relative w-full overflow-hidden rounded-3xl", heights[size])}>
+        <div className={cn("relative w-full overflow-hidden rounded-3xl border border-black/10 bg-[#f7f7f5] shadow-sm", heights[size])}>
           {hasRealPhoto ? (
             <Image
               src={product.hero}

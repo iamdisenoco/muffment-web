@@ -71,7 +71,7 @@ export function ProductGallery({
   return (
     <>
       {/* HERO grande con flechas + click para zoom */}
-      <div className="group relative aspect-[4/5] w-full overflow-hidden rounded-[2rem] bg-white md:aspect-[4/3]">
+      <div className="group relative aspect-[4/5] w-full overflow-hidden rounded-[2rem] border border-black/10 bg-[#f7f7f5] shadow-sm md:aspect-[4/3]">
         <button
           type="button"
           onClick={() => setZoom(true)}
@@ -158,10 +158,10 @@ export function ProductGallery({
               aria-label={`Ver foto ${i + 1}`}
               aria-current={i === active}
               className={cn(
-                "relative aspect-square overflow-hidden rounded-2xl bg-white transition-all",
+                "relative aspect-square overflow-hidden rounded-2xl border border-black/10 bg-[#f7f7f5] transition-all",
                 i === active
-                  ? "ring-2 ring-cobalt ring-offset-2 ring-offset-cream"
-                  : "opacity-60 hover:opacity-100",
+                  ? "ring-2 ring-cobalt ring-offset-2 ring-offset-white"
+                  : "opacity-70 hover:opacity-100",
               )}
             >
               <Image
