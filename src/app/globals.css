@@ -84,3 +84,19 @@ html, body {
 html.has-custom-cursor, html.has-custom-cursor * {
   cursor: none !important;
 }
+
+/* Cursor rainbow: cicla colores cada 8s.
+   El ring usa border-current y el dot usa bg-current — al animar color,
+   ambos se sincronizan. */
+@keyframes cursor-rainbow {
+  0%   { color: #3236b7; } /* cobalt */
+  16%  { color: #ff6b35; } /* naranja */
+  33%  { color: #f9c80e; } /* amarillo */
+  50%  { color: #06d6a0; } /* verde */
+  66%  { color: #ef476f; } /* rosa */
+  83%  { color: #4cc9f0; } /* cyan */
+  100% { color: #3236b7; } /* cobalt */
+}
+.cursor-rainbow {
+  animation: cursor-rainbow 8s linear infinite;
+}
