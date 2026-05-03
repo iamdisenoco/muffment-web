@@ -39,32 +39,33 @@ export default function Home() {
                   key={cat.id}
                   href={`/avisos?cat=${cat.id}`}
                   data-cursor="hover"
-                  className="group relative aspect-[4/5] overflow-hidden rounded-3xl border border-black/10 bg-white shadow-sm transition-transform hover:-translate-y-1 md:aspect-square"
+                  className="group flex aspect-[4/5] flex-col overflow-hidden rounded-3xl border border-black/10 bg-white shadow-sm transition-transform hover:-translate-y-1 md:aspect-square"
                 >
-                  {/* Producto centrado en TODA la card (con padding generoso
-                      para que no toque los textos de los overlays). */}
-                  <div className="absolute inset-0 flex items-center justify-center p-10 md:p-12">
-                    <div className="relative h-full w-full">
-                      <Image
-                        src={cover[cat.id]}
-                        alt={cat.label}
-                        fill
-                        sizes="(max-width: 768px) 50vw, 25vw"
-                        className="object-contain transition-transform duration-500 group-hover:scale-105"
-                        unoptimized
-                      />
-                    </div>
-                  </div>
-
-                  {/* Contador overlay arriba */}
-                  <div className="pointer-events-none absolute inset-x-0 top-0 p-6">
+                  {/* Banda superior — altura FIJA para balancear con el footer
+                      y que el producto del medio quede centrado vertical de
+                      verdad en la card. */}
+                  <div className="flex h-20 items-start px-6 pt-6">
                     <span className="text-xs font-medium uppercase tracking-widest text-neutral-400">
                       ▷ {cat.count} {cat.count === 1 ? "producto" : "productos"}
                     </span>
                   </div>
 
-                  {/* Título overlay abajo */}
-                  <div className="pointer-events-none absolute inset-x-0 bottom-0 flex items-end justify-between gap-2 p-6 text-neutral-500">
+                  {/* Producto en el espacio del medio — centrado vertical y
+                      horizontal por flex-1 + Image fill object-contain. */}
+                  <div className="relative flex-1 px-4">
+                    <Image
+                      src={cover[cat.id]}
+                      alt={cat.label}
+                      fill
+                      sizes="(max-width: 768px) 50vw, 25vw"
+                      className="object-contain transition-transform duration-500 group-hover:scale-105"
+                      unoptimized
+                    />
+                  </div>
+
+                  {/* Banda inferior — misma altura que la superior para que
+                      el producto quede exactamente al centro vertical. */}
+                  <div className="flex h-20 items-end justify-between gap-2 px-6 pb-6 text-neutral-500">
                     <h3
                       className="text-2xl leading-tight md:text-3xl"
                       style={{ fontFamily: "var(--font-bagel)" }}
