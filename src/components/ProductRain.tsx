@@ -43,19 +43,19 @@ const RIGHT_DROPS: Drop[] = [
 ];
 
 function Column({ drops, side }: { drops: Drop[]; side: "left" | "right" }) {
+  // Static classes so Tailwind always includes both left-0 and right-0
+  const sideClass = side === "left" ? "left-0" : "right-0";
+  const maskGradient =
+    side === "left"
+      ? "linear-gradient(to right, black 70%, transparent)"
+      : "linear-gradient(to left, black 70%, transparent)";
   return (
     <div
       aria-hidden
-      className={`pointer-events-none absolute inset-y-0 ${side}-0 z-0 hidden w-[26vw] max-w-[340px] overflow-hidden md:block`}
+      className={`pointer-events-none absolute inset-y-0 ${sideClass} z-0 hidden w-[26vw] max-w-[340px] overflow-hidden md:block`}
       style={{
-        maskImage:
-          side === "left"
-            ? "linear-gradient(to right, black 70%, transparent)"
-            : "linear-gradient(to left, black 70%, transparent)",
-        WebkitMaskImage:
-          side === "left"
-            ? "linear-gradient(to right, black 70%, transparent)"
-            : "linear-gradient(to left, black 70%, transparent)",
+        maskImage: maskGradient,
+        WebkitMaskImage: maskGradient,
       }}
     >
       {drops.map((drop, i) => (
