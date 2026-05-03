@@ -23,8 +23,9 @@ export default function Home() {
 
         <Steps />
 
-        {/* CATEGORÍAS — pegadas a los Steps */}
-        <section className="mx-auto max-w-[1600px] px-6 pt-2 pb-16 md:px-10 md:pt-4 md:pb-24">
+        {/* CATEGORÍAS — padding vertical simétrico para que el grid quede
+            centrado en su franja blanca (no tirado hacia arriba). */}
+        <section className="mx-auto max-w-[1600px] px-6 py-16 md:px-10 md:py-24">
           <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
             {CATEGORIES.map((cat) => {
               // Producto sin fondo (PNG con transparencia) para cada categoría
