@@ -39,10 +39,17 @@ export default function Home() {
                   key={cat.id}
                   href={`/avisos?cat=${cat.id}`}
                   data-cursor="hover"
-                  className="group relative aspect-[4/5] overflow-hidden rounded-3xl border border-black/10 bg-white shadow-sm transition-transform hover:-translate-y-1 md:aspect-square"
+                  className="group relative flex aspect-[4/5] flex-col overflow-hidden rounded-3xl border border-black/10 bg-white p-6 shadow-sm transition-transform hover:-translate-y-1 md:aspect-square"
                 >
-                  {/* Producto centrado en la mitad superior, no se solapa con el texto */}
-                  <div className="absolute inset-x-0 top-0 bottom-[35%] flex items-center justify-center p-6">
+                  {/* Contador arriba */}
+                  <span className="pointer-events-none text-xs font-medium uppercase tracking-widest text-neutral-400">
+                    ▷ {cat.count} {cat.count === 1 ? "producto" : "productos"}
+                  </span>
+
+                  {/* Producto centrado en el espacio que sobra entre el
+                      contador (arriba) y el título (abajo). flex-1 + relative
+                      le da una zona contenedora propia para que <Image fill> funcione. */}
+                  <div className="relative flex-1">
                     <Image
                       src={cover[cat.id]}
                       alt={cat.label}
@@ -52,13 +59,9 @@ export default function Home() {
                       unoptimized
                     />
                   </div>
-                  {/* Texto en GRIS, abajo, sin solaparse con el producto */}
-                  <div className="pointer-events-none absolute inset-x-0 top-0 flex flex-col p-6">
-                    <span className="text-xs font-medium uppercase tracking-widest text-neutral-400">
-                      ▷ {cat.count} {cat.count === 1 ? "producto" : "productos"}
-                    </span>
-                  </div>
-                  <div className="pointer-events-none absolute inset-x-0 bottom-0 flex items-end justify-between gap-2 p-6 text-neutral-500">
+
+                  {/* Título abajo */}
+                  <div className="pointer-events-none flex items-end justify-between gap-2 text-neutral-500">
                     <h3
                       className="text-2xl leading-tight md:text-3xl"
                       style={{ fontFamily: "var(--font-bagel)" }}

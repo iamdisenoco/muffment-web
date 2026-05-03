@@ -113,8 +113,28 @@ function StepBadge({ step }: { step: Step }) {
 
 export function Steps() {
   return (
-    <section className="bg-cream pt-4 pb-0 md:pt-6 md:pb-2">
+    <section className="bg-cream pt-10 pb-0 md:pt-14 md:pb-2">
       <div className="mx-auto max-w-[1400px] px-6 md:px-10">
+        {/* Título de sección */}
+        <div className="mb-8 text-center md:mb-12">
+          <p
+            className="text-[10px] font-bold uppercase tracking-[0.3em] text-cobalt/70"
+            style={{ fontFamily: "var(--font-mono)" }}
+          >
+            ▷ Cómo funciona
+          </p>
+          <h2
+            className="mt-2 text-cobalt"
+            style={{
+              fontFamily: "var(--font-bagel)",
+              fontSize: "clamp(1.75rem, 4vw, 3rem)",
+              lineHeight: 1,
+            }}
+          >
+            proceso de compra
+          </h2>
+        </div>
+
         <div className="relative">
           {/* Línea punteada horizontal cruzando los 3 pasos.
               Posicionada al centro vertical del círculo del número.
