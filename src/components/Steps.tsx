@@ -39,7 +39,11 @@ function StepBadge({ step }: { step: Step }) {
   const TEXT_PATH = "M 30 160 A 110 110 0 0 1 250 160";
   const TEXT_PATH_ID = `textpath-${step.n}`;
 
-  const text = (hovered ? step.hoverText : step.defaultText).toUpperCase();
+  const curvedText = step.defaultText.toUpperCase();
+
+  // Tamaño del texto del hover dentro del círculo (Bagel) según largo
+  const hoverFontSize =
+    step.hoverText.length > 22 ? 13 : step.hoverText.length > 14 ? 18 : 24;
 
   return (
     <Link
@@ -66,60 +70,79 @@ function StepBadge({ step }: { step: Step }) {
             <path id={TEXT_PATH_ID} d={TEXT_PATH} fill="none" />
           </defs>
 
-          {/* Texto curvo arriba siguiendo el arc — NEGRO.
+          {/* Texto curvo arriba siguiendo el arc — NEGRO sobre el cream.
               Auto-ajusta tamaño si el texto es muy largo (>20 chars). */}
           <text
             fill="#000"
             style={{
               fontFamily: "var(--font-mono)",
               fontWeight: 700,
-              fontSize: text.length > 20 ? 14 : 17,
-              letterSpacing: text.length > 20 ? "0.06em" : "0.1em",
+              fontSize: curvedText.length > 20 ? 14 : 17,
+              letterSpacing: curvedText.length > 20 ? "0.06em" : "0.1em",
             }}
           >
             <textPath href={`#${TEXT_PATH_ID}`} startOffset="50%" textAnchor="middle">
-              {text}
+              {curvedText}
             </textPath>
           </text>
 
           {/* Círculo del número */}
           <circle cx="140" cy="160" r="62" fill="var(--color-cobalt)" />
 
-          {/* Número en el centro */}
-          <text
-            x="140"
-            y="183"
-            textAnchor="middle"
-            fill="var(--color-cream)"
-            style={{
-              fontFamily: "var(--font-bagel)",
-              fontSize: 56,
-            }}
-          >
-            {step.n}
-          </text>
-
-          {/* Flecha al hover (sutil) */}
-          <AnimatePresence>
-            {hovered && (
-              <motion.text
-                initial={{ opacity: 0, y: 4 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: 4 }}
-                x="140"
-                y="240"
-                textAnchor="middle"
-                fill="var(--color-cobalt)"
-                style={{
-                  fontFamily: "var(--font-mono)",
-                  fontWeight: 700,
-                  fontSize: 22,
-                }}
-              >
-                →
-              </motion.text>
-            )}
-          </AnimatePresence>
+          {/* Contenido del círculo: número (default) o hoverText (hover),
+              ambos en Bagel ("tipografía redondita"). foreignObject permite
+              wrap del texto largo dentro del círculo. */}
+          <foreignObject x="78" y="98" width="124" height="124">
+            <div
+              style={{
+                width: "100%",
+                height: "100%",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                color: "var(--color-cream)",
+                textAlign: "center",
+                padding: "0 6px",
+                boxSizing: "border-box",
+              }}
+            >
+              <AnimatePresence mode="wait" initial={false}>
+                {hovered ? (
+                  <motion.span
+                    key="hover"
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.8 }}
+                    transition={{ duration: 0.18, ease: [0.16, 1, 0.3, 1] }}
+                    style={{
+                      fontFamily: "var(--font-bagel)",
+                      fontSize: hoverFontSize,
+                      lineHeight: 1.05,
+                      display: "block",
+                    }}
+                  >
+                    {step.hoverText}
+                  </motion.span>
+                ) : (
+                  <motion.span
+                    key="default"
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.8 }}
+                    transition={{ duration: 0.18, ease: [0.16, 1, 0.3, 1] }}
+                    style={{
+                      fontFamily: "var(--font-bagel)",
+                      fontSize: 56,
+                      lineHeight: 1,
+                      display: "block",
+                    }}
+                  >
+                    {step.n}
+                  </motion.span>
+                )}
+              </AnimatePresence>
+            </div>
+          </foreignObject>
         </svg>
       </motion.div>
     </Link>
@@ -128,7 +151,7 @@ function StepBadge({ step }: { step: Step }) {
 
 export function Steps() {
   return (
-    <section className="bg-white pt-4 pb-0 md:pt-6 md:pb-2">
+    <section className="bg-cream pt-4 pb-0 md:pt-6 md:pb-2">
       <div className="mx-auto max-w-[1400px] px-6 md:px-10">
         <div className="relative">
           {/* Línea punteada horizontal cruzando los 3 pasos.
