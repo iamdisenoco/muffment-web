@@ -34,7 +34,7 @@ const LEFT_DROPS: Drop[] = [
   { product: PRODUCTS[5], size: 75,  startX: 75, duration: 11, delay: -8,    rotate: 10,  opacity: 0.8 },
   { product: PRODUCTS[3], size: 95,  startX: 50, duration: 13, delay: -2,    rotate: -6,  opacity: 0.9 },
   { product: PRODUCTS[4], size: 65,  startX: 12, duration: 10, delay: -5,    rotate: 8,   opacity: 0.75 },
-  { product: PRODUCTS[6], size: 105, startX: 30, duration: 15, delay: -10,   rotate: 4,   opacity: 0.95 },
+  { product: PRODUCTS[6], size: 70,  startX: 30, duration: 15, delay: -10,   rotate: 4,   opacity: 0.9  },
 ];
 
 const RIGHT_DROPS: Drop[] = [
