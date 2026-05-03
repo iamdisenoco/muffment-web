@@ -120,12 +120,12 @@ export function Hero() {
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.8 }}
-          className="mt-12 flex flex-col items-center gap-4 sm:flex-row"
+          className="mt-10 flex flex-col items-center gap-3 sm:flex-row"
         >
           <Link
             href="/avisos"
             data-cursor="hover"
-            className="rounded-full bg-white px-8 py-4 text-base font-medium uppercase tracking-wider text-cobalt transition-colors hover:bg-cream-light"
+            className="rounded-full bg-white px-6 py-2.5 text-sm font-medium uppercase tracking-wider text-cobalt transition-colors hover:bg-cream-light"
           >
             Ver el catálogo
           </Link>
@@ -136,20 +136,32 @@ export function Hero() {
             target="_blank"
             rel="noopener noreferrer"
             data-cursor="hover"
-            className="rounded-full border border-cream/40 px-8 py-4 text-center text-base font-medium uppercase tracking-wider text-cream transition-colors hover:bg-cream/10"
+            className="rounded-full border border-cream/40 px-6 py-2.5 text-center text-sm font-medium uppercase tracking-wider text-cream transition-colors hover:bg-cream/10"
           >
             Necesito un aviso a la medida
           </a>
         </motion.div>
 
-        <motion.div
+        {/* Scroll button estilo basement.studio — pill outline con chevron
+            animado bouncing. */}
+        <motion.a
+          href="#segundo-slide"
+          data-cursor="hover"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1, delay: 1.4 }}
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 text-xs uppercase tracking-[0.3em] text-cream/60"
+          className="group absolute bottom-8 left-1/2 flex -translate-x-1/2 items-center gap-2 rounded-full border border-cream/30 bg-cream/5 px-5 py-2 text-[11px] font-semibold uppercase tracking-[0.25em] text-cream/80 backdrop-blur-sm transition-colors hover:bg-cream/15 hover:text-cream"
         >
-          ▽ scroll ▽
-        </motion.div>
+          Scroll to explore
+          <motion.span
+            aria-hidden
+            animate={{ y: [0, 4, 0] }}
+            transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
+            className="text-base leading-none"
+          >
+            ↓
+          </motion.span>
+        </motion.a>
       </div>
     </section>
   );

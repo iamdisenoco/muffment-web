@@ -15,7 +15,7 @@ const STEPS: Step[] = [
   {
     n: "01",
     defaultText: "Escoge tu aviso",
-    hoverText: "Ver productos",
+    hoverText: "Ver avisos",
     href: "/avisos",
   },
   {
@@ -27,7 +27,7 @@ const STEPS: Step[] = [
   {
     n: "03",
     defaultText: "Escoge cómo poner tu mensaje",
-    hoverText: "Ver formas para poner mi info",
+    hoverText: "Ver formas para la info",
     href: "/info",
   },
 ];
@@ -39,7 +39,8 @@ function StepBadge({ step }: { step: Step }) {
   const TEXT_PATH = "M 30 160 A 110 110 0 0 1 250 160";
   const TEXT_PATH_ID = `textpath-${step.n}`;
 
-  const curvedText = step.defaultText.toUpperCase();
+  // Texto curvo: cambia entre defaultText y hoverText según el cursor.
+  const curvedText = (hovered ? step.hoverText : step.defaultText).toUpperCase();
 
   return (
     <Link

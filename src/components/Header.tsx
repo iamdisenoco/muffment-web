@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Logo } from "./Logo";
-import { cn } from "@/lib/utils";
+import { cn, whatsappLink } from "@/lib/utils";
 
 const NAV = [
   { href: "/", label: "Inicio" },
@@ -38,30 +38,37 @@ export function Header() {
   const onDark = pathname === "/" && scrollY < vh * 0.85;
   const scrolled = scrollY > 12;
 
-  return (
-    <header
-      className={cn(
-        "fixed inset-x-0 top-0 z-50 transition-all duration-300",
-        // Cuando NO estamos sobre el Hero (cobalt) y ya hicimos scroll,
-        // metemos un fondo cream translúcido con blur para que el menú no
-        // se confunda con títulos del contenido (ej. "proceso de compra").
-        !onDark && scrolled && "bg-cream/85 backdrop-blur-md shadow-sm",
-      )}
-    >
-      <div className="mx-auto flex max-w-[1600px] items-center justify-between gap-6 px-6 py-4 md:px-10">
-        {/* Logo: muñeco cream sobre cobalt, cobalt sobre blanco */}
-        <Logo variant={onDark ? "icon-cream" : "icon"} size={48} />
+  // Estilo de la píldora del nav central: bg + borde varían según fondo.
+  const navPillBg = onDark
+    ? "bg-cream/10 border border-cream/15 backdrop-blur-md"
+    : "bg-cobalt/8 border border-cobalt/15 backdrop-blur-md";
 
-        {/* Items del menú — sans serif (Campton), sin uppercase, un tris más grande */}
-        <nav className="hidden items-center gap-7 md:flex">
+  return (
+    <header className="fixed inset-x-0 top-0 z-50 transition-all duration-300">
+      <div className="mx-auto flex max-w-[1600px] items-center justify-between gap-4 px-6 py-4 md:px-10">
+        {/* Logo izquierda */}
+        <div className="flex-1">
+          <Logo variant={onDark ? "icon-cream" : "icon"} size={44} />
+        </div>
+
+        {/* Nav central — píldora flotante estilo basement.studio */}
+        <nav
+          className={cn(
+            "hidden items-center gap-1 rounded-full px-2 py-1.5 transition-colors duration-300 md:flex",
+            navPillBg,
+            scrolled && "shadow-sm",
+          )}
+        >
           {NAV.map((item) => (
             <Link
               key={item.href}
               href={item.href}
               data-cursor="hover"
               className={cn(
-                "text-base font-medium tracking-wide transition-opacity hover:opacity-60 lg:text-lg",
-                onDark ? "text-cream" : "text-cobalt",
+                "rounded-full px-4 py-1.5 text-sm font-medium tracking-wide transition-colors lg:text-[15px]",
+                onDark
+                  ? "text-cream/90 hover:bg-cream/15 hover:text-cream"
+                  : "text-cobalt/85 hover:bg-cobalt/10 hover:text-cobalt",
               )}
             >
               {item.label}
@@ -69,21 +76,26 @@ export function Header() {
           ))}
         </nav>
 
-        {/* Ver productos — pill grande y prominente */}
-        <Link
-          href="/avisos"
-          data-cursor="hover"
-          className={cn(
-            "rounded-full px-7 py-3.5 text-sm font-semibold tracking-wide shadow-md transition-all hover:scale-105 md:text-base",
-            onDark
-              ? "bg-cream text-cobalt hover:bg-white"
-              : "bg-cobalt text-cream hover:bg-cobalt-dark",
-            scrolled && "shadow-lg",
-          )}
-          style={{ fontFamily: "var(--font-bagel)" }}
-        >
-          Ver productos
-        </Link>
+        {/* Hablemos — pill que abre WhatsApp */}
+        <div className="flex flex-1 justify-end">
+          <a
+            href={whatsappLink(
+              "Hola MUFFMENT, quisiera saber más de los avisos.",
+            )}
+            target="_blank"
+            rel="noopener noreferrer"
+            data-cursor="hover"
+            className={cn(
+              "rounded-full px-5 py-2.5 text-sm font-medium tracking-wide transition-all hover:scale-105 md:text-base",
+              onDark
+                ? "bg-cream text-cobalt hover:bg-white"
+                : "bg-cobalt text-cream hover:bg-cobalt-dark",
+              scrolled && "shadow-md",
+            )}
+          >
+            Hablemos
+          </a>
+        </div>
       </div>
     </header>
   );
