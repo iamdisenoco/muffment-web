@@ -18,12 +18,12 @@ export function Hero() {
           className="relative max-w-[20ch] text-[clamp(3rem,9vw,9.5rem)] font-normal leading-[0.9] tracking-tight"
           style={{ fontFamily: "var(--font-bagel)" }}
         >
-          {/* Muñeco apoyado en la "c" de creative — sale por arriba del texto */}
+          {/* Muñeco asomando: solo la mitad superior visible sobre el texto creative */}
           <motion.div
-            initial={{ opacity: 0, y: 30, rotate: -8 }}
-            animate={{ opacity: 1, y: 0, rotate: 0 }}
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.1, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
-            className="pointer-events-none absolute -top-[60%] left-[-2%] z-20 md:-top-[55%] md:left-[2%]"
+            className="pointer-events-none absolute left-1/2 top-0 z-20 -translate-x-1/2 -translate-y-[55%] md:-translate-y-[60%]"
             aria-hidden
           >
             <Image
@@ -33,8 +33,11 @@ export function Hero() {
               height={257}
               priority
               unoptimized
-              className="h-auto w-[110px] md:w-[200px] lg:w-[240px]"
-              style={{ filter: "brightness(0) invert(1)" }}
+              className="h-auto w-[140px] md:w-[220px] lg:w-[260px]"
+              style={{
+                filter: "brightness(0) invert(1)",
+                clipPath: "inset(0 0 52% 0)",
+              }}
             />
           </motion.div>
           creative signs <br /> for creative <br /> businesses
