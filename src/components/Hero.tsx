@@ -123,7 +123,7 @@ export function Hero() {
           transition={{ duration: 1, delay: 1.4 }}
           className="absolute bottom-8 left-1/2 -translate-x-1/2 text-xs uppercase tracking-[0.3em] text-cream/60"
         >
-          ▷ scroll ▷
+          ▽ scroll ▽
         </motion.div>
       </div>
     </section>

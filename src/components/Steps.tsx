@@ -113,18 +113,12 @@ function StepBadge({ step }: { step: Step }) {
 
 export function Steps() {
   return (
-    <section className="bg-cream pt-10 pb-0 md:pt-14 md:pb-2">
+    <section className="bg-cream pt-6 pb-0 md:pt-8 md:pb-1">
       <div className="mx-auto max-w-[1400px] px-6 md:px-10">
         {/* Título de sección */}
-        <div className="mb-8 text-center md:mb-12">
-          <p
-            className="text-[10px] font-bold uppercase tracking-[0.3em] text-cobalt/70"
-            style={{ fontFamily: "var(--font-mono)" }}
-          >
-            ▷ Cómo funciona
-          </p>
+        <div className="mb-4 text-center md:mb-6">
           <h2
-            className="mt-2 text-cobalt"
+            className="text-cobalt"
             style={{
               fontFamily: "var(--font-bagel)",
               fontSize: "clamp(1.75rem, 4vw, 3rem)",
