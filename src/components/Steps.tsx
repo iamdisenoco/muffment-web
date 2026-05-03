@@ -10,7 +10,7 @@ const STEPS = [
 
 export function Steps() {
   return (
-    <section className="bg-white py-16 md:py-24">
+    <section className="bg-white pt-16 pb-0 md:pt-24 md:pb-2">
       <div className="mx-auto max-w-[1400px] px-6 md:px-10">
         <div className="grid grid-cols-1 items-start gap-12 md:grid-cols-3 md:gap-0">
           {STEPS.map((step, i) => {
