@@ -41,10 +41,6 @@ function StepBadge({ step }: { step: Step }) {
 
   const curvedText = step.defaultText.toUpperCase();
 
-  // Tamaño del texto del hover dentro del círculo (Bagel) según largo
-  const hoverFontSize =
-    step.hoverText.length > 22 ? 13 : step.hoverText.length > 14 ? 18 : 24;
-
   return (
     <Link
       href={step.href}
@@ -70,10 +66,9 @@ function StepBadge({ step }: { step: Step }) {
             <path id={TEXT_PATH_ID} d={TEXT_PATH} fill="none" />
           </defs>
 
-          {/* Texto curvo arriba siguiendo el arc — NEGRO sobre el cream.
-              Auto-ajusta tamaño si el texto es muy largo (>20 chars). */}
+          {/* Texto curvo arriba — gris sobre cream. */}
           <text
-            fill="#000"
+            fill="#6b6b6b"
             style={{
               fontFamily: "var(--font-mono)",
               fontWeight: 700,
@@ -89,60 +84,27 @@ function StepBadge({ step }: { step: Step }) {
           {/* Círculo del número */}
           <circle cx="140" cy="160" r="62" fill="var(--color-cobalt)" />
 
-          {/* Contenido del círculo: número (default) o hoverText (hover),
-              ambos en Bagel ("tipografía redondita"). foreignObject permite
-              wrap del texto largo dentro del círculo. */}
-          <foreignObject x="78" y="98" width="124" height="124">
-            <div
+          {/* Centro del círculo: número en idle, flecha → en hover.
+              Ambos en Bagel ("tipografía redondita"). */}
+          <AnimatePresence mode="wait" initial={false}>
+            <motion.text
+              key={hovered ? "arrow" : "number"}
+              initial={{ opacity: 0, scale: 0.7 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.7 }}
+              transition={{ duration: 0.18, ease: [0.16, 1, 0.3, 1] }}
+              x="140"
+              y="183"
+              textAnchor="middle"
+              fill="var(--color-cream)"
               style={{
-                width: "100%",
-                height: "100%",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                color: "var(--color-cream)",
-                textAlign: "center",
-                padding: "0 6px",
-                boxSizing: "border-box",
+                fontFamily: "var(--font-bagel)",
+                fontSize: 56,
               }}
             >
-              <AnimatePresence mode="wait" initial={false}>
-                {hovered ? (
-                  <motion.span
-                    key="hover"
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.8 }}
-                    transition={{ duration: 0.18, ease: [0.16, 1, 0.3, 1] }}
-                    style={{
-                      fontFamily: "var(--font-bagel)",
-                      fontSize: hoverFontSize,
-                      lineHeight: 1.05,
-                      display: "block",
-                    }}
-                  >
-                    {step.hoverText}
-                  </motion.span>
-                ) : (
-                  <motion.span
-                    key="default"
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.8 }}
-                    transition={{ duration: 0.18, ease: [0.16, 1, 0.3, 1] }}
-                    style={{
-                      fontFamily: "var(--font-bagel)",
-                      fontSize: 56,
-                      lineHeight: 1,
-                      display: "block",
-                    }}
-                  >
-                    {step.n}
-                  </motion.span>
-                )}
-              </AnimatePresence>
-            </div>
-          </foreignObject>
+              {hovered ? "→" : step.n}
+            </motion.text>
+          </AnimatePresence>
         </svg>
       </motion.div>
     </Link>
