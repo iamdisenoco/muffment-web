@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Header } from "@/components/Header";
@@ -65,29 +66,50 @@ export default async function ProductPage({ params }: Props) {
           {/* Visual */}
           <div className="md:col-span-7">
             <div className="relative aspect-square w-full overflow-hidden rounded-3xl bg-cream-light md:aspect-[4/3]">
-              <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-cream-light via-cream to-cream-dark">
-                <div className="text-center px-6">
-                  <span
-                    className="block text-[14vw] leading-none text-cobalt md:text-[10rem]"
-                    style={{ fontFamily: "var(--font-bagel)" }}
-                  >
-                    {product.code}
-                  </span>
-                  <span className="mt-4 block text-base font-medium uppercase tracking-wider text-cobalt/60">
-                    {product.shortName}
-                  </span>
-                </div>
-              </div>
-            </div>
-            {/* Mini-galería placeholder */}
-            <div className="mt-4 grid grid-cols-3 gap-4">
-              {[1, 2, 3].map((i) => (
-                <div
-                  key={i}
-                  className="aspect-square rounded-2xl bg-cream-light"
+              {product.hero.includes("/2026/") ? (
+                <Image
+                  src={product.hero}
+                  alt={product.name}
+                  fill
+                  priority
+                  sizes="(max-width: 768px) 100vw, 60vw"
+                  className="object-cover"
                 />
-              ))}
+              ) : (
+                <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-cream-light via-cream to-cream-dark">
+                  <div className="text-center px-6">
+                    <span
+                      className="block text-[14vw] leading-none text-cobalt md:text-[10rem]"
+                      style={{ fontFamily: "var(--font-bagel)" }}
+                    >
+                      {product.code}
+                    </span>
+                    <span className="mt-4 block text-base font-medium uppercase tracking-wider text-cobalt/60">
+                      {product.shortName}
+                    </span>
+                  </div>
+                </div>
+              )}
             </div>
+            {/* Galería de imágenes adicionales */}
+            {product.gallery && product.gallery.length > 0 && (
+              <div className="mt-4 grid grid-cols-3 gap-4 sm:grid-cols-4 md:grid-cols-3 lg:grid-cols-4">
+                {product.gallery.map((img, i) => (
+                  <div
+                    key={img}
+                    className="relative aspect-square overflow-hidden rounded-2xl bg-cream-light"
+                  >
+                    <Image
+                      src={img}
+                      alt={`${product.name} — vista ${i + 2}`}
+                      fill
+                      sizes="(max-width: 768px) 30vw, 20vw"
+                      className="object-cover transition-transform duration-500 hover:scale-105"
+                    />
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
 
           {/* Info */}

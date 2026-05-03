@@ -19,6 +19,7 @@ export type Product = {
   paint: string;
   description: string;
   hero: string; // imagen principal (relativa a /public)
+  gallery?: string[]; // imágenes adicionales (relativas a /public)
   has3D?: boolean;
   modelPath?: string; // ruta al .glb si existe
   notes?: string;
@@ -42,7 +43,13 @@ export const PRODUCTS: Product[] = [
     paint: "En polvo, electrostática, para exterior e interior",
     description:
       "El hablador grande oval que cuenta tu marca a metros. Para entradas, terrazas y vitrinas. Pintura electrostática para sol y lluvia.",
-    hero: "/img/products/piso-ov.jpg",
+    hero: "/img/products/2026/ov-1.jpg",
+    gallery: [
+      "/img/products/2026/ov-2.jpg",
+      "/img/products/2026/ov-3.jpg",
+      "/img/products/2026/ov-4.jpg",
+      "/img/products/2026/ov-5.jpg",
+    ],
     has3D: true,
   },
   {
@@ -60,8 +67,40 @@ export const PRODUCTS: Product[] = [
     paint: "En polvo, electrostática, para exterior e interior",
     description:
       "Tipo A-frame, plegable para guardar fácil al cierre. El clásico de cafés y restaurantes que cambian menú a diario.",
-    hero: "/img/products/piso-plegable.jpg",
+    hero: "/img/products/2026/plegable-1.jpg",
+    gallery: [
+      "/img/products/2026/plegable-2.jpg",
+      "/img/products/2026/plegable-3.jpg",
+      "/img/products/2026/plegable-4.jpg",
+      "/img/products/2026/plegable-5.jpg",
+      "/img/products/2026/plegable-6.jpg",
+      "/img/products/2026/plegable-7.jpg",
+    ],
     has3D: true,
+  },
+  {
+    slug: "hablador-piso-plegable-small",
+    code: "5418",
+    name: "Hablador de Piso Plegable small",
+    shortName: "Piso Plegable small",
+    category: "piso",
+    categoryLabel: "Hablador de piso",
+    price: 620000,
+    priceLabel: "$620K",
+    totalSize: "74 cm × 60 cm × 40 cm",
+    artSize: "46 cm × 46 cm",
+    materials: "Acero galvanizado, acero inoxidable",
+    paint: "En polvo, electrostática, para exterior e interior",
+    description:
+      "La versión chica del A-frame plegable. Misma lógica de cambio rápido de mensaje, formato compacto para entradas y barras estrechas.",
+    hero: "/img/products/2026/plegable-small-1.jpg",
+    gallery: [
+      "/img/products/2026/plegable-small-2.jpg",
+      "/img/products/2026/plegable-small-3.jpg",
+      "/img/products/2026/plegable-small-4.jpg",
+      "/img/products/2026/plegable-small-5.jpg",
+    ],
+    isNew: true,
   },
   {
     slug: "hablador-piso-top-shelf",
@@ -97,7 +136,15 @@ export const PRODUCTS: Product[] = [
     paint: "En polvo, electrostática para interior y exterior",
     description:
       "Forma curva con personalidad. La pieza grande para zonas premium: hoteles, showrooms, retail concept.",
-    hero: "/img/products/piso-bent.jpg",
+    hero: "/img/products/2026/bent-1.jpg",
+    gallery: [
+      "/img/products/2026/bent-2.jpg",
+      "/img/products/2026/bent-3.jpg",
+      "/img/products/2026/bent-4.jpg",
+      "/img/products/2026/bent-5.jpg",
+      "/img/products/2026/bent-6.jpg",
+      "/img/products/2026/bent-7.jpg",
+    ],
     isNew: true,
     notes: "La información que pones en el aviso es un producto aparte.",
   },
@@ -223,7 +270,13 @@ export const PRODUCTS: Product[] = [
     paint: "En polvo, electrostática para interior y exterior",
     description:
       "Bandera de pared con tensor en nailon. Cuelga perpendicular a la fachada y se ve desde ambas direcciones de la calle.",
-    hero: "/img/products/pared-flag.jpg",
+    hero: "/img/products/2026/flag-1.jpg",
+    gallery: [
+      "/img/products/2026/flag-2.jpg",
+      "/img/products/2026/flag-3.jpg",
+      "/img/products/2026/flag-4.jpg",
+      "/img/products/2026/flag-5.jpg",
+    ],
     isNew: true,
   },
   {
@@ -293,7 +346,7 @@ export const PRODUCTS: Product[] = [
     paint: "En polvo, electrostática, para exterior e interior",
     description:
       "Media luna lateral. La forma menos esperada — la más recordada.",
-    hero: "/img/products/pared-luna.jpg",
+    hero: "/img/products/2026/luna-1.jpg",
   },
 
   // ============ HABLADORES DE MESA ============
@@ -356,7 +409,7 @@ export const PRODUCTS: Product[] = [
 ];
 
 export const CATEGORIES = [
-  { id: "piso", label: "Habladores de piso", count: 9 },
+  { id: "piso", label: "Habladores de piso", count: 10 },
   { id: "pared", label: "Habladores de pared", count: 6 },
   { id: "mesa", label: "Habladores de mesa", count: 2 },
   { id: "accesorio", label: "Accesorios", count: 1 },
