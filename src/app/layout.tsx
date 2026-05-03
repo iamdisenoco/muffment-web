@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Bagel_Fat_One } from "next/font/google";
 import "./globals.css";
+import { FloatingDecorations } from "@/components/FloatingDecorations";
 
 const bagelFatOne = Bagel_Fat_One({
   weight: "400",
@@ -49,6 +50,7 @@ export default function RootLayout({
   return (
     <html lang="es" className={bagelFatOne.variable} suppressHydrationWarning>
       <body className="bg-white text-black antialiased" suppressHydrationWarning>
+        <FloatingDecorations />
         {children}
       </body>
     </html>

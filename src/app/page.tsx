@@ -39,29 +39,32 @@ export default function Home() {
                   key={cat.id}
                   href={`/avisos?cat=${cat.id}`}
                   data-cursor="hover"
-                  className="group relative flex aspect-[4/5] flex-col overflow-hidden rounded-3xl border border-black/10 bg-white p-6 shadow-sm transition-transform hover:-translate-y-1 md:aspect-square"
+                  className="group relative aspect-[4/5] overflow-hidden rounded-3xl border border-black/10 bg-white shadow-sm transition-transform hover:-translate-y-1 md:aspect-square"
                 >
-                  {/* Contador arriba */}
-                  <span className="pointer-events-none text-xs font-medium uppercase tracking-widest text-neutral-400">
-                    ▷ {cat.count} {cat.count === 1 ? "producto" : "productos"}
-                  </span>
-
-                  {/* Producto centrado en el espacio que sobra entre el
-                      contador (arriba) y el título (abajo). flex-1 + relative
-                      le da una zona contenedora propia para que <Image fill> funcione. */}
-                  <div className="relative flex-1">
-                    <Image
-                      src={cover[cat.id]}
-                      alt={cat.label}
-                      fill
-                      sizes="(max-width: 768px) 50vw, 25vw"
-                      className="object-contain p-2 transition-transform duration-500 group-hover:scale-105"
-                      unoptimized
-                    />
+                  {/* Producto centrado en TODA la card (con padding generoso
+                      para que no toque los textos de los overlays). */}
+                  <div className="absolute inset-0 flex items-center justify-center p-10 md:p-12">
+                    <div className="relative h-full w-full">
+                      <Image
+                        src={cover[cat.id]}
+                        alt={cat.label}
+                        fill
+                        sizes="(max-width: 768px) 50vw, 25vw"
+                        className="object-contain transition-transform duration-500 group-hover:scale-105"
+                        unoptimized
+                      />
+                    </div>
                   </div>
 
-                  {/* Título abajo */}
-                  <div className="pointer-events-none flex items-end justify-between gap-2 text-neutral-500">
+                  {/* Contador overlay arriba */}
+                  <div className="pointer-events-none absolute inset-x-0 top-0 p-6">
+                    <span className="text-xs font-medium uppercase tracking-widest text-neutral-400">
+                      ▷ {cat.count} {cat.count === 1 ? "producto" : "productos"}
+                    </span>
+                  </div>
+
+                  {/* Título overlay abajo */}
+                  <div className="pointer-events-none absolute inset-x-0 bottom-0 flex items-end justify-between gap-2 p-6 text-neutral-500">
                     <h3
                       className="text-2xl leading-tight md:text-3xl"
                       style={{ fontFamily: "var(--font-bagel)" }}

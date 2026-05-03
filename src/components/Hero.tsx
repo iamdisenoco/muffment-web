@@ -6,11 +6,36 @@ import Link from "next/link";
 import { ProductRain } from "./ProductRain";
 import { whatsappLink } from "@/lib/utils";
 
+// Paleta para hover-por-letra del h1.
+const LETTER_COLORS = ["#ff6b35", "#f9c80e", "#06d6a0", "#ef476f", "#4cc9f0"];
+
+function HoverLetters({ text }: { text: string }) {
+  return (
+    <>
+      {text.split("").map((char, i) => (
+        <span
+          key={i}
+          className="inline-block transition-colors duration-150 ease-out"
+          onMouseEnter={(e) => {
+            (e.currentTarget as HTMLSpanElement).style.color =
+              LETTER_COLORS[i % LETTER_COLORS.length];
+          }}
+          onMouseLeave={(e) => {
+            (e.currentTarget as HTMLSpanElement).style.color = "";
+          }}
+        >
+          {char === " " ? " " : char}
+        </span>
+      ))}
+    </>
+  );
+}
+
 export function Hero() {
   return (
     <section className="relative min-h-[100svh] overflow-hidden bg-cobalt text-cream">
-      {/* Decoraciones — estrellas y triángulos como en el catálogo */}
-      <Decorations />
+      {/* (Las decoraciones flotantes ahora son globales — ver
+          <FloatingDecorations /> en layout.tsx) */}
 
       {/* Lluvia de productos a los costados */}
       <ProductRain />
@@ -53,22 +78,22 @@ export function Hero() {
             animate={{ scale: [1, 1.035, 1] }}
             transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 2 }}
           >
-            creative
+            <HoverLetters text="creative" />
           </motion.span>{" "}
           <motion.span
             className="inline-block"
             animate={{ scale: [1, 1.025, 1] }}
             transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 3.5 }}
           >
-            signs
+            <HoverLetters text="signs" />
           </motion.span>{" "}
-          <br /> for{" "}
+          <br /> <HoverLetters text="for" />{" "}
           <motion.span
             className="inline-block"
             animate={{ scale: [1, 1.04, 1] }}
             transition={{ duration: 6.5, repeat: Infinity, ease: "easeInOut", delay: 5 }}
           >
-            creative
+            <HoverLetters text="creative" />
           </motion.span>{" "}
           <br />{" "}
           <motion.span
@@ -76,7 +101,7 @@ export function Hero() {
             animate={{ scale: [1, 1.03, 1] }}
             transition={{ duration: 8, repeat: Infinity, ease: "easeInOut", delay: 4 }}
           >
-            businesses
+            <HoverLetters text="businesses" />
           </motion.span>
         </motion.h1>
 
@@ -130,106 +155,3 @@ export function Hero() {
   );
 }
 
-function Decorations() {
-  return (
-    <div aria-hidden className="pointer-events-none absolute inset-0">
-      {/* Estrellas — entran con pop y luego flotan + rotan en loop infinito */}
-      {[
-        { top: "12%", left: "8%", size: 28, delay: 0.5, floatY: 12, floatDur: 4.5, rotDur: 8 },
-        { top: "18%", right: "12%", size: 38, delay: 0.7, floatY: 16, floatDur: 5.2, rotDur: 10 },
-        { bottom: "22%", left: "16%", size: 22, delay: 0.9, floatY: 10, floatDur: 4, rotDur: 7 },
-        { bottom: "35%", right: "18%", size: 32, delay: 1.1, floatY: 14, floatDur: 5.6, rotDur: 9 },
-        { top: "45%", left: "5%", size: 18, delay: 1.3, floatY: 8, floatDur: 3.6, rotDur: 6 },
-      ].map((pos, i) => (
-        <motion.div
-          key={`star-${i}`}
-          className="absolute"
-          style={{
-            top: pos.top,
-            left: pos.left,
-            right: pos.right,
-            bottom: pos.bottom,
-          }}
-          initial={{ opacity: 0, scale: 0 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8, delay: pos.delay, ease: "backOut" }}
-        >
-          {/* Inner: float vertical en loop */}
-          <motion.div
-            animate={{ y: [0, -pos.floatY, 0] }}
-            transition={{
-              duration: pos.floatDur,
-              repeat: Infinity,
-              ease: "easeInOut",
-              delay: pos.delay,
-            }}
-          >
-            {/* Inner-inner: rotación continua del SVG */}
-            <motion.svg
-              viewBox="0 0 24 24"
-              width={pos.size}
-              height={pos.size}
-              className="fill-cream/70"
-              animate={{ rotate: 360 }}
-              transition={{
-                duration: pos.rotDur,
-                repeat: Infinity,
-                ease: "linear",
-                delay: pos.delay,
-              }}
-            >
-              <path d="M12 1l2.59 7.41L22 11l-7.41 2.59L12 21l-2.59-7.41L2 11l7.41-2.59L12 1z" />
-            </motion.svg>
-          </motion.div>
-        </motion.div>
-      ))}
-
-      {/* Triángulos — fade-in y bobbing + rotación lenta */}
-      {[
-        { top: "30%", right: "8%", baseRotate: 0, delay: 1, floatY: 14, floatDur: 5, rotDur: 14 },
-        { bottom: "12%", left: "10%", baseRotate: 90, delay: 1.2, floatY: 10, floatDur: 4.5, rotDur: 12 },
-      ].map((pos, i) => (
-        <motion.div
-          key={`tri-${i}`}
-          className="absolute"
-          style={{
-            top: pos.top,
-            left: pos.left,
-            right: pos.right,
-            bottom: pos.bottom,
-          }}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.6, delay: pos.delay }}
-        >
-          <motion.div
-            animate={{ y: [0, -pos.floatY, 0] }}
-            transition={{
-              duration: pos.floatDur,
-              repeat: Infinity,
-              ease: "easeInOut",
-              delay: pos.delay,
-            }}
-          >
-            <motion.svg
-              viewBox="0 0 24 24"
-              width={36}
-              height={36}
-              className="fill-cream/40"
-              style={{ transformOrigin: "center" }}
-              animate={{ rotate: [pos.baseRotate, pos.baseRotate + 360] }}
-              transition={{
-                duration: pos.rotDur,
-                repeat: Infinity,
-                ease: "linear",
-                delay: pos.delay,
-              }}
-            >
-              <path d="M12 2L2 22h20L12 2z" />
-            </motion.svg>
-          </motion.div>
-        </motion.div>
-      ))}
-    </div>
-  );
-}
