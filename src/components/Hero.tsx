@@ -25,7 +25,7 @@ export function Hero() {
             initial={{ opacity: 0, y: 30, rotate: -6 }}
             animate={{ opacity: 1, y: 0, rotate: 0 }}
             transition={{ duration: 1.1, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
-            className="pointer-events-none absolute left-[2%] top-0 z-20 -translate-y-[34%] md:left-[3%]"
+            className="pointer-events-none absolute left-[2%] top-0 z-20 -translate-y-[10%] md:left-[3%]"
             aria-hidden
           >
             <Image
