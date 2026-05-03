@@ -1,5 +1,5 @@
-// MUFFMENT — Catálogo 2024 (extraído del PDF oficial + IG)
-// Precios marcados con * son estimados; Jon ajusta después en este archivo.
+// MUFFMENT — Catálogo 2026 (extraído del PDF oficial)
+// Precios actualizados al catálogo vigente.
 
 export type ProductCategory = "piso" | "pared" | "mesa" | "accesorio";
 
@@ -11,7 +11,7 @@ export type Product = {
   category: ProductCategory;
   categoryLabel: string;
   price: number; // COP
-  priceLabel: string; // "$790K"
+  priceLabel: string; // "$915K"
   priceEstimated?: boolean;
   totalSize: string;
   artSize: string;
@@ -22,9 +22,11 @@ export type Product = {
   has3D?: boolean;
   modelPath?: string; // ruta al .glb si existe
   notes?: string;
+  isNew?: boolean; // novedad 2026
 };
 
 export const PRODUCTS: Product[] = [
+  // ============ HABLADORES DE PISO ============
   {
     slug: "hablador-piso-ov",
     code: "5402",
@@ -32,11 +34,11 @@ export const PRODUCTS: Product[] = [
     shortName: "Piso OV",
     category: "piso",
     categoryLabel: "Hablador de piso",
-    price: 790000,
-    priceLabel: "$790K",
+    price: 915000,
+    priceLabel: "$915K",
     totalSize: "100 cm × 57 cm",
     artSize: "85 cm × 56 cm",
-    materials: "Acero cold rolled, acero inoxidable",
+    materials: "Acero galvanizado, acero inoxidable",
     paint: "En polvo, electrostática, para exterior e interior",
     description:
       "El hablador grande oval que cuenta tu marca a metros. Para entradas, terrazas y vitrinas. Pintura electrostática para sol y lluvia.",
@@ -50,16 +52,54 @@ export const PRODUCTS: Product[] = [
     shortName: "Piso Plegable",
     category: "piso",
     categoryLabel: "Hablador de piso",
-    price: 670000,
-    priceLabel: "$670K",
+    price: 780000,
+    priceLabel: "$780K",
     totalSize: "96 cm × 70 cm",
     artSize: "80 cm × 60 cm",
-    materials: "Acero cold rolled y acero inoxidable",
+    materials: "Acero galvanizado, acero inoxidable",
     paint: "En polvo, electrostática, para exterior e interior",
     description:
       "Tipo A-frame, plegable para guardar fácil al cierre. El clásico de cafés y restaurantes que cambian menú a diario.",
     hero: "/img/products/piso-plegable.jpg",
     has3D: true,
+  },
+  {
+    slug: "hablador-piso-top-shelf",
+    code: "5412",
+    name: "Hablador de Piso TOP SHELF",
+    shortName: "Piso TOP SHELF",
+    category: "piso",
+    categoryLabel: "Hablador de piso",
+    price: 725000,
+    priceLabel: "$725K",
+    totalSize: "62 cm × 46 cm × 50 cm",
+    artSize: "45 cm × 45 cm",
+    materials: "Acero galvanizado, ABS con fibra de vidrio",
+    paint: "En polvo, electrostática para interior y exterior",
+    description:
+      "Estructura tipo estante con bandeja superior. Para mostrar producto y mensaje al mismo tiempo. La información va aparte.",
+    hero: "/img/products/piso-top-shelf.jpg",
+    isNew: true,
+    notes: "La información que pones en el aviso es un producto aparte.",
+  },
+  {
+    slug: "hablador-piso-bent",
+    code: "5413",
+    name: "Hablador de Piso BENT",
+    shortName: "Piso BENT",
+    category: "piso",
+    categoryLabel: "Hablador de piso",
+    price: 830000,
+    priceLabel: "$830K",
+    totalSize: "98 cm × 67 cm × 70 cm",
+    artSize: "65 cm × 62 cm",
+    materials: "Acero galvanizado, ABS con fibra de vidrio",
+    paint: "En polvo, electrostática para interior y exterior",
+    description:
+      "Forma curva con personalidad. La pieza grande para zonas premium: hoteles, showrooms, retail concept.",
+    hero: "/img/products/piso-bent.jpg",
+    isNew: true,
+    notes: "La información que pones en el aviso es un producto aparte.",
   },
   {
     slug: "hablador-piso-paleta",
@@ -68,12 +108,11 @@ export const PRODUCTS: Product[] = [
     shortName: "Piso Paleta",
     category: "piso",
     categoryLabel: "Hablador de piso",
-    price: 480000,
-    priceLabel: "$480K",
-    priceEstimated: true,
+    price: 725000,
+    priceLabel: "$725K",
     totalSize: "106 cm × Ø 40 cm",
     artSize: "Ø 40 cm",
-    materials: "Acero cold rolled y acero inoxidable",
+    materials: "Acero galvanizado, acero inoxidable",
     paint: "En polvo, electrostática, para exterior e interior",
     description:
       "Paleta circular sobre poste. Vibe vintage gas-station modernizado. Llama desde la cuadra siguiente.",
@@ -87,12 +126,11 @@ export const PRODUCTS: Product[] = [
     shortName: "Piso P.OV",
     category: "piso",
     categoryLabel: "Hablador de piso",
-    price: 510000,
-    priceLabel: "$510K",
-    priceEstimated: true,
+    price: 725000,
+    priceLabel: "$725K",
     totalSize: "116 cm × 40 cm",
     artSize: "45 cm × 30 cm",
-    materials: "Acero cold rolled, acero inoxidable",
+    materials: "Acero galvanizado, acero inoxidable",
     paint: "En polvo, electrostática, para exterior e interior",
     description:
       "Paleta oval sobre poste alto. Para señalizar entrada, parking, recepción o lo que sea.",
@@ -105,12 +143,11 @@ export const PRODUCTS: Product[] = [
     shortName: "Piso P.RECT",
     category: "piso",
     categoryLabel: "Hablador de piso",
-    price: 510000,
-    priceLabel: "$510K",
-    priceEstimated: true,
+    price: 725000,
+    priceLabel: "$725K",
     totalSize: "116 cm × 40 cm",
     artSize: "45 cm × 30 cm",
-    materials: "Acero cold rolled, acero inoxidable",
+    materials: "Acero galvanizado, acero inoxidable",
     paint: "En polvo, electrostática, para exterior e interior",
     description:
       "Paleta rectangular sobre poste alto. Como el P.OV pero con esquinas para que tu copy respire mejor.",
@@ -123,8 +160,8 @@ export const PRODUCTS: Product[] = [
     shortName: "Piso P.OV chico",
     category: "piso",
     categoryLabel: "Hablador de piso",
-    price: 90000,
-    priceLabel: "$90K",
+    price: 100000,
+    priceLabel: "$100K",
     totalSize: "45 cm × 15 cm",
     artSize: "43 cm × 15 cm",
     materials: "Acero galvanizado, acero inoxidable",
@@ -134,22 +171,78 @@ export const PRODUCTS: Product[] = [
     hero: "/img/products/piso-p-ov-chico.jpg",
   },
   {
+    slug: "aviso-piso-menu-swinger",
+    code: "5415",
+    name: "Aviso de Piso MENU SWINGER",
+    shortName: "Piso MENU SWINGER",
+    category: "piso",
+    categoryLabel: "Hablador de piso",
+    price: 790000,
+    priceLabel: "$790K",
+    totalSize: "115 cm × 40 cm",
+    artSize: "39 cm × 26 cm",
+    materials: "Acero galvanizado, acrílico 3mm",
+    paint: "En polvo, electrostática para interior y exterior",
+    description:
+      "Aviso de piso pivotante. Acrílico 3mm para que tu mensaje brille con la luz. Perfecto para entradas y zonas de espera.",
+    hero: "/img/products/piso-menu-swinger.jpg",
+    isNew: true,
+  },
+
+  // ============ HABLADORES DE PARED ============
+  {
     slug: "hablador-pared-rect-grande",
     code: "5404",
     name: "Hablador de Pared RECT grande",
     shortName: "Pared RECT grande",
     category: "pared",
     categoryLabel: "Hablador de pared",
-    price: 560000,
-    priceLabel: "$560K",
+    price: 650000,
+    priceLabel: "$650K",
     totalSize: "85 cm × 46 cm",
     artSize: "80 cm × 40 cm",
-    materials: "Acero cold rolled, acero inox",
+    materials: "Acero galvanizado, acero inoxidable",
     paint: "En polvo, electrostática, para exterior e interior",
     description:
       "Aviso colgante de techo o pared. Funciona con letras magnéticas — cambias el menú sin imprimir nada nuevo.",
     hero: "/img/products/pared-rect-grande.jpg",
     notes: "Las letras magnéticas son un producto aparte.",
+  },
+  {
+    slug: "hablador-pared-flag",
+    code: "5414",
+    name: "Aviso de Pared FLAG",
+    shortName: "Pared FLAG",
+    category: "pared",
+    categoryLabel: "Hablador de pared",
+    price: 515000,
+    priceLabel: "$515K",
+    totalSize: "55 cm × 50 cm",
+    artSize: "46 cm × 46 cm",
+    materials: "Acero galvanizado, acero inoxidable, nailon",
+    paint: "En polvo, electrostática para interior y exterior",
+    description:
+      "Bandera de pared con tensor en nailon. Cuelga perpendicular a la fachada y se ve desde ambas direcciones de la calle.",
+    hero: "/img/products/pared-flag.jpg",
+    isNew: true,
+  },
+  {
+    slug: "hablador-pared-luna-big",
+    code: "5417",
+    name: "Hablador de Pared LUNA BIG",
+    shortName: "Pared LUNA BIG",
+    category: "pared",
+    categoryLabel: "Hablador de pared",
+    price: 170000,
+    priceLabel: "$170K",
+    totalSize: "50 cm × 30 cm",
+    artSize: "50 cm × 30 cm",
+    materials: "Acero galvanizado, acero inoxidable",
+    paint: "En polvo, electrostática, para exterior e interior",
+    description:
+      "La media luna en versión grande. Más espacio, más impacto. Para fachadas que necesitan personalidad.",
+    hero: "/img/products/pared-luna-big.jpg",
+    isNew: true,
   },
   {
     slug: "hablador-pared-rect-chico",
@@ -158,8 +251,8 @@ export const PRODUCTS: Product[] = [
     shortName: "Pared RECT chico",
     category: "pared",
     categoryLabel: "Hablador de pared",
-    price: 90000,
-    priceLabel: "$90K",
+    price: 100000,
+    priceLabel: "$100K",
     totalSize: "44 cm × 14.5 cm",
     artSize: "44 cm × 14.5 cm",
     materials: "Acero galvanizado, acero inoxidable",
@@ -175,8 +268,8 @@ export const PRODUCTS: Product[] = [
     shortName: "Pared CUAD",
     category: "pared",
     categoryLabel: "Hablador de pared",
-    price: 95000,
-    priceLabel: "$95K",
+    price: 110000,
+    priceLabel: "$110K",
     totalSize: "30 cm × 30 cm",
     artSize: "30 cm × 30 cm",
     materials: "Acero galvanizado, acero inoxidable",
@@ -192,8 +285,8 @@ export const PRODUCTS: Product[] = [
     shortName: "Pared LUNA",
     category: "pared",
     categoryLabel: "Hablador de pared",
-    price: 80000,
-    priceLabel: "$80K",
+    price: 90000,
+    priceLabel: "$90K",
     totalSize: "30 cm × 20 cm",
     artSize: "30 cm × 20 cm",
     materials: "Acero galvanizado, acero inoxidable",
@@ -202,6 +295,8 @@ export const PRODUCTS: Product[] = [
       "Media luna lateral. La forma menos esperada — la más recordada.",
     hero: "/img/products/pared-luna.jpg",
   },
+
+  // ============ HABLADORES DE MESA ============
   {
     slug: "hablador-mesa-rect",
     code: "5401",
@@ -209,17 +304,37 @@ export const PRODUCTS: Product[] = [
     shortName: "Mesa RECT",
     category: "mesa",
     categoryLabel: "Hablador de mesa",
-    price: 72000,
-    priceLabel: "$72K",
+    price: 80000,
+    priceLabel: "$80K",
     totalSize: "18 cm × 12 cm",
     artSize: "16 cm × 12 cm",
-    materials: "Acero cold rolled, madera pino, imanes neodimio",
+    materials: "Acero galvanizado, madera roble con acabados en cera de abeja, imanes neodimio",
     paint: "En polvo, electrostática, para exterior e interior",
     description:
-      "Para menús, números de mesa, promos. Base en madera pino. Incluye 8 imanes neodimio.",
+      "Para menús, números de mesa, promos. Base en madera roble con cera de abeja. Incluye 8 imanes neodimio.",
     hero: "/img/products/mesa-rect.jpg",
     notes: "Incluye 8 imanes neodimio.",
   },
+  {
+    slug: "hablador-mesa-clear",
+    code: "5416",
+    name: "Hablador de Mesa CLEAR",
+    shortName: "Mesa CLEAR",
+    category: "mesa",
+    categoryLabel: "Hablador de mesa",
+    price: 70000,
+    priceLabel: "$70K",
+    totalSize: "18 cm × 12 cm",
+    artSize: "16 cm × 12 cm",
+    materials: "Acrílico 2mm, madera roble con acabado en cera de abejas",
+    paint: "—",
+    description:
+      "Versión transparente del hablador de mesa. Acrílico que deja respirar el menú y madera roble que aterriza la pieza.",
+    hero: "/img/products/mesa-clear.jpg",
+    isNew: true,
+  },
+
+  // ============ ACCESORIOS ============
   {
     slug: "letras-magneticas",
     code: "MAG350",
@@ -227,8 +342,8 @@ export const PRODUCTS: Product[] = [
     shortName: "Letras Magnéticas",
     category: "accesorio",
     categoryLabel: "Accesorio",
-    price: 650000,
-    priceLabel: "$650K",
+    price: 760000,
+    priceLabel: "$760K",
     totalSize: "25 mm de alto × 2 mm de espesor",
     artSize: "350 caracteres",
     materials: "Imán neodimio y acrílico",
@@ -241,9 +356,9 @@ export const PRODUCTS: Product[] = [
 ];
 
 export const CATEGORIES = [
-  { id: "piso", label: "Habladores de piso", count: 6 },
-  { id: "pared", label: "Habladores de pared", count: 4 },
-  { id: "mesa", label: "Habladores de mesa", count: 1 },
+  { id: "piso", label: "Habladores de piso", count: 9 },
+  { id: "pared", label: "Habladores de pared", count: 6 },
+  { id: "mesa", label: "Habladores de mesa", count: 2 },
   { id: "accesorio", label: "Accesorios", count: 1 },
 ] as const;
 

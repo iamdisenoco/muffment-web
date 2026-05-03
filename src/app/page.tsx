@@ -47,7 +47,7 @@ export default function Home() {
                 className="mt-6 text-[clamp(2.5rem,6vw,5.5rem)] leading-[0.95] text-cobalt"
                 style={{ fontFamily: "var(--font-bagel)" }}
               >
-                12 productos. <br /> 4 categorías. <br /> Infinitas marcas.
+                18 productos. <br /> 4 categorías. <br /> Infinitas marcas.
               </h2>
             </div>
             <div className="md:col-span-7">
