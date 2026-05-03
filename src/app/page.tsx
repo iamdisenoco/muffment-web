@@ -37,7 +37,7 @@ export default function Home() {
         />
 
         {/* CATEGORÍAS — directamente después del marquee, sin headline */}
-        <section className="mx-auto max-w-[1600px] px-6 py-16 md:px-10 md:py-24">
+        <section className="mx-auto max-w-[1600px] px-6 pt-32 pb-16 md:px-10 md:pt-44 md:pb-24">
           <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
             {CATEGORIES.map((cat) => {
               // Producto sin fondo (PNG con transparencia) para cada categoría

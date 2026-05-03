@@ -4,6 +4,7 @@ import Image from "next/image";
 import { motion } from "motion/react";
 import Link from "next/link";
 import { ProductRain } from "./ProductRain";
+import { whatsappLink } from "@/lib/utils";
 
 export function Hero() {
   return (
@@ -103,13 +104,17 @@ export function Hero() {
           >
             Ver el catálogo
           </Link>
-          <Link
-            href="/manifiesto"
+          <a
+            href={whatsappLink(
+              "Hola MUFFMENT, necesito un aviso a la medida. ¿Me ayudan con la cotización?",
+            )}
+            target="_blank"
+            rel="noopener noreferrer"
             data-cursor="hover"
-            className="rounded-full border border-cream/40 px-8 py-4 text-base font-medium uppercase tracking-wider text-cream transition-colors hover:bg-cream/10"
+            className="rounded-full border border-cream/40 px-8 py-4 text-center text-base font-medium uppercase tracking-wider text-cream transition-colors hover:bg-cream/10"
           >
-            Manifiesto
-          </Link>
+            Necesito un aviso a la medida
+          </a>
         </motion.div>
 
         <motion.div
