@@ -3,7 +3,7 @@ import Link from "next/link";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { Hero } from "@/components/Hero";
-import { Marquee } from "@/components/Marquee";
+import { Steps } from "@/components/Steps";
 import { FAQ } from "@/components/FAQ";
 import { Logo } from "@/components/Logo";
 import { Cursor } from "@/components/Cursor";
@@ -21,13 +21,7 @@ export default function Home() {
       <main>
         <Hero />
 
-        <Marquee
-          items={[
-            "escoge tu aviso",
-            "escoge tu color",
-            "escoge cómo poner tu mensaje",
-          ]}
-        />
+        <Steps />
 
         {/* CATEGORÍAS — pegadas al marquee, sin separación */}
         <section className="mx-auto max-w-[1600px] px-6 pt-8 pb-16 md:px-10 md:pt-12 md:pb-24">
