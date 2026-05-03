@@ -47,7 +47,7 @@ export function ProductGallery({
   // Si NO hay fotos reales (todo placeholder)
   if (images.length === 0) {
     return (
-      <div className="relative aspect-square w-full overflow-hidden rounded-3xl bg-white md:aspect-[4/3]">
+      <div className="relative aspect-square w-full overflow-hidden rounded-[2rem] bg-white md:aspect-[4/3]">
         <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-white via-white to-white">
           <div className="text-center px-6">
             <span
@@ -71,7 +71,7 @@ export function ProductGallery({
   return (
     <>
       {/* HERO grande con flechas + click para zoom */}
-      <div className="group relative aspect-[4/5] w-full overflow-hidden rounded-3xl bg-white md:aspect-[4/3]">
+      <div className="group relative aspect-[4/5] w-full overflow-hidden rounded-[2rem] bg-white md:aspect-[4/3]">
         <button
           type="button"
           onClick={() => setZoom(true)}

@@ -49,7 +49,7 @@ export function Header() {
           data-cursor="hover"
           className="rounded-full bg-cobalt px-5 py-2.5 text-sm font-medium uppercase tracking-wider text-cream transition-colors hover:bg-cobalt-dark"
         >
-          Ver avisos
+          Ver productos
         </Link>
       </div>
     </header>

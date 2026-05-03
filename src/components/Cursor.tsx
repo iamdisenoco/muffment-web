@@ -37,8 +37,14 @@ export function Cursor() {
     });
 
     const tick = () => {
-      ringX += (mouseX - ringX) * 0.18;
-      ringY += (mouseY - ringY) * 0.18;
+      // factor más alto = ring sigue mucho más cerca del cursor (menos lag visual)
+      // si el delta es muy grande, snap directo (al moverse rápido la bola no se queda atrás)
+      const dx = mouseX - ringX;
+      const dy = mouseY - ringY;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      const factor = dist > 80 ? 1 : 0.45;
+      ringX += dx * factor;
+      ringY += dy * factor;
       if (ringRef.current) {
         ringRef.current.style.transform = `translate3d(${ringX - 16}px, ${ringY - 16}px, 0)`;
       }

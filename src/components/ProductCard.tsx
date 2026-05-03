@@ -16,9 +16,9 @@ export function ProductCard({
   index?: number;
 }) {
   const heights = {
-    sm: "aspect-[4/5]",
+    sm: "aspect-[3/4]",
     md: "aspect-[3/4]",
-    lg: "aspect-[4/5] md:aspect-[5/6]",
+    lg: "aspect-[3/4] md:aspect-[3/4]",
   } as const;
 
   // Si la foto está en /2026/ es una foto real (no placeholder)
@@ -34,16 +34,16 @@ export function ProductCard({
       <Link
         href={`/avisos/${product.slug}`}
         data-cursor="hover"
-        className="group block overflow-hidden rounded-2xl bg-white"
+        className="group block overflow-hidden rounded-3xl bg-white"
       >
-        <div className={cn("relative w-full overflow-hidden", heights[size])}>
+        <div className={cn("relative w-full overflow-hidden rounded-3xl", heights[size])}>
           {hasRealPhoto ? (
             <Image
               src={product.hero}
               alt={product.name}
               fill
               sizes="(max-width: 768px) 50vw, (max-width: 1280px) 25vw, 400px"
-              className="object-contain p-3 transition-transform duration-500 group-hover:scale-105"
+              className="object-cover transition-transform duration-500 group-hover:scale-105"
             />
           ) : (
             /* Placeholder con código + nombre cuando aún no hay foto real */
