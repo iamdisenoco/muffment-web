@@ -21,67 +21,70 @@ export default function Home() {
       <main>
         <Hero />
 
-        <Steps />
+        {/* SEGUNDO SLIDE — Steps + Categorías juntas a altura 100vh, así
+            tras un scroll desde el Hero, este bloque encaja como página
+            completa igual que el inicio. */}
+        <div className="flex min-h-[100svh] flex-col">
+          <Steps />
 
-        {/* CATEGORÍAS — padding vertical simétrico para que el grid quede
-            centrado en su franja blanca (no tirado hacia arriba). */}
-        <section className="mx-auto max-w-[1600px] px-6 py-16 md:px-10 md:py-24">
-          <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
-            {CATEGORIES.map((cat) => {
-              // Producto sin fondo (PNG con transparencia) para cada categoría
-              const cover: Record<string, string> = {
-                piso: "/img/products/2026/cutouts/ov.png",
-                pared: "/img/products/2026/cutouts/flag.png",
-                mesa: "/img/products/2026/cutouts/luna.png",
-                accesorio: "/img/products/2026/cutouts/bent.png",
-              };
-              return (
-                <Link
-                  key={cat.id}
-                  href={`/avisos?cat=${cat.id}`}
-                  data-cursor="hover"
-                  className="group flex aspect-[4/5] flex-col overflow-hidden rounded-3xl border border-black/10 bg-white shadow-sm transition-transform hover:-translate-y-1 md:aspect-square"
-                >
-                  {/* Banda superior — altura FIJA para balancear con el footer
-                      y que el producto del medio quede centrado vertical de
-                      verdad en la card. */}
-                  <div className="flex h-20 items-start px-6 pt-6">
-                    <span className="text-xs font-medium uppercase tracking-widest text-neutral-400">
-                      ▷ {cat.count} {cat.count === 1 ? "producto" : "productos"}
-                    </span>
-                  </div>
-
-                  {/* Producto en el espacio del medio — centrado vertical y
-                      horizontal por flex-1 + Image fill object-contain. */}
-                  <div className="relative flex-1 px-4">
-                    <Image
-                      src={cover[cat.id]}
-                      alt={cat.label}
-                      fill
-                      sizes="(max-width: 768px) 50vw, 25vw"
-                      className="object-contain transition-transform duration-500 group-hover:scale-105"
-                      unoptimized
-                    />
-                  </div>
-
-                  {/* Banda inferior — misma altura que la superior para que
-                      el producto quede exactamente al centro vertical. */}
-                  <div className="flex h-20 items-end justify-between gap-2 px-6 pb-6 text-neutral-500">
-                    <h3
-                      className="text-2xl leading-tight md:text-3xl"
-                      style={{ fontFamily: "var(--font-bagel)" }}
+          {/* CATEGORÍAS — flex-1 + items-center para centrar el grid en el
+              espacio que sobra dentro del slide. */}
+          <section className="flex flex-1 items-center bg-white">
+            <div className="mx-auto w-full max-w-[1600px] px-6 py-8 md:px-10 md:py-10">
+              <div className="grid grid-cols-2 gap-4 md:grid-cols-4 md:gap-5">
+                {CATEGORIES.map((cat) => {
+                  // Producto sin fondo (PNG con transparencia) por categoría
+                  const cover: Record<string, string> = {
+                    piso: "/img/products/2026/cutouts/ov.png",
+                    pared: "/img/products/2026/cutouts/flag.png",
+                    mesa: "/img/products/2026/cutouts/luna.png",
+                    accesorio: "/img/products/2026/cutouts/bent.png",
+                  };
+                  return (
+                    <Link
+                      key={cat.id}
+                      href={`/avisos?cat=${cat.id}`}
+                      data-cursor="hover"
+                      className="group flex aspect-[3/4] flex-col overflow-hidden rounded-3xl border border-black/10 bg-white shadow-sm transition-transform hover:-translate-y-1 md:aspect-[5/6]"
                     >
-                      {cat.label}
-                    </h3>
-                    <span className="text-2xl transition-transform group-hover:translate-x-1">
-                      →
-                    </span>
-                  </div>
-                </Link>
-              );
-            })}
-          </div>
-        </section>
+                      {/* Banda superior — altura fija para balance vertical */}
+                      <div className="flex h-20 items-start px-6 pt-6">
+                        <span className="text-xs font-medium uppercase tracking-widest text-neutral-400">
+                          ▷ {cat.count} {cat.count === 1 ? "producto" : "productos"}
+                        </span>
+                      </div>
+
+                      {/* Producto centrado vertical y horizontal */}
+                      <div className="relative flex-1 px-4">
+                        <Image
+                          src={cover[cat.id]}
+                          alt={cat.label}
+                          fill
+                          sizes="(max-width: 768px) 50vw, 25vw"
+                          className="object-contain transition-transform duration-500 group-hover:scale-105"
+                          unoptimized
+                        />
+                      </div>
+
+                      {/* Banda inferior — misma altura que la superior */}
+                      <div className="flex h-20 items-end justify-between gap-2 px-6 pb-6 text-neutral-500">
+                        <h3
+                          className="text-2xl leading-tight md:text-3xl"
+                          style={{ fontFamily: "var(--font-bagel)" }}
+                        >
+                          {cat.label}
+                        </h3>
+                        <span className="text-2xl transition-transform group-hover:translate-x-1">
+                          →
+                        </span>
+                      </div>
+                    </Link>
+                  );
+                })}
+              </div>
+            </div>
+          </section>
+        </div>
 
         {/* FAQ */}
         <FAQ />
