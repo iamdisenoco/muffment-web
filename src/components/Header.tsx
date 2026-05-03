@@ -44,7 +44,7 @@ export function Header() {
         {/* Logo: muñeco cream sobre cobalt, cobalt sobre blanco */}
         <Logo variant={onDark ? "icon-cream" : "icon"} size={48} />
 
-        {/* Items del menú — sin uppercase, color adaptado al fondo */}
+        {/* Items del menú — sans serif (Campton), sin uppercase, un tris más grande */}
         <nav className="hidden items-center gap-7 md:flex">
           {NAV.map((item) => (
             <Link
@@ -55,7 +55,6 @@ export function Header() {
                 "text-base font-medium tracking-wide transition-opacity hover:opacity-60 lg:text-lg",
                 onDark ? "text-cream" : "text-cobalt",
               )}
-              style={{ fontFamily: "var(--font-bagel)" }}
             >
               {item.label}
             </Link>
