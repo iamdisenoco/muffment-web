@@ -128,7 +128,7 @@ function StepBadge({ step }: { step: Step }) {
 
 export function Steps() {
   return (
-    <section className="bg-white pt-12 pb-0 md:pt-16 md:pb-2">
+    <section className="bg-white pt-4 pb-0 md:pt-6 md:pb-2">
       <div className="mx-auto max-w-[1400px] px-6 md:px-10">
         <div className="relative">
           {/* Línea punteada horizontal cruzando los 3 pasos.
