@@ -2,12 +2,13 @@ import Image from "next/image";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 
-type Variant = "color" | "white" | "icon";
+type Variant = "color" | "white" | "icon" | "icon-cream";
 
 const SRC: Record<Variant, string> = {
   color: "/logos/muffment-color.svg",
   white: "/logos/muffment-white.svg",
-  icon: "/logos/muffment-icon.svg", // muñeco en la bola azul, sin texto
+  icon: "/logos/muffment-icon.svg", // muñeco cobalt (para fondos claros)
+  "icon-cream": "/logos/muffment-icon-cream.svg", // muñeco cream (para fondo cobalt)
 };
 
 // El icon tiene aspect ratio casi cuadrado (1634×1748)
@@ -16,6 +17,7 @@ const ASPECT: Record<Variant, number> = {
   color: 1.25,
   white: 1.25,
   icon: 1.07,
+  "icon-cream": 1.07,
 };
 
 export function Logo({
