@@ -78,7 +78,7 @@ function Column({ drops, side }: { drops: Drop[]; side: "left" | "right" }) {
         >
           <Image
             src={drop.src}
-            alt={drop.alt ?? ""}
+            alt=""
             width={drop.size * 2}
             height={drop.size * 2}
             unoptimized
