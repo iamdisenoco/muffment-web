@@ -21,8 +21,8 @@ export function Marquee({
         {list.map((item, i) => (
           <span
             key={i}
-            className="text-base font-medium uppercase tracking-[0.25em] text-neutral-700 md:text-xl"
-            style={{ fontFamily: "var(--font-sans)" }}
+            className="text-base uppercase tracking-[0.2em] text-neutral-700 md:text-xl"
+            style={{ fontFamily: "var(--font-mono)", fontWeight: 700 }}
           >
             {item} <span className="text-cobalt">✦</span>
           </span>

@@ -30,9 +30,9 @@ export default function Home() {
 
         <Marquee
           items={[
-            "Paso 1 · elige tu aviso",
-            "Paso 2 · elige el color de tu aviso",
-            "Paso 3 · elige cómo quieres ponerle la información",
+            "1 · elige tu aviso",
+            "2 · pinta tu color",
+            "3 · diseñamos tu mensaje",
           ]}
         />
 
