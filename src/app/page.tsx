@@ -79,7 +79,7 @@ export default function Home() {
         <FAQ />
 
         {/* MANIFIESTO */}
-        <section className="bg-cobalt py-32 text-cream md:py-44">
+        <section className="bg-cobalt py-20 text-cream md:py-28">
           <div className="mx-auto max-w-[1400px] px-6 text-center md:px-10">
             <p className="text-sm font-medium uppercase tracking-widest text-cream/60">
               ▷ Manifiesto
@@ -131,7 +131,7 @@ export default function Home() {
         </section>
 
         {/* CLIENTES */}
-        <section className="bg-white py-24 md:py-36">
+        <section className="bg-white py-16 md:py-24">
           <div className="mx-auto max-w-[1600px] px-6 md:px-10">
             <div className="mb-12">
               <p className="text-sm font-medium uppercase tracking-widest text-black/60">
@@ -169,7 +169,7 @@ export default function Home() {
         </section>
 
         {/* CTA FINAL */}
-        <section className="bg-cobalt py-32 text-cream md:py-44">
+        <section className="bg-cobalt py-20 text-cream md:py-28">
           <div className="mx-auto max-w-[1400px] px-6 text-center md:px-10">
             <Logo variant="white" size={100} withLink={false} />
             <h2

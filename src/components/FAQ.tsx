@@ -31,7 +31,7 @@ export function FAQ() {
   const [open, setOpen] = useState<number | null>(0);
 
   return (
-    <section className="bg-cobalt py-24 text-cream md:py-32">
+    <section className="bg-cobalt py-16 text-cream md:py-24">
       <div className="mx-auto max-w-[1100px] px-6 md:px-10">
         <p className="text-xs font-medium uppercase tracking-widest text-cream/60">
           ▷ Preguntas frecuentes
