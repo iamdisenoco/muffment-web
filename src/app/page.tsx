@@ -30,10 +30,9 @@ export default function Home() {
 
         <Marquee
           items={[
-            "Avisos hechos en Colombia",
-            "Garantía 3 años",
-            "Diseño que se ve a metros",
-            "By @inkspiracompany",
+            "Paso 1 · elige tu aviso",
+            "Paso 2 · elige el color de tu aviso",
+            "Paso 3 · elige cómo quieres ponerle la información",
           ]}
         />
 

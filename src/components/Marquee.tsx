@@ -21,10 +21,10 @@ export function Marquee({
         {list.map((item, i) => (
           <span
             key={i}
-            className="text-3xl uppercase tracking-tight text-cobalt md:text-5xl"
-            style={{ fontFamily: "var(--font-bagel)" }}
+            className="text-base font-medium uppercase tracking-[0.25em] text-neutral-700 md:text-xl"
+            style={{ fontFamily: "var(--font-sans)" }}
           >
-            {item} ✦
+            {item} <span className="text-cobalt">✦</span>
           </span>
         ))}
       </motion.div>
