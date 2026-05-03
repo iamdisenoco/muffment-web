@@ -4,23 +4,15 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { Hero } from "@/components/Hero";
 import { Marquee } from "@/components/Marquee";
-import { ProductCard } from "@/components/ProductCard";
 import { FAQ } from "@/components/FAQ";
 import { Logo } from "@/components/Logo";
 import { Cursor } from "@/components/Cursor";
 import { SmoothScroll } from "@/components/SmoothScroll";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
-import { PRODUCTS, CATEGORIES } from "@/data/products";
+import { CATEGORIES } from "@/data/products";
 import { CLIENTS } from "@/data/clients";
 
 export default function Home() {
-  const featured = [
-    PRODUCTS.find((p) => p.slug === "hablador-piso-ov"),
-    PRODUCTS.find((p) => p.slug === "hablador-piso-plegable"),
-    PRODUCTS.find((p) => p.slug === "hablador-pared-luna"),
-    PRODUCTS.find((p) => p.slug === "letras-magneticas"),
-  ].filter(Boolean);
-
   return (
     <>
       <SmoothScroll />
@@ -86,37 +78,6 @@ export default function Home() {
                 </Link>
               );
             })}
-          </div>
-        </section>
-
-        {/* DESTACADOS */}
-        <section className="bg-white py-24 md:py-36">
-          <div className="mx-auto max-w-[1600px] px-6 md:px-10">
-            <div className="mb-12 flex items-end justify-between gap-8">
-              <div>
-                <p className="text-sm font-medium uppercase tracking-widest text-black/60">
-                  ▷ Destacados
-                </p>
-                <h2
-                  className="mt-4 text-[clamp(2rem,5vw,4rem)] leading-tight text-cobalt"
-                  style={{ fontFamily: "var(--font-bagel)" }}
-                >
-                  Los más pedidos
-                </h2>
-              </div>
-              <Link
-                href="/avisos"
-                data-cursor="hover"
-                className="hidden text-sm font-medium uppercase tracking-wider text-cobalt hover:opacity-60 md:inline"
-              >
-                Ver todos →
-              </Link>
-            </div>
-            <div className="grid grid-cols-2 gap-4 md:grid-cols-4 md:gap-6">
-              {featured.map((p, i) => (
-                <ProductCard key={p!.slug} product={p!} index={i} />
-              ))}
-            </div>
           </div>
         </section>
 
