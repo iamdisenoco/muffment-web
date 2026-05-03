@@ -83,33 +83,33 @@ export default function Home() {
                   data-cursor="hover"
                   className="group relative aspect-[4/5] overflow-hidden rounded-3xl border border-black/10 bg-white shadow-sm transition-transform hover:-translate-y-1 md:aspect-square"
                 >
-                  {/* Producto centrado sobre fondo blanco */}
-                  <div className="absolute inset-0 flex items-center justify-center p-10">
+                  {/* Producto centrado en la mitad superior, no se solapa con el texto */}
+                  <div className="absolute inset-x-0 top-0 bottom-[35%] flex items-center justify-center p-6">
                     <Image
                       src={cover[cat.id]}
                       alt={cat.label}
                       fill
                       sizes="(max-width: 768px) 50vw, 25vw"
-                      className="object-contain p-6 transition-transform duration-500 group-hover:scale-105"
+                      className="object-contain p-2 transition-transform duration-500 group-hover:scale-105"
                       unoptimized
                     />
                   </div>
-                  {/* Texto en negro, esquinas */}
-                  <div className="pointer-events-none absolute inset-0 flex flex-col justify-between p-6">
-                    <span className="text-xs font-medium uppercase tracking-widest text-black/70">
+                  {/* Texto en GRIS, abajo, sin solaparse con el producto */}
+                  <div className="pointer-events-none absolute inset-x-0 top-0 flex flex-col p-6">
+                    <span className="text-xs font-medium uppercase tracking-widest text-neutral-500">
                       ▷ {cat.count} {cat.count === 1 ? "producto" : "productos"}
                     </span>
-                    <div className="flex items-end justify-between gap-2 text-black">
-                      <h3
-                        className="text-2xl leading-tight md:text-3xl"
-                        style={{ fontFamily: "var(--font-bagel)" }}
-                      >
-                        {cat.label}
-                      </h3>
-                      <span className="text-2xl transition-transform group-hover:translate-x-1">
-                        →
-                      </span>
-                    </div>
+                  </div>
+                  <div className="pointer-events-none absolute inset-x-0 bottom-0 flex items-end justify-between gap-2 p-6 text-neutral-700">
+                    <h3
+                      className="text-2xl leading-tight md:text-3xl"
+                      style={{ fontFamily: "var(--font-bagel)" }}
+                    >
+                      {cat.label}
+                    </h3>
+                    <span className="text-2xl transition-transform group-hover:translate-x-1">
+                      →
+                    </span>
                   </div>
                 </Link>
               );
