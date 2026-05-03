@@ -26,20 +26,25 @@ export function Header() {
     <header
       className={cn(
         "fixed inset-x-0 top-0 z-50 transition-all duration-300",
-        scrolled
-          ? "bg-white/85 backdrop-blur-md border-b border-black/10"
-          : "bg-transparent",
+        // Sin barra de fondo: header transparente, los pills son los que tienen visibilidad
       )}
     >
-      <div className="mx-auto flex max-w-[1600px] items-center justify-between px-6 py-4 md:px-10">
+      <div className="mx-auto flex max-w-[1600px] items-center justify-between gap-4 px-6 py-4 md:px-10">
         <Logo variant="icon" size={48} />
-        <nav className="hidden items-center gap-8 md:flex">
+        <nav
+          className={cn(
+            "hidden items-center gap-2 rounded-full px-2 py-2 transition-all duration-300 md:flex",
+            scrolled
+              ? "bg-white/90 shadow-sm backdrop-blur-md"
+              : "bg-white/70 backdrop-blur-md",
+          )}
+        >
           {NAV.map((item) => (
             <Link
               key={item.href}
               href={item.href}
-              className="text-sm font-medium uppercase tracking-wider text-cobalt transition-opacity hover:opacity-60"
               data-cursor="hover"
+              className="rounded-full px-4 py-2 text-xs font-medium uppercase tracking-wider text-cobalt transition-colors hover:bg-cobalt hover:text-cream"
             >
               {item.label}
             </Link>
@@ -48,7 +53,7 @@ export function Header() {
         <Link
           href="/avisos"
           data-cursor="hover"
-          className="rounded-full bg-cobalt px-5 py-2.5 text-sm font-medium uppercase tracking-wider text-cream transition-colors hover:bg-cobalt-dark"
+          className="rounded-full bg-cobalt px-5 py-2.5 text-xs font-medium uppercase tracking-wider text-cream transition-colors hover:bg-cobalt-dark md:text-sm"
         >
           Ver productos
         </Link>
