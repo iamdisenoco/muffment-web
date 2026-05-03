@@ -69,36 +69,37 @@ export default function Home() {
 
           <div className="mt-20 grid grid-cols-2 gap-4 md:grid-cols-4">
             {CATEGORIES.map((cat) => {
-              // Foto representativa de cada categoría
+              // Producto sin fondo (PNG con transparencia) para cada categoría
               const cover: Record<string, string> = {
-                piso: "/img/products/2026/ov-1.jpg",
-                pared: "/img/products/2026/flag-1.jpg",
-                mesa: "/img/products/2026/luna-1.jpg",
-                accesorio: "/img/products/2026/bent-1.jpg",
+                piso: "/img/products/2026/cutouts/ov.png",
+                pared: "/img/products/2026/cutouts/flag.png",
+                mesa: "/img/products/2026/cutouts/luna.png",
+                accesorio: "/img/products/2026/cutouts/bent.png",
               };
               return (
                 <Link
                   key={cat.id}
                   href={`/avisos?cat=${cat.id}`}
                   data-cursor="hover"
-                  className="group relative aspect-[4/5] overflow-hidden rounded-3xl border border-black/10 bg-white text-cobalt shadow-sm transition-transform hover:-translate-y-1 md:aspect-square"
+                  className="group relative aspect-[4/5] overflow-hidden rounded-3xl border border-black/10 bg-white shadow-sm transition-transform hover:-translate-y-1 md:aspect-square"
                 >
-                  {/* Foto de portada */}
-                  <Image
-                    src={cover[cat.id]}
-                    alt={cat.label}
-                    fill
-                    sizes="(max-width: 768px) 50vw, 25vw"
-                    className="object-cover transition-transform duration-500 group-hover:scale-105"
-                  />
-                  {/* Overlay para legibilidad del texto */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-cobalt/85 via-cobalt/40 to-transparent" />
-                  {/* Texto sobre la foto */}
-                  <div className="absolute inset-0 flex flex-col justify-between p-6 text-cream">
-                    <span className="text-xs font-medium uppercase tracking-widest text-cream/85">
+                  {/* Producto centrado sobre fondo blanco */}
+                  <div className="absolute inset-0 flex items-center justify-center p-10">
+                    <Image
+                      src={cover[cat.id]}
+                      alt={cat.label}
+                      fill
+                      sizes="(max-width: 768px) 50vw, 25vw"
+                      className="object-contain p-6 transition-transform duration-500 group-hover:scale-105"
+                      unoptimized
+                    />
+                  </div>
+                  {/* Texto en negro, esquinas */}
+                  <div className="pointer-events-none absolute inset-0 flex flex-col justify-between p-6">
+                    <span className="text-xs font-medium uppercase tracking-widest text-black/70">
                       ▷ {cat.count} {cat.count === 1 ? "producto" : "productos"}
                     </span>
-                    <div className="flex items-end justify-between gap-2">
+                    <div className="flex items-end justify-between gap-2 text-black">
                       <h3
                         className="text-2xl leading-tight md:text-3xl"
                         style={{ fontFamily: "var(--font-bagel)" }}
