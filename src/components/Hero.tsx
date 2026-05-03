@@ -18,26 +18,23 @@ export function Hero() {
           className="relative max-w-[20ch] text-[clamp(3rem,9vw,9.5rem)] font-normal leading-[0.9] tracking-tight"
           style={{ fontFamily: "var(--font-bagel)" }}
         >
-          {/* Muñeco asomando: solo la mitad superior visible sobre el texto creative */}
+          {/* Muñequito completo, parado sobre la primera "c" de creative */}
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, y: 20, rotate: -10 }}
+            animate={{ opacity: 1, y: 0, rotate: 0 }}
             transition={{ duration: 1.1, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
-            className="pointer-events-none absolute left-1/2 top-0 z-20 -translate-x-1/2 -translate-y-[55%] md:-translate-y-[60%]"
+            className="pointer-events-none absolute bottom-full left-[2%] z-20 -mb-2 md:left-[3%]"
             aria-hidden
           >
             <Image
               src="/logos/muffment-icon.svg"
               alt=""
-              width={240}
-              height={257}
+              width={120}
+              height={128}
               priority
               unoptimized
-              className="h-auto w-[140px] md:w-[220px] lg:w-[260px]"
-              style={{
-                filter: "brightness(0) invert(1)",
-                clipPath: "inset(0 0 52% 0)",
-              }}
+              className="h-auto w-[60px] md:w-[100px] lg:w-[130px]"
+              style={{ filter: "brightness(0) invert(1)" }}
             />
           </motion.div>
           creative signs <br /> for creative <br /> businesses
