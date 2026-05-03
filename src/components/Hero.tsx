@@ -93,58 +93,102 @@ export function Hero() {
 function Decorations() {
   return (
     <div aria-hidden className="pointer-events-none absolute inset-0">
-      {/* Estrellas */}
+      {/* Estrellas — entran con pop y luego flotan + rotan en loop infinito */}
       {[
-        { top: "12%", left: "8%", size: 28, delay: 0.5 },
-        { top: "18%", right: "12%", size: 38, delay: 0.7 },
-        { bottom: "22%", left: "16%", size: 22, delay: 0.9 },
-        { bottom: "35%", right: "18%", size: 32, delay: 1.1 },
-        { top: "45%", left: "5%", size: 18, delay: 1.3 },
+        { top: "12%", left: "8%", size: 28, delay: 0.5, floatY: 12, floatDur: 4.5, rotDur: 8 },
+        { top: "18%", right: "12%", size: 38, delay: 0.7, floatY: 16, floatDur: 5.2, rotDur: 10 },
+        { bottom: "22%", left: "16%", size: 22, delay: 0.9, floatY: 10, floatDur: 4, rotDur: 7 },
+        { bottom: "35%", right: "18%", size: 32, delay: 1.1, floatY: 14, floatDur: 5.6, rotDur: 9 },
+        { top: "45%", left: "5%", size: 18, delay: 1.3, floatY: 8, floatDur: 3.6, rotDur: 6 },
       ].map((pos, i) => (
-        <motion.svg
+        <motion.div
           key={`star-${i}`}
-          viewBox="0 0 24 24"
-          width={pos.size}
-          height={pos.size}
-          className="absolute fill-cream/70"
+          className="absolute"
           style={{
             top: pos.top,
             left: pos.left,
             right: pos.right,
             bottom: pos.bottom,
           }}
-          initial={{ opacity: 0, scale: 0, rotate: -45 }}
-          animate={{ opacity: 1, scale: 1, rotate: 0 }}
+          initial={{ opacity: 0, scale: 0 }}
+          animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8, delay: pos.delay, ease: "backOut" }}
         >
-          <path d="M12 1l2.59 7.41L22 11l-7.41 2.59L12 21l-2.59-7.41L2 11l7.41-2.59L12 1z" />
-        </motion.svg>
+          {/* Inner: float vertical en loop */}
+          <motion.div
+            animate={{ y: [0, -pos.floatY, 0] }}
+            transition={{
+              duration: pos.floatDur,
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: pos.delay,
+            }}
+          >
+            {/* Inner-inner: rotación continua del SVG */}
+            <motion.svg
+              viewBox="0 0 24 24"
+              width={pos.size}
+              height={pos.size}
+              className="fill-cream/70"
+              animate={{ rotate: 360 }}
+              transition={{
+                duration: pos.rotDur,
+                repeat: Infinity,
+                ease: "linear",
+                delay: pos.delay,
+              }}
+            >
+              <path d="M12 1l2.59 7.41L22 11l-7.41 2.59L12 21l-2.59-7.41L2 11l7.41-2.59L12 1z" />
+            </motion.svg>
+          </motion.div>
+        </motion.div>
       ))}
 
-      {/* Triángulos */}
+      {/* Triángulos — fade-in y bobbing + rotación lenta */}
       {[
-        { top: "30%", right: "8%", rotate: 0, delay: 1 },
-        { bottom: "12%", left: "10%", rotate: 90, delay: 1.2 },
+        { top: "30%", right: "8%", baseRotate: 0, delay: 1, floatY: 14, floatDur: 5, rotDur: 14 },
+        { bottom: "12%", left: "10%", baseRotate: 90, delay: 1.2, floatY: 10, floatDur: 4.5, rotDur: 12 },
       ].map((pos, i) => (
-        <motion.svg
+        <motion.div
           key={`tri-${i}`}
-          viewBox="0 0 24 24"
-          width={36}
-          height={36}
-          className="absolute fill-cream/40"
+          className="absolute"
           style={{
             top: pos.top,
             left: pos.left,
             right: pos.right,
             bottom: pos.bottom,
-            transform: `rotate(${pos.rotate}deg)`,
           }}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.6, delay: pos.delay }}
         >
-          <path d="M12 2L2 22h20L12 2z" />
-        </motion.svg>
+          <motion.div
+            animate={{ y: [0, -pos.floatY, 0] }}
+            transition={{
+              duration: pos.floatDur,
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: pos.delay,
+            }}
+          >
+            <motion.svg
+              viewBox="0 0 24 24"
+              width={36}
+              height={36}
+              className="fill-cream/40"
+              style={{ transformOrigin: "center" }}
+              animate={{ rotate: [pos.baseRotate, pos.baseRotate + 360] }}
+              transition={{
+                duration: pos.rotDur,
+                repeat: Infinity,
+                ease: "linear",
+                delay: pos.delay,
+              }}
+            >
+              <path d="M12 2L2 22h20L12 2z" />
+            </motion.svg>
+          </motion.div>
+        </motion.div>
       ))}
     </div>
   );
