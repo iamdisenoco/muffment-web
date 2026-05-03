@@ -3,12 +3,16 @@
 import Image from "next/image";
 import { motion } from "motion/react";
 import Link from "next/link";
+import { ProductRain } from "./ProductRain";
 
 export function Hero() {
   return (
     <section className="relative min-h-[100svh] overflow-hidden bg-cobalt text-cream">
       {/* Decoraciones — estrellas y triángulos como en el catálogo */}
       <Decorations />
+
+      {/* Lluvia de productos a los costados */}
+      <ProductRain />
 
       <div className="relative mx-auto flex min-h-[100svh] max-w-[1600px] flex-col items-center justify-center px-6 pb-20 pt-32 text-center md:px-10">
         <motion.h1
