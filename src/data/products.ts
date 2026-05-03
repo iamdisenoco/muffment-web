@@ -117,7 +117,14 @@ export const PRODUCTS: Product[] = [
     paint: "En polvo, electrostática para interior y exterior",
     description:
       "Estructura tipo estante con bandeja superior. Para mostrar producto y mensaje al mismo tiempo. La información va aparte.",
-    hero: "/img/products/piso-top-shelf.jpg",
+    hero: "/img/products/2026/top-shelf-1.jpg",
+    gallery: [
+      "/img/products/2026/top-shelf-2.jpg",
+      "/img/products/2026/top-shelf-3.jpg",
+      "/img/products/2026/top-shelf-4.jpg",
+      "/img/products/2026/top-shelf-5.jpg",
+      "/img/products/2026/top-shelf-6.jpg",
+    ],
     isNew: true,
     notes: "La información que pones en el aviso es un producto aparte.",
   },

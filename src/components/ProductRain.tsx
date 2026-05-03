@@ -12,6 +12,7 @@ const PRODUCTS: ProductMeta[] = [
   { src: "/img/products/2026/cutouts/ov.png",              slug: "hablador-piso-ov",            name: "Hablador de Piso OV" },
   { src: "/img/products/2026/cutouts/luna.png",            slug: "hablador-pared-luna",         name: "Hablador de Pared LUNA" },
   { src: "/img/products/2026/cutouts/flag.png",            slug: "hablador-pared-flag",         name: "Aviso de Pared FLAG" },
+  { src: "/img/products/2026/cutouts/top-shelf.png",       slug: "hablador-piso-top-shelf",     name: "Hablador de Piso TOP SHELF" },
 ];
 
 type Drop = {
