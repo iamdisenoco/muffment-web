@@ -1,0 +1,86 @@
+@import "tailwindcss";
+
+/* MUFFMENT FONTS — local self-hosted */
+@font-face {
+  font-family: "Campton";
+  src: url("/fonts/CamptonLight.otf") format("opentype");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Campton";
+  src: url("/fonts/CamptonMedium.otf") format("opentype");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Campton";
+  src: url("/fonts/CamptonSemiBold.otf") format("opentype");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Campton";
+  src: url("/fonts/CamptonExtraLightItalic.otf") format("opentype");
+  font-weight: 200;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Campton";
+  src: url("/fonts/CamptonThinItalic.otf") format("opentype");
+  font-weight: 100;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Satoshi";
+  src: url("/fonts/Satoshi-Bold.otf") format("opentype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* MUFFMENT THEME — paleta extraída del catálogo + IG */
+@theme {
+  --color-cream: #e8e2d1;
+  --color-cream-light: #f2ede0;
+  --color-cream-dark: #d8d1bd;
+  --color-cobalt: #3236b7;
+  --color-cobalt-light: #4549d4;
+  --color-cobalt-dark: #252890;
+  --color-ink: #0a0a0a;
+  --color-paper: #ffffff;
+
+  --font-display: "Bagel Fat One", "Campton", system-ui, sans-serif;
+  --font-sans: "Campton", system-ui, -apple-system, sans-serif;
+  --font-mono: "Satoshi", ui-monospace, monospace;
+
+  --radius-soft: 0.5rem;
+  --radius-pill: 9999px;
+}
+
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+html, body {
+  background: var(--color-cream);
+  color: var(--color-cobalt);
+  font-family: var(--font-sans);
+}
+
+::selection {
+  background: var(--color-cobalt);
+  color: var(--color-cream);
+}
+
+/* hide native cursor when custom cursor is active */
+html.has-custom-cursor, html.has-custom-cursor * {
+  cursor: none !important;
+}

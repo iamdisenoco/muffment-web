@@ -1,0 +1,56 @@
+import type { Metadata } from "next";
+import { Bagel_Fat_One } from "next/font/google";
+import "./globals.css";
+
+const bagelFatOne = Bagel_Fat_One({
+  weight: "400",
+  variable: "--font-bagel",
+  subsets: ["latin"],
+  display: "swap",
+});
+
+export const metadata: Metadata = {
+  metadataBase: new URL("https://muffment.vercel.app"),
+  title: {
+    default: "MUFFMENT — Creative signs for creative businesses",
+    template: "%s · MUFFMENT",
+  },
+  description:
+    "Somos una nueva versión de los avisos tradicionales. Diseñados y fabricados en Colombia. Garantía por 3 años.",
+  keywords: [
+    "avisos",
+    "señalética",
+    "letreros",
+    "habladores",
+    "diseño",
+    "Colombia",
+    "MUFFMENT",
+    "INKSPIRA",
+  ],
+  openGraph: {
+    title: "MUFFMENT — Creative signs for creative businesses",
+    description:
+      "Avisos diseñados y fabricados en Colombia. Frescos, minimalistas e impactantes.",
+    type: "website",
+    locale: "es_CO",
+    siteName: "MUFFMENT",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "MUFFMENT — Creative signs for creative businesses",
+  },
+};
+
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
+  return (
+    <html lang="es" className={bagelFatOne.variable} suppressHydrationWarning>
+      <body className="bg-cream text-cobalt antialiased" suppressHydrationWarning>
+        {children}
+      </body>
+    </html>
+  );
+}

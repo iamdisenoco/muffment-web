@@ -1,0 +1,21 @@
+import { clsx, type ClassValue } from "clsx";
+import { twMerge } from "tailwind-merge";
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs));
+}
+
+export const WHATSAPP_NUMBER = "573044160172";
+export const WHATSAPP_LINK_BASE = `https://wa.me/${WHATSAPP_NUMBER}`;
+
+export function whatsappLink(message: string) {
+  return `${WHATSAPP_LINK_BASE}?text=${encodeURIComponent(message)}`;
+}
+
+export function formatCOP(value: number) {
+  return new Intl.NumberFormat("es-CO", {
+    style: "currency",
+    currency: "COP",
+    maximumFractionDigits: 0,
+  }).format(value);
+}
