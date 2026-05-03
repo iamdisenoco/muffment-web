@@ -50,8 +50,10 @@ export default function RootLayout({
   return (
     <html lang="es" className={bagelFatOne.variable} suppressHydrationWarning>
       <body className="bg-white text-black antialiased" suppressHydrationWarning>
-        <FloatingDecorations />
-        {children}
+        <div className="relative overflow-x-clip">
+          <FloatingDecorations />
+          {children}
+        </div>
       </body>
     </html>
   );
