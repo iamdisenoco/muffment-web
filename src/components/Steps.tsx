@@ -114,9 +114,10 @@ function StepBadge({ step }: { step: Step }) {
 
 export function Steps() {
   return (
-    <section className="bg-cream pt-6 pb-0 md:pt-8 md:pb-1">
+    <section className="bg-cream pt-24 pb-0 md:pt-28 md:pb-1">
       <div className="mx-auto max-w-[1400px] px-6 md:px-10">
-        {/* Título de sección */}
+        {/* Título de sección — pt grande arriba para que el header fixed
+            no se monte sobre 'proceso de compra'. */}
         <div className="mb-4 text-center md:mb-6">
           <h2
             className="text-cobalt"

@@ -28,7 +28,7 @@ export default function ManifiestoPage() {
               className="mt-8 max-w-[18ch] text-[clamp(3rem,9vw,9rem)] leading-[0.9] tracking-tight"
               style={{ fontFamily: "var(--font-bagel)" }}
             >
-              creative signs <br /> for creative <br /> businesses.
+              creative signs <br /> for creative <br /> brands.
             </h1>
             <p className="mt-12 max-w-2xl text-xl text-cream/85 md:text-2xl">
               Somos una nueva versión de los avisos tradicionales.

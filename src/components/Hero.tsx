@@ -101,7 +101,7 @@ export function Hero() {
             animate={{ scale: [1, 1.03, 1] }}
             transition={{ duration: 8, repeat: Infinity, ease: "easeInOut", delay: 4 }}
           >
-            <HoverLetters text="businesses" />
+            <HoverLetters text="brands" />
           </motion.span>
         </motion.h1>
 
@@ -142,22 +142,22 @@ export function Hero() {
           </a>
         </motion.div>
 
-        {/* Scroll button estilo basement.studio — pill outline con chevron
-            animado bouncing. */}
+        {/* Indicador de scroll — minimalista (sin pill ni border) para no
+            competir con los CTAs de arriba. Texto + chevron en columna. */}
         <motion.a
           href="#segundo-slide"
           data-cursor="hover"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1, delay: 1.4 }}
-          className="group absolute bottom-8 left-1/2 flex -translate-x-1/2 items-center gap-2 rounded-full border border-cream/30 bg-cream/5 px-5 py-2 text-[11px] font-semibold uppercase tracking-[0.25em] text-cream/80 backdrop-blur-sm transition-colors hover:bg-cream/15 hover:text-cream"
+          className="group absolute bottom-5 left-1/2 flex -translate-x-1/2 flex-col items-center gap-1 text-[10px] font-semibold uppercase tracking-[0.4em] text-cream/55 transition-colors hover:text-cream"
         >
           Scroll to explore
           <motion.span
             aria-hidden
-            animate={{ y: [0, 4, 0] }}
+            animate={{ y: [0, 5, 0] }}
             transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
-            className="text-base leading-none"
+            className="text-sm leading-none"
           >
             ↓
           </motion.span>

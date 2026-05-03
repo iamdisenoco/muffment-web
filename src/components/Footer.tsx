@@ -12,7 +12,7 @@ export function Footer() {
             <p className="mt-8 max-w-md text-2xl leading-tight" style={{ fontFamily: "var(--font-bagel)" }}>
               Creative signs <br />
               for creative <br />
-              businesses.
+              brands.
             </p>
             <p className="mt-6 max-w-sm text-sm text-cream/80">
               Somos una nueva versión de los avisos tradicionales. Diseñados y

@@ -93,7 +93,7 @@ export function Header() {
               scrolled && "shadow-md",
             )}
           >
-            Hablemos
+            ¡Hablemos!
           </a>
         </div>
       </div>

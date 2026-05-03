@@ -13,7 +13,7 @@ const bagelFatOne = Bagel_Fat_One({
 export const metadata: Metadata = {
   metadataBase: new URL("https://muffment.vercel.app"),
   title: {
-    default: "MUFFMENT — Creative signs for creative businesses",
+    default: "MUFFMENT — Creative signs for creative brands",
     template: "%s · MUFFMENT",
   },
   description:
@@ -29,7 +29,7 @@ export const metadata: Metadata = {
     "INKSPIRA",
   ],
   openGraph: {
-    title: "MUFFMENT — Creative signs for creative businesses",
+    title: "MUFFMENT — Creative signs for creative brands",
     description:
       "Avisos diseñados y fabricados en Colombia. Frescos, minimalistas e impactantes.",
     type: "website",
@@ -38,7 +38,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "MUFFMENT — Creative signs for creative businesses",
+    title: "MUFFMENT — Creative signs for creative brands",
   },
 };
 
