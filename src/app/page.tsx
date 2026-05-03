@@ -21,17 +21,18 @@ export default function Home() {
       <main>
         <Hero />
 
-        {/* SEGUNDO SLIDE — Steps + Categorías juntas a altura 100vh +
-            snap-start, así tras un scroll desde el Hero este bloque
-            encaja como página completa igual que el inicio. */}
-        <div className="flex min-h-[100svh] snap-start flex-col">
+        {/* SEGUNDO SLIDE — Steps + Categorías exactos a 100vh + snap-start.
+            h-[100svh] (no min-h) + overflow-hidden para que un solo scroll
+            desde el Hero encaje, sin scroll interno residual. */}
+        <div className="flex h-[100svh] snap-start flex-col overflow-hidden">
           <Steps />
 
           {/* CATEGORÍAS — flex-1 + items-center para centrar el grid en el
-              espacio que sobra dentro del slide. */}
-          <section className="flex flex-1 items-center bg-white">
-            <div className="mx-auto w-full max-w-[1600px] px-6 py-8 md:px-10 md:py-10">
-              <div className="grid grid-cols-2 gap-4 md:grid-cols-4 md:gap-5">
+              espacio que sobra dentro del slide. min-h-0 para que el flex
+              child no estire. */}
+          <section className="flex min-h-0 flex-1 items-center bg-white">
+            <div className="mx-auto w-full max-w-[1600px] px-6 py-6 md:px-10 md:py-8">
+              <div className="grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-4">
                 {CATEGORIES.map((cat) => {
                   // Producto sin fondo (PNG con transparencia) por categoría
                   const cover: Record<string, string> = {
@@ -45,7 +46,7 @@ export default function Home() {
                       key={cat.id}
                       href={`/avisos?cat=${cat.id}`}
                       data-cursor="hover"
-                      className="group flex aspect-[3/4] flex-col overflow-hidden rounded-3xl border border-black/10 bg-white shadow-sm transition-transform hover:-translate-y-1 md:aspect-[5/6]"
+                      className="group flex aspect-[4/5] flex-col overflow-hidden rounded-3xl border border-black/10 bg-white shadow-sm transition-transform hover:-translate-y-1 md:aspect-[6/7]"
                     >
                       {/* TÍTULO arriba (sin contador). Flecha al lado derecho. */}
                       <div className="flex items-start justify-between gap-2 px-6 pt-6 text-neutral-700">
