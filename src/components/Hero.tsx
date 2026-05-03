@@ -18,13 +18,14 @@ export function Hero() {
           className="relative max-w-[20ch] text-[clamp(3rem,9vw,9.5rem)] font-normal leading-[0.9] tracking-tight"
           style={{ fontFamily: "var(--font-bagel)" }}
         >
-          {/* Muñequito asomando como en el dibujo de Jon — usa DEF-07 (logo con muñeco arriba),
-               recortado para mostrar SOLO la cabeza/ojos, posicionado encima del texto "creative" */}
+          {/* Muñequito asomando — DEF-07 con clip-path. Bottom visible del muñeco
+               debe TOCAR el top de la palabra "creative". clip muestra 0%–38% del Image,
+               translate-y -34% deja la base del muñeco pegada al top del h1 (con leve overlap). */}
           <motion.div
             initial={{ opacity: 0, y: 30, rotate: -6 }}
             animate={{ opacity: 1, y: 0, rotate: 0 }}
             transition={{ duration: 1.1, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
-            className="pointer-events-none absolute left-[2%] top-0 z-20 -translate-y-[55%] md:left-[3%] md:-translate-y-[60%]"
+            className="pointer-events-none absolute left-[2%] top-0 z-20 -translate-y-[34%] md:left-[3%]"
             aria-hidden
           >
             <Image
