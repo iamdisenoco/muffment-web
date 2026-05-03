@@ -30,18 +30,53 @@ export function Hero() {
             className="pointer-events-none absolute left-[2%] top-0 z-20 -translate-y-[18%] md:left-[3%]"
             aria-hidden
           >
-            <Image
-              src="/logos/muneco-cream.svg"
-              alt=""
-              width={300}
-              height={239}
-              priority
-              unoptimized
-              className="h-auto w-[160px] md:w-[260px] lg:w-[320px]"
-              style={{ clipPath: "inset(0 0 62% 0)" }}
-            />
+            {/* Idle breathing — el muñeco respira sutil */}
+            <motion.div
+              animate={{ y: [0, -3, 0, 2, 0], rotate: [0, 1.2, 0, -1.2, 0] }}
+              transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1.5 }}
+            >
+              <Image
+                src="/logos/muneco-cream.svg"
+                alt=""
+                width={300}
+                height={239}
+                priority
+                unoptimized
+                className="h-auto w-[160px] md:w-[260px] lg:w-[320px]"
+                style={{ clipPath: "inset(0 0 62% 0)" }}
+              />
+            </motion.div>
           </motion.div>
-          creative signs <br /> for creative <br /> businesses
+          <motion.span
+            className="inline-block"
+            animate={{ scale: [1, 1.035, 1] }}
+            transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+          >
+            creative
+          </motion.span>{" "}
+          <motion.span
+            className="inline-block"
+            animate={{ scale: [1, 1.025, 1] }}
+            transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 3.5 }}
+          >
+            signs
+          </motion.span>{" "}
+          <br /> for{" "}
+          <motion.span
+            className="inline-block"
+            animate={{ scale: [1, 1.04, 1] }}
+            transition={{ duration: 6.5, repeat: Infinity, ease: "easeInOut", delay: 5 }}
+          >
+            creative
+          </motion.span>{" "}
+          <br />{" "}
+          <motion.span
+            className="inline-block"
+            animate={{ scale: [1, 1.03, 1] }}
+            transition={{ duration: 8, repeat: Infinity, ease: "easeInOut", delay: 4 }}
+          >
+            businesses
+          </motion.span>
         </motion.h1>
 
         <motion.p
