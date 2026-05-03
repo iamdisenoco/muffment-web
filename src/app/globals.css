@@ -75,6 +75,13 @@ html, body {
   font-family: var(--font-sans);
 }
 
+/* Scroll-snap por proximity (no mandatory) — solo encaja cuando el scroll
+   está cerca de una sección con .snap-start. Las páginas sin snap-start
+   no se ven afectadas. */
+html {
+  scroll-snap-type: y proximity;
+}
+
 ::selection {
   background: var(--color-cobalt);
   color: var(--color-cream);

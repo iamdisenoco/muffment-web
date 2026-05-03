@@ -33,7 +33,7 @@ function HoverLetters({ text }: { text: string }) {
 
 export function Hero() {
   return (
-    <section className="relative min-h-[100svh] overflow-hidden bg-cobalt text-cream">
+    <section className="relative min-h-[100svh] snap-start overflow-hidden bg-cobalt text-cream">
       {/* (Las decoraciones flotantes ahora son globales — ver
           <FloatingDecorations /> en layout.tsx) */}
 
