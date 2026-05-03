@@ -37,14 +37,10 @@ export function Cursor() {
     });
 
     const tick = () => {
-      // factor más alto = ring sigue mucho más cerca del cursor (menos lag visual)
-      // si el delta es muy grande, snap directo (al moverse rápido la bola no se queda atrás)
-      const dx = mouseX - ringX;
-      const dy = mouseY - ringY;
-      const dist = Math.sqrt(dx * dx + dy * dy);
-      const factor = dist > 80 ? 1 : 0.45;
-      ringX += dx * factor;
-      ringY += dy * factor;
+      // factor 1.0 = snap directo al cursor (sin lag)
+      // mantenemos requestAnimationFrame por si queremos volver a interpolar más adelante
+      ringX = mouseX;
+      ringY = mouseY;
       if (ringRef.current) {
         ringRef.current.style.transform = `translate3d(${ringX - 16}px, ${ringY - 16}px, 0)`;
       }
@@ -70,7 +66,8 @@ export function Cursor() {
       <div
         ref={ringRef}
         aria-hidden
-        className="pointer-events-none fixed left-0 top-0 z-[9999] hidden h-8 w-8 rounded-full border-2 border-cobalt mix-blend-difference transition-transform duration-200 ease-out md:block"
+        className="pointer-events-none fixed left-0 top-0 z-[9999] hidden h-8 w-8 rounded-full border-2 border-cobalt mix-blend-difference md:block"
+        style={{ transition: "scale 200ms ease-out" }}
       />
       <div
         ref={dotRef}
