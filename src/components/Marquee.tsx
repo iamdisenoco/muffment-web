@@ -12,7 +12,7 @@ export function Marquee({
   // Duplicamos para loop continuo
   const list = [...items, ...items, ...items];
   return (
-    <div className="overflow-hidden border-y border-cobalt/15 bg-cream py-6">
+    <div className="overflow-hidden border-y border-black/10 bg-white py-6">
       <motion.div
         className="flex shrink-0 gap-12 whitespace-nowrap"
         animate={{ x: ["0%", "-33.33%"] }}

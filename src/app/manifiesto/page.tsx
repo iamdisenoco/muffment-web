@@ -17,7 +17,7 @@ export default function ManifiestoPage() {
       <SmoothScroll />
       <Cursor />
       <Header />
-      <main className="bg-cream">
+      <main className="bg-white">
         {/* HERO MANIFIESTO */}
         <section className="relative min-h-[100svh] overflow-hidden bg-cobalt text-cream">
           <div className="relative mx-auto flex min-h-[100svh] max-w-[1400px] flex-col items-center justify-center px-6 pb-20 pt-32 text-center md:px-10">
@@ -37,9 +37,9 @@ export default function ManifiestoPage() {
         </section>
 
         {/* PRINCIPIOS */}
-        <section className="bg-cream py-32 md:py-44">
+        <section className="bg-white py-32 md:py-44">
           <div className="mx-auto max-w-[1200px] px-6 md:px-10">
-            <p className="text-sm font-medium uppercase tracking-widest text-cobalt/60">
+            <p className="text-sm font-medium uppercase tracking-widest text-black/60">
               ▷ Cómo lo hacemos
             </p>
             <h2
@@ -106,7 +106,7 @@ export default function ManifiestoPage() {
             <div className="mt-12">
               <WhatsAppButton
                 size="lg"
-                className="bg-cream text-cobalt hover:bg-cream-light"
+                className="bg-cream text-cobalt hover:bg-white"
               >
                 Empezar tu aviso
               </WhatsAppButton>
@@ -143,7 +143,7 @@ function Principle({
         >
           {title}
         </h3>
-        <p className="mt-4 max-w-2xl text-lg leading-relaxed text-cobalt/85">
+        <p className="mt-4 max-w-2xl text-lg leading-relaxed text-black/85">
           {body}
         </p>
       </div>

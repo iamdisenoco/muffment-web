@@ -44,10 +44,10 @@ export default async function ProductPage({ params }: Props) {
       <SmoothScroll />
       <Cursor />
       <Header />
-      <main className="bg-cream pt-32">
+      <main className="bg-white pt-32">
         {/* Breadcrumb */}
         <div className="mx-auto max-w-[1600px] px-6 md:px-10">
-          <nav className="text-xs uppercase tracking-widest text-cobalt/60">
+          <nav className="text-xs uppercase tracking-widest text-black/60">
             <Link href="/avisos" className="hover:opacity-70">
               ← Catálogo
             </Link>
@@ -76,7 +76,7 @@ export default async function ProductPage({ params }: Props) {
 
           {/* Info */}
           <div className="md:col-span-5 md:sticky md:top-32 md:self-start">
-            <p className="text-xs font-medium uppercase tracking-widest text-cobalt/60">
+            <p className="text-xs font-medium uppercase tracking-widest text-black/60">
               ▷ {product.categoryLabel}
             </p>
             <h1
@@ -94,17 +94,17 @@ export default async function ProductPage({ params }: Props) {
                 {product.priceLabel}
               </span>
               {product.priceEstimated && (
-                <span className="text-xs font-medium uppercase tracking-wider text-cobalt/60">
+                <span className="text-xs font-medium uppercase tracking-wider text-black/60">
                   desde · final según diseño
                 </span>
               )}
             </div>
 
-            <p className="mt-8 text-lg leading-relaxed text-cobalt/85">
+            <p className="mt-8 text-lg leading-relaxed text-black/85">
               {product.description}
             </p>
 
-            <dl className="mt-10 space-y-4 border-t border-cobalt/15 pt-8 text-sm">
+            <dl className="mt-10 space-y-4 border-t border-black/15 pt-8 text-sm">
               <Row label="Dimensiones totales" value={product.totalSize} />
               <Row label="Dimensiones para el arte" value={product.artSize} />
               <Row label="Materiales" value={product.materials} />
@@ -129,7 +129,7 @@ export default async function ProductPage({ params }: Props) {
               </a>
             </div>
 
-            <p className="mt-6 text-xs uppercase tracking-widest text-cobalt/50">
+            <p className="mt-6 text-xs uppercase tracking-widest text-black/50">
               ✦ Garantía 3 años ✦ Hecho en Colombia ✦
             </p>
           </div>
@@ -137,7 +137,7 @@ export default async function ProductPage({ params }: Props) {
 
         {/* RELACIONADOS */}
         {related.length > 0 && (
-          <section className="bg-cream-light py-24 md:py-32">
+          <section className="bg-white py-24 md:py-32">
             <div className="mx-auto max-w-[1600px] px-6 md:px-10">
               <h2
                 className="mb-10 text-[clamp(2rem,4vw,3rem)] leading-tight text-cobalt"
@@ -162,7 +162,7 @@ export default async function ProductPage({ params }: Props) {
 function Row({ label, value }: { label: string; value: string }) {
   return (
     <div className="grid grid-cols-[140px_1fr] gap-4 md:grid-cols-[180px_1fr]">
-      <dt className="text-xs font-medium uppercase tracking-wider text-cobalt/60">
+      <dt className="text-xs font-medium uppercase tracking-wider text-black/60">
         {label}
       </dt>
       <dd className="text-cobalt">{value}</dd>

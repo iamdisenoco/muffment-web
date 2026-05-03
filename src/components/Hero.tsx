@@ -49,7 +49,7 @@ export function Hero() {
           <Link
             href="/avisos"
             data-cursor="hover"
-            className="rounded-full bg-cream px-8 py-4 text-base font-medium uppercase tracking-wider text-cobalt transition-colors hover:bg-cream-light"
+            className="rounded-full bg-white px-8 py-4 text-base font-medium uppercase tracking-wider text-cobalt transition-colors hover:bg-cream-light"
           >
             Ver el catálogo
           </Link>

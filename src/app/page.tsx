@@ -40,7 +40,7 @@ export default function Home() {
         <section className="mx-auto max-w-[1600px] px-6 py-24 md:px-10 md:py-36">
           <div className="grid gap-12 md:grid-cols-12">
             <div className="md:col-span-5">
-              <p className="text-sm font-medium uppercase tracking-widest text-cobalt/60">
+              <p className="text-sm font-medium uppercase tracking-widest text-black/60">
                 ▷ Catálogo
               </p>
               <h2
@@ -51,7 +51,7 @@ export default function Home() {
               </h2>
             </div>
             <div className="md:col-span-7">
-              <p className="text-lg leading-relaxed text-cobalt/85">
+              <p className="text-lg leading-relaxed text-black/85">
                 Cada hablador MUFFMENT está diseñado para durar a la intemperie y
                 brillar al primer vistazo. Acero cold rolled, pintura
                 electrostática, y atención a cada detalle.
@@ -92,11 +92,11 @@ export default function Home() {
         </section>
 
         {/* DESTACADOS */}
-        <section className="bg-cream-light py-24 md:py-36">
+        <section className="bg-white py-24 md:py-36">
           <div className="mx-auto max-w-[1600px] px-6 md:px-10">
             <div className="mb-12 flex items-end justify-between gap-8">
               <div>
-                <p className="text-sm font-medium uppercase tracking-widest text-cobalt/60">
+                <p className="text-sm font-medium uppercase tracking-widest text-black/60">
                   ▷ Destacados
                 </p>
                 <h2
@@ -175,10 +175,10 @@ export default function Home() {
         </section>
 
         {/* CLIENTES */}
-        <section className="bg-cream py-24 md:py-36">
+        <section className="bg-white py-24 md:py-36">
           <div className="mx-auto max-w-[1600px] px-6 md:px-10">
             <div className="mb-12">
-              <p className="text-sm font-medium uppercase tracking-widest text-cobalt/60">
+              <p className="text-sm font-medium uppercase tracking-widest text-black/60">
                 ▷ Clientes muff
               </p>
               <h2
@@ -192,7 +192,7 @@ export default function Home() {
               {CLIENTS.map((c) => (
                 <div
                   key={c.slug}
-                  className="flex aspect-[3/2] flex-col items-center justify-center bg-cream-light p-6 text-center transition-colors hover:bg-cobalt hover:text-cream"
+                  className="flex aspect-[3/2] flex-col items-center justify-center bg-white p-6 text-center transition-colors hover:bg-cobalt hover:text-cream"
                   data-cursor="hover"
                 >
                   <span
@@ -228,7 +228,7 @@ export default function Home() {
             <div className="mt-10">
               <WhatsAppButton
                 size="lg"
-                className="bg-cream text-cobalt hover:bg-cream-light"
+                className="bg-cream text-cobalt hover:bg-white"
               >
                 Empezar por WhatsApp
               </WhatsAppButton>

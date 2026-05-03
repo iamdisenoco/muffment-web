@@ -47,8 +47,8 @@ export function ProductGallery({
   // Si NO hay fotos reales (todo placeholder)
   if (images.length === 0) {
     return (
-      <div className="relative aspect-square w-full overflow-hidden rounded-3xl bg-cream-light md:aspect-[4/3]">
-        <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-cream-light via-cream to-cream-dark">
+      <div className="relative aspect-square w-full overflow-hidden rounded-3xl bg-white md:aspect-[4/3]">
+        <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-white via-white to-white">
           <div className="text-center px-6">
             <span
               className="block text-[14vw] leading-none text-cobalt md:text-[10rem]"
@@ -56,7 +56,7 @@ export function ProductGallery({
             >
               {fallbackCode}
             </span>
-            <span className="mt-4 block text-base font-medium uppercase tracking-wider text-cobalt/60">
+            <span className="mt-4 block text-base font-medium uppercase tracking-wider text-black/60">
               {fallbackName}
             </span>
           </div>
@@ -71,7 +71,7 @@ export function ProductGallery({
   return (
     <>
       {/* HERO grande con flechas + click para zoom */}
-      <div className="group relative aspect-[4/5] w-full overflow-hidden rounded-3xl bg-cream-light md:aspect-[4/3]">
+      <div className="group relative aspect-[4/5] w-full overflow-hidden rounded-3xl bg-white md:aspect-[4/3]">
         <button
           type="button"
           onClick={() => setZoom(true)}
@@ -85,7 +85,7 @@ export function ProductGallery({
             fill
             priority
             sizes="(max-width: 768px) 100vw, 60vw"
-            className="object-contain p-4 md:p-8"
+            className="object-contain"
           />
         </button>
 
@@ -158,7 +158,7 @@ export function ProductGallery({
               aria-label={`Ver foto ${i + 1}`}
               aria-current={i === active}
               className={cn(
-                "relative aspect-square overflow-hidden rounded-2xl bg-cream-light transition-all",
+                "relative aspect-square overflow-hidden rounded-2xl bg-white transition-all",
                 i === active
                   ? "ring-2 ring-cobalt ring-offset-2 ring-offset-cream"
                   : "opacity-60 hover:opacity-100",
@@ -169,7 +169,7 @@ export function ProductGallery({
                 alt={`${alt} — vista ${i + 1}`}
                 fill
                 sizes="(max-width: 768px) 25vw, 15vw"
-                className="object-contain p-2"
+                className="object-contain"
               />
             </button>
           ))}

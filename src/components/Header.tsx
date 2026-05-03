@@ -26,12 +26,12 @@ export function Header() {
       className={cn(
         "fixed inset-x-0 top-0 z-50 transition-all duration-300",
         scrolled
-          ? "bg-cream/85 backdrop-blur-md border-b border-cobalt/10"
+          ? "bg-white/85 backdrop-blur-md border-b border-black/10"
           : "bg-transparent",
       )}
     >
       <div className="mx-auto flex max-w-[1600px] items-center justify-between px-6 py-4 md:px-10">
-        <Logo size={48} />
+        <Logo variant="icon" size={48} />
         <nav className="hidden items-center gap-8 md:flex">
           {NAV.map((item) => (
             <Link

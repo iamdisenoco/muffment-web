@@ -70,8 +70,8 @@
 }
 
 html, body {
-  background: var(--color-cream);
-  color: var(--color-cobalt);
+  background: var(--color-paper);
+  color: var(--color-ink);
   font-family: var(--font-sans);
 }
 

@@ -48,7 +48,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es" className={bagelFatOne.variable} suppressHydrationWarning>
-      <body className="bg-cream text-cobalt antialiased" suppressHydrationWarning>
+      <body className="bg-white text-black antialiased" suppressHydrationWarning>
         {children}
       </body>
     </html>

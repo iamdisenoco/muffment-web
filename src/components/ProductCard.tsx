@@ -34,7 +34,7 @@ export function ProductCard({
       <Link
         href={`/avisos/${product.slug}`}
         data-cursor="hover"
-        className="group block overflow-hidden rounded-2xl bg-cream-light"
+        className="group block overflow-hidden rounded-2xl bg-white"
       >
         <div className={cn("relative w-full overflow-hidden", heights[size])}>
           {hasRealPhoto ? (
@@ -47,7 +47,7 @@ export function ProductCard({
             />
           ) : (
             /* Placeholder con código + nombre cuando aún no hay foto real */
-            <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-cream-light via-cream to-cream-dark">
+            <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-white via-white to-white">
               <div
                 className="text-center px-6"
                 style={{ fontFamily: "var(--font-bagel)" }}
@@ -55,7 +55,7 @@ export function ProductCard({
                 <span className="block text-7xl leading-none text-cobalt md:text-8xl">
                   {product.code}
                 </span>
-                <span className="mt-3 block text-sm font-medium uppercase tracking-wider text-cobalt/70">
+                <span className="mt-3 block text-sm font-medium uppercase tracking-wider text-black/70">
                   {product.shortName}
                 </span>
               </div>
@@ -70,7 +70,7 @@ export function ProductCard({
         </div>
         <div className="flex items-end justify-between gap-4 px-1 py-4">
           <div>
-            <p className="text-xs font-medium uppercase tracking-wider text-cobalt/60">
+            <p className="text-xs font-medium uppercase tracking-wider text-black/60">
               {product.categoryLabel}
             </p>
             <h3 className="mt-1 text-lg font-medium text-cobalt">
@@ -82,7 +82,7 @@ export function ProductCard({
               {product.priceLabel}
             </span>
             {product.priceEstimated && (
-              <p className="text-[10px] uppercase tracking-wider text-cobalt/50">desde</p>
+              <p className="text-[10px] uppercase tracking-wider text-black/50">desde</p>
             )}
           </div>
         </div>

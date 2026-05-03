@@ -15,9 +15,9 @@ export default function ContactoPage() {
       <SmoothScroll />
       <Cursor />
       <Header />
-      <main className="bg-cream pt-32 pb-24">
+      <main className="bg-white pt-32 pb-24">
         <section className="mx-auto max-w-[1400px] px-6 md:px-10">
-          <p className="text-sm font-medium uppercase tracking-widest text-cobalt/60">
+          <p className="text-sm font-medium uppercase tracking-widest text-black/60">
             ▷ Contacto
           </p>
           <h1
@@ -26,7 +26,7 @@ export default function ContactoPage() {
           >
             cuéntanos <br /> tu aviso.
           </h1>
-          <p className="mt-8 max-w-xl text-lg text-cobalt/85">
+          <p className="mt-8 max-w-xl text-lg text-black/85">
             Cotización en 24 horas. Diseñamos en Colombia, fabricamos en
             Colombia, despachamos a todo el país.
           </p>
@@ -100,7 +100,7 @@ export default function ContactoPage() {
               <WhatsAppButton
                 message="Hola MUFFMENT, quiero un aviso a la medida. Te paso el contexto:"
                 size="lg"
-                className="bg-cream text-cobalt hover:bg-cream-light"
+                className="bg-cream text-cobalt hover:bg-white"
               >
                 Pedir cotización a medida
               </WhatsAppButton>
@@ -108,7 +108,7 @@ export default function ContactoPage() {
           </div>
         </section>
 
-        <section className="mx-auto mt-16 max-w-[1400px] px-6 text-center text-cobalt/60 md:px-10">
+        <section className="mx-auto mt-16 max-w-[1400px] px-6 text-center text-black/60 md:px-10">
           <p className="text-xs uppercase tracking-[0.3em]">
             ✦ Diseñados y fabricados en Colombia ✦ Garantía por 3 años ✦
           </p>
@@ -131,8 +131,8 @@ function Card({
   cta: React.ReactNode;
 }) {
   return (
-    <div className="flex flex-col bg-cream-light p-10">
-      <p className="text-xs font-medium uppercase tracking-widest text-cobalt/60">
+    <div className="flex flex-col bg-white p-10">
+      <p className="text-xs font-medium uppercase tracking-widest text-black/60">
         {kicker}
       </p>
       <h3
@@ -141,7 +141,7 @@ function Card({
       >
         {title}
       </h3>
-      <p className="mt-2 text-lg text-cobalt/85">{value}</p>
+      <p className="mt-2 text-lg text-black/85">{value}</p>
       {cta}
     </div>
   );

@@ -31,10 +31,10 @@ export default async function AvisosPage({ searchParams }: Props) {
       <SmoothScroll />
       <Cursor />
       <Header />
-      <main className="bg-cream pt-32 pb-24">
+      <main className="bg-white pt-32 pb-24">
         <section className="mx-auto max-w-[1600px] px-6 md:px-10">
           <div className="mb-10">
-            <p className="text-sm font-medium uppercase tracking-widest text-cobalt/60">
+            <p className="text-sm font-medium uppercase tracking-widest text-black/60">
               ▷ Catálogo MUFFMENT 2024
             </p>
             <h1
@@ -43,7 +43,7 @@ export default async function AvisosPage({ searchParams }: Props) {
             >
               {cat ? labelOf(cat) : "Todos los avisos"}
             </h1>
-            <p className="mt-6 max-w-xl text-lg text-cobalt/85">
+            <p className="mt-6 max-w-xl text-lg text-black/85">
               {filtered.length} producto{filtered.length === 1 ? "" : "s"}.
               Diseñados y fabricados en Colombia. Garantía por 3 años.
             </p>

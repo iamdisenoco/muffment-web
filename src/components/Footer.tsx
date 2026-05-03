@@ -22,7 +22,7 @@ export function Footer() {
               <WhatsAppButton
                 variant="primary"
                 size="md"
-                className="bg-cream text-cobalt hover:bg-cream-light hover:text-cobalt-dark"
+                className="bg-cream text-cobalt hover:bg-white hover:text-cobalt-dark"
               >
                 Escríbenos a WhatsApp
               </WhatsAppButton>
