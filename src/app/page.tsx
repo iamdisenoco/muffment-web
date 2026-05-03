@@ -5,6 +5,7 @@ import { Footer } from "@/components/Footer";
 import { Hero } from "@/components/Hero";
 import { Marquee } from "@/components/Marquee";
 import { ProductCard } from "@/components/ProductCard";
+import { FAQ } from "@/components/FAQ";
 import { Logo } from "@/components/Logo";
 import { Cursor } from "@/components/Cursor";
 import { SmoothScroll } from "@/components/SmoothScroll";
@@ -118,6 +119,9 @@ export default function Home() {
             </div>
           </div>
         </section>
+
+        {/* FAQ */}
+        <FAQ />
 
         {/* MANIFIESTO */}
         <section className="bg-cobalt py-32 text-cream md:py-44">
