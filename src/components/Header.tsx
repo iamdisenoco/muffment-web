@@ -39,7 +39,15 @@ export function Header() {
   const scrolled = scrollY > 12;
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50 transition-all duration-300">
+    <header
+      className={cn(
+        "fixed inset-x-0 top-0 z-50 transition-all duration-300",
+        // Cuando NO estamos sobre el Hero (cobalt) y ya hicimos scroll,
+        // metemos un fondo cream translúcido con blur para que el menú no
+        // se confunda con títulos del contenido (ej. "proceso de compra").
+        !onDark && scrolled && "bg-cream/85 backdrop-blur-md shadow-sm",
+      )}
+    >
       <div className="mx-auto flex max-w-[1600px] items-center justify-between gap-6 px-6 py-4 md:px-10">
         {/* Logo: muñeco cream sobre cobalt, cobalt sobre blanco */}
         <Logo variant={onDark ? "icon-cream" : "icon"} size={48} />

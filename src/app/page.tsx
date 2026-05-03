@@ -48,8 +48,10 @@ export default function Home() {
                       data-cursor="hover"
                       className="group flex aspect-[4/5] flex-col overflow-hidden rounded-3xl border border-black/10 bg-white shadow-sm transition-transform hover:-translate-y-1 md:aspect-[6/7]"
                     >
-                      {/* TÍTULO arriba (sin contador). Flecha al lado derecho. */}
-                      <div className="flex items-start justify-between gap-2 px-6 pt-6 text-neutral-700">
+                      {/* TÍTULO arriba (sin contador). Flecha al lado derecho.
+                          Color en gris claro (neutral-400) para que el producto
+                          sea el héroe visual de la card. */}
+                      <div className="flex items-start justify-between gap-2 px-6 pt-6 text-neutral-400">
                         <h3
                           className="text-2xl leading-tight md:text-3xl"
                           style={{ fontFamily: "var(--font-bagel)" }}
