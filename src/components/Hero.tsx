@@ -18,28 +18,23 @@ export function Hero() {
           className="relative max-w-[20ch] text-[clamp(3rem,9vw,9.5rem)] font-normal leading-[0.9] tracking-tight"
           style={{ fontFamily: "var(--font-bagel)" }}
         >
-          {/* Muñequito asomando — DEF-07 con clip-path. Bottom visible del muñeco
-               debe TOCAR el top de la palabra "creative". clip muestra 0%–38% del Image,
-               translate-y -34% deja la base del muñeco pegada al top del h1 (con leve overlap). */}
+          {/* Muñequito asomando, color cream igual al texto, base tocando "creative" */}
           <motion.div
             initial={{ opacity: 0, y: 30, rotate: -6 }}
             animate={{ opacity: 1, y: 0, rotate: 0 }}
             transition={{ duration: 1.1, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
-            className="pointer-events-none absolute left-[2%] top-0 z-20 -translate-y-[10%] md:left-[3%]"
+            className="pointer-events-none absolute left-[2%] top-0 z-20 -translate-y-[22%] md:left-[3%]"
             aria-hidden
           >
             <Image
-              src="/logos/test-07.svg"
+              src="/logos/muneco-cream.svg"
               alt=""
               width={300}
               height={239}
               priority
               unoptimized
               className="h-auto w-[160px] md:w-[260px] lg:w-[320px]"
-              style={{
-                filter: "brightness(0) invert(1)",
-                clipPath: "inset(0 0 62% 0)",
-              }}
+              style={{ clipPath: "inset(0 0 62% 0)" }}
             />
           </motion.div>
           creative signs <br /> for creative <br /> businesses
