@@ -36,37 +36,9 @@ export default function Home() {
           ]}
         />
 
-        {/* CATEGORÍAS — bento style */}
-        <section className="mx-auto max-w-[1600px] px-6 py-24 md:px-10 md:py-36">
-          <div className="grid gap-12 md:grid-cols-12">
-            <div className="md:col-span-5">
-              <p className="text-sm font-medium uppercase tracking-widest text-black/60">
-                ▷ Catálogo
-              </p>
-              <h2
-                className="mt-6 text-[clamp(2.5rem,6vw,5.5rem)] leading-[0.95] text-cobalt"
-                style={{ fontFamily: "var(--font-bagel)" }}
-              >
-                19 productos. <br /> 4 categorías. <br /> Infinitas marcas.
-              </h2>
-            </div>
-            <div className="md:col-span-7">
-              <p className="text-lg leading-relaxed text-black/85">
-                Cada hablador MUFFMENT está diseñado para durar a la intemperie y
-                brillar al primer vistazo. Acero cold rolled, pintura
-                electrostática, y atención a cada detalle.
-              </p>
-              <Link
-                href="/avisos"
-                data-cursor="hover"
-                className="mt-8 inline-block rounded-full bg-cobalt px-7 py-3.5 text-sm font-medium uppercase tracking-wider text-cream transition-colors hover:bg-cobalt-dark"
-              >
-                Ver todo el catálogo →
-              </Link>
-            </div>
-          </div>
-
-          <div className="mt-20 grid grid-cols-2 gap-4 md:grid-cols-4">
+        {/* CATEGORÍAS — directamente después del marquee, sin headline */}
+        <section className="mx-auto max-w-[1600px] px-6 py-16 md:px-10 md:py-24">
+          <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
             {CATEGORIES.map((cat) => {
               // Producto sin fondo (PNG con transparencia) para cada categoría
               const cover: Record<string, string> = {
