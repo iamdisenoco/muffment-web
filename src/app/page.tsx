@@ -96,11 +96,11 @@ export default function Home() {
                   </div>
                   {/* Texto en GRIS, abajo, sin solaparse con el producto */}
                   <div className="pointer-events-none absolute inset-x-0 top-0 flex flex-col p-6">
-                    <span className="text-xs font-medium uppercase tracking-widest text-neutral-500">
+                    <span className="text-xs font-medium uppercase tracking-widest text-neutral-400">
                       ▷ {cat.count} {cat.count === 1 ? "producto" : "productos"}
                     </span>
                   </div>
-                  <div className="pointer-events-none absolute inset-x-0 bottom-0 flex items-end justify-between gap-2 p-6 text-neutral-700">
+                  <div className="pointer-events-none absolute inset-x-0 bottom-0 flex items-end justify-between gap-2 p-6 text-neutral-500">
                     <h3
                       className="text-2xl leading-tight md:text-3xl"
                       style={{ fontFamily: "var(--font-bagel)" }}
