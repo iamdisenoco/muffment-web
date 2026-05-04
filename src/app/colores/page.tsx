@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "motion/react";
 import { Header } from "@/components/Header";
@@ -148,29 +148,36 @@ function ColorBubble({
   color,
   size,
   offset,
+  isActive,
+  onActivate,
+  onDeactivate,
 }: {
   color: Color;
   size: number;
   offset: { x: number; y: number; rotate: number };
+  isActive: boolean;
+  onActivate: (id: string, anchor: { x: number; y: number }) => void;
+  onDeactivate: (id: string) => void;
 }) {
-  const [hover, setHover] = useState(false);
   const [anchor, setAnchor] = useState({ x: 0, y: 0 });
   const ref = useRef<HTMLDivElement>(null);
   const dark = isDark(color.hex);
+  const hover = isActive;
 
   const handleEnter = () => {
     if (ref.current) {
       const rect = ref.current.getBoundingClientRect();
-      setAnchor({ x: rect.left + rect.width / 2, y: rect.bottom });
+      const a = { x: rect.left + rect.width / 2, y: rect.bottom };
+      setAnchor(a);
+      onActivate(color.id, a);
     }
-    setHover(true);
   };
 
   return (
     <div
       ref={ref}
       onMouseEnter={handleEnter}
-      onMouseLeave={() => setHover(false)}
+      onMouseLeave={() => onDeactivate(color.id)}
       className={cn("relative", hover ? "z-50" : "z-0")}
       style={{
         marginLeft: -Math.round(size * 0.14),
@@ -311,11 +318,25 @@ function CollageWall({ colors }: { colors: Color[] }) {
   const SIZE = 72;
   const halfBox = 400; // contenedor 800x800 a escala 1x
 
+  // Una sola bola activa a la vez. Cuando el mouse entra a otra bola,
+  // automáticamente se "desactiva" la previa. Esto previene tooltips
+  // múltiples cuando el mouse se mueve rápido entre bolas overlapping.
+  const [activeId, setActiveId] = useState<string | null>(null);
+  const handleActivate = useCallback((id: string) => {
+    setActiveId(id);
+  }, []);
+  const handleDeactivate = useCallback((id: string) => {
+    setActiveId((current) => (current === id ? null : current));
+  }, []);
+
   // El mandala se construye en geometría fija 800×800. Si el viewport es
   // mas chico, el wrapper aplica scale via CSS para que quepa. Mantiene
   // proporciones perfectas de los anillos a cualquier ancho.
   return (
-    <div className="mandala-outer mx-auto aspect-square w-full max-w-[800px]">
+    <div
+      className="mandala-outer mx-auto aspect-square w-full max-w-[800px]"
+      onMouseLeave={() => setActiveId(null)}
+    >
       <div className="mandala-inner">
       {ordered.map((c, i) => {
         const pos = positions[i];
@@ -341,6 +362,9 @@ function CollageWall({ colors }: { colors: Color[] }) {
               color={c}
               size={SIZE}
               offset={{ x: 0, y: 0, rotate: 0 }}
+              isActive={activeId === c.id}
+              onActivate={handleActivate}
+              onDeactivate={handleDeactivate}
             />
           </div>
         );
