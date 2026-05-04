@@ -309,13 +309,14 @@ function CollageWall({ colors }: { colors: Color[] }) {
 
   // Tamaño uniforme.
   const SIZE = 72;
-  const halfBox = 400; // contenedor 800x800
+  const halfBox = 400; // contenedor 800x800 a escala 1x
 
+  // El mandala se construye en geometría fija 800×800. Si el viewport es
+  // mas chico, el wrapper aplica scale via CSS para que quepa. Mantiene
+  // proporciones perfectas de los anillos a cualquier ancho.
   return (
-    <div
-      className="relative mx-auto"
-      style={{ width: halfBox * 2, height: halfBox * 2 }}
-    >
+    <div className="mandala-outer mx-auto aspect-square w-full max-w-[800px]">
+      <div className="mandala-inner">
       {ordered.map((c, i) => {
         const pos = positions[i];
         if (!pos) return null;
@@ -344,6 +345,21 @@ function CollageWall({ colors }: { colors: Color[] }) {
           </div>
         );
       })}
+      </div>
+      <style>{`
+        .mandala-inner {
+          position: relative;
+          width: 800px;
+          height: 800px;
+          transform-origin: top left;
+        }
+        @media (max-width: 832px) {
+          /* el viewport limit incluye 16px padding a cada lado del container */
+          .mandala-inner {
+            transform: scale(calc((100vw - 32px) / 800));
+          }
+        }
+      `}</style>
     </div>
   );
 }
