@@ -1,6 +1,6 @@
 @import "tailwindcss";
 
-/* MUFFMENT FONTS — local self-hosted */
+/* MUFFMENT FONTS - local self-hosted */
 @font-face {
   font-family: "Campton";
   src: url("/fonts/CamptonLight.otf") format("opentype");
@@ -44,7 +44,7 @@
   font-display: swap;
 }
 
-/* MUFFMENT THEME — paleta extraída del catálogo + IG */
+/* MUFFMENT THEME */
 @theme {
   --color-cream: #e8e2d1;
   --color-cream-light: #f2ede0;
@@ -75,9 +75,6 @@ html, body {
   font-family: var(--font-sans);
 }
 
-/* Scroll-snap por proximity (no mandatory) — solo encaja cuando el scroll
-   está cerca de una sección con .snap-start. Las páginas sin snap-start
-   no se ven afectadas. */
 html {
   scroll-snap-type: y proximity;
 }
@@ -87,24 +84,24 @@ html {
   color: var(--color-cream);
 }
 
-/* hide native cursor when custom cursor is active */
 html.has-custom-cursor, html.has-custom-cursor * {
   cursor: none !important;
 }
 
-/* Cursor rainbow: cicla colores cada 8s.
-   El ring usa border-current y el dot usa bg-current — al animar color,
-   ambos se sincronizan. */
 @keyframes cursor-rainbow {
-  0%   { color: #3236b7; } /* cobalt */
-  16%  { color: #ff6b35; } /* naranja */
-  33%  { color: #f9c80e; } /* amarillo */
-  50%  { color: #06d6a0; } /* verde */
-  66%  { color: #ef476f; } /* rosa */
-  83%  { color: #4cc9f0; } /* cyan */
-  100% { color: #3236b7; } /* cobalt */
+  0%   { color: #3236b7; }
+  16%  { color: #ff6b35; }
+  33%  { color: #f9c80e; }
+  50%  { color: #06d6a0; }
+  66%  { color: #ef476f; }
+  83%  { color: #4cc9f0; }
+  100% { color: #3236b7; }
 }
 .cursor-rainbow {
   animation: cursor-rainbow 8s linear infinite;
 }
-/* deploy: 2026-05-03 12:45:34 */
+
+@keyframes bubble-breathe {
+  0%, 100% { transform: scale(1); }
+  50%      { transform: scale(1.07); }
+}

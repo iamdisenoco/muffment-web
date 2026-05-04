@@ -17,11 +17,8 @@ export default function ContactoPage() {
       <Header />
       <main className="bg-white pt-32 pb-24">
         <section className="mx-auto max-w-[1400px] px-6 md:px-10">
-          <p className="text-sm font-medium uppercase tracking-widest text-black/60">
-            ▷ Contacto
-          </p>
           <h1
-            className="mt-4 text-[clamp(3rem,8vw,8rem)] leading-[0.9] text-cobalt"
+            className="text-[clamp(3rem,8vw,8rem)] leading-[0.9] text-cobalt"
             style={{ fontFamily: "var(--font-bagel)" }}
           >
             cuéntanos <br /> tu aviso.
@@ -35,7 +32,6 @@ export default function ContactoPage() {
         <section className="mx-auto mt-20 max-w-[1400px] px-6 md:px-10">
           <div className="grid gap-px overflow-hidden rounded-3xl bg-cobalt/15 md:grid-cols-3">
             <Card
-              kicker="▷ Lo más rápido"
               title="WhatsApp"
               value="304 416 0172"
               cta={
@@ -48,7 +44,6 @@ export default function ContactoPage() {
               }
             />
             <Card
-              kicker="▷ Llamada directa"
               title="Teléfono"
               value="304 416 0172"
               cta={
@@ -62,7 +57,6 @@ export default function ContactoPage() {
               }
             />
             <Card
-              kicker="▷ Síguenos"
               title="Instagram"
               value="@muffment"
               cta={
@@ -82,11 +76,8 @@ export default function ContactoPage() {
 
         <section className="mx-auto mt-20 max-w-[1000px] px-6 md:px-10">
           <div className="rounded-3xl bg-cobalt p-10 text-cream md:p-16">
-            <p className="text-sm font-medium uppercase tracking-widest text-cream/60">
-              ▷ ¿Necesitas algo a la medida?
-            </p>
             <h2
-              className="mt-6 text-[clamp(2rem,5vw,4rem)] leading-tight"
+              className="text-[clamp(2rem,5vw,4rem)] leading-tight"
               style={{ fontFamily: "var(--font-bagel)" }}
             >
               Sí, también hacemos eso.
@@ -120,23 +111,18 @@ export default function ContactoPage() {
 }
 
 function Card({
-  kicker,
   title,
   value,
   cta,
 }: {
-  kicker: string;
   title: string;
   value: string;
   cta: React.ReactNode;
 }) {
   return (
     <div className="flex flex-col bg-white p-10">
-      <p className="text-xs font-medium uppercase tracking-widest text-black/60">
-        {kicker}
-      </p>
       <h3
-        className="mt-4 text-3xl text-cobalt"
+        className="text-3xl text-cobalt"
         style={{ fontFamily: "var(--font-bagel)" }}
       >
         {title}

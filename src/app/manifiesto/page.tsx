@@ -21,11 +21,8 @@ export default function ManifiestoPage() {
         {/* HERO MANIFIESTO */}
         <section className="relative min-h-[100svh] overflow-hidden bg-cobalt text-cream">
           <div className="relative mx-auto flex min-h-[100svh] max-w-[1400px] flex-col items-center justify-center px-6 pb-20 pt-32 text-center md:px-10">
-            <p className="text-sm font-medium uppercase tracking-widest text-cream/60">
-              ▷ Manifiesto MUFFMENT
-            </p>
             <h1
-              className="mt-8 max-w-[18ch] text-[clamp(3rem,9vw,9rem)] leading-[0.9] tracking-tight"
+              className="max-w-[18ch] text-[clamp(3rem,9vw,9rem)] leading-[0.9] tracking-tight"
               style={{ fontFamily: "var(--font-bagel)" }}
             >
               creative signs <br /> for creative <br /> brands.
@@ -39,11 +36,8 @@ export default function ManifiestoPage() {
         {/* PRINCIPIOS */}
         <section className="bg-white py-32 md:py-44">
           <div className="mx-auto max-w-[1200px] px-6 md:px-10">
-            <p className="text-sm font-medium uppercase tracking-widest text-black/60">
-              ▷ Cómo lo hacemos
-            </p>
             <h2
-              className="mt-6 text-[clamp(2.5rem,6vw,5.5rem)] leading-[0.95] text-cobalt"
+              className="text-[clamp(2.5rem,6vw,5.5rem)] leading-[0.95] text-cobalt"
               style={{ fontFamily: "var(--font-bagel)" }}
             >
               cada detalle <br /> es importante.

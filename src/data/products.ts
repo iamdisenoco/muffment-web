@@ -156,10 +156,10 @@ export const PRODUCTS: Product[] = [
     notes: "La información que pones en el aviso es un producto aparte.",
   },
   {
-    slug: "hablador-piso-paleta",
+    slug: "hablador-piso-paleta-redondo",
     code: "5408",
-    name: "Hablador de Piso Paleta",
-    shortName: "Piso Paleta",
+    name: "Paleta Redondo",
+    shortName: "Paleta Redondo",
     category: "piso",
     categoryLabel: "Hablador de piso",
     price: 725000,
@@ -170,7 +170,13 @@ export const PRODUCTS: Product[] = [
     paint: "En polvo, electrostática, para exterior e interior",
     description:
       "Paleta circular sobre poste. Vibe vintage gas-station modernizado. Llama desde la cuadra siguiente.",
-    hero: "/img/products/piso-paleta.jpg",
+    hero: "/img/products/paleta-redondo-1-detail.jpg",
+    gallery: [
+      "/img/products/paleta-redondo-1.jpg",
+      "/img/products/paleta-redondo-2-top.jpg",
+      "/img/products/paleta-redondo-3-angle.jpg",
+      "/img/products/paleta-redondo-4-detail.jpg",
+    ],
     has3D: true,
   },
   {

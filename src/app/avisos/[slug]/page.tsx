@@ -76,11 +76,8 @@ export default async function ProductPage({ params }: Props) {
 
           {/* Info */}
           <div className="md:col-span-5 md:sticky md:top-32 md:self-start">
-            <p className="text-xs font-medium uppercase tracking-widest text-black/60">
-              ▷ {product.categoryLabel}
-            </p>
             <h1
-              className="mt-4 text-[clamp(2.25rem,5vw,4.5rem)] leading-[0.95] text-cobalt"
+              className="text-[clamp(2.25rem,5vw,4.5rem)] leading-[0.95] text-cobalt"
               style={{ fontFamily: "var(--font-bagel)" }}
             >
               {product.name}

@@ -46,3 +46,7 @@ next-env.d.ts
 # Local-only Word task files
 *.docx
 ~$*.docx
+
+# Local-only outputs from extraction scripts
+/scripts/chip-debug
+/scripts/pdf-images

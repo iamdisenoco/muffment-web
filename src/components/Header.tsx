@@ -8,34 +8,51 @@ import { cn, whatsappLink } from "@/lib/utils";
 
 const NAV = [
   { href: "/", label: "Inicio" },
-  { href: "/avisos", label: "Catálogo" },
+  { href: "/avisos", label: "Productos" },
+  { href: "/colores", label: "Carta de color" },
   { href: "/clientes", label: "Clientes" },
   { href: "/manifiesto", label: "Manifiesto" },
   { href: "/contacto", label: "Contacto" },
 ];
 
+// Línea (en px desde el borde superior de la ventana) en la que vive el
+// centro vertical del header — ahí es donde tomamos la "muestra" del fondo
+// para decidir si la barra debe estar en modo claro u oscuro.
+const HEADER_PROBE_Y = 36;
+
 export function Header() {
   const pathname = usePathname();
   const [scrollY, setScrollY] = useState(0);
+  const [onDark, setOnDark] = useState(pathname === "/");
 
   useEffect(() => {
-    const onScroll = () => setScrollY(window.scrollY);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+    // Recalcula tanto en scroll como en resize: en cada tick mira qué
+    // sección con `data-header-theme="dark"` tiene su rectángulo cruzando
+    // la línea HEADER_PROBE_Y. Si hay alguna, modo oscuro; si no, claro.
+    const recompute = () => {
+      setScrollY(window.scrollY);
+      const sections = document.querySelectorAll<HTMLElement>(
+        '[data-header-theme="dark"]',
+      );
+      let isDark = false;
+      for (const sec of sections) {
+        const rect = sec.getBoundingClientRect();
+        if (rect.top <= HEADER_PROBE_Y && rect.bottom > HEADER_PROBE_Y) {
+          isDark = true;
+          break;
+        }
+      }
+      setOnDark(isDark);
+    };
+    recompute();
+    window.addEventListener("scroll", recompute, { passive: true });
+    window.addEventListener("resize", recompute);
+    return () => {
+      window.removeEventListener("scroll", recompute);
+      window.removeEventListener("resize", recompute);
+    };
+  }, [pathname]);
 
-  // ¿El header está sobre fondo cobalt (Hero del home)?
-  // Solo aplica en `/` y mientras scrollY < 90vh aprox.
-  const [vh, setVh] = useState(800);
-  useEffect(() => {
-    const onResize = () => setVh(window.innerHeight);
-    onResize();
-    window.addEventListener("resize", onResize);
-    return () => window.removeEventListener("resize", onResize);
-  }, []);
-
-  const onDark = pathname === "/" && scrollY < vh * 0.85;
   const scrolled = scrollY > 12;
 
   // Estilo de la píldora del nav central: bg + borde varían según fondo.
@@ -86,10 +103,10 @@ export function Header() {
             rel="noopener noreferrer"
             data-cursor="hover"
             className={cn(
-              "rounded-full px-5 py-2.5 text-sm font-medium tracking-wide transition-all hover:scale-105 md:text-base",
+              "rounded-full border px-5 py-2.5 text-sm font-medium tracking-wide backdrop-blur-md transition-all hover:scale-105 md:text-base",
               onDark
-                ? "bg-cream text-cobalt hover:bg-white"
-                : "bg-cobalt text-cream hover:bg-cobalt-dark",
+                ? "border-white/25 bg-white/10 text-white hover:border-white/45 hover:bg-white/20"
+                : "border-cobalt/25 bg-cobalt/10 text-cobalt hover:border-cobalt/45 hover:bg-cobalt/20",
               scrolled && "shadow-md",
             )}
           >

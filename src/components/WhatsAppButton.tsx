@@ -23,11 +23,15 @@ export function WhatsAppButton({
     md: "px-6 py-3 text-base",
     lg: "px-8 py-4 text-lg",
   } as const;
+  // Estilo cristal (glassmorphism) — bg semi-transparente + borde sutil +
+  // backdrop-blur. Variantes para fondo oscuro (light text) y claro (dark text).
   const variants = {
+    // Sobre fondos oscuros (cobalt, black, cream/10)
     primary:
-      "bg-cobalt text-cream hover:bg-cobalt-dark",
+      "border border-white/25 bg-white/10 text-white backdrop-blur-md hover:bg-white/20 hover:border-white/40",
+    // Sobre fondos claros (white, cream)
     ghost:
-      "border border-cobalt text-cobalt hover:bg-cobalt hover:text-cream",
+      "border border-cobalt/25 bg-cobalt/8 text-cobalt backdrop-blur-md hover:bg-cobalt/15 hover:border-cobalt/40",
   } as const;
   return (
     <a
