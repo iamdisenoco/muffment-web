@@ -166,14 +166,13 @@ function ColorBubble({
     }
   };
 
-  // Toggle al tap/click — necesario para mobile (no hay hover en touch).
+  // Click siempre activa (no togglea). En mobile, el browser dispara
+  // mouseenter ANTES que click, asi que si toggleamos el click cierra el
+  // tooltip que el mouseenter acababa de abrir. Usuario cierra tocando
+  // el fondo o tocando otra bola.
   const onClick = (e: React.MouseEvent) => {
     e.stopPropagation();
-    if (isActive) {
-      onDeactivate(color.id);
-    } else {
-      activate();
-    }
+    activate();
   };
 
   return (
