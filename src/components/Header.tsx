@@ -20,10 +20,17 @@ const NAV = [
 // para decidir si la barra debe estar en modo claro u oscuro.
 const HEADER_PROBE_Y = 36;
 
+// Paths cuyo TOP siempre es oscuro (bg-cobalt/black). Garantiza el estado
+// correcto desde el primer paint, sin esperar al recompute del effect.
+const DARK_TOP_PATHS = ["/", "/colores", "/manifiesto"];
+
 export function Header() {
   const pathname = usePathname();
   const [scrollY, setScrollY] = useState(0);
-  const [onDark, setOnDark] = useState(pathname === "/");
+  const startsDark = DARK_TOP_PATHS.some(
+    (p) => pathname === p || (p !== "/" && pathname?.startsWith(p + "/")),
+  );
+  const [onDark, setOnDark] = useState(startsDark);
 
   useEffect(() => {
     // Recalcula tanto en scroll como en resize: en cada tick mira qué
