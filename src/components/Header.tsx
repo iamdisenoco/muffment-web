@@ -44,10 +44,15 @@ export function Header() {
       }
       setOnDark(isDark);
     };
+    // Doble ejecución para evitar timing donde el DOM aún no terminó
+    // de hidratar al primer render del effect.
     recompute();
+    requestAnimationFrame(recompute);
+    const t = setTimeout(recompute, 100);
     window.addEventListener("scroll", recompute, { passive: true });
     window.addEventListener("resize", recompute);
     return () => {
+      clearTimeout(t);
       window.removeEventListener("scroll", recompute);
       window.removeEventListener("resize", recompute);
     };
@@ -57,8 +62,8 @@ export function Header() {
 
   // Estilo de la píldora del nav central: bg + borde varían según fondo.
   const navPillBg = onDark
-    ? "bg-cream/10 border border-cream/15 backdrop-blur-md"
-    : "bg-cobalt/8 border border-cobalt/15 backdrop-blur-md";
+    ? "bg-white/10 border border-white/20 backdrop-blur-md"
+    : "bg-cobalt/10 border border-cobalt/20 backdrop-blur-md";
 
   return (
     <header className="fixed inset-x-0 top-0 z-50 transition-all duration-300">
@@ -104,9 +109,11 @@ export function Header() {
             data-cursor="hover"
             className={cn(
               "rounded-full border px-5 py-2.5 text-sm font-medium tracking-wide backdrop-blur-md transition-all hover:scale-105 md:text-base",
+              // Glass mucho mas contrastado para que se vea bien en cualquier
+              // fondo (especialmente en /colores donde el bg es negro puro).
               onDark
-                ? "border-white/25 bg-white/10 text-white hover:border-white/45 hover:bg-white/20"
-                : "border-cobalt/25 bg-cobalt/10 text-cobalt hover:border-cobalt/45 hover:bg-cobalt/20",
+                ? "border-white/45 bg-white/15 text-white hover:border-white/70 hover:bg-white/25"
+                : "border-cobalt/40 bg-cobalt/15 text-cobalt hover:border-cobalt/60 hover:bg-cobalt/25",
               scrolled && "shadow-md",
             )}
           >
