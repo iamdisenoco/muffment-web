@@ -146,46 +146,43 @@ function PortalTooltip({ color, anchor }: { color: Color; anchor: { x: number; y
 // ─────────────────────────────────────────────────────────────────────────────
 function ColorBubble({
   color,
-  size,
-  offset,
   isActive,
   onActivate,
   onDeactivate,
 }: {
   color: Color;
-  size: number;
-  offset: { x: number; y: number; rotate: number };
   isActive: boolean;
   onActivate: (id: string, anchor: { x: number; y: number }) => void;
   onDeactivate: (id: string) => void;
 }) {
-  const [anchor, setAnchor] = useState({ x: 0, y: 0 });
   const ref = useRef<HTMLDivElement>(null);
-  const dark = isDark(color.hex);
   const hover = isActive;
 
-  const handleEnter = () => {
+  // Activa el tooltip y registra el ancla (centro-bottom de la bola).
+  const activate = () => {
     if (ref.current) {
       const rect = ref.current.getBoundingClientRect();
-      const a = { x: rect.left + rect.width / 2, y: rect.bottom };
-      setAnchor(a);
-      onActivate(color.id, a);
+      onActivate(color.id, { x: rect.left + rect.width / 2, y: rect.bottom });
+    }
+  };
+
+  // Toggle al tap/click — necesario para mobile (no hay hover en touch).
+  const onClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (isActive) {
+      onDeactivate(color.id);
+    } else {
+      activate();
     }
   };
 
   return (
     <div
       ref={ref}
-      onMouseEnter={handleEnter}
+      onMouseEnter={activate}
       onMouseLeave={() => onDeactivate(color.id)}
-      className={cn("relative", hover ? "z-50" : "z-0")}
-      style={{
-        marginLeft: -Math.round(size * 0.14),
-        marginRight: -Math.round(size * 0.14),
-        marginTop: -Math.round(size * 0.10),
-        marginBottom: -Math.round(size * 0.10),
-        transform: `translate(${offset.x}px, ${offset.y}px) rotate(${offset.rotate}deg)`,
-      }}
+      onClick={onClick}
+      className={cn("relative h-full w-full", hover ? "z-50" : "z-0")}
     >
       {/* Glow pulsante detrás del swatch */}
       <AnimatePresence>
@@ -207,14 +204,11 @@ function ColorBubble({
         data-cursor="hover"
         animate={{
           scale: hover ? 1.32 : 1,
-          y: hover ? -14 : 0,
-          rotate: hover ? -offset.rotate : 0,
+          y: hover ? -8 : 0,
         }}
         transition={{ type: "spring", stiffness: 320, damping: 16 }}
-        className="relative block rounded-full"
+        className="relative block h-full w-full rounded-full"
         style={{
-          width: size,
-          height: size,
           boxShadow: hover
             ? `0 0 0 3px rgba(255,255,255,0.95), 0 22px 50px rgba(0,0,0,0.55)`
             : `0 4px 12px rgba(0,0,0,0.45)`,
@@ -230,10 +224,6 @@ function ColorBubble({
           unoptimized
         />
       </motion.button>
-
-      <AnimatePresence>
-        {hover && <PortalTooltip color={color} anchor={anchor} />}
-      </AnimatePresence>
     </div>
   );
 }
@@ -273,17 +263,23 @@ function pickOffset(id: string): { x: number; y: number; rotate: number } {
 }
 
 // Anillos concéntricos de un mandala. Suma EXACTA = 88 (total de chips).
-// Cada anillo tiene N bolas distribuidas uniformemente en 360°. El radio se
-// calcula para que los anillos se superpongan ~25% (similar al overlap del
-// collage previo) en TODAS las direcciones.
+// Cada anillo tiene N bolas distribuidas uniformemente en 360°.
+// Los radios son PORCENTAJES del lado del contenedor (que es siempre cuadrado),
+// asi escalan automaticamente con el viewport sin necesidad de CSS scale.
+//   8.8% = ~70px en 800, ~32px en 360
+//  17.5% = ~140px en 800, ~63px en 360
+//   etc.
 const RINGS = [
   { count: 1, radius: 0 },
-  { count: 6, radius: 72 },
-  { count: 12, radius: 142 },
-  { count: 18, radius: 210 },
-  { count: 24, radius: 276 },
-  { count: 27, radius: 342 },
+  { count: 6, radius: 8.8 },
+  { count: 12, radius: 17.5 },
+  { count: 18, radius: 26 },
+  { count: 24, radius: 34.5 },
+  { count: 27, radius: 42.5 },
 ];
+
+// Tamaño de cada bola = 9% del lado del contenedor (escala junto con el frame).
+const BUBBLE_PCT = 9;
 
 function CollageWall({ colors }: { colors: Color[] }) {
   // Ordenamos por familia → el mandala tiene un flujo tonal radial.
@@ -298,70 +294,72 @@ function CollageWall({ colors }: { colors: Color[] }) {
     return arr;
   }, [colors]);
 
-  // Computa posición (x, y) absoluta para cada bola en el mandala.
+  // Posiciones en PORCENTAJES del lado del contenedor.
+  // x_pct y y_pct son offsets desde el centro (50%, 50%).
   const positions = useMemo(() => {
-    const out: { x: number; y: number; ring: number }[] = [];
+    const out: { xPct: number; yPct: number; ring: number }[] = [];
     for (let r = 0; r < RINGS.length; r++) {
       const { count, radius } = RINGS[r];
-      // Empieza desde -90° (top) y rota — el offset por anillo lo decala
-      // levemente para que las bolas no estén alineadas radialmente.
       const startAngle = -Math.PI / 2 + (r * Math.PI) / 12;
       for (let j = 0; j < count; j++) {
         const angle = startAngle + (j / count) * Math.PI * 2;
-        out.push({ x: Math.cos(angle) * radius, y: Math.sin(angle) * radius, ring: r });
+        out.push({
+          xPct: Math.cos(angle) * radius,
+          yPct: Math.sin(angle) * radius,
+          ring: r,
+        });
       }
     }
     return out;
   }, []);
 
-  // Tamaño uniforme.
-  const SIZE = 72;
-  const halfBox = 400; // contenedor 800x800 a escala 1x
-
-  // Una sola bola activa a la vez. Cuando el mouse entra a otra bola,
-  // automáticamente se "desactiva" la previa. Esto previene tooltips
-  // múltiples cuando el mouse se mueve rápido entre bolas overlapping.
+  // Una sola bola activa a la vez + un solo tooltip global (renderizado
+  // abajo). Esto previene tooltips múltiples cuando el mouse se mueve
+  // rápido entre bolas overlapping y alguna bola se queda sin disparar
+  // mouseLeave. AnimatePresence con un solo hijo siempre converge.
   const [activeId, setActiveId] = useState<string | null>(null);
-  const handleActivate = useCallback((id: string) => {
+  const [activeAnchor, setActiveAnchor] = useState({ x: 0, y: 0 });
+  const handleActivate = useCallback((id: string, anchor: { x: number; y: number }) => {
     setActiveId(id);
+    setActiveAnchor(anchor);
   }, []);
   const handleDeactivate = useCallback((id: string) => {
     setActiveId((current) => (current === id ? null : current));
   }, []);
+  const activeColor = activeId ? ordered.find((c) => c.id === activeId) ?? null : null;
 
   // El mandala se construye en geometría fija 800×800. Si el viewport es
   // mas chico, el wrapper aplica scale via CSS para que quepa. Mantiene
   // proporciones perfectas de los anillos a cualquier ancho.
+  // Container que es SIEMPRE cuadrado, escala con viewport (max 800).
+  // Todo dentro usa porcentajes -> nunca overflow en mobile.
   return (
     <div
-      className="mandala-outer mx-auto aspect-square w-full max-w-[800px]"
+      className="relative mx-auto aspect-square w-full max-w-[800px]"
       onMouseLeave={() => setActiveId(null)}
+      onClick={() => setActiveId(null)}
     >
-      <div className="mandala-inner">
       {ordered.map((c, i) => {
         const pos = positions[i];
         if (!pos) return null;
-        // Cada bola respira con CSS keyframe + animation-delay negativo:
-        // CSS sí soporta delay negativo correctamente → cada bola arranca
-        // en un punto distinto del ciclo. Period extra-largo (random por
-        // bola) evita sincronización visible.
-        const period = 5 + (hash(c.id) % 1500) / 500; // 5-8s por bola
-        const delay = -((hash(c.id) >> 5) % 7000) / 1000; // -0..-7s
+        const period = 5 + (hash(c.id) % 1500) / 500;
+        const delay = -((hash(c.id) >> 5) % 7000) / 1000;
         return (
           <div
             key={c.id}
             className="absolute"
             style={{
-              left: halfBox + pos.x - SIZE / 2,
-              top: halfBox + pos.y - SIZE / 2,
+              // Posicion: centro (50%) + offset relativo - mitad del bubble
+              left: `calc(50% + ${pos.xPct}% - ${BUBBLE_PCT / 2}%)`,
+              top: `calc(50% + ${pos.yPct}% - ${BUBBLE_PCT / 2}%)`,
+              width: `${BUBBLE_PCT}%`,
+              height: `${BUBBLE_PCT}%`,
               animation: `bubble-breathe ${period}s ease-in-out infinite`,
               animationDelay: `${delay}s`,
             }}
           >
             <ColorBubble
               color={c}
-              size={SIZE}
-              offset={{ x: 0, y: 0, rotate: 0 }}
               isActive={activeId === c.id}
               onActivate={handleActivate}
               onDeactivate={handleDeactivate}
@@ -369,21 +367,11 @@ function CollageWall({ colors }: { colors: Color[] }) {
           </div>
         );
       })}
-      </div>
-      <style>{`
-        .mandala-inner {
-          position: relative;
-          width: 800px;
-          height: 800px;
-          transform-origin: top left;
-        }
-        @media (max-width: 832px) {
-          /* el viewport limit incluye 16px padding a cada lado del container */
-          .mandala-inner {
-            transform: scale(calc((100vw - 32px) / 800));
-          }
-        }
-      `}</style>
+      <AnimatePresence>
+        {activeColor && (
+          <PortalTooltip key={activeColor.id} color={activeColor} anchor={activeAnchor} />
+        )}
+      </AnimatePresence>
     </div>
   );
 }

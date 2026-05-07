@@ -13,7 +13,8 @@ const PRODUCTS: ProductMeta[] = [
   { src: "/img/products/2026/cutouts/luna.png",            slug: "hablador-pared-luna",         name: "Hablador de Pared LUNA" },
   { src: "/img/products/2026/cutouts/flag.png",            slug: "hablador-pared-flag",         name: "Aviso de Pared FLAG" },
   { src: "/img/products/2026/cutouts/top-shelf.png",       slug: "hablador-piso-top-shelf",     name: "Hablador de Piso TOP SHELF" },
-  { src: "/img/products/2026/cutouts/paleta-redondo.png",  slug: "hablador-piso-paleta-redondo", name: "Paleta Redondo" },
+  { src: "/img/products/2026/cutouts/doble-lamina.png",    slug: "hablador-piso-doble-lamina",  name: "Hablador de Piso Doble Lámina" },
+  { src: "/img/products/2026/cutouts/swinger.png",         slug: "hablador-piso-swinger",       name: "Hablador de Piso Swinger" },
 ];
 
 type Drop = {
@@ -28,29 +29,34 @@ type Drop = {
 
 // Pre-baked drop configs — staggered with NEGATIVE delays so all drops are
 // already on screen at first paint (no empty side at startup).
+// Sizes son los originales del Hero del home. ProductRain acepta una prop
+// `scale` que multiplica todos los sizes — el /post usa 0.55 para que se
+// vean chiquitos al lado del titulo grande, mientras que el / usa 1.0.
 const LEFT_DROPS: Drop[] = [
-  { product: PRODUCTS[0], size: 110, startX: 20, duration: 14, delay: 0,     rotate: -8,  opacity: 1   },
-  { product: PRODUCTS[1], size: 85,  startX: 60, duration: 12, delay: -3,    rotate: 6,   opacity: 0.85 },
-  { product: PRODUCTS[2], size: 120, startX: 35, duration: 16, delay: -6,    rotate: -4,  opacity: 0.95 },
-  { product: PRODUCTS[5], size: 75,  startX: 75, duration: 11, delay: -8,    rotate: 10,  opacity: 0.8 },
-  { product: PRODUCTS[3], size: 95,  startX: 50, duration: 13, delay: -2,    rotate: -6,  opacity: 0.9 },
-  { product: PRODUCTS[4], size: 65,  startX: 12, duration: 10, delay: -5,    rotate: 8,   opacity: 0.75 },
-  { product: PRODUCTS[6], size: 70,  startX: 30, duration: 15, delay: -10,   rotate: 4,   opacity: 0.9  },
-  { product: PRODUCTS[7], size: 105, startX: 18, duration: 13, delay: -4.5,  rotate: -7,  opacity: 0.95 },
+  { product: PRODUCTS[0], size: 110, startX: 20, duration: 14, delay: 0,     rotate: -8,  opacity: 1    }, // bent
+  { product: PRODUCTS[1], size: 85,  startX: 60, duration: 12, delay: -3,    rotate: 6,   opacity: 0.85 }, // plegable
+  { product: PRODUCTS[2], size: 120, startX: 35, duration: 16, delay: -6,    rotate: -4,  opacity: 0.95 }, // plegable-small
+  { product: PRODUCTS[5], size: 75,  startX: 75, duration: 11, delay: -8,    rotate: 10,  opacity: 0.8  }, // flag
+  { product: PRODUCTS[3], size: 95,  startX: 50, duration: 13, delay: -2,    rotate: -6,  opacity: 0.9  }, // ov
+  { product: PRODUCTS[4], size: 65,  startX: 12, duration: 10, delay: -5,    rotate: 8,   opacity: 0.75 }, // luna
+  { product: PRODUCTS[6], size: 70,  startX: 30, duration: 15, delay: -10,   rotate: 4,   opacity: 0.9  }, // top-shelf
+  { product: PRODUCTS[7], size: 105, startX: 18, duration: 13, delay: -4.5,  rotate: -7,  opacity: 0.95 }, // doble-lamina
+  { product: PRODUCTS[8], size: 100, startX: 25, duration: 14, delay: -12,   rotate: -9,  opacity: 0.9  }, // swinger
 ];
 
 const RIGHT_DROPS: Drop[] = [
-  { product: PRODUCTS[1], size: 100, startX: 22, duration: 13, delay: -1,    rotate: 7,   opacity: 0.95 },
-  { product: PRODUCTS[3], size: 85,  startX: 65, duration: 15, delay: -4,    rotate: -8,  opacity: 0.9  },
-  { product: PRODUCTS[0], size: 115, startX: 40, duration: 17, delay: -7,    rotate: 5,   opacity: 1    },
-  { product: PRODUCTS[5], size: 80,  startX: 80, duration: 11, delay: -9,    rotate: -6,  opacity: 0.8  },
-  { product: PRODUCTS[2], size: 90,  startX: 28, duration: 14, delay: -11,   rotate: 9,   opacity: 0.85 },
-  { product: PRODUCTS[4], size: 60,  startX: 55, duration: 9,  delay: -2.5,  rotate: -10, opacity: 0.7  },
-  { product: PRODUCTS[6], size: 110, startX: 70, duration: 16, delay: -13,   rotate: -5,  opacity: 0.95 },
-  { product: PRODUCTS[7], size: 95,  startX: 45, duration: 12, delay: -6,    rotate: 8,   opacity: 0.9  },
+  { product: PRODUCTS[1], size: 100, startX: 22, duration: 13, delay: -1,    rotate: 7,   opacity: 0.95 }, // plegable
+  { product: PRODUCTS[3], size: 85,  startX: 65, duration: 15, delay: -4,    rotate: -8,  opacity: 0.9  }, // ov
+  { product: PRODUCTS[0], size: 115, startX: 40, duration: 17, delay: -7,    rotate: 5,   opacity: 1    }, // bent
+  { product: PRODUCTS[5], size: 80,  startX: 80, duration: 11, delay: -9,    rotate: -6,  opacity: 0.8  }, // flag
+  { product: PRODUCTS[2], size: 90,  startX: 28, duration: 14, delay: -11,   rotate: 9,   opacity: 0.85 }, // plegable-small
+  { product: PRODUCTS[4], size: 60,  startX: 55, duration: 9,  delay: -2.5,  rotate: -10, opacity: 0.7  }, // luna
+  { product: PRODUCTS[6], size: 110, startX: 70, duration: 16, delay: -13,   rotate: -5,  opacity: 0.95 }, // top-shelf
+  { product: PRODUCTS[7], size: 95,  startX: 45, duration: 12, delay: -6,    rotate: 8,   opacity: 0.9  }, // doble-lamina
+  { product: PRODUCTS[8], size: 110, startX: 60, duration: 15, delay: -3.5,  rotate: 7,   opacity: 0.92 }, // swinger
 ];
 
-function Column({ drops, side }: { drops: Drop[]; side: "left" | "right" }) {
+function Column({ drops, side, scale }: { drops: Drop[]; side: "left" | "right"; scale: number }) {
   // Static classes so Tailwind always includes both left-0 and right-0
   const sideClass = side === "left" ? "left-0" : "right-0";
   const maskGradient =
@@ -72,8 +78,8 @@ function Column({ drops, side }: { drops: Drop[]; side: "left" | "right" }) {
           className="absolute"
           style={{
             left: `${drop.startX}%`,
-            width: drop.size,
-            height: drop.size,
+            width: drop.size * scale,
+            height: drop.size * scale,
             opacity: drop.opacity,
           }}
           initial={{ y: "-30vh", rotate: drop.rotate }}
@@ -97,8 +103,8 @@ function Column({ drops, side }: { drops: Drop[]; side: "left" | "right" }) {
             <Image
               src={drop.product.src}
               alt={drop.product.name}
-              width={drop.size * 2}
-              height={drop.size * 2}
+              width={Math.round(drop.size * scale * 2)}
+              height={Math.round(drop.size * scale * 2)}
               unoptimized
               className="h-auto w-full select-none"
               draggable={false}
@@ -110,11 +116,11 @@ function Column({ drops, side }: { drops: Drop[]; side: "left" | "right" }) {
   );
 }
 
-export function ProductRain() {
+export function ProductRain({ scale = 1 }: { scale?: number } = {}) {
   return (
     <>
-      <Column drops={LEFT_DROPS} side="left" />
-      <Column drops={RIGHT_DROPS} side="right" />
+      <Column drops={LEFT_DROPS} side="left" scale={scale} />
+      <Column drops={RIGHT_DROPS} side="right" scale={scale} />
     </>
   );
 }

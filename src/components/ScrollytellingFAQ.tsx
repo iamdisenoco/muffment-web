@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import {
   motion,
   useScroll,
@@ -37,10 +37,28 @@ const VIDEO_SRC = "/videos/plegable-azul.mp4";
 
 export function ScrollytellingFAQ() {
   const sectionRef = useRef<HTMLElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ["start start", "end end"],
   });
+
+  // Algunos browsers (Chrome con políticas de media estrictas) marcan
+  // <video autoPlay> como `stalled` cuando hay 2 elementos compartiendo
+  // el mismo src o cuando el elemento aún no está en viewport. Forzamos
+  // play() explícito al montar para destrabar el download.
+  useEffect(() => {
+    const v = videoRef.current;
+    if (!v) return;
+    const tryPlay = () => v.play().catch(() => {});
+    tryPlay();
+    v.addEventListener("stalled", tryPlay);
+    v.addEventListener("suspend", tryPlay);
+    return () => {
+      v.removeEventListener("stalled", tryPlay);
+      v.removeEventListener("suspend", tryPlay);
+    };
+  }, []);
 
   // Suavizamos el progress con un spring — da inercia cinematográfica.
   // Los videos y FAQs reaccionan ligeramente "tarde", como en landonorris.
@@ -60,30 +78,23 @@ export function ScrollytellingFAQ() {
       style={{ height: `${FAQS.length * 130}vh` }}
     >
       <div className="sticky top-0 h-screen overflow-hidden bg-cobalt">
-        {/* VIDEO DE FONDO — doble capa con mask en los bordes.
-            - Capa de atrás: video estirado + blur 80px → "expande" el cobalt a los lados
-            - Capa de adelante: video nítido con altura completa, ancho automático
-              (su bounding box = su contenido) y mask-image lineal que difumina
-              los bordes izquierdo/derecho contra el backdrop borroso. */}
+        {/* VIDEO DE FONDO — UN solo <video> centrado con aspect ratio fijo
+            (9:16 = 540/960). width/height attributes evitan el bug donde el
+            elemento colapsa a 300×150 default si los metadata aún no llegan
+            del network. La capa borrosa de fondo se logra con un backdrop
+            gradient + blur ligero CSS (no requiere segundo video). */}
         <div className="absolute inset-0 flex items-center justify-center">
           <video
+            ref={videoRef}
             src={VIDEO_SRC}
+            width={540}
+            height={960}
             muted
             loop
             autoPlay
             playsInline
             preload="auto"
-            aria-hidden
-            className="absolute inset-0 hidden h-full w-full scale-125 object-cover blur-[80px] saturate-150 md:block"
-          />
-          <video
-            src={VIDEO_SRC}
-            muted
-            loop
-            autoPlay
-            playsInline
-            preload="auto"
-            className="relative h-full w-auto max-w-full"
+            className="relative h-full w-auto max-w-full object-contain"
             style={{
               WebkitMaskImage:
                 "linear-gradient(to right, transparent 0%, black 7%, black 93%, transparent 100%)",
