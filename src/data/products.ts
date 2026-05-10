@@ -30,7 +30,7 @@ export const PRODUCTS: Product[] = [
   // ============ HABLADORES DE PISO ============
   {
     slug: "hablador-piso-ov",
-    code: "5402",
+    code: "5420",
     name: "Hablador de Piso OV",
     shortName: "Piso OV",
     category: "piso",
@@ -54,7 +54,7 @@ export const PRODUCTS: Product[] = [
   },
   {
     slug: "hablador-piso-plegable",
-    code: "5403",
+    code: "5408",
     name: "Hablador de Piso Plegable",
     shortName: "Piso Plegable",
     category: "piso",
@@ -80,7 +80,7 @@ export const PRODUCTS: Product[] = [
   },
   {
     slug: "hablador-piso-plegable-small",
-    code: "5418",
+    code: "5422",
     name: "Hablador de Piso Plegable small",
     shortName: "Piso Plegable small",
     category: "piso",
@@ -104,7 +104,7 @@ export const PRODUCTS: Product[] = [
   },
   {
     slug: "hablador-piso-top-shelf",
-    code: "5412",
+    code: "5428",
     name: "Hablador de Piso TOP SHELF",
     shortName: "Piso TOP SHELF",
     category: "piso",
@@ -130,7 +130,7 @@ export const PRODUCTS: Product[] = [
   },
   {
     slug: "hablador-piso-bent",
-    code: "5413",
+    code: "5415",
     name: "Hablador de Piso BENT",
     shortName: "Piso BENT",
     category: "piso",
@@ -157,7 +157,7 @@ export const PRODUCTS: Product[] = [
   },
   {
     slug: "hablador-piso-paleta-redondo",
-    code: "5408",
+    code: "5401-4",
     name: "Paleta Redondo",
     shortName: "Paleta Redondo",
     category: "piso",
@@ -181,7 +181,7 @@ export const PRODUCTS: Product[] = [
   },
   {
     slug: "hablador-piso-p-ov",
-    code: "5409",
+    code: "5407-1",
     name: "Hablador de Piso P.OV",
     shortName: "Piso P.OV",
     category: "piso",
@@ -198,7 +198,7 @@ export const PRODUCTS: Product[] = [
   },
   {
     slug: "hablador-piso-p-rect",
-    code: "5410",
+    code: "5406",
     name: "Hablador de Piso P.RECT",
     shortName: "Piso P.RECT",
     category: "piso",
@@ -215,7 +215,7 @@ export const PRODUCTS: Product[] = [
   },
   {
     slug: "hablador-piso-p-ov-chico",
-    code: "5411",
+    code: "5407-2",
     name: "Hablador de Piso P.OV chico",
     shortName: "Piso P.OV chico",
     category: "piso",
@@ -232,7 +232,7 @@ export const PRODUCTS: Product[] = [
   },
   {
     slug: "aviso-piso-menu-swinger",
-    code: "5415",
+    code: "5413",
     name: "Aviso de Piso MENU SWINGER",
     shortName: "Piso MENU SWINGER",
     category: "piso",
@@ -252,7 +252,7 @@ export const PRODUCTS: Product[] = [
   // ============ HABLADORES DE PARED ============
   {
     slug: "hablador-pared-rect-grande",
-    code: "5404",
+    code: "5409",
     name: "Hablador de Pared RECT grande",
     shortName: "Pared RECT grande",
     category: "pared",
@@ -270,7 +270,7 @@ export const PRODUCTS: Product[] = [
   },
   {
     slug: "hablador-pared-flag",
-    code: "5414",
+    code: "5426",
     name: "Aviso de Pared FLAG",
     shortName: "Pared FLAG",
     category: "pared",
@@ -294,15 +294,15 @@ export const PRODUCTS: Product[] = [
   },
   {
     slug: "hablador-pared-luna-big",
-    code: "5417",
+    code: "5404-1",
     name: "Hablador de Pared LUNA BIG",
     shortName: "Pared LUNA BIG",
     category: "pared",
     categoryLabel: "Hablador de pared",
     price: 170000,
     priceLabel: "$170K",
-    totalSize: "50 cm × 30 cm",
-    artSize: "50 cm × 30 cm",
+    totalSize: "60 cm × 40 cm",
+    artSize: "60 cm × 40 cm",
     materials: "Acero galvanizado, acero inoxidable",
     paint: "En polvo, electrostática, para exterior e interior",
     description:
@@ -312,7 +312,7 @@ export const PRODUCTS: Product[] = [
   },
   {
     slug: "hablador-pared-rect-chico",
-    code: "5405",
+    code: "5402-1",
     name: "Hablador de Pared RECT chico",
     shortName: "Pared RECT chico",
     category: "pared",
@@ -329,7 +329,7 @@ export const PRODUCTS: Product[] = [
   },
   {
     slug: "hablador-pared-cuad",
-    code: "5406",
+    code: "5403",
     name: "Hablador de Pared CUAD",
     shortName: "Pared CUAD",
     category: "pared",
@@ -346,7 +346,7 @@ export const PRODUCTS: Product[] = [
   },
   {
     slug: "hablador-pared-luna",
-    code: "5407",
+    code: "5404",
     name: "Hablador de Pared LUNA",
     shortName: "Pared LUNA",
     category: "pared",
@@ -365,7 +365,7 @@ export const PRODUCTS: Product[] = [
   // ============ HABLADORES DE MESA ============
   {
     slug: "hablador-mesa-rect",
-    code: "5401",
+    code: "5411",
     name: "Hablador de Mesa RECT",
     shortName: "Mesa RECT",
     category: "mesa",
@@ -383,7 +383,7 @@ export const PRODUCTS: Product[] = [
   },
   {
     slug: "hablador-mesa-clear",
-    code: "5416",
+    code: "5411-2",
     name: "Hablador de Mesa CLEAR",
     shortName: "Mesa CLEAR",
     category: "mesa",
@@ -403,7 +403,7 @@ export const PRODUCTS: Product[] = [
   // ============ ACCESORIOS ============
   {
     slug: "letras-magneticas",
-    code: "MAG350",
+    code: "5412-1N",
     name: "Letras Magnéticas",
     shortName: "Letras Magnéticas",
     category: "accesorio",
