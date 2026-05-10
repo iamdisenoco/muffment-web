@@ -280,7 +280,11 @@ export const PRODUCTS: Product[] = [
     paint: "En polvo, electrostática, para exterior e interior",
     description:
       "Aviso colgante de techo o pared. Funciona con letras magnéticas — cambias el menú sin imprimir nada nuevo.",
-    hero: "/img/products/pared-rect-grande.jpg",
+    hero: "/img/products/2026/pared-rect-grande-1.jpg",
+    gallery: [
+      "/img/products/2026/pared-rect-grande-2.jpg",
+      "/img/products/2026/pared-rect-grande-3.jpg",
+    ],
     notes: "Las letras magnéticas son un producto aparte.",
   },
   {
