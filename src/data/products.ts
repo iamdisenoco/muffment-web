@@ -253,8 +253,8 @@ export const PRODUCTS: Product[] = [
   {
     slug: "aviso-piso-doble-lamina-portable",
     code: "5423",
-    name: "Aviso de Piso Doble Lámina Portable",
-    shortName: "Piso Doble Lámina",
+    name: "Doble Lámina Portable",
+    shortName: "Doble Lámina Portable",
     category: "piso",
     categoryLabel: "Hablador de piso",
     price: 1097000,
