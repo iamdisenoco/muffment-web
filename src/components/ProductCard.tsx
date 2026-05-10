@@ -30,7 +30,7 @@ export function ProductCard({
   };
   const categoryName = CATEGORY_NAME[product.category] ?? product.categoryLabel;
 
-  // Nombre corto SIN el prefijo de categoría: "Piso TOP SHELF" → "TOP SHELF".
+  // Nombre corto SIN el prefijo de categoría: "Piso Top Shelf" → "Top Shelf".
   const displayName = product.shortName.replace(/^(Piso|Pared|Mesa)\s+/i, "");
 
   // Mini-carousel dentro de la card: hero + gallery. Permite pasar imágenes

@@ -6,15 +6,15 @@ import { motion } from "motion/react";
 
 type ProductMeta = { src: string; slug: string; name: string };
 const PRODUCTS: ProductMeta[] = [
-  { src: "/img/products/2026/cutouts/bent.png",            slug: "hablador-piso-bent",          name: "Hablador de Piso BENT" },
+  { src: "/img/products/2026/cutouts/bent.png",            slug: "hablador-piso-bent",          name: "Hablador de Piso Bent" },
   { src: "/img/products/2026/cutouts/plegable.png",        slug: "hablador-piso-plegable",      name: "Hablador de Piso Plegable" },
-  { src: "/img/products/2026/cutouts/plegable-small.png",  slug: "hablador-piso-plegable-small", name: "Hablador de Piso Plegable small" },
-  { src: "/img/products/2026/cutouts/ov.png",              slug: "hablador-piso-ov",            name: "Hablador de Piso OV" },
-  { src: "/img/products/2026/cutouts/luna.png",            slug: "hablador-pared-luna",         name: "Hablador de Pared LUNA" },
-  { src: "/img/products/2026/cutouts/flag.png",            slug: "hablador-pared-flag",         name: "Aviso de Pared FLAG" },
-  { src: "/img/products/2026/cutouts/top-shelf.png",       slug: "hablador-piso-top-shelf",     name: "Hablador de Piso TOP SHELF" },
-  { src: "/img/products/2026/cutouts/doble-lamina.png",    slug: "hablador-piso-doble-lamina",  name: "Hablador de Piso Doble Lámina" },
-  { src: "/img/products/2026/cutouts/swinger.png",         slug: "hablador-piso-swinger",       name: "Hablador de Piso Swinger" },
+  { src: "/img/products/2026/cutouts/plegable-small.png",  slug: "hablador-piso-plegable-small", name: "Hablador de Piso Plegable Pequeño" },
+  { src: "/img/products/2026/cutouts/ov.png",              slug: "hablador-piso-ov",            name: "Hablador de Piso Ovalado" },
+  { src: "/img/products/2026/cutouts/luna.png",            slug: "hablador-pared-luna",         name: "Hablador de Pared Luna" },
+  { src: "/img/products/2026/cutouts/flag.png",            slug: "hablador-pared-flag",         name: "Aviso de Pared Flag" },
+  { src: "/img/products/2026/cutouts/top-shelf.png",       slug: "hablador-piso-top-shelf",     name: "Hablador de Piso Top Shelf" },
+  { src: "/img/products/2026/cutouts/doble-lamina.png",    slug: "aviso-piso-doble-lamina-portable",  name: "Doble Lámina Portable" },
+  { src: "/img/products/2026/cutouts/swinger.png",         slug: "aviso-piso-menu-swinger",     name: "Aviso de Piso Menu Swinger" },
 ];
 
 type Drop = {
