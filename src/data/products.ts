@@ -220,23 +220,6 @@ export const PRODUCTS: Product[] = [
     ],
   },
   {
-    slug: "hablador-piso-p-ov-chico",
-    code: "5407-2",
-    name: "Hablador de Piso P.OV chico",
-    shortName: "Piso P.OV chico",
-    category: "piso",
-    categoryLabel: "Hablador de piso",
-    price: 100000,
-    priceLabel: "$100K",
-    totalSize: "45 cm × 15 cm",
-    artSize: "43 cm × 15 cm",
-    materials: "Acero galvanizado, acero inoxidable",
-    paint: "En polvo, electrostática, para exterior e interior",
-    description:
-      "El compacto perfecto para barras, vitrinas y mesas altas. Mismo lenguaje, formato pequeño.",
-    hero: "/img/products/piso-p-ov-chico.jpg",
-  },
-  {
     slug: "aviso-piso-menu-swinger",
     code: "5413",
     name: "Aviso de Piso MENU SWINGER",
@@ -475,7 +458,7 @@ export const PRODUCTS: Product[] = [
 ];
 
 export const CATEGORIES = [
-  { id: "piso", label: "Habladores de piso", count: 11 },
+  { id: "piso", label: "Habladores de piso", count: 10 },
   { id: "pared", label: "Habladores de pared", count: 7 },
   { id: "mesa", label: "Habladores de mesa", count: 2 },
   { id: "accesorio", label: "Accesorios", count: 1 },
