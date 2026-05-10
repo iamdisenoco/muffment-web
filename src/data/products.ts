@@ -170,12 +170,10 @@ export const PRODUCTS: Product[] = [
     paint: "En polvo, electrostática, para exterior e interior",
     description:
       "Paleta circular sobre poste. Vibe vintage gas-station modernizado. Llama desde la cuadra siguiente.",
-    hero: "/img/products/paleta-redondo-1-detail.jpg",
+    hero: "/img/products/2026/paleta-redondo-1.jpg",
     gallery: [
-      "/img/products/paleta-redondo-1.jpg",
-      "/img/products/paleta-redondo-2-top.jpg",
-      "/img/products/paleta-redondo-3-angle.jpg",
-      "/img/products/paleta-redondo-4-detail.jpg",
+      "/img/products/2026/paleta-redondo-2.jpg",
+      "/img/products/2026/paleta-redondo-3.jpg",
     ],
     has3D: true,
   },
