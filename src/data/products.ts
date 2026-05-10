@@ -213,7 +213,11 @@ export const PRODUCTS: Product[] = [
     paint: "En polvo, electrostática, para exterior e interior",
     description:
       "Paleta rectangular sobre poste alto. Como el P.OV pero con esquinas para que tu copy respire mejor.",
-    hero: "/img/products/piso-p-rect.jpg",
+    hero: "/img/products/2026/p-rect-1.jpg",
+    gallery: [
+      "/img/products/2026/p-rect-2.jpg",
+      "/img/products/2026/p-rect-3.jpg",
+    ],
   },
   {
     slug: "hablador-piso-p-ov-chico",
@@ -247,7 +251,11 @@ export const PRODUCTS: Product[] = [
     paint: "En polvo, electrostática para interior y exterior",
     description:
       "Aviso de piso pivotante. Acrílico 3mm para que tu mensaje brille con la luz. Perfecto para entradas y zonas de espera.",
-    hero: "/img/products/piso-menu-swinger.jpg",
+    hero: "/img/products/2026/menu-swinger-1.jpg",
+    gallery: [
+      "/img/products/2026/menu-swinger-2.jpg",
+      "/img/products/2026/menu-swinger-3.jpg",
+    ],
     isNew: true,
   },
   {
