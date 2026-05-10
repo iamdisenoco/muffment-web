@@ -192,7 +192,11 @@ export const PRODUCTS: Product[] = [
     paint: "En polvo, electrostática, para exterior e interior",
     description:
       "Paleta oval sobre poste alto. Para señalizar entrada, parking, recepción o lo que sea.",
-    hero: "/img/products/piso-p-ov.jpg",
+    hero: "/img/products/2026/p-ov-1.jpg",
+    gallery: [
+      "/img/products/2026/p-ov-2.jpg",
+      "/img/products/2026/p-ov-3.jpg",
+    ],
   },
   {
     slug: "hablador-piso-p-rect",
