@@ -250,6 +250,29 @@ export const PRODUCTS: Product[] = [
     hero: "/img/products/piso-menu-swinger.jpg",
     isNew: true,
   },
+  {
+    slug: "aviso-piso-doble-lamina-portable",
+    code: "5423",
+    name: "Aviso de Piso Doble Lámina Portable",
+    shortName: "Piso Doble Lámina",
+    category: "piso",
+    categoryLabel: "Hablador de piso",
+    price: 850000,
+    priceLabel: "$850K",
+    priceEstimated: true,
+    totalSize: "170 cm × 80 cm",
+    artSize: "Dos paneles 60 × 40 cm",
+    materials: "Tubería galvanizada, láminas en aluminio, tapones impresión 3D",
+    paint: "En polvo, electrostática, para exterior e interior",
+    description:
+      "Aviso doble lámina sobre estructura tubular portable. Dos paneles para comunicar dos mensajes al tiempo, o uno por cada lado del flujo de gente.",
+    hero: "/img/products/2026/doble-lamina-portable-1.jpg",
+    gallery: [
+      "/img/products/2026/doble-lamina-portable-2.jpg",
+      "/img/products/2026/doble-lamina-portable-3.jpg",
+    ],
+    isNew: true,
+  },
 
   // ============ HABLADORES DE PARED ============
   {
@@ -291,6 +314,28 @@ export const PRODUCTS: Product[] = [
       "/img/products/2026/flag-3.jpg",
       "/img/products/2026/flag-4.jpg",
       "/img/products/2026/flag-5.jpg",
+    ],
+    isNew: true,
+  },
+  {
+    slug: "hablador-pared-flag-ov",
+    code: "5426-1",
+    name: "Aviso de Pared FLAG OV",
+    shortName: "Pared FLAG OV",
+    category: "pared",
+    categoryLabel: "Hablador de pared",
+    price: 545000,
+    priceLabel: "$545K",
+    priceEstimated: true,
+    totalSize: "65 cm × 45 cm",
+    artSize: "50 cm × 35 cm",
+    materials: "Acero inoxidable, acero galvanizado, herrajes impresión 3D",
+    paint: "En polvo, electrostática para interior y exterior",
+    description:
+      "La versión oval del FLAG. Mismo soporte perpendicular a la fachada con herrajes en impresión 3D, paddle oval para una silueta más suave.",
+    hero: "/img/products/2026/flag-ov-1.jpg",
+    gallery: [
+      "/img/products/2026/flag-ov-2.jpg",
     ],
     isNew: true,
   },
@@ -424,8 +469,8 @@ export const PRODUCTS: Product[] = [
 ];
 
 export const CATEGORIES = [
-  { id: "piso", label: "Habladores de piso", count: 10 },
-  { id: "pared", label: "Habladores de pared", count: 6 },
+  { id: "piso", label: "Habladores de piso", count: 11 },
+  { id: "pared", label: "Habladores de pared", count: 7 },
   { id: "mesa", label: "Habladores de mesa", count: 2 },
   { id: "accesorio", label: "Accesorios", count: 1 },
 ] as const;
