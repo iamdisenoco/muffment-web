@@ -306,7 +306,7 @@ export const PRODUCTS: Product[] = [
     paint: "En polvo, electrostática para interior y exterior",
     description:
       "Bandera de pared con tensor en nailon. Cuelga perpendicular a la fachada y se ve desde ambas direcciones de la calle.",
-    hero: "/img/products/2026/flag-1.jpg",
+    hero: "/img/products/2026/flag-1-v2.jpg",
     gallery: [
       "/img/products/2026/flag-2.jpg",
       "/img/products/2026/flag-3.jpg",
