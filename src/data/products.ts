@@ -389,7 +389,10 @@ export const PRODUCTS: Product[] = [
     paint: "En polvo, electrostática, para exterior e interior",
     description:
       "Cuadrado para logo + frase. Perfecto al lado de la puerta o sobre la barra.",
-    hero: "/img/products/pared-cuad.jpg",
+    hero: "/img/products/2026/pared-cuad-1.jpg",
+    gallery: [
+      "/img/products/2026/pared-cuad-2.jpg",
+    ],
   },
   {
     slug: "hablador-pared-luna",
