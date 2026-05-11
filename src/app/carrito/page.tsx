@@ -159,6 +159,19 @@ export default function CarritoPage() {
             Revisá los productos y completá tus datos. El pago se procesa con Bold (tarjeta, PSE, Nequi, Daviplata).
           </p>
 
+          {/* Aviso de produccion bajo pedido - critico antes de pagar */}
+          <div className="mt-6 flex items-start gap-3 rounded-2xl border border-cobalt/20 bg-cobalt/5 px-5 py-4 text-cobalt">
+            <span aria-hidden className="text-xl">📦</span>
+            <div className="text-sm">
+              <p className="font-semibold">Trabajamos bajo pedido</p>
+              <p className="mt-1 text-cobalt/75">
+                Cada aviso se fabrica especialmente para vos. El despacho se realiza
+                <strong className="text-cobalt"> entre 4 a 5 semanas</strong> después de
+                confirmar el pago. Coordinamos el envío contigo por WhatsApp.
+              </p>
+            </div>
+          </div>
+
           <div className="mt-10 grid gap-10 md:grid-cols-12 md:gap-12">
             {/* IZQUIERDA: items + formulario */}
             <div className="md:col-span-7 space-y-8">
@@ -240,7 +253,11 @@ export default function CarritoPage() {
                   </div>
                   <div className="flex justify-between text-cobalt/55 text-xs">
                     <dt>Envío</dt>
-                    <dd>Se coordina por WhatsApp</dd>
+                    <dd>Coordinado por WhatsApp</dd>
+                  </div>
+                  <div className="flex justify-between text-cobalt/55 text-xs">
+                    <dt>Tiempo de despacho</dt>
+                    <dd className="font-semibold">4 a 5 semanas</dd>
                   </div>
                 </dl>
                 <div className="my-5 h-px bg-cobalt/10" />

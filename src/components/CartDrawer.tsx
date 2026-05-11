@@ -145,9 +145,11 @@ export function CartDrawer() {
                     {COP.format(subtotal)}
                   </span>
                 </div>
-                <p className="mb-4 text-xs text-cobalt/55">
-                  El envío se calcula en el siguiente paso
-                </p>
+                <div className="mb-4 rounded-xl bg-cobalt/5 px-3 py-2 text-xs text-cobalt/80">
+                  <p>
+                    📦 Bajo pedido — <strong>despacho en 4 a 5 semanas</strong>
+                  </p>
+                </div>
                 <Link
                   href="/carrito"
                   onClick={close}

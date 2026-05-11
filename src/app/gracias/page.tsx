@@ -33,9 +33,17 @@ function GraciasInner() {
             <p className="mt-6 text-base text-cream/80 md:text-lg">
               Tu pago fue aprobado. Te enviamos un correo con el comprobante.
             </p>
-            <p className="mt-2 text-base text-cream/80 md:text-lg">
-              Vamos a coordinar el envío contigo por WhatsApp dentro de las próximas horas.
-            </p>
+            <div className="mt-8 rounded-2xl border border-cream/20 bg-cream/10 px-6 py-5 text-left text-cream/90 backdrop-blur-sm md:text-lg">
+              <p className="font-semibold flex items-center gap-2">
+                <span aria-hidden>📦</span> Trabajamos bajo pedido
+              </p>
+              <p className="mt-2 text-sm text-cream/75 md:text-base">
+                Tu aviso se fabrica especialmente para vos. El despacho se realiza
+                <strong className="text-cream"> entre 4 a 5 semanas</strong> a partir
+                de hoy. Te vamos a contactar por WhatsApp para coordinar la dirección
+                y mantenerte al día del avance.
+              </p>
+            </div>
             {orderId && (
               <p className="mt-4 text-xs uppercase tracking-widest text-cream/55">
                 Orden: {orderId}
