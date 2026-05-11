@@ -7,7 +7,14 @@ import { SmoothScroll } from "@/components/SmoothScroll";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { ProductCard } from "@/components/ProductCard";
 import { ProductGallery } from "@/components/ProductGallery";
+import { ProductDetailMedia } from "@/components/ProductDetailMedia";
 import { PRODUCTS, getProduct } from "@/data/products";
+
+/** Productos con selector de color habilitado.
+ *  Mapping: slug del producto → prefix usado en /img/products/colors/{prefix}-{color-id}.jpg */
+const COLOR_PICKER_PRODUCTS: Record<string, string> = {
+  "hablador-piso-plegable": "plegable",
+};
 import { whatsappLink } from "@/lib/utils";
 
 type Props = {
@@ -63,16 +70,23 @@ export default async function ProductPage({ params }: Props) {
 
         {/* DETALLE */}
         <section className="mx-auto mt-8 grid max-w-[1600px] gap-10 px-6 pb-24 md:grid-cols-12 md:gap-16 md:px-10 md:pb-36">
-          {/* Visual con galería interactiva */}
+          {/* Visual con galería interactiva (+ color picker para productos habilitados) */}
           <div className="md:col-span-7">
-            <ProductGallery
-              hero={product.hero}
-              gallery={product.gallery}
-              video={product.video}
-              alt={product.name}
-              fallbackCode={product.code}
-              fallbackName={product.shortName}
-            />
+            {COLOR_PICKER_PRODUCTS[product.slug] ? (
+              <ProductDetailMedia
+                product={product}
+                colorPrefix={COLOR_PICKER_PRODUCTS[product.slug]}
+              />
+            ) : (
+              <ProductGallery
+                hero={product.hero}
+                gallery={product.gallery}
+                video={product.video}
+                alt={product.name}
+                fallbackCode={product.code}
+                fallbackName={product.shortName}
+              />
+            )}
           </div>
 
           {/* Info */}

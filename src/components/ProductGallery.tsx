@@ -23,8 +23,12 @@ export function ProductGallery({
   fallbackCode,
   fallbackName,
 }: Props) {
-  // Items: hero + gallery (solo del 2026) + video al final si existe
-  const images = [hero, ...gallery].filter((img) => img.includes("/2026/"));
+  // Items: hero + gallery + video al final si existe.
+  // Se filtran placeholders legacy que apuntaban a /img/products/<slug>.jpg
+  // (sin /2026/ y sin /colors/) que eran solo nombres genericos.
+  const isRealImage = (img: string) =>
+    img.includes("/2026/") || img.includes("/colors/");
+  const images = [hero, ...gallery].filter(isRealImage);
   const items: Item[] = [
     ...images.map((src) => ({ type: "image" as const, src })),
     ...(video ? [{ type: "video" as const, src: video }] : []),
