@@ -339,6 +339,23 @@ export default function CarritoPage() {
                   </button>
                 )}
 
+                {/* Notas debajo del botón de pago */}
+                <div className="mt-5 space-y-2 rounded-2xl bg-cobalt/5 px-4 py-3 text-xs text-cobalt/80">
+                  <p className="flex items-start gap-2">
+                    <span aria-hidden>📦</span>
+                    <span>
+                      <strong>Trabajamos bajo pedido — nos demoramos 4 semanas.</strong>{" "}
+                      Te avisamos la fecha exacta por WhatsApp.
+                    </span>
+                  </p>
+                  <p className="flex items-start gap-2">
+                    <span aria-hidden>✦</span>
+                    <span>
+                      <strong>Garantía de 3 años</strong> en todos nuestros avisos.
+                    </span>
+                  </p>
+                </div>
+
                 <p className="mt-4 text-center text-[10px] uppercase tracking-widest text-cobalt/45">
                   Tarjeta · PSE · Nequi · Daviplata
                 </p>
