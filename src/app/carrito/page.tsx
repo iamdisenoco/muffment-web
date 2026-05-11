@@ -285,7 +285,7 @@ export default function CarritoPage() {
                     <dd className="tabular-nums">{COP.format(subtotal)}</dd>
                   </div>
                   <div className="flex justify-between text-cobalt/75">
-                    <dt>Envío {zone ? `(${ZONE_LABELS[zone]})` : ""}</dt>
+                    <dt>Envío {form.ciudad.trim() ? `(${form.ciudad.trim()})` : ""}</dt>
                     <dd className="tabular-nums">
                       {zone ? COP.format(shipping.cost) : (
                         <span className="text-xs italic text-cobalt/55">Ingresá tu ciudad</span>
