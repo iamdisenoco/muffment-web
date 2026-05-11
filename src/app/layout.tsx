@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Bagel_Fat_One } from "next/font/google";
 import "./globals.css";
 import { FloatingDecorations } from "@/components/FloatingDecorations";
+import { CartProvider } from "@/hooks/useCart";
+import { CartDrawer } from "@/components/CartDrawer";
 
 const bagelFatOne = Bagel_Fat_One({
   weight: "400",
@@ -50,10 +52,13 @@ export default function RootLayout({
   return (
     <html lang="es" className={bagelFatOne.variable} suppressHydrationWarning>
       <body className="bg-white text-black antialiased" suppressHydrationWarning>
-        <div className="relative overflow-x-clip">
-          <FloatingDecorations />
-          {children}
-        </div>
+        <CartProvider>
+          <div className="relative overflow-x-clip">
+            <FloatingDecorations />
+            {children}
+          </div>
+          <CartDrawer />
+        </CartProvider>
       </body>
     </html>
   );

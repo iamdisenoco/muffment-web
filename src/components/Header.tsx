@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Logo } from "./Logo";
+import { CartIcon } from "./CartIcon";
 import { cn, whatsappLink } from "@/lib/utils";
 
 const NAV = [
@@ -105,8 +106,9 @@ export function Header() {
           ))}
         </nav>
 
-        {/* Hablemos — pill que abre WhatsApp */}
-        <div className="flex flex-1 justify-end">
+        {/* Hablemos + Cart */}
+        <div className="flex flex-1 items-center justify-end gap-3">
+          <CartIcon onDark={onDark} />
           <a
             href={whatsappLink(
               "Hola MUFFMENT, quisiera saber más de los avisos.",
