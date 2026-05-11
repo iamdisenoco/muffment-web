@@ -452,7 +452,7 @@ export const PRODUCTS: Product[] = [
     paint: "—",
     description:
       "Versión transparente del hablador de mesa. Acrílico que deja respirar el menú y madera roble que aterriza la pieza.",
-    hero: "/img/products/mesa-clear.jpg",
+    hero: "/img/products/2026/mesa-clear-1.jpg",
     isNew: true,
   },
 
