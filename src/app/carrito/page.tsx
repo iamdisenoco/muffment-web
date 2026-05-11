@@ -14,7 +14,23 @@ import {
   ZONE_LABELS,
   type ShippingZone,
 } from "@/lib/shipping";
-import { cn } from "@/lib/utils";
+
+/**
+ * Detecta la zona de envío a partir de la ciudad ingresada.
+ * "Medellín" (con o sin tilde, mayúsculas, etc.) = tarifa Medellín.
+ * Cualquier otra ciudad = tarifa nacional.
+ */
+function detectZone(ciudad: string): ShippingZone | null {
+  const normalized = ciudad
+    .trim()
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[̀-ͯ]/g, "");
+  if (normalized.length < 2) return null;
+  if (/\bmedellin\b|\bmedellin\s/.test(normalized) || normalized === "medellin")
+    return "medellin";
+  return "nacional";
+}
 
 const COP = new Intl.NumberFormat("es-CO", {
   style: "currency",
@@ -49,15 +65,15 @@ declare global {
 export default function CarritoPage() {
   const { items, subtotal, updateQuantity, remove } = useCart();
   const [form, setForm] = useState<CheckoutForm>(EMPTY_FORM);
-  const [zone, setZone] = useState<ShippingZone>("medellin");
   const [signature, setSignature] = useState<string | null>(null);
   const [orderId, setOrderId] = useState<string | null>(null);
   const [signError, setSignError] = useState<string | null>(null);
   const [loadingSig, setLoadingSig] = useState(false);
 
-  // Calcular envío según zona + items
+  // Zona se detecta automáticamente del campo "ciudad" del form
+  const zone = useMemo(() => detectZone(form.ciudad), [form.ciudad]);
   const shipping = useMemo(
-    () => calculateShipping(items, zone),
+    () => (zone ? calculateShipping(items, zone) : { cost: 0, maxSize: null }),
     [items, zone],
   );
   const total = subtotal + shipping.cost;
@@ -261,39 +277,18 @@ export default function CarritoPage() {
                   Resumen
                 </h2>
 
-                {/* Selector de zona de envío */}
-                <div className="mt-4">
-                  <p className="mb-2 text-xs font-medium uppercase tracking-wider text-cobalt/70">
-                    ¿A dónde despachamos?
-                  </p>
-                  <div className="grid grid-cols-2 gap-2">
-                    {(["medellin", "nacional"] as ShippingZone[]).map((z) => (
-                      <button
-                        key={z}
-                        type="button"
-                        data-cursor="hover"
-                        onClick={() => setZone(z)}
-                        className={cn(
-                          "rounded-full border px-3 py-2 text-sm font-medium transition-colors",
-                          zone === z
-                            ? "border-cobalt bg-cobalt text-cream"
-                            : "border-cobalt/20 bg-white text-cobalt hover:border-cobalt/50",
-                        )}
-                      >
-                        {ZONE_LABELS[z]}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-
                 <dl className="mt-4 space-y-2 text-sm">
                   <div className="flex justify-between text-cobalt/75">
                     <dt>Subtotal</dt>
                     <dd className="tabular-nums">{COP.format(subtotal)}</dd>
                   </div>
                   <div className="flex justify-between text-cobalt/75">
-                    <dt>Envío ({ZONE_LABELS[zone]})</dt>
-                    <dd className="tabular-nums">{COP.format(shipping.cost)}</dd>
+                    <dt>Envío {zone ? `(${ZONE_LABELS[zone]})` : ""}</dt>
+                    <dd className="tabular-nums">
+                      {zone ? COP.format(shipping.cost) : (
+                        <span className="text-xs italic text-cobalt/55">Ingresá tu ciudad</span>
+                      )}
+                    </dd>
                   </div>
                   <div className="flex justify-between text-cobalt/55 text-xs">
                     <dt>Despacho</dt>
