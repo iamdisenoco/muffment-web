@@ -25,6 +25,7 @@ export type Product = {
   modelPath?: string; // ruta al .glb si existe
   notes?: string;
   isNew?: boolean; // novedad 2026
+  tags?: string[]; // categorías transversales: "menu", "lifestyle", etc.
 };
 
 export const PRODUCTS: Product[] = [
@@ -241,6 +242,7 @@ export const PRODUCTS: Product[] = [
       "/img/products/2026/menu-swinger-3.jpg",
     ],
     isNew: true,
+    tags: ["menu"],
   },
   {
     slug: "aviso-piso-doble-lamina-portable",
@@ -287,6 +289,7 @@ export const PRODUCTS: Product[] = [
       "/img/products/2026/pared-rect-grande-3.jpg",
     ],
     notes: "Las letras magnéticas son un producto aparte.",
+    tags: ["menu"],
   },
   {
     slug: "hablador-pared-flag",
@@ -436,6 +439,7 @@ export const PRODUCTS: Product[] = [
     ],
     video: "/img/products/2026/mesa-rect-video.mp4",
     notes: "Incluye 8 imanes neodimio.",
+    tags: ["menu"],
   },
   {
     slug: "hablador-mesa-clear",
@@ -454,6 +458,7 @@ export const PRODUCTS: Product[] = [
       "Versión transparente del hablador de mesa. Acrílico que deja respirar el menú y madera roble que aterriza la pieza.",
     hero: "/img/products/2026/mesa-clear-1.jpg",
     isNew: true,
+    tags: ["menu"],
   },
 
   // ============ ACCESORIOS ============

@@ -5,13 +5,14 @@ import { motion, AnimatePresence, LayoutGroup } from "motion/react";
 import { ProductCard } from "./ProductCard";
 import type { Product } from "@/data/products";
 
-type Filter = "all" | "piso" | "pared" | "mesa" | "accesorio";
+type Filter = "all" | "piso" | "pared" | "mesa" | "accesorio" | "menu";
 
 const FILTERS: Array<{ id: Filter; label: string }> = [
   { id: "all", label: "Todos" },
   { id: "piso", label: "Aviso de piso" },
   { id: "pared", label: "Aviso de pared" },
   { id: "mesa", label: "Aviso de mesa" },
+  { id: "menu", label: "Avisos para menú" },
   { id: "accesorio", label: "Accesorios" },
 ];
 
@@ -19,7 +20,11 @@ export function ProductCatalog({ products }: { products: Product[] }) {
   const [filter, setFilter] = useState<Filter>("all");
 
   const filtered =
-    filter === "all" ? products : products.filter((p) => p.category === filter);
+    filter === "all"
+      ? products
+      : filter === "menu"
+        ? products.filter((p) => p.tags?.includes("menu"))
+        : products.filter((p) => p.category === filter);
 
   return (
     <div className="relative">
