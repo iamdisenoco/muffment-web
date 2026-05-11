@@ -320,7 +320,7 @@ export default function CarritoPage() {
 
                 {/* Bold Button — se renderiza solo cuando hay firma + apiKey + form válido */}
                 {apiKey && formValid && signature && orderId ? (
-                  <BoldCheckoutButton
+                  <CustomPayButton
                     apiKey={apiKey}
                     orderId={orderId}
                     amount={total}
@@ -389,14 +389,27 @@ function Field({
   );
 }
 
-// ─── Bold button wrapper ───────────────────────────────────────────────
-// El library de Bold (boldPaymentButton.js) busca elementos
-// <script data-bold-button> y los reemplaza por un botón al cargar.
-// Como en React insertamos el script DESPUÉS del library, tenemos que
-// re-cargar el library cada vez. Solución: en cada cambio de signature
-// (cuando hay un nuevo orderId), insertamos el <script data-bold-button>
-// y JUSTO DESPUÉS cargamos el script CDN — así procesa nuestro elemento.
-function BoldCheckoutButton(props: {
+// ─── Botón de pago personalizado ──────────────────────────────────────
+// Usamos la API "Custom button" de la pasarela: cargamos su library,
+// instanciamos new BoldCheckout({...}) con los datos, y nuestro botón
+// propio llama checkout.open() al click. Esto evita renderizar el
+// botón nativo (que muestra branding del proveedor).
+declare global {
+  interface Window {
+    BoldCheckout?: new (opts: {
+      orderId: string;
+      currency: string;
+      amount: string;
+      apiKey: string;
+      integritySignature: string;
+      description: string;
+      redirectionUrl: string;
+      customerData?: string;
+    }) => { open: () => void };
+  }
+}
+
+function CustomPayButton(props: {
   apiKey: string;
   orderId: string;
   amount: number;
@@ -405,53 +418,69 @@ function BoldCheckoutButton(props: {
   redirectUrl: string;
   customer: CheckoutForm;
 }) {
+  const [libReady, setLibReady] = useState(
+    typeof window !== "undefined" && typeof window.BoldCheckout === "function",
+  );
+  const [busy, setBusy] = useState(false);
+
+  // Cargar el library una sola vez (idempotente)
   useEffect(() => {
-    const container = document.getElementById("bold-button-container");
-    if (!container) return;
-
-    // Limpiar render previo (incluye scripts viejos de Bold)
-    container.innerHTML = "";
-    // Remover library viejo si existe
-    document
-      .querySelectorAll('script[src*="boldPaymentButton.js"]')
-      .forEach((s) => s.remove());
-
-    // 1. Insertar el <script data-bold-button> con los datos
-    const dataScript = document.createElement("script");
-    dataScript.setAttribute("data-bold-button", "");
-    dataScript.setAttribute("data-api-key", props.apiKey);
-    dataScript.setAttribute("data-order-id", props.orderId);
-    dataScript.setAttribute("data-amount", String(Math.round(props.amount)));
-    dataScript.setAttribute("data-currency", "COP");
-    dataScript.setAttribute("data-integrity-signature", props.signature);
-    dataScript.setAttribute("data-description", props.description);
-    dataScript.setAttribute("data-redirection-url", props.redirectUrl);
-    dataScript.setAttribute(
-      "data-customer-data",
-      JSON.stringify({
-        email: props.customer.email,
-        fullName: props.customer.nombre,
-        phone: props.customer.telefono,
-      }),
+    if (typeof window === "undefined") return;
+    if (typeof window.BoldCheckout === "function") {
+      setLibReady(true);
+      return;
+    }
+    const existing = document.querySelector<HTMLScriptElement>(
+      'script[src*="boldPaymentButton.js"]',
     );
-    container.appendChild(dataScript);
+    if (existing) {
+      existing.addEventListener("load", () => setLibReady(true), { once: true });
+      return;
+    }
+    const js = document.createElement("script");
+    js.src = "https://checkout.bold.co/library/boldPaymentButton.js";
+    js.async = true;
+    js.onload = () => setLibReady(true);
+    document.head.appendChild(js);
+  }, []);
 
-    // 2. Cargar el library CDN (procesa el <script data-bold-button> al cargar)
-    const lib = document.createElement("script");
-    lib.src = "https://checkout.bold.co/library/boldPaymentButton.js";
-    lib.async = true;
-    container.appendChild(lib);
-  }, [
-    props.apiKey,
-    props.orderId,
-    props.amount,
-    props.signature,
-    props.description,
-    props.redirectUrl,
-    props.customer.email,
-    props.customer.nombre,
-    props.customer.telefono,
-  ]);
+  const handleClick = () => {
+    if (!libReady || typeof window.BoldCheckout !== "function") return;
+    try {
+      setBusy(true);
+      const checkout = new window.BoldCheckout({
+        orderId: props.orderId,
+        currency: "COP",
+        amount: String(Math.round(props.amount)),
+        apiKey: props.apiKey,
+        integritySignature: props.signature,
+        description: props.description,
+        redirectionUrl: props.redirectUrl,
+        customerData: JSON.stringify({
+          email: props.customer.email,
+          fullName: props.customer.nombre,
+          phone: props.customer.telefono,
+        }),
+      });
+      checkout.open();
+    } catch (err) {
+      console.error("[checkout] no se pudo abrir:", err);
+    } finally {
+      // Pequeño debounce visual antes de re-habilitar (por si el cliente
+      // cierra el modal y vuelve a clickear).
+      setTimeout(() => setBusy(false), 800);
+    }
+  };
 
-  return <div id="bold-button-container" className="min-h-[56px]" />;
+  return (
+    <button
+      type="button"
+      onClick={handleClick}
+      disabled={!libReady || busy}
+      data-cursor="hover"
+      className="w-full rounded-full bg-cobalt px-6 py-4 text-base font-semibold uppercase tracking-wider text-cream transition-all hover:scale-[1.02] hover:bg-cobalt/90 active:scale-[0.98] disabled:cursor-not-allowed disabled:bg-cobalt/30 disabled:hover:scale-100"
+    >
+      {busy ? "Abriendo..." : libReady ? "Pagar" : "Cargando..."}
+    </button>
+  );
 }
