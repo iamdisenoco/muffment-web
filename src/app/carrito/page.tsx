@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import Script from "next/script";
 import { useEffect, useMemo, useState } from "react";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
@@ -172,10 +171,6 @@ export default function CarritoPage() {
       <SmoothScroll />
       <Cursor />
       <Header />
-      <Script
-        src="https://checkout.bold.co/library/boldPaymentButton.js"
-        strategy="afterInteractive"
-      />
 
       <main className="min-h-screen bg-cream pt-32 pb-24 md:pt-40 md:pb-32">
         <div className="mx-auto max-w-[1400px] px-6 md:px-10">
@@ -186,7 +181,7 @@ export default function CarritoPage() {
             Finalizá tu compra
           </h1>
           <p className="mt-2 text-sm text-cobalt/65 md:text-base">
-            Revisá los productos y completá tus datos. El pago se procesa con Bold (tarjeta, PSE, Nequi, Daviplata).
+            Revisá los productos y completá tus datos. Pago seguro con tarjeta, PSE, Nequi o Daviplata.
           </p>
 
           {/* Aviso de despacho - critico antes de pagar */}
@@ -307,7 +302,7 @@ export default function CarritoPage() {
 
                 {!apiKey && (
                   <div className="mb-4 rounded-2xl bg-yellow-50 px-4 py-3 text-xs text-yellow-900">
-                    ⚠️ Falta configurar <code>NEXT_PUBLIC_BOLD_API_KEY</code> en las env vars de Vercel.
+                    ⚠️ Pasarela de pago en configuración. Intentá de nuevo en unos minutos.
                   </div>
                 )}
 
@@ -340,12 +335,12 @@ export default function CarritoPage() {
                     disabled
                     className="w-full cursor-not-allowed rounded-full bg-cobalt/30 px-6 py-4 text-sm font-semibold uppercase tracking-wider text-white"
                   >
-                    {loadingSig ? "Preparando pago..." : "Pagar con Bold"}
+                    {loadingSig ? "Preparando pago..." : "Pagar"}
                   </button>
                 )}
 
                 <p className="mt-4 text-center text-[10px] uppercase tracking-widest text-cobalt/45">
-                  Bold · Tarjeta · PSE · Nequi · Daviplata
+                  Tarjeta · PSE · Nequi · Daviplata
                 </p>
               </div>
             </aside>
@@ -395,9 +390,12 @@ function Field({
 }
 
 // ─── Bold button wrapper ───────────────────────────────────────────────
-// El script de Bold renderiza el <script data-bold-button> en place,
-// reemplazándolo por su iframe/modal. En React necesitamos crear el
-// elemento dinámicamente y dejar que el script lo procese.
+// El library de Bold (boldPaymentButton.js) busca elementos
+// <script data-bold-button> y los reemplaza por un botón al cargar.
+// Como en React insertamos el script DESPUÉS del library, tenemos que
+// re-cargar el library cada vez. Solución: en cada cambio de signature
+// (cuando hay un nuevo orderId), insertamos el <script data-bold-button>
+// y JUSTO DESPUÉS cargamos el script CDN — así procesa nuestro elemento.
 function BoldCheckoutButton(props: {
   apiKey: string;
   orderId: string;
@@ -411,19 +409,24 @@ function BoldCheckoutButton(props: {
     const container = document.getElementById("bold-button-container");
     if (!container) return;
 
-    // Limpiar render previo si la firma/orderid cambió
+    // Limpiar render previo (incluye scripts viejos de Bold)
     container.innerHTML = "";
+    // Remover library viejo si existe
+    document
+      .querySelectorAll('script[src*="boldPaymentButton.js"]')
+      .forEach((s) => s.remove());
 
-    const script = document.createElement("script");
-    script.setAttribute("data-bold-button", "");
-    script.setAttribute("data-api-key", props.apiKey);
-    script.setAttribute("data-order-id", props.orderId);
-    script.setAttribute("data-amount", String(Math.round(props.amount)));
-    script.setAttribute("data-currency", "COP");
-    script.setAttribute("data-integrity-signature", props.signature);
-    script.setAttribute("data-description", props.description);
-    script.setAttribute("data-redirection-url", props.redirectUrl);
-    script.setAttribute(
+    // 1. Insertar el <script data-bold-button> con los datos
+    const dataScript = document.createElement("script");
+    dataScript.setAttribute("data-bold-button", "");
+    dataScript.setAttribute("data-api-key", props.apiKey);
+    dataScript.setAttribute("data-order-id", props.orderId);
+    dataScript.setAttribute("data-amount", String(Math.round(props.amount)));
+    dataScript.setAttribute("data-currency", "COP");
+    dataScript.setAttribute("data-integrity-signature", props.signature);
+    dataScript.setAttribute("data-description", props.description);
+    dataScript.setAttribute("data-redirection-url", props.redirectUrl);
+    dataScript.setAttribute(
       "data-customer-data",
       JSON.stringify({
         email: props.customer.email,
@@ -431,8 +434,24 @@ function BoldCheckoutButton(props: {
         phone: props.customer.telefono,
       }),
     );
-    container.appendChild(script);
-  }, [props.apiKey, props.orderId, props.amount, props.signature, props.description, props.redirectUrl, props.customer.email, props.customer.nombre, props.customer.telefono]);
+    container.appendChild(dataScript);
 
-  return <div id="bold-button-container" />;
+    // 2. Cargar el library CDN (procesa el <script data-bold-button> al cargar)
+    const lib = document.createElement("script");
+    lib.src = "https://checkout.bold.co/library/boldPaymentButton.js";
+    lib.async = true;
+    container.appendChild(lib);
+  }, [
+    props.apiKey,
+    props.orderId,
+    props.amount,
+    props.signature,
+    props.description,
+    props.redirectUrl,
+    props.customer.email,
+    props.customer.nombre,
+    props.customer.telefono,
+  ]);
+
+  return <div id="bold-button-container" className="min-h-[56px]" />;
 }
