@@ -128,9 +128,9 @@ export function ProductDetailSection({ product, colorPrefix }: Props) {
           <p className="flex items-center gap-2">
             <span aria-hidden>📦</span>
             <span>
-              <strong>Trabajamos bajo pedido.</strong> Nos contactaremos los
-              próximos días para darte la fecha exacta del despacho de tu
-              pedido.
+              <strong>Trabajamos bajo pedido — nos demoramos 4 semanas.</strong>{" "}
+              Nos contactaremos los próximos días para darte la fecha exacta
+              del despacho de tu pedido.
             </span>
           </p>
         </div>

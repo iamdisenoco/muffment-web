@@ -193,7 +193,9 @@ export default function CarritoPage() {
           <div className="mt-6 flex items-start gap-3 rounded-2xl border border-cobalt/20 bg-cobalt/5 px-5 py-4 text-cobalt">
             <span aria-hidden className="text-xl">📦</span>
             <div className="text-sm">
-              <p className="font-semibold">Trabajamos bajo pedido</p>
+              <p className="font-semibold">
+                Trabajamos bajo pedido — nos demoramos 4 semanas
+              </p>
               <p className="mt-1 text-cobalt/75">
                 Nos contactaremos los próximos días para darte la fecha
                 exacta del despacho de tu pedido. Coordinamos contigo por
@@ -292,7 +294,7 @@ export default function CarritoPage() {
                   </div>
                   <div className="flex justify-between text-cobalt/55 text-xs">
                     <dt>Despacho</dt>
-                    <dd className="font-semibold">Te avisamos la fecha</dd>
+                    <dd className="font-semibold">~4 semanas</dd>
                   </div>
                 </dl>
                 <div className="my-5 h-px bg-cobalt/10" />

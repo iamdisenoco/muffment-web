@@ -35,7 +35,7 @@ function GraciasInner() {
             </p>
             <div className="mt-8 rounded-2xl border border-cream/20 bg-cream/10 px-6 py-5 text-left text-cream/90 backdrop-blur-sm md:text-lg">
               <p className="font-semibold flex items-center gap-2">
-                <span aria-hidden>📦</span> Trabajamos bajo pedido
+                <span aria-hidden>📦</span> Bajo pedido — nos demoramos 4 semanas
               </p>
               <p className="mt-2 text-sm text-cream/75 md:text-base">
                 Nos contactaremos contigo los próximos días para darte la
