@@ -9,6 +9,12 @@ import { Footer } from "@/components/Footer";
 import { Cursor } from "@/components/Cursor";
 import { SmoothScroll } from "@/components/SmoothScroll";
 import { useCart, getItemKey } from "@/hooks/useCart";
+import {
+  calculateShipping,
+  ZONE_LABELS,
+  type ShippingZone,
+} from "@/lib/shipping";
+import { cn } from "@/lib/utils";
 
 const COP = new Intl.NumberFormat("es-CO", {
   style: "currency",
@@ -43,10 +49,18 @@ declare global {
 export default function CarritoPage() {
   const { items, subtotal, updateQuantity, remove } = useCart();
   const [form, setForm] = useState<CheckoutForm>(EMPTY_FORM);
+  const [zone, setZone] = useState<ShippingZone>("medellin");
   const [signature, setSignature] = useState<string | null>(null);
   const [orderId, setOrderId] = useState<string | null>(null);
   const [signError, setSignError] = useState<string | null>(null);
   const [loadingSig, setLoadingSig] = useState(false);
+
+  // Calcular envío según zona + items
+  const shipping = useMemo(
+    () => calculateShipping(items, zone),
+    [items, zone],
+  );
+  const total = subtotal + shipping.cost;
 
   const apiKey = process.env.NEXT_PUBLIC_BOLD_API_KEY;
   const redirectUrl =
@@ -92,7 +106,7 @@ export default function CarritoPage() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         orderId: newOrderId,
-        amount: subtotal,
+        amount: total,
         currency: "COP",
       }),
     })
@@ -103,7 +117,7 @@ export default function CarritoPage() {
       })
       .catch((err) => setSignError(String(err)))
       .finally(() => setLoadingSig(false));
-  }, [formValid, subtotal, items.length]);
+  }, [formValid, total, items.length]);
 
   // Carrito vacío
   if (items.length === 0) {
@@ -246,14 +260,40 @@ export default function CarritoPage() {
                 <h2 className="text-xl text-cobalt md:text-2xl" style={{ fontFamily: "var(--font-bagel)" }}>
                   Resumen
                 </h2>
+
+                {/* Selector de zona de envío */}
+                <div className="mt-4">
+                  <p className="mb-2 text-xs font-medium uppercase tracking-wider text-cobalt/70">
+                    ¿A dónde despachamos?
+                  </p>
+                  <div className="grid grid-cols-2 gap-2">
+                    {(["medellin", "nacional"] as ShippingZone[]).map((z) => (
+                      <button
+                        key={z}
+                        type="button"
+                        data-cursor="hover"
+                        onClick={() => setZone(z)}
+                        className={cn(
+                          "rounded-full border px-3 py-2 text-sm font-medium transition-colors",
+                          zone === z
+                            ? "border-cobalt bg-cobalt text-cream"
+                            : "border-cobalt/20 bg-white text-cobalt hover:border-cobalt/50",
+                        )}
+                      >
+                        {ZONE_LABELS[z]}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
                 <dl className="mt-4 space-y-2 text-sm">
                   <div className="flex justify-between text-cobalt/75">
                     <dt>Subtotal</dt>
                     <dd className="tabular-nums">{COP.format(subtotal)}</dd>
                   </div>
-                  <div className="flex justify-between text-cobalt/55 text-xs">
-                    <dt>Envío</dt>
-                    <dd>Coordinado por WhatsApp</dd>
+                  <div className="flex justify-between text-cobalt/75">
+                    <dt>Envío ({ZONE_LABELS[zone]})</dt>
+                    <dd className="tabular-nums">{COP.format(shipping.cost)}</dd>
                   </div>
                   <div className="flex justify-between text-cobalt/55 text-xs">
                     <dt>Tiempo de despacho</dt>
@@ -264,7 +304,7 @@ export default function CarritoPage() {
                 <div className="mb-6 flex items-baseline justify-between">
                   <span className="text-sm uppercase tracking-wider text-cobalt/70">Total</span>
                   <span className="text-3xl text-cobalt tabular-nums" style={{ fontFamily: "var(--font-bagel)" }}>
-                    {COP.format(subtotal)}
+                    {COP.format(total)}
                   </span>
                 </div>
 
@@ -291,7 +331,7 @@ export default function CarritoPage() {
                   <BoldCheckoutButton
                     apiKey={apiKey}
                     orderId={orderId}
-                    amount={subtotal}
+                    amount={total}
                     signature={signature}
                     description={`MUFFMENT · ${orderSummary.slice(0, 90)}`}
                     redirectUrl={redirectUrl}

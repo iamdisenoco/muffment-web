@@ -22,6 +22,7 @@ export type CartItem = {
   priceLabel: string;
   price: number;
   hero: string; // hero original del producto (sin color)
+  shippingSize: "pequeno" | "mediano" | "grande";
   quantity: number;
   color?: {
     id: string;

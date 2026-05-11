@@ -26,6 +26,7 @@ export type Product = {
   notes?: string;
   isNew?: boolean; // novedad 2026
   tags?: string[]; // categorías transversales: "menu", "lifestyle", etc.
+  shippingSize: "grande" | "mediano" | "pequeno"; // tamaño para cálculo de envío
 };
 
 export const PRODUCTS: Product[] = [
@@ -52,7 +53,7 @@ export const PRODUCTS: Product[] = [
       "/img/products/2026/ov-4.jpg",
       "/img/products/2026/ov-5.jpg",
     ],
-    has3D: true,
+    has3D: true,    shippingSize: "grande",
   },
   {
     slug: "hablador-piso-plegable",
@@ -78,7 +79,7 @@ export const PRODUCTS: Product[] = [
       "/img/products/2026/plegable-6.jpg",
       "/img/products/2026/plegable-7.jpg",
     ],
-    has3D: true,
+    has3D: true,    shippingSize: "grande",
   },
   {
     slug: "hablador-piso-plegable-small",
@@ -102,7 +103,7 @@ export const PRODUCTS: Product[] = [
       "/img/products/2026/plegable-small-4.jpg",
       "/img/products/2026/plegable-small-5.jpg",
     ],
-    isNew: true,
+    isNew: true,    shippingSize: "mediano",
   },
   {
     slug: "hablador-piso-top-shelf",
@@ -128,7 +129,7 @@ export const PRODUCTS: Product[] = [
       "/img/products/2026/top-shelf-6.jpg",
     ],
     isNew: true,
-    notes: "La información que pones en el aviso es un producto aparte.",
+    notes: "La información que pones en el aviso es un producto aparte.",    shippingSize: "grande",
   },
   {
     slug: "hablador-piso-bent",
@@ -155,7 +156,7 @@ export const PRODUCTS: Product[] = [
       "/img/products/2026/bent-7.jpg",
     ],
     isNew: true,
-    notes: "La información que pones en el aviso es un producto aparte.",
+    notes: "La información que pones en el aviso es un producto aparte.",    shippingSize: "grande",
   },
   {
     slug: "hablador-piso-paleta-redondo",
@@ -177,7 +178,7 @@ export const PRODUCTS: Product[] = [
       "/img/products/2026/paleta-redondo-2.jpg",
       "/img/products/2026/paleta-redondo-3.jpg",
     ],
-    has3D: true,
+    has3D: true,    shippingSize: "grande",
   },
   {
     slug: "hablador-piso-p-ov",
@@ -198,7 +199,7 @@ export const PRODUCTS: Product[] = [
     gallery: [
       "/img/products/2026/p-ov-2.jpg",
       "/img/products/2026/p-ov-3.jpg",
-    ],
+    ],    shippingSize: "grande",
   },
   {
     slug: "hablador-piso-p-rect",
@@ -219,7 +220,7 @@ export const PRODUCTS: Product[] = [
     gallery: [
       "/img/products/2026/p-rect-2.jpg",
       "/img/products/2026/p-rect-3.jpg",
-    ],
+    ],    shippingSize: "grande",
   },
   {
     slug: "aviso-piso-menu-swinger",
@@ -242,7 +243,7 @@ export const PRODUCTS: Product[] = [
       "/img/products/2026/menu-swinger-3.jpg",
     ],
     isNew: true,
-    tags: ["menu"],
+    tags: ["menu"],    shippingSize: "grande",
   },
   {
     slug: "aviso-piso-doble-lamina-portable",
@@ -264,7 +265,7 @@ export const PRODUCTS: Product[] = [
       "/img/products/2026/doble-lamina-portable-2.jpg",
       "/img/products/2026/doble-lamina-portable-3.jpg",
     ],
-    isNew: true,
+    isNew: true,    shippingSize: "grande",
   },
 
   // ============ HABLADORES DE PARED ============
@@ -289,7 +290,7 @@ export const PRODUCTS: Product[] = [
       "/img/products/2026/pared-rect-grande-3.jpg",
     ],
     notes: "Las letras magnéticas son un producto aparte.",
-    tags: ["menu"],
+    tags: ["menu"],    shippingSize: "mediano",
   },
   {
     slug: "hablador-pared-flag",
@@ -313,7 +314,7 @@ export const PRODUCTS: Product[] = [
       "/img/products/2026/flag-4.jpg",
       "/img/products/2026/flag-5.jpg",
     ],
-    isNew: true,
+    isNew: true,    shippingSize: "pequeno",
   },
   {
     slug: "hablador-pared-flag-ov",
@@ -334,7 +335,7 @@ export const PRODUCTS: Product[] = [
     gallery: [
       "/img/products/2026/flag-ov-2.jpg",
     ],
-    isNew: true,
+    isNew: true,    shippingSize: "pequeno",
   },
   {
     slug: "hablador-pared-luna-big",
@@ -355,7 +356,7 @@ export const PRODUCTS: Product[] = [
     gallery: [
       "/img/products/2026/pared-luna-big-2.jpg",
     ],
-    isNew: true,
+    isNew: true,    shippingSize: "mediano",
   },
   {
     slug: "aviso-pared-rectangular",
@@ -376,7 +377,7 @@ export const PRODUCTS: Product[] = [
     hero: "/img/products/2026/pared-rectangular-1.jpg",
     gallery: [
       "/img/products/2026/pared-rectangular-2.jpg",
-    ],
+    ],    shippingSize: "pequeno",
   },
   {
     slug: "hablador-pared-cuad",
@@ -396,7 +397,7 @@ export const PRODUCTS: Product[] = [
     hero: "/img/products/2026/pared-cuad-1.jpg",
     gallery: [
       "/img/products/2026/pared-cuad-2.jpg",
-    ],
+    ],    shippingSize: "pequeno",
   },
   {
     slug: "hablador-pared-luna",
@@ -413,7 +414,7 @@ export const PRODUCTS: Product[] = [
     paint: "En polvo, electrostática, para exterior e interior",
     description:
       "Media luna lateral. La forma menos esperada — la más recordada.",
-    hero: "/img/products/2026/luna-1.jpg",
+    hero: "/img/products/2026/luna-1.jpg",    shippingSize: "pequeno",
   },
 
   // ============ HABLADORES DE MESA ============
@@ -439,7 +440,7 @@ export const PRODUCTS: Product[] = [
     ],
     video: "/img/products/2026/mesa-rect-video.mp4",
     notes: "Incluye 8 imanes neodimio.",
-    tags: ["menu"],
+    tags: ["menu"],    shippingSize: "pequeno",
   },
   {
     slug: "hablador-mesa-clear",
@@ -458,7 +459,7 @@ export const PRODUCTS: Product[] = [
       "Versión transparente del hablador de mesa. Acrílico que deja respirar el menú y madera roble que aterriza la pieza.",
     hero: "/img/products/2026/mesa-clear-1.jpg",
     isNew: true,
-    tags: ["menu"],
+    tags: ["menu"],    shippingSize: "pequeno",
   },
 
   // ============ ACCESORIOS ============
@@ -478,7 +479,7 @@ export const PRODUCTS: Product[] = [
     description:
       "Set de 350 caracteres (A-Z, 0-9, símbolos). Cambias el mensaje en segundos sin imprimir ni reimprimir nada.",
     hero: "/img/products/letras-magneticas.jpg",
-    notes: "Compatible con habladores de pared metálicos.",
+    notes: "Compatible con habladores de pared metálicos.",    shippingSize: "pequeno",
   },
 ];
 

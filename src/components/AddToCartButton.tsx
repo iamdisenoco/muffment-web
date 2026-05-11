@@ -29,6 +29,7 @@ export function AddToCartButton({ product, selectedColor }: Props) {
       priceLabel: product.priceLabel,
       price: product.price,
       hero: product.hero,
+      shippingSize: product.shippingSize,
       color: selectedColor
         ? { id: selectedColor.id, name: selectedColor.name, hex: selectedColor.hex }
         : undefined,
