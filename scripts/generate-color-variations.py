@@ -19,6 +19,7 @@ import re
 from pathlib import Path
 import numpy as np
 from PIL import Image
+from rembg import remove, new_session
 
 COLORS_TS = Path("C:/Users/User/Downloads/muffment-web/src/data/colors.ts")
 text = COLORS_TS.read_text(encoding="utf-8")
@@ -41,19 +42,21 @@ arr = np.array(img).astype(np.float32) / 255.0
 H, W = arr.shape[:2]
 print(f"Source: {W}x{H}")
 
-# Mask del producto: NOT blanco/sombra suave
-# Fondo = V > 0.93 AND S < 0.10 (white + soft shadows)
-maxc = np.max(arr, axis=2)
-minc = np.min(arr, axis=2)
-v_arr = maxc
-s_arr = np.where(maxc > 0, (maxc - minc) / (maxc + 1e-10), 0)
-fondo = (v_arr > 0.93) & (s_arr < 0.10)
-mask_prod = ~fondo
-
-# Limpieza: erosionar/dilatar para quitar pixels sueltos (sombras stray)
-from scipy.ndimage import binary_opening, binary_closing
-mask_prod = binary_closing(mask_prod, iterations=2)
-mask_prod = binary_opening(mask_prod, iterations=1)
+# rembg saca el producto con alpha SMOOTH (sombras del piso = alpha bajo,
+# producto solido = alpha alto, reflejos = alpha medio-alto)
+print("Running rembg (1-2 min)...")
+session = new_session("isnet-general-use")
+cutout = remove(img, session=session)
+alpha_arr = np.array(cutout)[:, :, 3].astype(np.float32) / 255.0
+# La sombra del piso queda con alpha < 0.3. La pisamos a 0 para
+# eliminarla completamente.
+alpha_arr[alpha_arr < 0.30] = 0
+# AMPLIFICAR opacidad: cualquier pixel con alpha > 0.30 lo subimos al
+# nivel solido. Asi los reflejos (que rembg detectaba como semi-
+# transparentes) NO se mezclan con blanco - mantienen color completo.
+# Solo el "feather" finisimo del borde queda smooth.
+alpha_blend = np.where(alpha_arr > 0.30, np.minimum(alpha_arr * 1.6, 1.0), 0.0)
+mask_prod = alpha_blend > 0
 print(f"Producto: {mask_prod.sum()} pixels ({mask_prod.mean()*100:.1f}%)")
 
 # Escala de gris percibida
@@ -79,6 +82,7 @@ bw, bh = x1 - x0, y1 - y0
 # Crop arrays
 norm_crop = norm[y0:y1, x0:x1]
 mask_crop = mask_prod[y0:y1, x0:x1]
+alpha_blend_crop = alpha_blend[y0:y1, x0:x1]
 
 TARGET_SIZE = 1200
 TARGET_FILL = 0.78
@@ -126,9 +130,12 @@ for i, (color_id, hex_str) in enumerate(COLORS):
     out_rgb = np.where(low_mask, out_low, out_high)
     out_rgb = np.clip(out_rgb, 0, 1)
 
-    # Fondo = blanco. Solo aplicar tinte donde mask_prod
-    final = np.ones_like(out_rgb)
-    final[mask_crop] = out_rgb[mask_crop]
+    # Composite con blanco usando alpha smooth:
+    # alpha=1 (producto solido) -> color completo
+    # alpha=0 (fondo + sombra piso) -> blanco puro
+    # alpha intermedio (bordes/reflejos blandos) -> blend suave
+    a3 = alpha_blend_crop[:, :, np.newaxis]
+    final = out_rgb * a3 + np.ones_like(out_rgb) * (1 - a3)
 
     out_img = (final * 255).clip(0, 255).astype(np.uint8)
     pil = Image.fromarray(out_img)
