@@ -11,9 +11,25 @@ import { ProductDetailMedia } from "@/components/ProductDetailMedia";
 import { PRODUCTS, getProduct } from "@/data/products";
 
 /** Productos con selector de color habilitado.
- *  Mapping: slug del producto → prefix usado en /img/products/colors/{prefix}-{color-id}.jpg */
+ *  Mapping: slug del producto → prefix usado en /img/products/colors/{prefix}-{color-id}.jpg
+ *  No incluye productos con fotos lifestyle (mesa-rect, doble-lamina-portable,
+ *  menu-swinger) ni el mesa-clear (acrílico transparente, sin color base). */
 const COLOR_PICKER_PRODUCTS: Record<string, string> = {
+  "hablador-piso-ov": "ov",
   "hablador-piso-plegable": "plegable",
+  "hablador-piso-plegable-small": "plegable-small",
+  "hablador-piso-top-shelf": "top-shelf",
+  "hablador-piso-bent": "bent",
+  "hablador-piso-paleta-redondo": "paleta-redondo",
+  "hablador-piso-p-ov": "p-ov",
+  "hablador-piso-p-rect": "p-rect",
+  "hablador-pared-rect-grande": "pared-rect-grande",
+  "hablador-pared-flag": "flag",
+  "hablador-pared-flag-ov": "flag-ov",
+  "hablador-pared-luna-big": "pared-luna-big",
+  "aviso-pared-rectangular": "pared-rectangular",
+  "hablador-pared-cuad": "pared-cuad",
+  "hablador-pared-luna": "luna",
 };
 import { whatsappLink } from "@/lib/utils";
 

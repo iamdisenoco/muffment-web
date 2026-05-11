@@ -119,7 +119,7 @@ export const COLORS: Color[] = [
 
   // ========== AMARILLOS & NARANJAS ==========
   { id: "amarillo-canario", name: "Amarillo Canario", family: "amarillos", hex: "#f3c722", finishes: ["brillante"], bicapaMate: true },
-  { id: "amarillo-fr", name: "Amarillo FR", family: "amarillos", hex: "#f3c322", finishes: ["brillante"], bicapaMate: true },
+  { id: "amarillo-fr", name: "Amarillo FR", family: "amarillos", hex: "#f3a822", finishes: ["brillante"], bicapaMate: true },
   { id: "amarillo-electrico-mtx", name: "Amarillo Eléctrico MTX", family: "amarillos", hex: "#dba31d", finishes: ["microtexturizado"] },
   { id: "mostaza", name: "Mostaza", family: "amarillos", hex: "#d97b22", finishes: ["brillante"] },
   { id: "mandoria-mtx", name: "Mandoria MTX", family: "amarillos", hex: "#cdc7a3", finishes: ["interior", "texturizado"] },
