@@ -23,8 +23,16 @@ from rembg import remove, new_session
 
 COLORS_TS = Path("C:/Users/User/Downloads/muffment-web/src/data/colors.ts")
 text = COLORS_TS.read_text(encoding="utf-8")
-pattern = re.compile(r'\{\s*id:\s*"([\w-]+)".*?hex:\s*"(#[\w]+)"', re.DOTALL)
-COLORS = [(m.group(1), m.group(2)) for m in pattern.finditer(text)]
+# Parse cada color con su id, hex y finishes
+pattern = re.compile(
+    r'\{\s*id:\s*"([\w-]+)".*?hex:\s*"(#[\w]+)".*?finishes:\s*\[([^\]]+)\]',
+    re.DOTALL,
+)
+COLORS = []
+for m in pattern.finditer(text):
+    cid, hex_str, finishes_str = m.group(1), m.group(2), m.group(3)
+    finishes = [f.strip().strip('"') for f in finishes_str.split(",") if f.strip()]
+    COLORS.append((cid, hex_str, finishes))
 print(f"Colores: {len(COLORS)}")
 
 slug_prefix = sys.argv[1] if len(sys.argv) > 1 else "plegable"
@@ -97,35 +105,59 @@ def hex_to_rgb01(h):
     return np.array([int(h[i:i+2], 16)/255 for i in (0, 2, 4)], dtype=np.float32)
 
 print(f"\nGenerando {len(COLORS)} variantes...")
-for i, (color_id, hex_str) in enumerate(COLORS):
+for i, (color_id, hex_str, finishes) in enumerate(COLORS):
     target = hex_to_rgb01(hex_str)
     target_lum = 0.299 * target[0] + 0.587 * target[1] + 0.114 * target[2]
 
-    # Tritono anchor points:
-    # shadow: target * 0.25 (muy oscuro, casi negro tintado)
-    # mid: target (color base)
-    # highlight: mezcla target + blanco (acabado powder coated brillante)
-    shadow = target * 0.20
-    mid = target
-    # Para colores OSCUROS: highlight = mas claro pero no blanco puro
-    # Para colores CLAROS: highlight = blanco casi puro con leve tinte
-    if target_lum < 0.3:
-        # negros/oscuros: highlight gris claro, no blanco
-        highlight = np.minimum(target + 0.45, np.array([0.55, 0.55, 0.55], dtype=np.float32))
-    elif target_lum < 0.6:
-        highlight = target * 0.4 + np.array([0.6, 0.6, 0.6]) * 0.6
+    # Detectar finish dominante para modular contraste y reflejo
+    fset = set(finishes)
+    if "brillante" in fset:
+        # Brillante: highlight muy alto, contraste maximo
+        highlight_strength = 0.85
+        shadow_strength = 0.18
+    elif "semi-brillante" in fset or "destellos" in fset:
+        highlight_strength = 0.65
+        shadow_strength = 0.22
+    elif "semi-mate" in fset:
+        highlight_strength = 0.45
+        shadow_strength = 0.28
+    elif "texturizado" in fset or "microtexturizado" in fset or "micro-destellos" in fset:
+        # Texturas matifican: highlight muy bajo, contraste minimo
+        highlight_strength = 0.30
+        shadow_strength = 0.35
+    elif "mate" in fset:
+        highlight_strength = 0.25
+        shadow_strength = 0.40
+    elif "interior" in fset:
+        highlight_strength = 0.55
+        shadow_strength = 0.25
     else:
-        # claros: highlight casi blanco
-        highlight = target * 0.3 + np.array([1.0, 1.0, 1.0]) * 0.7
+        highlight_strength = 0.50
+        shadow_strength = 0.25
+
+    # Tritono anchor points moduladas por finish:
+    shadow = target * shadow_strength
+    mid = target
+    # Highlight: mix target con un "color highlight" segun luminancia
+    # del target. Para negros brillantes, highlight muy alto = mucho contraste.
+    # Para colores mate, highlight cercano al mid (poco contraste).
+    if target_lum < 0.3:
+        # Oscuros: highlight strength controla cuanto brillo (max gris claro)
+        highlight_color = np.array([1.0, 1.0, 1.0], dtype=np.float32)
+        # Para brillante: hasta blanco. Para mate: solo un poco mas claro que target.
+        highlight = target + (highlight_color - target) * highlight_strength
+    elif target_lum < 0.6:
+        highlight_color = np.array([1.0, 1.0, 1.0], dtype=np.float32)
+        highlight = target + (highlight_color - target) * (highlight_strength * 0.9)
+    else:
+        highlight_color = np.array([1.0, 1.0, 1.0], dtype=np.float32)
+        highlight = target + (highlight_color - target) * highlight_strength
 
     # Interpolacion 3-pt: norm 0 -> shadow, 0.5 -> mid, 1 -> highlight
     out_rgb = np.zeros((mask_crop.shape[0], mask_crop.shape[1], 3), dtype=np.float32)
-    # Vectorizar:
-    n = norm_crop[:, :, np.newaxis]  # H,W,1
+    n = norm_crop[:, :, np.newaxis]
     low_mask = n < 0.5
-    # Para low_mask: lerp(shadow, mid, n * 2)
     out_low = shadow + (mid - shadow) * (n * 2)
-    # Para high_mask: lerp(mid, highlight, (n - 0.5) * 2)
     out_high = mid + (highlight - mid) * ((n - 0.5) * 2)
     out_rgb = np.where(low_mask, out_low, out_high)
     out_rgb = np.clip(out_rgb, 0, 1)
