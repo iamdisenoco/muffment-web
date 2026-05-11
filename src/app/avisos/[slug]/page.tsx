@@ -68,6 +68,7 @@ export default async function ProductPage({ params }: Props) {
             <ProductGallery
               hero={product.hero}
               gallery={product.gallery}
+              video={product.video}
               alt={product.name}
               fallbackCode={product.code}
               fallbackName={product.shortName}

@@ -7,29 +7,38 @@ import { cn } from "@/lib/utils";
 type Props = {
   hero: string;
   gallery?: string[];
+  video?: string;
   alt: string;
   fallbackCode?: string;
   fallbackName?: string;
 };
 
+type Item = { type: "image" | "video"; src: string };
+
 export function ProductGallery({
   hero,
   gallery = [],
+  video,
   alt,
   fallbackCode,
   fallbackName,
 }: Props) {
+  // Items: hero + gallery (solo del 2026) + video al final si existe
   const images = [hero, ...gallery].filter((img) => img.includes("/2026/"));
+  const items: Item[] = [
+    ...images.map((src) => ({ type: "image" as const, src })),
+    ...(video ? [{ type: "video" as const, src: video }] : []),
+  ];
   const [active, setActive] = useState(0);
   const [zoom, setZoom] = useState(false);
 
   const next = useCallback(
-    () => setActive((i) => (i + 1) % images.length),
-    [images.length],
+    () => setActive((i) => (i + 1) % items.length),
+    [items.length],
   );
   const prev = useCallback(
-    () => setActive((i) => (i - 1 + images.length) % images.length),
-    [images.length],
+    () => setActive((i) => (i - 1 + items.length) % items.length),
+    [items.length],
   );
 
   // Teclado: flechas para navegar, Escape para cerrar zoom
@@ -44,8 +53,8 @@ export function ProductGallery({
     return () => window.removeEventListener("keydown", handler);
   }, [zoom, next, prev]);
 
-  // Si NO hay fotos reales (todo placeholder)
-  if (images.length === 0) {
+  // Si NO hay items (todo placeholder)
+  if (items.length === 0) {
     return (
       <div className="relative aspect-square w-full overflow-hidden rounded-[2rem] bg-white md:aspect-[4/3]">
         <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-white via-white to-white">
@@ -65,29 +74,41 @@ export function ProductGallery({
     );
   }
 
-  const current = images[active];
-  const showArrows = images.length > 1;
+  const current = items[active];
+  const showArrows = items.length > 1;
 
   return (
     <>
       {/* HERO grande con flechas + click para zoom */}
       <div className="group relative aspect-[4/5] w-full overflow-hidden rounded-[2rem] border border-black/10 bg-[#f7f7f5] shadow-sm md:aspect-[4/3]">
-        <button
-          type="button"
-          onClick={() => setZoom(true)}
-          className="absolute inset-0 cursor-zoom-in"
-          aria-label="Ampliar imagen"
-          data-cursor="hover"
-        >
-          <Image
-            src={current}
-            alt={alt}
-            fill
-            priority
-            sizes="(max-width: 768px) 100vw, 60vw"
-            className="object-contain"
+        {current.type === "video" ? (
+          <video
+            src={current.src}
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="absolute inset-0 h-full w-full object-contain"
+            aria-label={alt}
           />
-        </button>
+        ) : (
+          <button
+            type="button"
+            onClick={() => setZoom(true)}
+            className="absolute inset-0 cursor-zoom-in"
+            aria-label="Ampliar imagen"
+            data-cursor="hover"
+          >
+            <Image
+              src={current.src}
+              alt={alt}
+              fill
+              priority
+              sizes="(max-width: 768px) 100vw, 60vw"
+              className="object-contain"
+            />
+          </button>
+        )}
 
         {showArrows && (
           <>
@@ -140,22 +161,22 @@ export function ProductGallery({
               </svg>
             </button>
             <span className="pointer-events-none absolute bottom-4 right-4 rounded-full bg-cobalt/85 px-3 py-1 text-xs font-medium uppercase tracking-wider text-cream">
-              {active + 1} / {images.length}
+              {active + 1} / {items.length}
             </span>
           </>
         )}
       </div>
 
       {/* THUMBNAILS */}
-      {images.length > 1 && (
+      {items.length > 1 && (
         <div className="mt-4 grid grid-cols-4 gap-3 sm:grid-cols-5 md:grid-cols-4 lg:grid-cols-5">
-          {images.map((img, i) => (
+          {items.map((it, i) => (
             <button
-              key={img}
+              key={it.src}
               type="button"
               onClick={() => setActive(i)}
               data-cursor="hover"
-              aria-label={`Ver foto ${i + 1}`}
+              aria-label={it.type === "video" ? "Ver video" : `Ver foto ${i + 1}`}
               aria-current={i === active}
               className={cn(
                 "relative aspect-square overflow-hidden rounded-2xl border border-black/10 bg-[#f7f7f5] transition-all",
@@ -164,20 +185,34 @@ export function ProductGallery({
                   : "opacity-70 hover:opacity-100",
               )}
             >
-              <Image
-                src={img}
-                alt={`${alt} — vista ${i + 1}`}
-                fill
-                sizes="(max-width: 768px) 25vw, 15vw"
-                className="object-contain"
-              />
+              {it.type === "video" ? (
+                <>
+                  <video
+                    src={it.src}
+                    muted
+                    playsInline
+                    className="absolute inset-0 h-full w-full object-contain"
+                  />
+                  <span className="pointer-events-none absolute bottom-1 right-1 rounded-full bg-cobalt/85 px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wider text-cream">
+                    VIDEO
+                  </span>
+                </>
+              ) : (
+                <Image
+                  src={it.src}
+                  alt={`${alt} — vista ${i + 1}`}
+                  fill
+                  sizes="(max-width: 768px) 25vw, 15vw"
+                  className="object-contain"
+                />
+              )}
             </button>
           ))}
         </div>
       )}
 
-      {/* LIGHTBOX */}
-      {zoom && (
+      {/* LIGHTBOX (solo para imágenes, no para video) */}
+      {zoom && current.type === "image" && (
         <div
           role="dialog"
           aria-modal="true"
@@ -211,7 +246,7 @@ export function ProductGallery({
             onClick={(e) => e.stopPropagation()}
           >
             <Image
-              src={current}
+              src={current.src}
               alt={alt}
               fill
               sizes="100vw"
@@ -261,7 +296,7 @@ export function ProductGallery({
                   </svg>
                 </button>
                 <span className="pointer-events-none absolute bottom-6 left-1/2 -translate-x-1/2 rounded-full bg-cream/15 px-4 py-1.5 text-sm font-medium uppercase tracking-wider text-cream">
-                  {active + 1} / {images.length}
+                  {active + 1} / {items.length}
                 </span>
               </>
             )}

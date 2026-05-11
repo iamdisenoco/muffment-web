@@ -20,6 +20,7 @@ export type Product = {
   description: string;
   hero: string; // imagen principal (relativa a /public)
   gallery?: string[]; // imágenes adicionales (relativas a /public)
+  video?: string; // video del producto (mp4 relativo a /public, autoplay loop muted)
   has3D?: boolean;
   modelPath?: string; // ruta al .glb si existe
   notes?: string;
@@ -428,7 +429,12 @@ export const PRODUCTS: Product[] = [
     paint: "En polvo, electrostática, para exterior e interior",
     description:
       "Para menús, números de mesa, promos. Base en madera roble con cera de abeja. Incluye 8 imanes neodimio.",
-    hero: "/img/products/mesa-rect.jpg",
+    hero: "/img/products/2026/mesa-rect-1.jpg",
+    gallery: [
+      "/img/products/2026/mesa-rect-2.jpg",
+      "/img/products/2026/mesa-rect-3.jpg",
+    ],
+    video: "/img/products/2026/mesa-rect-video.mp4",
     notes: "Incluye 8 imanes neodimio.",
   },
   {
