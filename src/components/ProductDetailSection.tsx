@@ -80,7 +80,7 @@ export function ProductDetailSection({ product, colorPrefix }: Props) {
       {/* DERECHA: info + precio + CTA */}
       <div className="md:col-span-5 md:sticky md:top-32 md:self-start">
         <h1
-          className="text-[clamp(2.25rem,5vw,4.5rem)] leading-[0.95] text-cobalt"
+          className="text-[clamp(1.75rem,3.2vw,3rem)] leading-[1] text-cobalt"
           style={{ fontFamily: "var(--font-bagel)" }}
         >
           {product.name}
