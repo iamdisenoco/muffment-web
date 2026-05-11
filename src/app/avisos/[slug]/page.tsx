@@ -10,8 +10,9 @@ import { PRODUCTS, getProduct } from "@/data/products";
 
 /** Productos con selector de color habilitado.
  *  Mapping: slug del producto → prefix usado en /img/products/colors/{prefix}-{color-id}.jpg
- *  No incluye productos con fotos lifestyle (mesa-rect, doble-lamina-portable,
- *  menu-swinger) ni el mesa-clear (acrílico transparente, sin color base). */
+ *  Excluidos: mesa-rect (foto lifestyle con video del cliente),
+ *  mesa-clear (acrílico transparente sin color base), letras-magneticas
+ *  (accesorio sin foto producto). */
 const COLOR_PICKER_PRODUCTS: Record<string, string> = {
   "hablador-piso-ov": "ov",
   "hablador-piso-plegable": "plegable",
@@ -21,6 +22,8 @@ const COLOR_PICKER_PRODUCTS: Record<string, string> = {
   "hablador-piso-paleta-redondo": "paleta-redondo",
   "hablador-piso-p-ov": "p-ov",
   "hablador-piso-p-rect": "p-rect",
+  "aviso-piso-menu-swinger": "menu-swinger",
+  "aviso-piso-doble-lamina-portable": "doble-lamina-portable",
   "hablador-pared-rect-grande": "pared-rect-grande",
   "hablador-pared-flag": "flag",
   "hablador-pared-flag-ov": "flag-ov",
