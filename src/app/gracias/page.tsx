@@ -38,10 +38,9 @@ function GraciasInner() {
                 <span aria-hidden>📦</span> Trabajamos bajo pedido
               </p>
               <p className="mt-2 text-sm text-cream/75 md:text-base">
-                Tu aviso se fabrica especialmente para vos. El despacho se realiza
-                <strong className="text-cream"> entre 4 a 5 semanas</strong> a partir
-                de hoy. Te vamos a contactar por WhatsApp para coordinar la dirección
-                y mantenerte al día del avance.
+                Nos contactaremos contigo los próximos días para darte la
+                fecha exacta del despacho de tu pedido y coordinar la
+                dirección de entrega por WhatsApp.
               </p>
             </div>
             {orderId && (

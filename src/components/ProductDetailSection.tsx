@@ -123,14 +123,14 @@ export function ProductDetailSection({ product, colorPrefix }: Props) {
           {product.notes && <Row label="Nota" value={product.notes} />}
         </dl>
 
-        {/* Aviso de tiempo de produccion - importante antes de comprar */}
+        {/* Aviso de despacho - importante antes de comprar */}
         <div className="mt-8 rounded-2xl border border-cobalt/15 bg-cobalt/5 px-4 py-3 text-sm text-cobalt">
           <p className="flex items-center gap-2">
             <span aria-hidden>📦</span>
             <span>
-              <strong>Trabajamos bajo pedido.</strong> Tu aviso se fabrica
-              especialmente para vos. <strong>Despacho en 4 a 5 semanas</strong> después
-              de confirmar el pago.
+              <strong>Trabajamos bajo pedido.</strong> Nos contactaremos los
+              próximos días para darte la fecha exacta del despacho de tu
+              pedido.
             </span>
           </p>
         </div>

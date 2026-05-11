@@ -147,7 +147,8 @@ export function CartDrawer() {
                 </div>
                 <div className="mb-4 rounded-xl bg-cobalt/5 px-3 py-2 text-xs text-cobalt/80">
                   <p>
-                    📦 Bajo pedido — <strong>despacho en 4 a 5 semanas</strong>
+                    📦 Bajo pedido — te contactaremos los próximos días con la
+                    fecha exacta del despacho
                   </p>
                 </div>
                 <Link
