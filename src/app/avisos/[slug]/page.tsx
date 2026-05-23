@@ -65,24 +65,30 @@ export default async function ProductPage({ params }: Props) {
       <Cursor />
       <Header />
       <main className="relative bg-white pt-32">
-        {/* Franja cobalt UN SOLO gradient continuo (sin línea dura).
-            Antes tenía 2 divs (banda sólida + fade) que creaban un
-            quiebre visual donde terminaba la banda. Ahora 1 div con
-            el "sólido" + "fade" integrados:
-              0%    → cobalt sólido (top)
-              35%   → cobalt sólido (banda llena cubre header+breadcrumb)
-              70%   → cobalt 0.15 (mismo stop intermedio que el bottom-hero)
-              100%  → transparente (revela bg-white)
-            Mismo stop intermedio (0.15) y misma estructura que el fade
-            bottom-hero que sí funciona, pero más largo (256/320px) y
-            CONTINUO sin discontinuidades. */}
+        {/* BUG ENCONTRADO con preview_inspect: el marquee del producto
+            tiene bg-white sólido en y=239 y mi fade iba de y=160 a y=320.
+            Resultado: 80px del fade quedaban TAPADOS por el marquee.
+
+            Solución: comprimir banda sólida (h-20 = 80px solo cubre el
+            header) y poner el fade JUSTO en la zona visible entre header
+            y marquee (~159px visibles en y=80→239).
+
+            Banda + fade total: 240px → coincide con marquee_top exacto. */}
+
+        {/* Capa 1: banda cobalt sólida CHICA — solo cubre header pill */}
         <div
           aria-hidden
           data-header-theme="dark"
-          className="pointer-events-none absolute inset-x-0 top-0 z-0 h-[256px] md:h-[320px]"
+          className="pointer-events-none absolute inset-x-0 top-0 z-0 h-20 bg-cobalt md:h-24"
+        />
+
+        {/* Capa 2: fade smooth — TODO VISIBLE entre banda y marquee */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-x-0 top-20 z-0 h-40 md:top-24 md:h-[160px]"
           style={{
             background:
-              "linear-gradient(to bottom, rgb(50,54,183) 0%, rgb(50,54,183) 35%, rgba(50,54,183,0.15) 70%, rgba(255,255,255,0) 100%)",
+              "linear-gradient(to bottom, rgb(50,54,183) 0%, rgba(50,54,183,0.15) 60%, rgba(255,255,255,0) 100%)",
           }}
         />
 
