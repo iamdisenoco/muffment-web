@@ -42,10 +42,10 @@ export const PRODUCTS: Product[] = [
     priceLabel: "$915K",
     totalSize: "100 cm × 57 cm",
     artSize: "85 cm × 56 cm",
-    materials: "Acero galvanizado, acero inoxidable",
-    paint: "En polvo, electrostática, para exterior e interior",
+    materials: "Acero con tratamiento de metalizado (0 oxidación), acero inoxidable",
+    paint: "Pintura electrostática en polvo, para exterior e interior",
     description:
-      "El hablador grande oval que cuenta tu marca a metros. Para entradas, terrazas y vitrinas. Pintura electrostática para sol y lluvia.",
+      "Permite desarmarse por medio de una llave, ideal para estar transportando y que ocupe menos espacio.",
     hero: "/img/products/2026/ov-1.jpg",
     has3D: true,    shippingSize: "grande",
   },
@@ -60,10 +60,10 @@ export const PRODUCTS: Product[] = [
     priceLabel: "$780K",
     totalSize: "96 cm × 70 cm",
     artSize: "80 cm × 60 cm",
-    materials: "Acero galvanizado, acero inoxidable",
-    paint: "En polvo, electrostática, para exterior e interior",
+    materials: "Acero con tratamiento de metalizado (0 oxidación), acero inoxidable",
+    paint: "Pintura electrostática en polvo, para exterior e interior",
     description:
-      "Tipo A-frame, plegable para guardar fácil al cierre. El clásico de cafés y restaurantes que cambian menú a diario.",
+      "Permite plegarse, ideal si necesitas guardarlo todos los días o moverlo de un lugar a otro.",
     hero: "/img/products/2026/plegable-1-cutout.png",
     gallery: [
       "/img/products/2026/plegable-2-cutout.png",
@@ -86,10 +86,10 @@ export const PRODUCTS: Product[] = [
     priceLabel: "$620K",
     totalSize: "74 cm × 60 cm × 40 cm",
     artSize: "46 cm × 46 cm",
-    materials: "Acero galvanizado, acero inoxidable",
-    paint: "En polvo, electrostática, para exterior e interior",
+    materials: "Acero con tratamiento de metalizado (0 oxidación), acero inoxidable",
+    paint: "Pintura electrostática en polvo, para exterior e interior",
     description:
-      "La versión chica del A-frame plegable. Misma lógica de cambio rápido de mensaje, formato compacto para entradas y barras estrechas.",
+      "Permite plegarse, ideal si necesitas guardarlo todos los días o moverlo de un lugar a otro. Versión compacta para entradas y barras estrechas.",
     hero: "/img/products/2026/plegable-small-1.jpg",
     gallery: [
       "/img/products/2026/plegable-small-2.jpg",
@@ -110,10 +110,10 @@ export const PRODUCTS: Product[] = [
     priceLabel: "$725K",
     totalSize: "62 cm × 46 cm × 50 cm",
     artSize: "45 cm × 45 cm",
-    materials: "Acero galvanizado, ABS con fibra de vidrio",
-    paint: "En polvo, electrostática para interior y exterior",
+    materials: "Acero con tratamiento de metalizado (0 oxidación), ABS con fibra de vidrio",
+    paint: "Pintura electrostática en polvo, para exterior e interior",
     description:
-      "Estructura tipo estante con bandeja superior. Para mostrar producto y mensaje al mismo tiempo. La información va aparte.",
+      "Cuenta con una bandeja en la parte de arriba para poner objetos decorativos y volver el aviso único.",
     hero: "/img/products/2026/top-shelf-1.jpg",
     gallery: [
       "/img/products/2026/top-shelf-2.jpg",
@@ -136,10 +136,10 @@ export const PRODUCTS: Product[] = [
     priceLabel: "$830K",
     totalSize: "98 cm × 67 cm × 70 cm",
     artSize: "65 cm × 62 cm",
-    materials: "Acero galvanizado, ABS con fibra de vidrio",
-    paint: "En polvo, electrostática para interior y exterior",
+    materials: "Acero con tratamiento de metalizado (0 oxidación), tapones impresión 3D",
+    paint: "Pintura electrostática en polvo, para exterior e interior",
     description:
-      "Forma curva con personalidad. La pieza grande para zonas premium: hoteles, showrooms, retail concept.",
+      "El más indicado para lugares donde hay vientos fuertes — su estructura fija y robusta genera gran estabilidad. Tapones en impresión 3D para evitar rayar el piso.",
     hero: "/img/products/2026/bent-1.jpg",
     gallery: [
       "/img/products/2026/bent-2.jpg",
@@ -163,10 +163,10 @@ export const PRODUCTS: Product[] = [
     priceLabel: "$725K",
     totalSize: "106 cm × Ø 40 cm",
     artSize: "Ø 40 cm",
-    materials: "Acero galvanizado, acero inoxidable",
-    paint: "En polvo, electrostática, para exterior e interior",
+    materials: "Acero con tratamiento de metalizado (0 oxidación), base en acero macizo",
+    paint: "Pintura electrostática en polvo, para exterior e interior",
     description:
-      "Paleta circular sobre poste. Vibe vintage gas-station modernizado. Llama desde la cuadra siguiente.",
+      "Aviso paleta de una sola pieza, con una base en acero macizo que garantiza gran estabilidad.",
     hero: "/img/products/2026/paleta-redondo-1.jpg",
     gallery: [
       "/img/products/2026/paleta-redondo-2.jpg",
@@ -185,10 +185,10 @@ export const PRODUCTS: Product[] = [
     priceLabel: "$725K",
     totalSize: "116 cm × 40 cm",
     artSize: "45 cm × 30 cm",
-    materials: "Acero galvanizado, acero inoxidable",
-    paint: "En polvo, electrostática, para exterior e interior",
+    materials: "Acero con tratamiento de metalizado (0 oxidación), base en acero macizo",
+    paint: "Pintura electrostática en polvo, para exterior e interior",
     description:
-      "Paleta oval sobre poste alto. Para señalizar entrada, parking, recepción o lo que sea.",
+      "Aviso paleta de una sola pieza, con una base en acero macizo que garantiza gran estabilidad. Versión oval.",
     hero: "/img/products/2026/p-ov-1.jpg",
     gallery: [
       "/img/products/2026/p-ov-2.jpg",
@@ -206,10 +206,10 @@ export const PRODUCTS: Product[] = [
     priceLabel: "$725K",
     totalSize: "116 cm × 40 cm",
     artSize: "45 cm × 30 cm",
-    materials: "Acero galvanizado, acero inoxidable",
-    paint: "En polvo, electrostática, para exterior e interior",
+    materials: "Acero con tratamiento de metalizado (0 oxidación), base en acero macizo",
+    paint: "Pintura electrostática en polvo, para exterior e interior",
     description:
-      "Paleta rectangular sobre poste alto. Como la Paleta Ovalado pero con esquinas para que tu copy respire mejor.",
+      "Aviso paleta de una sola pieza, con una base en acero macizo que garantiza gran estabilidad. Versión rectangular.",
     hero: "/img/products/2026/p-rect-1.jpg",
     gallery: [
       "/img/products/2026/p-rect-2.jpg",
@@ -227,10 +227,10 @@ export const PRODUCTS: Product[] = [
     priceLabel: "$790K",
     totalSize: "115 cm × 40 cm",
     artSize: "39 cm × 26 cm",
-    materials: "Acero galvanizado, acrílico 3mm",
-    paint: "En polvo, electrostática para interior y exterior",
+    materials: "Acero con tratamiento de metalizado (0 oxidación), acrílico 3mm",
+    paint: "Pintura electrostática en polvo, para exterior e interior",
     description:
-      "Aviso de piso pivotante. Acrílico 3mm para que tu mensaje brille con la luz. Perfecto para entradas y zonas de espera.",
+      "Aviso recibidor, ideal para poner en la entrada y destacar tu menú o un plato del día. Caja magnética en acrílico para cambiar la info fácilmente. La parte superior gira para usarla en modo horizontal o vertical.",
     hero: "/img/products/2026/menu-swinger-1.jpg",
     gallery: [
       "/img/products/2026/menu-swinger-2.jpg",
@@ -250,10 +250,10 @@ export const PRODUCTS: Product[] = [
     priceLabel: "$1.097K",
     totalSize: "170 cm × 80 cm",
     artSize: "Dos paneles 60 × 40 cm",
-    materials: "Tubería galvanizada, láminas en aluminio, tapones impresión 3D",
-    paint: "En polvo, electrostática, para exterior e interior",
+    materials: "Acero con tratamiento de metalizado (0 oxidación), láminas en aluminio, tapones impresión 3D",
+    paint: "Pintura electrostática en polvo, para exterior e interior",
     description:
-      "Aviso doble lámina sobre estructura tubular portable. Dos paneles para comunicar dos mensajes al tiempo, o uno por cada lado del flujo de gente.",
+      "Permite desarmarse sin herramienta, lo que lo hace ideal para transportar o para eventos. Tapones en impresión 3D en la base para no rayar el piso.",
     hero: "/img/products/2026/doble-lamina-portable-1.jpg",
     gallery: [
       "/img/products/2026/doble-lamina-portable-2.jpg",
@@ -274,10 +274,10 @@ export const PRODUCTS: Product[] = [
     priceLabel: "$650K",
     totalSize: "85 cm × 46 cm",
     artSize: "80 cm × 40 cm",
-    materials: "Acero galvanizado, acero inoxidable",
-    paint: "En polvo, electrostática, para exterior e interior",
+    materials: "Acero con tratamiento de metalizado (0 oxidación), acero inoxidable",
+    paint: "Pintura electrostática en polvo, para exterior e interior",
     description:
-      "Aviso colgante de techo o pared. Funciona con letras magnéticas — cambias el menú sin imprimir nada nuevo.",
+      "Ideal para poner tu menú sea en interior o exterior. Funciona con letras magnéticas — cambias el mensaje sin imprimir nada nuevo.",
     hero: "/img/products/2026/pared-rect-grande-1.jpg",
     gallery: [
       "/img/products/2026/pared-rect-grande-2.jpg",
@@ -297,10 +297,10 @@ export const PRODUCTS: Product[] = [
     priceLabel: "$515K",
     totalSize: "55 cm × 50 cm",
     artSize: "46 cm × 46 cm",
-    materials: "Acero galvanizado, acero inoxidable, nailon",
-    paint: "En polvo, electrostática para interior y exterior",
+    materials: "Acero con tratamiento de metalizado (0 oxidación), acero inoxidable, nailon",
+    paint: "Pintura electrostática en polvo, para exterior e interior",
     description:
-      "Bandera de pared con tensor en nailon. Cuelga perpendicular a la fachada y se ve desde ambas direcciones de la calle.",
+      "Ideal para poner afuera o adentro tu marca con tu logo o alguna frase llamativa. Bandera perpendicular a la fachada, visible desde ambas direcciones de la calle.",
     hero: "/img/products/2026/flag-1-v2.jpg",
     gallery: [
       "/img/products/2026/flag-2.jpg",
@@ -321,10 +321,10 @@ export const PRODUCTS: Product[] = [
     priceLabel: "$515K",
     totalSize: "65 cm × 45 cm",
     artSize: "50 cm × 35 cm",
-    materials: "Acero inoxidable, acero galvanizado, herrajes impresión 3D",
-    paint: "En polvo, electrostática para interior y exterior",
+    materials: "Acero con tratamiento de metalizado (0 oxidación), acero inoxidable, herrajes impresión 3D",
+    paint: "Pintura electrostática en polvo, para exterior e interior",
     description:
-      "La versión oval del Flag. Mismo soporte perpendicular a la fachada con herrajes en impresión 3D, paddle oval para una silueta más suave.",
+      "Ideal para poner afuera o adentro tu marca con tu logo o alguna frase llamativa. Versión oval del Flag, silueta más suave.",
     hero: "/img/products/2026/flag-ov-1.jpg",
     gallery: [
       "/img/products/2026/flag-ov-2.jpg",
@@ -342,10 +342,10 @@ export const PRODUCTS: Product[] = [
     priceLabel: "$170K",
     totalSize: "60 cm × 40 cm",
     artSize: "60 cm × 40 cm",
-    materials: "Acero galvanizado, acero inoxidable",
-    paint: "En polvo, electrostática, para exterior e interior",
+    materials: "Acero con tratamiento de metalizado (0 oxidación), acero inoxidable",
+    paint: "Pintura electrostática en polvo, para exterior e interior",
     description:
-      "La media luna en versión grande. Más espacio, más impacto. Para fachadas que necesitan personalidad.",
+      "Ideal para poner afuera o adentro tu marca con tu logo o alguna frase llamativa. Forma media luna en versión grande, más espacio, más impacto.",
     hero: "/img/products/2026/pared-luna-big-1.jpg",
     gallery: [
       "/img/products/2026/pared-luna-big-2.jpg",
@@ -364,10 +364,10 @@ export const PRODUCTS: Product[] = [
     priceEstimated: true,
     totalSize: "44 cm × 14.5 cm",
     artSize: "44 cm × 14.5 cm",
-    materials: "Acero galvanizado, acero inoxidable",
-    paint: "En polvo, electrostática, para exterior e interior",
+    materials: "Acero con tratamiento de metalizado (0 oxidación), acero inoxidable",
+    paint: "Pintura electrostática en polvo, para exterior e interior",
     description:
-      "Aviso horizontal de pared para fachadas, pasillos y entradas. Una sola pieza con anclaje lateral oculto. El espacio justo para tu nombre y un sub-texto.",
+      "Ideal para poner afuera o adentro tu marca con tu logo o alguna frase llamativa. Una sola pieza con anclaje lateral oculto.",
     hero: "/img/products/2026/pared-rectangular-1.jpg",
     gallery: [
       "/img/products/2026/pared-rectangular-2.jpg",
@@ -384,10 +384,10 @@ export const PRODUCTS: Product[] = [
     priceLabel: "$110K",
     totalSize: "30 cm × 30 cm",
     artSize: "30 cm × 30 cm",
-    materials: "Acero galvanizado, acero inoxidable",
-    paint: "En polvo, electrostática, para exterior e interior",
+    materials: "Acero con tratamiento de metalizado (0 oxidación), acero inoxidable",
+    paint: "Pintura electrostática en polvo, para exterior e interior",
     description:
-      "Cuadrado para logo + frase. Perfecto al lado de la puerta o sobre la barra.",
+      "Ideal para poner afuera o adentro tu marca con tu logo o alguna frase llamativa. Formato cuadrado, perfecto al lado de la puerta o sobre la barra.",
     hero: "/img/products/2026/pared-cuad-1.jpg",
     gallery: [
       "/img/products/2026/pared-cuad-2.jpg",
@@ -404,10 +404,10 @@ export const PRODUCTS: Product[] = [
     priceLabel: "$90K",
     totalSize: "30 cm × 20 cm",
     artSize: "30 cm × 20 cm",
-    materials: "Acero galvanizado, acero inoxidable",
-    paint: "En polvo, electrostática, para exterior e interior",
+    materials: "Acero con tratamiento de metalizado (0 oxidación), acero inoxidable",
+    paint: "Pintura electrostática en polvo, para exterior e interior",
     description:
-      "Media luna lateral. La forma menos esperada — la más recordada.",
+      "Ideal para poner afuera o adentro tu marca con tu logo o alguna frase llamativa. Forma media luna lateral, la más recordada.",
     hero: "/img/products/2026/luna-1.jpg",    shippingSize: "pequeno",
   },
 
@@ -423,10 +423,10 @@ export const PRODUCTS: Product[] = [
     priceLabel: "$80K",
     totalSize: "18 cm × 12 cm",
     artSize: "16 cm × 12 cm",
-    materials: "Acero galvanizado, madera roble con acabados en cera de abeja, imanes neodimio",
-    paint: "En polvo, electrostática, para exterior e interior",
+    materials: "Acero con tratamiento de metalizado (0 oxidación), madera roble con acabado en cera de abejas, imanes neodimio",
+    paint: "Pintura electrostática en polvo, para exterior e interior",
     description:
-      "Para menús, números de mesa, promos. Base en madera roble con cera de abeja. Incluye 8 imanes neodimio.",
+      "Hablador de mesa para poner tu menú o destacar algún plato o evento. Incluye imanes neodimio para cambiar la información rápido y fácil.",
     hero: "/img/products/2026/mesa-rect-1.jpg",
     gallery: [
       "/img/products/2026/mesa-rect-2.jpg",
@@ -447,10 +447,10 @@ export const PRODUCTS: Product[] = [
     priceLabel: "$70K",
     totalSize: "18 cm × 12 cm",
     artSize: "16 cm × 12 cm",
-    materials: "Acrílico 2mm, madera roble con acabado en cera de abejas",
+    materials: "Acrílico 3mm, madera roble con acabado en cera de abejas",
     paint: "—",
     description:
-      "Versión transparente del hablador de mesa. Acrílico que deja respirar el menú y madera roble que aterriza la pieza.",
+      "Hablador de mesa para poner tu menú o destacar algún plato o evento. Dos acrílicos transparentes para cambiar la info rápido y fácil.",
     hero: "/img/products/2026/mesa-clear-1.jpg",
     isNew: true,
     tags: ["menu"],    shippingSize: "pequeno",
