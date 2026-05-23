@@ -28,7 +28,14 @@ type Props = {
  */
 export function ColorPicker({ selectedId, onSelect }: Props) {
   const [hover, setHover] = useState<Color | null>(null);
-  const tooltip = hover ?? COLORS.find((c) => c.id === selectedId) ?? null;
+  // Tooltip prioriza SELECTED (el que el usuario clickeó) sobre HOVER.
+  // Antes era al revés y causaba que el tooltip mostrara un color y el
+  // chip de arriba ("Color · X") otro distinto cuando el mouse pasaba
+  // sobre otra bolita (Jon 2026-05-23: "todavía no coinciden").
+  //
+  // Si NO hay seleccionado, sí mostramos el hover como preview.
+  const selectedColor = COLORS.find((c) => c.id === selectedId) ?? null;
+  const tooltip = selectedColor ?? hover ?? null;
 
   const isInterior = tooltip?.finishes.includes("interior");
   // Acabados que se muestran como ÍCONOS (excluye "interior" porque ya va
