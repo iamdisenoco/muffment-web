@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { ColorPicker } from "./ColorPicker";
-import { AddToCartButton } from "./AddToCartButton";
+import { useCart } from "@/hooks/useCart";
 import type { Product } from "@/data/products";
 import type { Color } from "@/data/colors";
 import { cn, whatsappLink } from "@/lib/utils";
@@ -130,30 +130,27 @@ export function ProductDetailSection({ product, colorPrefix }: Props) {
   return (
     <article ref={containerRef} className="relative bg-black text-white">
       {/* ═══════════════════════════════════════════════════════════════ */}
+      {/* GRADIENT TRANSITION white→black para mimetizar fronterea con     */}
+      {/* el main bg-white de arriba (feedback Jon: "mimetizar")           */}
+      {/* ═══════════════════════════════════════════════════════════════ */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 top-0 z-10 h-24 md:h-32"
+        style={{
+          background:
+            "linear-gradient(to bottom, rgba(255,255,255,1) 0%, rgba(255,255,255,0.85) 25%, rgba(0,0,0,0) 100%)",
+        }}
+      />
+
+      {/* ═══════════════════════════════════════════════════════════════ */}
       {/* HERO COMPACTO bg:black — todo entra en above-the-fold            */}
       {/* Orden vertical (feedback Jon):                                    */}
-      {/*   1. Cabecera rotando                                             */}
-      {/*   2. Marquee con nombre + button AGREGAR (ARRIBA, no abajo)       */}
-      {/*   3. Grid foto izq + info derecha                                 */}
+      {/*   1. Marquee con nombre + button AGREGAR ARRIBA                  */}
+      {/*   2. Grid foto izq + info derecha                                 */}
+      {/*   3. SELLO PREMIUM cerca del producto con texto rotando          */}
       {/* ═══════════════════════════════════════════════════════════════ */}
       <section className="relative overflow-hidden">
-        <div className="mx-auto max-w-[1700px] px-4 pb-10 pt-4 md:px-10 md:pb-14 md:pt-6">
-          {/* ───── CABECERA ROTANDO ARRIBA ───── */}
-          <div className="mb-3 flex h-6 items-center md:h-8">
-            <AnimatePresence mode="wait">
-              <motion.p
-                key={msgIdx}
-                initial={{ opacity: 0, y: 8 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -8 }}
-                transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-                className="text-xs font-bold uppercase tracking-[0.25em] text-white md:text-sm"
-                style={monoStyle}
-              >
-                {ROTATING_PILLARS[msgIdx]}
-              </motion.p>
-            </AnimatePresence>
-          </div>
+        <div className="relative z-20 mx-auto max-w-[1700px] px-4 pb-10 pt-10 md:px-10 md:pb-14 md:pt-14">
 
           {/* ───── MARQUEE + BUTTON-ROUND ARRIBA ───── */}
           <div
@@ -246,12 +243,72 @@ export function ProductDetailSection({ product, colorPrefix }: Props) {
                 <div
                   className="relative aspect-square w-full"
                   style={{
-                    // max-h dinámico: 55% del viewport-height máximo, así
-                    // queda lugar arriba para cabecera+marquee+button y
-                    // abajo para los dots, sin scroll forzado.
                     maxWidth: "min(55vh, 680px)",
                   }}
                 >
+                  {/* ───── SELLO PREMIUM con texto rotando ─────
+                      Posicionado absolute sobre la foto, esquina superior
+                      derecha (cerca del producto como pidió Jon). Estilo
+                      wax-stamp circular: doble ring border cream, sparkle
+                      ✦ arriba y abajo, texto centrado cambiando cross-fade.
+                      Rotación lenta sutil de todo el sello. */}
+                  <motion.div
+                    className="absolute -right-3 -top-3 z-30 flex h-28 w-28 items-center justify-center rounded-full bg-black/55 backdrop-blur-md md:-right-6 md:-top-6 md:h-36 md:w-36"
+                    style={{
+                      border: "1.5px solid rgba(232,226,209,0.5)",
+                      boxShadow:
+                        "0 0 0 1px rgba(0,0,0,0.4), inset 0 0 0 4px rgba(0,0,0,0.4), inset 0 0 0 5px rgba(232,226,209,0.25), 0 10px 30px rgba(0,0,0,0.6)",
+                    }}
+                    animate={{ rotate: [0, 360] }}
+                    transition={{
+                      duration: 90,
+                      repeat: Infinity,
+                      ease: "linear",
+                    }}
+                  >
+                    {/* Contenido NO rota (counter-rotation para legibilidad) */}
+                    <motion.div
+                      animate={{ rotate: [0, -360] }}
+                      transition={{
+                        duration: 90,
+                        repeat: Infinity,
+                        ease: "linear",
+                      }}
+                      className="flex flex-col items-center justify-center text-center"
+                    >
+                      <span
+                        aria-hidden
+                        className="text-[14px] leading-none text-cream/85 md:text-[18px]"
+                      >
+                        ✦
+                      </span>
+                      <div className="my-1 flex h-7 w-16 items-center justify-center md:my-1.5 md:h-8 md:w-20">
+                        <AnimatePresence mode="wait">
+                          <motion.p
+                            key={msgIdx}
+                            initial={{ opacity: 0, y: 4 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -4 }}
+                            transition={{
+                              duration: 0.4,
+                              ease: [0.22, 1, 0.36, 1],
+                            }}
+                            className="px-1 text-[8.5px] font-bold uppercase leading-[1.1] tracking-[0.13em] text-cream md:text-[10px] md:tracking-[0.15em]"
+                            style={monoStyle}
+                          >
+                            {ROTATING_PILLARS[msgIdx]}
+                          </motion.p>
+                        </AnimatePresence>
+                      </div>
+                      <span
+                        aria-hidden
+                        className="text-[14px] leading-none text-cream/85 md:text-[18px]"
+                      >
+                        ✦
+                      </span>
+                    </motion.div>
+                  </motion.div>
+
                   <AnimatePresence mode="wait">
                     <motion.div
                       key={activeImg}
@@ -532,8 +589,12 @@ export function ProductDetailSection({ product, colorPrefix }: Props) {
 }
 
 /**
- * Round Add Button — el "VIEW" verde fluo de Musotoku, AGREGAR para nosotros.
- * Posición absolute right del marquee, cortado por el border-bottom.
+ * Round Add Button — botón circular MUFFMENT con colores de marca
+ * (cream bg + cobalt text) y efecto magnético: el botón sigue al cursor
+ * con spring physics. Usa useCart() directamente (no hidden wrapper).
+ *
+ * Estilo "stamp"/sello premium con doble ring, similar al sello rotativo
+ * pero estático (excepto por el magnetic follow del cursor).
  */
 function RoundAddButton({
   product,
@@ -542,38 +603,111 @@ function RoundAddButton({
   product: Product;
   selectedColor: Color | null;
 }) {
+  const { add } = useCart();
+  const [justAdded, setJustAdded] = useState(false);
+  const btnRef = useRef<HTMLButtonElement>(null);
+  const [pos, setPos] = useState({ x: 0, y: 0 });
+
+  // Magnetic — el botón se atrae al cursor cuando está cerca
+  const handleMove = (e: React.MouseEvent) => {
+    if (!btnRef.current) return;
+    const r = btnRef.current.getBoundingClientRect();
+    setPos({
+      x: (e.clientX - r.left - r.width / 2) * 0.3,
+      y: (e.clientY - r.top - r.height / 2) * 0.3,
+    });
+  };
+  const handleLeave = () => setPos({ x: 0, y: 0 });
+
+  const handleClick = () => {
+    add({
+      slug: product.slug,
+      code: product.code,
+      name: product.name,
+      shortName: product.shortName,
+      priceLabel: product.priceLabel,
+      price: product.price,
+      hero: product.hero,
+      shippingSize: product.shippingSize,
+      color: selectedColor
+        ? {
+            id: selectedColor.id,
+            name: selectedColor.name,
+            hex: selectedColor.hex,
+          }
+        : undefined,
+    });
+    setJustAdded(true);
+    setTimeout(() => setJustAdded(false), 1800);
+  };
+
+  const transition = {
+    type: "spring" as const,
+    stiffness: 220,
+    damping: 18,
+    mass: 0.55,
+  };
+
   return (
-    <div className="relative">
-      {/* Hidden AddToCartButton para tener la lógica del carrito */}
-      <div className="absolute -z-10 opacity-0">
-        <AddToCartButton product={product} selectedColor={selectedColor} />
-      </div>
-      <button
-        type="button"
-        onClick={(e) => {
-          // Click programático al botón oculto
-          const hidden = (e.currentTarget.parentElement?.querySelector(
-            "button",
-          ) ?? null) as HTMLButtonElement | null;
-          if (hidden && hidden !== e.currentTarget) hidden.click();
-        }}
-        data-cursor="hover"
-        className="relative flex h-20 w-20 items-center justify-center rounded-full bg-[#06d6a0] text-black shadow-2xl transition-transform hover:scale-110 md:h-24 md:w-24"
-        aria-label={`Agregar ${product.name} al carrito`}
-        style={{ fontFamily: '"Satoshi", system-ui, sans-serif' }}
+    <motion.button
+      ref={btnRef}
+      type="button"
+      onClick={handleClick}
+      onMouseMove={handleMove}
+      onMouseLeave={handleLeave}
+      animate={pos}
+      transition={transition}
+      data-cursor="hover"
+      className={cn(
+        "relative flex h-24 w-24 items-center justify-center rounded-full shadow-2xl md:h-28 md:w-28",
+        justAdded
+          ? "bg-[#06d6a0] text-cobalt"
+          : "bg-cream text-cobalt",
+      )}
+      style={{
+        boxShadow: justAdded
+          ? "0 14px 36px -6px rgba(6,214,160,0.5)"
+          : "0 14px 38px -6px rgba(232,226,209,0.35), inset 0 0 0 1.5px rgba(50,54,183,0.12)",
+        fontFamily: '"Satoshi", system-ui, sans-serif',
+      }}
+      aria-label={`Agregar ${product.name} al carrito`}
+    >
+      <motion.span
+        className="flex flex-col items-center px-2 text-center leading-[1.05]"
+        animate={{ x: pos.x * 0.5, y: pos.y * 0.5 }}
+        transition={transition}
       >
-        <span className="text-[10px] font-bold uppercase tracking-[0.15em] md:text-[11px]">
-          Agregar
-        </span>
-        {selectedColor && (
-          <span
-            aria-hidden
-            className="absolute -right-1 -top-1 block h-5 w-5 rounded-full border-2 border-black"
-            style={{ backgroundColor: selectedColor.hex }}
-          />
+        {justAdded ? (
+          <span className="text-[10px] font-bold uppercase tracking-[0.14em] md:text-[11px]">
+            ✓ Agregado
+          </span>
+        ) : (
+          <>
+            <span className="text-[9px] font-bold uppercase tracking-[0.18em] md:text-[10px]">
+              Agregar al
+            </span>
+            <span
+              className="mt-0.5 text-[14px] uppercase leading-none md:text-[16px]"
+              style={{
+                fontFamily: "var(--font-bagel)",
+                letterSpacing: "0.01em",
+              }}
+            >
+              carrito
+            </span>
+          </>
         )}
-      </button>
-    </div>
+      </motion.span>
+
+      {/* Chip color seleccionado decorativo */}
+      {selectedColor && !justAdded && (
+        <span
+          aria-hidden
+          className="absolute -right-1 -top-1 block h-5 w-5 rounded-full border-2 border-cream"
+          style={{ backgroundColor: selectedColor.hex }}
+        />
+      )}
+    </motion.button>
   );
 }
 
