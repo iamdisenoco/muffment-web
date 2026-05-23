@@ -21,33 +21,30 @@ export function ColorPicker({ selectedId, onSelect }: Props) {
   const tooltip = hover ?? COLORS.find((c) => c.id === selectedId) ?? null;
 
   return (
-    <div className="space-y-3">
-      {/* Tooltip card — siempre presente para evitar layout shift */}
-      <div className="min-h-[64px] rounded-2xl border border-cobalt/10 bg-cream/40 px-3 py-2">
+    <div className="space-y-2.5">
+      {/* Mini tooltip - 1 linea inline arriba, sin caja */}
+      <div className="flex h-5 items-center text-[11px] text-cobalt/75">
         {tooltip ? (
-          <div className="flex items-center gap-2.5">
+          <>
             <span
               aria-hidden
-              className="block h-8 w-8 shrink-0 rounded-full border border-cobalt/15 shadow-sm"
+              className="mr-2 inline-block h-3 w-3 shrink-0 rounded-full border border-cobalt/15"
               style={{ backgroundColor: tooltip.hex }}
             />
-            <div className="flex-1 min-w-0">
-              <p className="text-sm font-medium text-cobalt leading-tight">{tooltip.name}</p>
-              <p className="text-[10px] text-cobalt/65 leading-snug mt-0.5">
-                {FAMILY_INFO[tooltip.family].label} ·{" "}
-                {tooltip.finishes.map((f) => FINISH_INFO[f].label).join(" · ")}
-              </p>
-            </div>
-          </div>
+            <span className="font-medium text-cobalt">{tooltip.name}</span>
+            <span className="ml-1.5 text-cobalt/55">
+              · {tooltip.finishes.map((f) => FINISH_INFO[f].label).join(", ")}
+            </span>
+          </>
         ) : (
-          <div className="flex h-full items-center justify-center text-[11px] uppercase tracking-wider text-cobalt/45">
-            Pasa el mouse sobre un color
-          </div>
+          <span className="text-[10px] uppercase tracking-[0.25em] text-cobalt/40">
+            Hover sobre un color
+          </span>
         )}
       </div>
 
-      {/* Grilla compacta — 8 columnas, bolitas chicas */}
-      <div className="grid grid-cols-8 gap-1">
+      {/* Grilla MUY compacta — 11 columnas, bolitas mini */}
+      <div className="grid grid-cols-11 gap-[3px]">
         {COLORS.map((color) => {
           const active = color.id === selectedId;
           return (
@@ -63,20 +60,20 @@ export function ColorPicker({ selectedId, onSelect }: Props) {
               className={cn(
                 "relative aspect-square overflow-hidden rounded-full transition-all",
                 active
-                  ? "ring-2 ring-cobalt ring-offset-2 ring-offset-white scale-110 z-10"
-                  : "hover:scale-110 hover:z-10",
+                  ? "ring-2 ring-cobalt ring-offset-1 ring-offset-white scale-125 z-10"
+                  : "hover:scale-125 hover:z-10",
               )}
               style={{
                 boxShadow: active
-                  ? "0 4px 16px rgba(0,0,0,0.25)"
-                  : "0 1px 4px rgba(0,0,0,0.18)",
+                  ? "0 3px 10px rgba(0,0,0,0.2)"
+                  : "0 1px 2px rgba(0,0,0,0.12)",
               }}
             >
               <Image
                 src={`/colors/${color.id}.png`}
                 alt={color.name}
                 fill
-                sizes="40px"
+                sizes="28px"
                 className="object-cover"
                 unoptimized
               />
@@ -84,12 +81,6 @@ export function ColorPicker({ selectedId, onSelect }: Props) {
           );
         })}
       </div>
-
-      {selectedId && (
-        <p className="text-center text-[10px] uppercase tracking-wider text-cobalt/50">
-          Click de nuevo para volver al original
-        </p>
-      )}
     </div>
   );
 }
