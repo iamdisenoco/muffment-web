@@ -15,7 +15,6 @@ type Props = {
   colorPrefix?: string;
 };
 
-// Mensajes rotantes en la cabecera (arriba del marquee)
 const ROTATING_PILLARS = [
   "Diseñado para durar",
   "0 oxidación",
@@ -24,29 +23,15 @@ const ROTATING_PILLARS = [
 ];
 
 /**
- * Product Detail v8 — feedback Jon:
- *   ✓ Imagen MUCHO más grande
- *   ✓ Cabecera rotando entre 4 pilares (Diseñado / 0 oxidación / Garantía / Colores)
- *   ✓ Flechas prev/next AL LADO de la imagen (no thumbnails debajo)
- *   ✓ Color picker más pequeño AL LADO DERECHO del producto
- *   ✓ Descripción + medidas al lado derecho del producto
- *   ✓ Mantiene marquee horizontal + button-round verde abajo
- *
- *  ┌────────────────────────────────────────────────────┐
- *  │ DISEÑADO PARA DURAR  ← rotating cada 3.5s          │
- *  │ ───────────────────────────────────────            │
- *  │                                                     │
- *  │ ←  ┌─────────────────────┐  →  COLORES (mini)     │
- *  │    │                     │     ▣▣▣▣▣▣▣▣          │
- *  │    │   FOTO GIANT        │     ▣▣▣▣▣▣▣▣          │
- *  │    │   cinematic         │                          │
- *  │    │                     │     DESCRIPCIÓN          │
- *  │    └─────────────────────┘     ─────────             │
- *  │                                 MEDIDAS              │
- *  │ ┏━━━━━━━━━━━━━━━━━━━━┓ ●AGR  96 cm × 70 cm        │
- *  │ ┃ HABLADOR ✦ → → →  ┃          ÁREA 80 × 60        │
- *  │ ┗━━━━━━━━━━━━━━━━━━━━┛                              │
- *  └────────────────────────────────────────────────────┘
+ * Product Detail v10 — paleta INVERTIDA (feedback Jon):
+ *   ✓ Hero bg-WHITE (antes negro)
+ *   ✓ Specs section bg-COBALT (antes blanco)
+ *   ✓ Texto default gris, detalles cobalt
+ *   ✓ Botones pill OVALADOS cobalt + glow blanco neón
+ *   ✓ Magnetic con MAYOR rango (percibe desde 250px)
+ *   ✓ "Desde" → "Valor"
+ *   ✓ Botón "Hablemos" con logo WhatsApp
+ *   ✓ Transiciones difuminadas top + bottom
  */
 export function ProductDetailSection({ product, colorPrefix }: Props) {
   const [selectedColor, setSelectedColor] = useState<Color | null>(null);
@@ -54,7 +39,6 @@ export function ProductDetailSection({ product, colorPrefix }: Props) {
   const [msgIdx, setMsgIdx] = useState(0);
   const containerRef = useRef<HTMLElement>(null);
 
-  // Rotar el mensaje de cabecera cada 3.5s
   useEffect(() => {
     const id = setInterval(() => {
       setMsgIdx((i) => (i + 1) % ROTATING_PILLARS.length);
@@ -105,13 +89,6 @@ export function ProductDetailSection({ product, colorPrefix }: Props) {
         ease: "power3.out",
         delay: 0.55,
       });
-      gsap.from(".pd-hero-button", {
-        opacity: 0,
-        scale: 0,
-        duration: 0.8,
-        ease: "back.out(1.7)",
-        delay: 0.85,
-      });
       gsap.from(".pd-spec", {
         opacity: 0,
         y: 30,
@@ -128,40 +105,20 @@ export function ProductDetailSection({ product, colorPrefix }: Props) {
   );
 
   return (
-    <article ref={containerRef} className="relative bg-black text-white">
+    <article ref={containerRef} className="relative bg-white text-gray-500">
       {/* ═══════════════════════════════════════════════════════════════ */}
-      {/* GRADIENT TRANSITION white→black para mimetizar fronterea con     */}
-      {/* el main bg-white de arriba (feedback Jon: "mimetizar")           */}
+      {/* HERO bg-WHITE (paleta invertida)                                 */}
       {/* ═══════════════════════════════════════════════════════════════ */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-x-0 top-0 z-10 h-24 md:h-32"
-        style={{
-          background:
-            "linear-gradient(to bottom, rgba(255,255,255,1) 0%, rgba(255,255,255,0.85) 25%, rgba(0,0,0,0) 100%)",
-        }}
-      />
-
-      {/* ═══════════════════════════════════════════════════════════════ */}
-      {/* HERO COMPACTO bg:black — todo entra en above-the-fold            */}
-      {/* Orden vertical (feedback Jon):                                    */}
-      {/*   1. Marquee con nombre + button AGREGAR ARRIBA                  */}
-      {/*   2. Grid foto izq + info derecha                                 */}
-      {/*   3. SELLO PREMIUM cerca del producto con texto rotando          */}
-      {/* ═══════════════════════════════════════════════════════════════ */}
-      <section className="relative overflow-hidden">
-        <div className="relative z-20 mx-auto max-w-[1700px] px-4 pb-10 pt-10 md:px-10 md:pb-14 md:pt-14">
-
-          {/* ───── MARQUEE + BUTTON-ROUND ARRIBA ───── */}
+      <section className="relative overflow-hidden bg-white">
+        <div className="relative z-20 mx-auto max-w-[1700px] px-4 pb-20 pt-8 md:px-10 md:pb-32 md:pt-12">
+          {/* ───── MARQUEE + BUTTON ARRIBA ───── */}
           <div
-            className="pd-hero-marquee relative mb-8 border-y border-white/70 py-3 md:mb-10 md:py-4"
+            className="pd-hero-marquee relative mb-10 border-y border-cobalt/30 py-3 md:mb-14 md:py-4"
             style={{ overflow: "visible" }}
           >
             <div
-              className="flex w-fit items-center whitespace-nowrap pr-32 md:pr-40"
-              style={{
-                animation: "muff-marquee 25s linear infinite",
-              }}
+              className="flex w-fit items-center whitespace-nowrap pr-32 md:pr-44"
+              style={{ animation: "muff-marquee 25s linear infinite" }}
             >
               {Array.from({ length: 6 }).map((_, i) => (
                 <span
@@ -170,7 +127,7 @@ export function ProductDetailSection({ product, colorPrefix }: Props) {
                   style={{ paddingRight: "2.5rem" }}
                 >
                   <span
-                    className="leading-none"
+                    className="leading-none text-cobalt"
                     style={{
                       ...displayStyle,
                       fontSize: "clamp(1.75rem, 4.2vw, 3.75rem)",
@@ -181,10 +138,8 @@ export function ProductDetailSection({ product, colorPrefix }: Props) {
                   </span>
                   <span
                     aria-hidden
-                    className="ml-6 text-white/70"
-                    style={{
-                      fontSize: "clamp(1.1rem, 2.2vw, 1.75rem)",
-                    }}
+                    className="ml-6 text-cobalt/40"
+                    style={{ fontSize: "clamp(1.1rem, 2.2vw, 1.75rem)" }}
                   >
                     ✦
                   </span>
@@ -192,9 +147,9 @@ export function ProductDetailSection({ product, colorPrefix }: Props) {
               ))}
             </div>
 
-            {/* BUTTON-ROUND verde fluo cortado por el border-bottom */}
+            {/* BOTÓN AGREGAR pill ovalado cobalt + glow neón */}
             <div
-              className="pd-hero-button absolute z-30"
+              className="absolute z-30"
               style={{
                 right: "0.5rem",
                 top: "100%",
@@ -202,17 +157,17 @@ export function ProductDetailSection({ product, colorPrefix }: Props) {
               }}
               id="agregar"
             >
-              <RoundAddButton
+              <PillAddButton
                 product={product}
                 selectedColor={selectedColor}
               />
             </div>
           </div>
 
-          {/* ───── GRID PRINCIPAL: foto-flechas IZQ · info DER ───── */}
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-12 md:gap-x-10">
-            {/* COL FOTO + FLECHAS (col-9) */}
-            <div className="relative md:col-span-9">
+          {/* ───── GRID PRINCIPAL ───── */}
+          <div className="grid grid-cols-1 gap-10 md:grid-cols-12 md:gap-x-12">
+            {/* COL FOTO + FLECHAS */}
+            <div className="relative md:col-span-8">
               <div className="pd-hero-photo relative flex items-center justify-center">
                 {/* Flecha PREV */}
                 {hasMultiple && (
@@ -221,7 +176,7 @@ export function ProductDetailSection({ product, colorPrefix }: Props) {
                     onClick={goPrev}
                     aria-label="Imagen anterior"
                     data-cursor="hover"
-                    className="absolute left-0 z-20 flex h-16 w-16 items-center justify-center rounded-full border border-white/15 bg-black/40 text-white/80 backdrop-blur-sm transition-all hover:scale-110 hover:border-white/50 hover:text-white md:-left-2 md:h-20 md:w-20"
+                    className="absolute left-0 z-20 flex h-14 w-14 items-center justify-center rounded-full border border-cobalt/15 bg-white/80 text-cobalt/65 backdrop-blur-sm transition-all hover:scale-110 hover:border-cobalt/45 hover:text-cobalt md:-left-2 md:h-20 md:w-20"
                   >
                     <svg
                       width="36"
@@ -239,76 +194,11 @@ export function ProductDetailSection({ product, colorPrefix }: Props) {
                   </button>
                 )}
 
-                {/* IMAGEN dominante pero respetando viewport */}
+                {/* IMAGEN */}
                 <div
                   className="relative aspect-square w-full"
-                  style={{
-                    maxWidth: "min(55vh, 680px)",
-                  }}
+                  style={{ maxWidth: "min(60vh, 720px)" }}
                 >
-                  {/* ───── SELLO PREMIUM con texto rotando ─────
-                      Posicionado absolute sobre la foto, esquina superior
-                      derecha (cerca del producto como pidió Jon). Estilo
-                      wax-stamp circular: doble ring border cream, sparkle
-                      ✦ arriba y abajo, texto centrado cambiando cross-fade.
-                      Rotación lenta sutil de todo el sello. */}
-                  <motion.div
-                    className="absolute -right-3 -top-3 z-30 flex h-28 w-28 items-center justify-center rounded-full bg-black/55 backdrop-blur-md md:-right-6 md:-top-6 md:h-36 md:w-36"
-                    style={{
-                      border: "1.5px solid rgba(232,226,209,0.5)",
-                      boxShadow:
-                        "0 0 0 1px rgba(0,0,0,0.4), inset 0 0 0 4px rgba(0,0,0,0.4), inset 0 0 0 5px rgba(232,226,209,0.25), 0 10px 30px rgba(0,0,0,0.6)",
-                    }}
-                    animate={{ rotate: [0, 360] }}
-                    transition={{
-                      duration: 90,
-                      repeat: Infinity,
-                      ease: "linear",
-                    }}
-                  >
-                    {/* Contenido NO rota (counter-rotation para legibilidad) */}
-                    <motion.div
-                      animate={{ rotate: [0, -360] }}
-                      transition={{
-                        duration: 90,
-                        repeat: Infinity,
-                        ease: "linear",
-                      }}
-                      className="flex flex-col items-center justify-center text-center"
-                    >
-                      <span
-                        aria-hidden
-                        className="text-[14px] leading-none text-cream/85 md:text-[18px]"
-                      >
-                        ✦
-                      </span>
-                      <div className="my-1 flex h-7 w-16 items-center justify-center md:my-1.5 md:h-8 md:w-20">
-                        <AnimatePresence mode="wait">
-                          <motion.p
-                            key={msgIdx}
-                            initial={{ opacity: 0, y: 4 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0, y: -4 }}
-                            transition={{
-                              duration: 0.4,
-                              ease: [0.22, 1, 0.36, 1],
-                            }}
-                            className="px-1 text-[8.5px] font-bold uppercase leading-[1.1] tracking-[0.13em] text-cream md:text-[10px] md:tracking-[0.15em]"
-                            style={monoStyle}
-                          >
-                            {ROTATING_PILLARS[msgIdx]}
-                          </motion.p>
-                        </AnimatePresence>
-                      </div>
-                      <span
-                        aria-hidden
-                        className="text-[14px] leading-none text-cream/85 md:text-[18px]"
-                      >
-                        ✦
-                      </span>
-                    </motion.div>
-                  </motion.div>
-
                   <AnimatePresence mode="wait">
                     <motion.div
                       key={activeImg}
@@ -326,15 +216,18 @@ export function ProductDetailSection({ product, colorPrefix }: Props) {
                         alt={product.name}
                         fill
                         priority
-                        sizes="(max-width: 768px) 100vw, 820px"
+                        sizes="(max-width: 768px) 100vw, 720px"
                         className="object-contain"
                         style={{
                           filter:
-                            "drop-shadow(0 40px 80px rgba(0,0,0,0.5))",
+                            "drop-shadow(0 30px 50px rgba(50,54,183,0.18))",
                         }}
                       />
                     </motion.div>
                   </AnimatePresence>
+
+                  {/* SELLO PREMIUM pill ovalado outline cobalt */}
+                  <PremiumSeal msgIdx={msgIdx} />
                 </div>
 
                 {/* Flecha NEXT */}
@@ -344,7 +237,7 @@ export function ProductDetailSection({ product, colorPrefix }: Props) {
                     onClick={goNext}
                     aria-label="Imagen siguiente"
                     data-cursor="hover"
-                    className="absolute right-0 z-20 flex h-16 w-16 items-center justify-center rounded-full border border-white/15 bg-black/40 text-white/80 backdrop-blur-sm transition-all hover:scale-110 hover:border-white/50 hover:text-white md:-right-2 md:h-20 md:w-20"
+                    className="absolute right-0 z-20 flex h-14 w-14 items-center justify-center rounded-full border border-cobalt/15 bg-white/80 text-cobalt/65 backdrop-blur-sm transition-all hover:scale-110 hover:border-cobalt/45 hover:text-cobalt md:-right-2 md:h-20 md:w-20"
                   >
                     <svg
                       width="36"
@@ -363,9 +256,9 @@ export function ProductDetailSection({ product, colorPrefix }: Props) {
                 )}
               </div>
 
-              {/* Dots indicator debajo de la foto */}
+              {/* Dots */}
               {hasMultiple && (
-                <div className="mt-5 flex items-center justify-center gap-1.5">
+                <div className="mt-6 flex items-center justify-center gap-1.5">
                   {images.map((_, i) => (
                     <button
                       key={i}
@@ -376,8 +269,8 @@ export function ProductDetailSection({ product, colorPrefix }: Props) {
                       className={cn(
                         "h-1 rounded-full transition-all",
                         i === activeIdx
-                          ? "w-8 bg-white"
-                          : "w-1 bg-white/30 hover:bg-white/60",
+                          ? "w-8 bg-cobalt"
+                          : "w-1 bg-cobalt/25 hover:bg-cobalt/55",
                       )}
                     />
                   ))}
@@ -385,26 +278,26 @@ export function ProductDetailSection({ product, colorPrefix }: Props) {
               )}
             </div>
 
-            {/* COL INFO DERECHA (col-3) — colors + desc + medidas */}
-            <aside className="md:col-span-3">
-              {/* Eyebrow técnico */}
+            {/* COL INFO DERECHA */}
+            <aside className="md:col-span-4">
+              {/* Eyebrow técnico — detalle cobalt */}
               <p
-                className="pd-hero-info-block text-[10px] uppercase tracking-[0.3em] text-white/55"
+                className="pd-hero-info-block text-[10px] uppercase tracking-[0.3em] text-cobalt/70"
                 style={monoStyle}
               >
                 {product.categoryLabel} · N°{product.code}
               </p>
 
-              {/* Precio */}
-              <div className="pd-hero-info-block mt-3">
+              {/* Valor */}
+              <div className="pd-hero-info-block mt-4">
                 <p
-                  className="text-[9px] uppercase tracking-[0.3em] text-white/55"
+                  className="text-[9px] uppercase tracking-[0.3em] text-gray-400"
                   style={monoStyle}
                 >
-                  Desde
+                  Valor
                 </p>
                 <p
-                  className="leading-none tabular-nums text-white"
+                  className="leading-none tabular-nums text-cobalt"
                   style={{
                     ...displayStyle,
                     fontSize: "clamp(1.75rem, 2.6vw, 2.5rem)",
@@ -414,18 +307,18 @@ export function ProductDetailSection({ product, colorPrefix }: Props) {
                 </p>
               </div>
 
-              {/* COLOR PICKER mini */}
+              {/* COLOR PICKER */}
               {colorPrefix && (
-                <div className="pd-hero-info-block mt-6 border-t border-white/10 pt-5">
+                <div className="pd-hero-info-block mt-6 border-t border-gray-200 pt-5">
                   <div className="mb-2 flex items-baseline justify-between">
                     <p
-                      className="text-[10px] uppercase tracking-[0.3em] text-white/65"
+                      className="text-[10px] uppercase tracking-[0.3em] text-gray-500"
                       style={monoStyle}
                     >
                       Color
                     </p>
                     <p
-                      className="text-[10px] text-white/45"
+                      className="text-[10px] text-gray-400"
                       style={monoStyle}
                     >
                       + de 90
@@ -436,11 +329,11 @@ export function ProductDetailSection({ product, colorPrefix }: Props) {
                     <div className="mb-2 flex items-center gap-2">
                       <span
                         aria-hidden
-                        className="block h-3 w-3 shrink-0 rounded-full border border-white/15"
+                        className="block h-3 w-3 shrink-0 rounded-full border border-cobalt/15"
                         style={{ backgroundColor: selectedColor.hex }}
                       />
                       <p
-                        className="text-[11px] text-white"
+                        className="text-[11px] text-cobalt"
                         style={monoStyle}
                       >
                         {selectedColor.name}
@@ -448,101 +341,118 @@ export function ProductDetailSection({ product, colorPrefix }: Props) {
                     </div>
                   )}
 
-                  {/* Wrapper con override CSS para invertir colores del
-                      ColorPicker (que está pensado para fondo blanco) */}
-                  <div className="muff-picker-dark">
-                    <ColorPicker
-                      selectedId={selectedColor?.id ?? null}
-                      onSelect={(c) => {
-                        setSelectedColor(c);
-                        setActiveIdx(0);
-                      }}
-                    />
-                  </div>
+                  <ColorPicker
+                    selectedId={selectedColor?.id ?? null}
+                    onSelect={(c) => {
+                      setSelectedColor(c);
+                      setActiveIdx(0);
+                    }}
+                  />
                 </div>
               )}
 
               {/* DESCRIPCIÓN */}
-              <div className="pd-hero-info-block mt-6 border-t border-white/10 pt-5">
+              <div className="pd-hero-info-block mt-6 border-t border-gray-200 pt-5">
                 <p
-                  className="mb-2 text-[10px] uppercase tracking-[0.3em] text-white/65"
+                  className="mb-2 text-[10px] uppercase tracking-[0.3em] text-gray-500"
                   style={monoStyle}
                 >
                   Descripción
                 </p>
-                <p className="text-[13px] leading-relaxed text-white/75">
+                <p className="text-[13px] leading-relaxed text-gray-600">
                   {product.description}
                 </p>
               </div>
 
               {/* MEDIDAS */}
-              <div className="pd-hero-info-block mt-6 border-t border-white/10 pt-5">
+              <div className="pd-hero-info-block mt-6 border-t border-gray-200 pt-5">
                 <p
-                  className="mb-3 text-[10px] uppercase tracking-[0.3em] text-white/65"
+                  className="mb-3 text-[10px] uppercase tracking-[0.3em] text-gray-500"
                   style={monoStyle}
                 >
                   Medidas
                 </p>
                 <dl className="space-y-2 text-[12px]" style={monoStyle}>
-                  <div className="flex justify-between border-b border-white/5 pb-1">
-                    <dt className="text-white/55">Total</dt>
-                    <dd className="text-white">{product.totalSize}</dd>
+                  <div className="flex justify-between border-b border-gray-100 pb-1">
+                    <dt className="text-gray-400">Total</dt>
+                    <dd className="text-gray-700">{product.totalSize}</dd>
                   </div>
-                  <div className="flex justify-between border-b border-white/5 pb-1">
-                    <dt className="text-white/55">Arte</dt>
-                    <dd className="text-white">{product.artSize}</dd>
+                  <div className="flex justify-between border-b border-gray-100 pb-1">
+                    <dt className="text-gray-400">Arte</dt>
+                    <dd className="text-gray-700">{product.artSize}</dd>
                   </div>
-                  <div className="flex justify-between border-b border-white/5 pb-1">
-                    <dt className="text-white/55">Material</dt>
-                    <dd className="max-w-[60%] text-right text-white">
+                  <div className="flex justify-between border-b border-gray-100 pb-1">
+                    <dt className="text-gray-400">Material</dt>
+                    <dd className="max-w-[60%] text-right text-gray-700">
                       Acero
                     </dd>
                   </div>
                 </dl>
               </div>
 
-              {/* WhatsApp link discreto */}
+              {/* BOTÓN HABLEMOS con logo WhatsApp */}
               <a
                 href={whatsappLink(message)}
                 target="_blank"
                 rel="noopener noreferrer"
                 data-cursor="hover"
-                className="pd-hero-info-block mt-6 flex items-center gap-2 text-[10px] uppercase tracking-[0.2em] text-white/55 transition-colors hover:text-white"
+                className="pd-hero-info-block mt-6 inline-flex w-full items-center justify-center gap-2 rounded-full border border-cobalt/20 bg-white px-6 py-3 text-cobalt transition-all hover:border-cobalt/50 hover:bg-cobalt/5"
                 style={monoStyle}
               >
                 <svg
                   viewBox="0 0 24 24"
-                  width="12"
-                  height="12"
+                  width="18"
+                  height="18"
                   fill="currentColor"
                   aria-hidden
                 >
-                  <path d="M12.04 2c-5.5 0-9.96 4.46-9.96 9.96 0 1.76.46 3.46 1.34 4.97L2 22l5.2-1.36c1.46.79 3.1 1.21 4.79 1.21h.01c5.5 0 9.96-4.46 9.96-9.96 0-2.66-1.04-5.16-2.92-7.04C17.16 3.04 14.66 2 12.04 2z" />
+                  <path d="M12.04 2c-5.5 0-9.96 4.46-9.96 9.96 0 1.76.46 3.46 1.34 4.97L2 22l5.2-1.36c1.46.79 3.1 1.21 4.79 1.21h.01c5.5 0 9.96-4.46 9.96-9.96 0-2.66-1.04-5.16-2.92-7.04C17.16 3.04 14.66 2 12.04 2zm0 18.16c-1.5 0-2.97-.4-4.25-1.16l-.3-.18-3.16.83.84-3.08-.2-.32a8.13 8.13 0 0 1-1.25-4.33c0-4.5 3.66-8.16 8.16-8.16 2.18 0 4.23.85 5.77 2.39a8.11 8.11 0 0 1 2.39 5.77c0 4.5-3.66 8.16-8.16 8.16zm4.47-6.11c-.24-.12-1.45-.72-1.67-.8-.22-.08-.39-.12-.55.12-.16.24-.63.8-.78.96-.14.16-.29.18-.53.06-.24-.12-1.03-.38-1.97-1.21-.73-.65-1.22-1.45-1.36-1.69-.14-.24-.02-.37.1-.49.11-.11.24-.29.36-.43.12-.14.16-.24.24-.4.08-.16.04-.3-.02-.42-.06-.12-.55-1.32-.75-1.81-.2-.48-.4-.41-.55-.42-.14-.01-.3-.01-.47-.01-.16 0-.43.06-.65.3-.22.24-.85.83-.85 2.03 0 1.2.87 2.36.99 2.52.12.16 1.71 2.61 4.14 3.66.58.25 1.03.4 1.38.51.58.18 1.11.16 1.53.1.47-.07 1.45-.59 1.65-1.16.2-.57.2-1.06.14-1.16-.06-.1-.22-.16-.46-.28z" />
                 </svg>
-                Preguntar por WhatsApp
+                <span className="text-[12px] uppercase tracking-[0.2em]">
+                  Hablemos
+                </span>
               </a>
             </aside>
           </div>
-
         </div>
+
+        {/* Gradient fade hero white → siguiente sección cobalt */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-x-0 bottom-0 h-32 md:h-40"
+          style={{
+            background:
+              "linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(50,54,183,0.15) 60%, rgba(50,54,183,1) 100%)",
+          }}
+        />
       </section>
 
-      {/* ═══════════════════ SPECS COMPLETOS (debajo del hero) ═══════════════════ */}
-      <section className="pd-specs-section bg-white">
-        <div className="mx-auto max-w-[1600px] px-6 py-20 md:px-12 md:py-28">
-          <div className="mb-10 flex items-end justify-between border-b border-cobalt/15 pb-6">
+      {/* ═══════════════════ SPECS COMPLETOS bg-COBALT (invertido) ═══ */}
+      <section className="pd-specs-section relative bg-cobalt text-cream">
+        {/* Top fade entrante (continuidad con el gradient del hero) */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-x-0 top-0 h-24 md:h-32"
+          style={{
+            background:
+              "linear-gradient(to top, rgba(50,54,183,0) 0%, rgba(50,54,183,0.5) 50%, rgba(50,54,183,1) 100%)",
+          }}
+        />
+
+        <div className="relative mx-auto max-w-[1600px] px-6 py-20 md:px-12 md:py-28">
+          <div className="mb-10 flex items-end justify-between border-b border-cream/15 pb-6">
             <h2
-              className="text-cobalt"
+              className="text-cream"
               style={{
                 ...displayStyle,
                 fontSize: "clamp(1.5rem, 2.4vw, 2.5rem)",
                 lineHeight: 0.95,
               }}
             >
-              Ficha técnica completa
+              Ficha técnica
             </h2>
             <p
-              className="text-[10px] uppercase tracking-[0.35em] text-cobalt/55"
+              className="text-[10px] uppercase tracking-[0.35em] text-cream/55"
               style={monoStyle}
             >
               N°{product.code}
@@ -550,31 +460,35 @@ export function ProductDetailSection({ product, colorPrefix }: Props) {
           </div>
 
           <div className="grid grid-cols-2 gap-x-6 gap-y-8 md:grid-cols-4 md:gap-x-12">
-            <Spec
+            <SpecDark
               label="Dimensiones"
               value={product.totalSize}
               className="pd-spec"
             />
-            <Spec
+            <SpecDark
               label="Área del arte"
               value={product.artSize}
               className="pd-spec"
             />
-            <Spec
+            <SpecDark
               label="Materiales"
               value={product.materials}
               className="pd-spec"
             />
-            <Spec label="Pintura" value={product.paint} className="pd-spec" />
+            <SpecDark
+              label="Pintura"
+              value={product.paint}
+              className="pd-spec"
+            />
           </div>
 
           {product.notes && (
             <p
-              className="pd-spec mt-10 max-w-[68ch] text-xs leading-relaxed text-cobalt/65"
+              className="pd-spec mt-10 max-w-[68ch] text-xs leading-relaxed text-cream/65"
               style={monoStyle}
             >
               <span
-                className="mr-2 text-[9px] uppercase tracking-[0.3em] text-cobalt/45"
+                className="mr-2 text-[9px] uppercase tracking-[0.3em] text-cream/45"
                 style={monoStyle}
               >
                 Nota
@@ -583,20 +497,27 @@ export function ProductDetailSection({ product, colorPrefix }: Props) {
             </p>
           )}
         </div>
+
+        {/* Bottom fade saliente → blanco (para el resto de la página) */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-x-0 bottom-0 h-24 md:h-32"
+          style={{
+            background:
+              "linear-gradient(to bottom, rgba(50,54,183,0) 0%, rgba(255,255,255,0.4) 60%, rgba(255,255,255,1) 100%)",
+          }}
+        />
       </section>
     </article>
   );
 }
 
-/**
- * Round Add Button — botón circular MUFFMENT con colores de marca
- * (cream bg + cobalt text) y efecto magnético: el botón sigue al cursor
- * con spring physics. Usa useCart() directamente (no hidden wrapper).
- *
- * Estilo "stamp"/sello premium con doble ring, similar al sello rotativo
- * pero estático (excepto por el magnetic follow del cursor).
- */
-function RoundAddButton({
+// ╔════════════════════════════════════════════════════════════════════╗
+// ║  Pill Add Button — ovalado, cobalt, glow blanco neón, magnetic     ║
+// ║  con rango EXTENDIDO (250px) — el botón se atrae desde más lejos.  ║
+// ╚════════════════════════════════════════════════════════════════════╝
+
+function PillAddButton({
   product,
   selectedColor,
 }: {
@@ -608,16 +529,27 @@ function RoundAddButton({
   const btnRef = useRef<HTMLButtonElement>(null);
   const [pos, setPos] = useState({ x: 0, y: 0 });
 
-  // Magnetic — el botón se atrae al cursor cuando está cerca
-  const handleMove = (e: React.MouseEvent) => {
-    if (!btnRef.current) return;
-    const r = btnRef.current.getBoundingClientRect();
-    setPos({
-      x: (e.clientX - r.left - r.width / 2) * 0.3,
-      y: (e.clientY - r.top - r.height / 2) * 0.3,
-    });
-  };
-  const handleLeave = () => setPos({ x: 0, y: 0 });
+  // Magnetic con rango EXTENDIDO — listener en window, distance fall-off
+  useEffect(() => {
+    const handler = (e: MouseEvent) => {
+      if (!btnRef.current) return;
+      const r = btnRef.current.getBoundingClientRect();
+      const cx = r.left + r.width / 2;
+      const cy = r.top + r.height / 2;
+      const dx = e.clientX - cx;
+      const dy = e.clientY - cy;
+      const distance = Math.sqrt(dx * dx + dy * dy);
+      const maxDistance = 250; // percibe el cursor desde 250px
+      if (distance < maxDistance) {
+        const strength = Math.pow(1 - distance / maxDistance, 1.5) * 0.45;
+        setPos({ x: dx * strength, y: dy * strength });
+      } else {
+        setPos({ x: 0, y: 0 });
+      }
+    };
+    window.addEventListener("mousemove", handler);
+    return () => window.removeEventListener("mousemove", handler);
+  }, []);
 
   const handleClick = () => {
     add({
@@ -643,9 +575,9 @@ function RoundAddButton({
 
   const transition = {
     type: "spring" as const,
-    stiffness: 220,
-    damping: 18,
-    mass: 0.55,
+    stiffness: 180,
+    damping: 16,
+    mass: 0.6,
   };
 
   return (
@@ -653,57 +585,43 @@ function RoundAddButton({
       ref={btnRef}
       type="button"
       onClick={handleClick}
-      onMouseMove={handleMove}
-      onMouseLeave={handleLeave}
       animate={pos}
       transition={transition}
       data-cursor="hover"
       className={cn(
-        "relative flex h-24 w-24 items-center justify-center rounded-full shadow-2xl md:h-28 md:w-28",
-        justAdded
-          ? "bg-[#06d6a0] text-cobalt"
-          : "bg-cream text-cobalt",
+        "relative inline-flex items-center justify-center rounded-full px-6 py-4 md:px-8 md:py-5",
+        justAdded ? "bg-[#06d6a0] text-cobalt" : "bg-cobalt text-cream",
       )}
       style={{
+        // Glow blanco neón detrás del botón (white halo expansive)
         boxShadow: justAdded
-          ? "0 14px 36px -6px rgba(6,214,160,0.5)"
-          : "0 14px 38px -6px rgba(232,226,209,0.35), inset 0 0 0 1.5px rgba(50,54,183,0.12)",
+          ? "0 0 32px 4px rgba(6,214,160,0.45), 0 6px 18px rgba(0,0,0,0.15)"
+          : "0 0 36px 6px rgba(255,255,255,0.55), 0 0 14px 2px rgba(255,255,255,0.4), 0 8px 22px rgba(50,54,183,0.35), inset 0 0 0 1px rgba(255,255,255,0.15)",
         fontFamily: '"Satoshi", system-ui, sans-serif',
       }}
       aria-label={`Agregar ${product.name} al carrito`}
     >
       <motion.span
-        className="flex flex-col items-center px-2 text-center leading-[1.05]"
+        className="relative z-10 flex items-center gap-2 whitespace-nowrap text-[11px] font-bold uppercase tracking-[0.18em] md:text-[13px]"
         animate={{ x: pos.x * 0.5, y: pos.y * 0.5 }}
         transition={transition}
       >
         {justAdded ? (
-          <span className="text-[10px] font-bold uppercase tracking-[0.14em] md:text-[11px]">
-            ✓ Agregado
-          </span>
+          <>✓ Agregado al carrito</>
         ) : (
           <>
-            <span className="text-[9px] font-bold uppercase tracking-[0.18em] md:text-[10px]">
-              Agregar al
-            </span>
-            <span
-              className="mt-0.5 text-[14px] uppercase leading-none md:text-[16px]"
-              style={{
-                fontFamily: "var(--font-bagel)",
-                letterSpacing: "0.01em",
-              }}
-            >
-              carrito
+            <span>Agregar al carrito</span>
+            <span aria-hidden className="text-cream/70">
+              →
             </span>
           </>
         )}
       </motion.span>
 
-      {/* Chip color seleccionado decorativo */}
       {selectedColor && !justAdded && (
         <span
           aria-hidden
-          className="absolute -right-1 -top-1 block h-5 w-5 rounded-full border-2 border-cream"
+          className="absolute -right-1 -top-1 block h-5 w-5 rounded-full border-2 border-white shadow-md"
           style={{ backgroundColor: selectedColor.hex }}
         />
       )}
@@ -711,7 +629,56 @@ function RoundAddButton({
   );
 }
 
-function Spec({
+// ╔════════════════════════════════════════════════════════════════════╗
+// ║  Premium Seal — pill ovalado outline cobalt con texto rotando      ║
+// ║  Posicionado sobre la foto del producto. Decorativo + premium.     ║
+// ╚════════════════════════════════════════════════════════════════════╝
+
+function PremiumSeal({ msgIdx }: { msgIdx: number }) {
+  return (
+    <div className="absolute -right-3 -top-3 z-30 md:-right-6 md:-top-6">
+      <div
+        className="relative inline-flex items-center gap-2 rounded-full bg-white/85 px-4 py-2 backdrop-blur-md md:gap-3 md:px-5 md:py-2.5"
+        style={{
+          border: "1.5px solid rgba(50,54,183,0.30)",
+          boxShadow:
+            "0 0 28px 4px rgba(255,255,255,0.6), 0 0 0 4px rgba(255,255,255,0.4), 0 6px 18px rgba(50,54,183,0.18)",
+        }}
+      >
+        <span
+          aria-hidden
+          className="text-[12px] leading-none text-cobalt/70 md:text-[14px]"
+        >
+          ✦
+        </span>
+        <div className="flex h-4 min-w-[110px] items-center justify-center md:h-5 md:min-w-[130px]">
+          <AnimatePresence mode="wait">
+            <motion.p
+              key={msgIdx}
+              initial={{ opacity: 0, y: 4 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -4 }}
+              transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+              className="whitespace-nowrap text-[9px] font-bold uppercase tracking-[0.18em] text-cobalt md:text-[10px] md:tracking-[0.2em]"
+              style={{ fontFamily: '"Satoshi", system-ui, sans-serif' }}
+            >
+              {ROTATING_PILLARS[msgIdx]}
+            </motion.p>
+          </AnimatePresence>
+        </div>
+        <span
+          aria-hidden
+          className="text-[12px] leading-none text-cobalt/70 md:text-[14px]"
+        >
+          ✦
+        </span>
+      </div>
+    </div>
+  );
+}
+
+// Spec con color cream sobre fondo cobalt
+function SpecDark({
   label,
   value,
   className,
@@ -723,12 +690,12 @@ function Spec({
   return (
     <div className={className}>
       <p
-        className="mb-2 text-[9px] uppercase tracking-[0.3em] text-cobalt/50"
+        className="mb-2 text-[9px] uppercase tracking-[0.3em] text-cream/50"
         style={{ fontFamily: '"Satoshi", system-ui, sans-serif' }}
       >
         {label}
       </p>
-      <p className="text-sm leading-snug text-cobalt md:text-base">{value}</p>
+      <p className="text-sm leading-snug text-cream md:text-base">{value}</p>
     </div>
   );
 }
