@@ -65,14 +65,15 @@ export default async function ProductPage({ params }: Props) {
       <Cursor />
       <Header />
       <main className="relative bg-white pt-32">
-        {/* Franja cobalt arriba que se difumina a blanco antes del marquee
-            del producto. Cubre el área del header global + breadcrumb. */}
+        {/* Franja cobalt arriba con fade LARGO y smooth al blanco.
+            Altura aumentada (640px) + más stops para que la transición se
+            sienta orgánica, no una línea dura. Fade va del 18% al 100%. */}
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-x-0 top-0 z-0 h-[320px] md:h-[360px]"
+          className="pointer-events-none absolute inset-x-0 top-0 z-0 h-[560px] md:h-[640px]"
           style={{
             background:
-              "linear-gradient(to bottom, rgb(50,54,183) 0%, rgb(50,54,183) 25%, rgba(50,54,183,0.85) 50%, rgba(50,54,183,0.4) 75%, rgba(255,255,255,0) 100%)",
+              "linear-gradient(to bottom, rgb(50,54,183) 0%, rgb(50,54,183) 18%, rgba(50,54,183,0.93) 28%, rgba(50,54,183,0.82) 40%, rgba(50,54,183,0.6) 55%, rgba(50,54,183,0.38) 70%, rgba(50,54,183,0.18) 84%, rgba(50,54,183,0.05) 94%, rgba(255,255,255,0) 100%)",
           }}
         />
 

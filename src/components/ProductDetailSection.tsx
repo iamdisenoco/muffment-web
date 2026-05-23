@@ -111,9 +111,12 @@ export function ProductDetailSection({ product, colorPrefix }: Props) {
       {/* ═══════════════════════════════════════════════════════════════ */}
       <section className="relative overflow-hidden bg-white">
         <div className="relative z-20 mx-auto max-w-[1700px] px-4 pb-20 pt-8 md:px-10 md:pb-32 md:pt-12">
-          {/* ───── MARQUEE + BUTTON ARRIBA ───── */}
+          {/* ───── MARQUEE + BUTTON ARRIBA ─────
+              bg-white propio para que sea legible incluso si todavía está
+              encima del fade cobalt residual (el gradient cobalt-to-white
+              de la página puede no terminar perfectamente aquí). */}
           <div
-            className="pd-hero-marquee relative mb-10 border-y border-cobalt/30 py-3 md:mb-14 md:py-4"
+            className="pd-hero-marquee relative mb-10 border-y border-cobalt/30 bg-white py-3 md:mb-14 md:py-4"
             style={{ overflow: "visible" }}
           >
             <div
@@ -636,7 +639,8 @@ function PillAddButton({
 
 function PremiumSeal({ msgIdx }: { msgIdx: number }) {
   return (
-    <div className="absolute -right-3 -top-3 z-30 md:-right-6 md:-top-6">
+    // DENTRO de la foto (no fuera) — top-right corner con padding
+    <div className="absolute right-3 top-3 z-30 md:right-6 md:top-6">
       <div
         className="relative inline-flex items-center gap-2 rounded-full bg-white/85 px-4 py-2 backdrop-blur-md md:gap-3 md:px-5 md:py-2.5"
         style={{
