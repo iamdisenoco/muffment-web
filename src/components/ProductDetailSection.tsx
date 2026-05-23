@@ -50,20 +50,6 @@ export function ProductDetailSection({ product, colorPrefix }: Props) {
     <article className="bg-white">
       {/* ═══════════ HERO STAGE - todo en una vista ═══════════ */}
       <section className="relative overflow-hidden">
-        {/* Nombre Bagel GIGANTE detrás (decorativo, cruza todo el ancho) */}
-        <h1
-          aria-hidden
-          className="pointer-events-none absolute left-1/2 top-[55%] z-0 -translate-x-1/2 -translate-y-1/2 select-none whitespace-nowrap text-center text-cobalt/[0.05]"
-          style={{
-            ...displayStyle,
-            fontSize: "clamp(4rem, 18vw, 22rem)",
-            lineHeight: 0.85,
-            letterSpacing: "-0.02em",
-          }}
-        >
-          {product.shortName}
-        </h1>
-
         <div className="relative mx-auto max-w-[1700px] px-6 pb-10 md:px-12 md:pb-16">
           {/* Eyebrow + nombre real centrado */}
           <div className="relative z-10 mb-6 text-center md:mb-8">
