@@ -4,16 +4,16 @@ import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 
 const MESSAGES = [
-  { star: "✦", text: "Diseñado para durar" },
-  { star: "✦", text: "Acero galvanizado · No se oxida" },
-  { star: "✦", text: "Garantía 3 años" },
-  { star: "✦", text: "Pintura electrostática" },
-  { star: "✦", text: "Hecho en Colombia" },
+  "Diseñado para durar",
+  "Acero galvanizado · no se oxida",
+  "Garantía 3 años",
+  "Pintura electrostática",
+  "Hecho en Colombia",
 ];
 
 /**
- * Sello premium flotante - estrella giratoria + mensaje que rota
- * entre 5 bondades del producto cada 3.5s. Diseño tipo medalla.
+ * Sello premium minimal - sparkle giratorio + mensaje rotando.
+ * Diseño limpio sin emoji redundante.
  */
 export function PremiumBadge() {
   const [i, setI] = useState(0);
@@ -25,40 +25,40 @@ export function PremiumBadge() {
     return () => clearInterval(id);
   }, []);
 
-  const m = MESSAGES[i];
-
   return (
-    <div className="pointer-events-none flex items-center gap-3">
-      {/* Estrella giratoria */}
+    <div className="pointer-events-none inline-flex items-center gap-4 rounded-full border border-cobalt/15 bg-white/60 px-5 py-2.5 backdrop-blur-sm">
+      {/* Sparkle giratorio - estrella sutil 4 puntas */}
       <motion.svg
-        width="48"
-        height="48"
-        viewBox="0 0 100 100"
-        className="md:h-14 md:w-14"
+        width="18"
+        height="18"
+        viewBox="0 0 24 24"
         animate={{ rotate: 360 }}
-        transition={{ duration: 18, repeat: Infinity, ease: "linear" }}
+        transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+        className="shrink-0 text-cobalt"
+        aria-hidden
       >
-        <g fill="currentColor" className="text-cobalt">
-          {/* Estrella de 8 puntas tipo medalla MUFFMENT */}
-          <path d="M50 5 L54 46 L95 50 L54 54 L50 95 L46 54 L5 50 L46 46 Z" />
-          <circle cx="50" cy="50" r="4" />
-        </g>
+        <path
+          d="M12 2 L13 11 L22 12 L13 13 L12 22 L11 13 L2 12 L11 11 Z"
+          fill="currentColor"
+        />
       </motion.svg>
 
+      {/* Línea separadora */}
+      <span aria-hidden className="h-3 w-px bg-cobalt/25" />
+
       {/* Texto que rota */}
-      <div className="relative h-6 min-w-[170px] overflow-hidden md:h-7 md:min-w-[210px]">
+      <div className="relative h-5 min-w-[180px] overflow-hidden">
         <AnimatePresence mode="wait">
           <motion.p
             key={i}
-            initial={{ opacity: 0, y: 12 }}
+            initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -12 }}
+            exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.45, ease: [0.21, 0.6, 0.35, 1] }}
-            className="absolute inset-0 text-sm font-medium uppercase tracking-[0.18em] text-cobalt md:text-[15px]"
+            className="absolute inset-0 text-xs font-medium uppercase tracking-[0.18em] text-cobalt"
             style={{ fontFamily: '"Satoshi", system-ui, sans-serif' }}
           >
-            <span className="mr-1.5 opacity-60">{m.star}</span>
-            {m.text}
+            {MESSAGES[i]}
           </motion.p>
         </AnimatePresence>
       </div>
