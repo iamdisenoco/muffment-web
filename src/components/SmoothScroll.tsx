@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import Lenis from "lenis";
+import { gsap, ScrollTrigger } from "@/lib/gsap";
 
 export function SmoothScroll() {
   useEffect(() => {
@@ -21,14 +22,15 @@ export function SmoothScroll() {
       syncTouch: false,
     });
 
-    function raf(time: number) {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
-    }
-    const id = requestAnimationFrame(raf);
+    // 🔑 Sync Lenis ↔ GSAP ScrollTrigger — sin esto los triggers se
+    // calculan contra el scroll nativo y la inercia de Lenis desfasaria
+    // todas las animaciones (Awwwards-skill recommendation).
+    lenis.on("scroll", ScrollTrigger.update);
+    gsap.ticker.add((time) => lenis.raf(time * 1000));
+    gsap.ticker.lagSmoothing(0);
 
     return () => {
-      cancelAnimationFrame(id);
+      gsap.ticker.remove((time) => lenis.raf(time * 1000));
       lenis.destroy();
     };
   }, []);
