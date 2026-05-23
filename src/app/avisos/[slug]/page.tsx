@@ -65,27 +65,25 @@ export default async function ProductPage({ params }: Props) {
       <Cursor />
       <Header />
       <main className="relative bg-white pt-32">
-        {/* Franja cobalt arriba con fade IDÉNTICO al de abajo (que ya
-            funciona). Implementado como 2 divs separados — mismo patrón
-            que la transición hero→specs en ProductDetailSection. */}
+        {/* Franja cobalt arriba REPLICA EXACTA del fade hero→specs de
+            ProductDetailSection (que SÍ funciona). Mismo h-32/40 + h-24/32
+            y mismos gradient values, solo invertido en dirección. */}
 
-        {/* Capa 1: banda cobalt SÓLIDA arriba (cubre header + breadcrumb).
-            data-header-theme="dark" → el Header global auto-detecta esto
-            y cambia su pill+icons a modo white/glass cuando está sobre
-            esta franja. */}
+        {/* Capa 1: banda cobalt SÓLIDA — cubre header + breadcrumb.
+            data-header-theme="dark" → Header global auto-detect white. */}
         <div
           aria-hidden
           data-header-theme="dark"
-          className="pointer-events-none absolute inset-x-0 top-0 z-0 h-[200px] bg-cobalt md:h-[240px]"
+          className="pointer-events-none absolute inset-x-0 top-0 z-0 h-32 bg-cobalt md:h-40"
         />
 
-        {/* Capa 2: fade cobalt → transparente (igual al top del specs
-            section que dice "Ficha técnica"). Smooth y largo. */}
+        {/* Capa 2: fade cobalt-1 → cobalt-0.5 → cobalt-0 — mismo gradient
+            EXACTO que el top del specs section ("Top fade entrante").
+            top=h32(128px) mobile / md:top=h40(160px) desktop. */}
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-x-0 z-0 h-[160px] md:h-[200px]"
+          className="pointer-events-none absolute inset-x-0 top-32 z-0 h-24 md:top-40 md:h-32"
           style={{
-            top: "200px",
             background:
               "linear-gradient(to bottom, rgba(50,54,183,1) 0%, rgba(50,54,183,0.5) 50%, rgba(50,54,183,0) 100%)",
           }}
