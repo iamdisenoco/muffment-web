@@ -20,21 +20,39 @@ export function ColorPicker({ selectedId, onSelect }: Props) {
   const [hover, setHover] = useState<Color | null>(null);
   const tooltip = hover ?? COLORS.find((c) => c.id === selectedId) ?? null;
 
+  // El finish "interior" indica que el color SOLO es para uso interior.
+  // Si no está en la lista, es apto para exterior.
+  const isInterior = tooltip?.finishes.includes("interior");
+  const visibleFinishes =
+    tooltip?.finishes.filter((f) => f !== "interior") ?? [];
+
   return (
     <div className="space-y-2.5">
-      {/* Mini tooltip - 1 linea inline arriba, sin caja */}
-      <div className="flex h-5 items-center text-[11px] text-cobalt/75">
+      {/* Mini tooltip - linea inline con uso + acabado */}
+      <div className="flex h-5 items-center gap-1.5 text-[11px] text-cobalt/75">
         {tooltip ? (
           <>
             <span
               aria-hidden
-              className="mr-2 inline-block h-3 w-3 shrink-0 rounded-full border border-cobalt/15"
+              className="inline-block h-3 w-3 shrink-0 rounded-full border border-cobalt/15"
               style={{ backgroundColor: tooltip.hex }}
             />
             <span className="font-medium text-cobalt">{tooltip.name}</span>
-            <span className="ml-1.5 text-cobalt/55">
-              · {tooltip.finishes.map((f) => FINISH_INFO[f].label).join(", ")}
+            <span
+              className={cn(
+                "shrink-0 rounded-full px-1.5 py-0.5 text-[8px] font-semibold uppercase tracking-[0.15em]",
+                isInterior
+                  ? "bg-[#f9c80e]/30 text-cobalt"
+                  : "bg-[#06d6a0]/30 text-cobalt",
+              )}
+            >
+              {isInterior ? "Interior" : "Exterior"}
             </span>
+            {visibleFinishes.length > 0 && (
+              <span className="truncate text-cobalt/55">
+                · {visibleFinishes.map((f) => FINISH_INFO[f].label).join(", ")}
+              </span>
+            )}
           </>
         ) : (
           <span className="text-[10px] uppercase tracking-[0.25em] text-cobalt/40">

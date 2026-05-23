@@ -151,6 +151,11 @@ export function ProductDetailSection({ product, colorPrefix }: Props) {
 
             {/* ────── CENTRO (col-6): FOTO GIGANTE ────── */}
             <div className={cn("relative", colorPrefix ? "md:col-span-6" : "md:col-span-9")}>
+              {/* Premium badge flotante esquina sup-derecha del stage */}
+              <div className="absolute right-0 top-0 z-30 hidden md:block">
+                <PremiumBadge />
+              </div>
+
               <div className="relative mx-auto flex items-center justify-center">
                 {hasMultiple && (
                   <button
@@ -249,8 +254,8 @@ export function ProductDetailSection({ product, colorPrefix }: Props) {
                 </div>
               )}
 
-              {/* Premium badge centrado */}
-              <div className="mt-5 flex justify-center">
+              {/* Premium badge inline en mobile (en desktop va arriba absolute) */}
+              <div className="mt-5 flex justify-center md:hidden">
                 <PremiumBadge />
               </div>
             </div>
@@ -268,7 +273,7 @@ export function ProductDetailSection({ product, colorPrefix }: Props) {
                   className="mt-0.5 mb-4 text-[11px] text-cobalt/60"
                   style={monoStyle}
                 >
-                  88 colores ZMK · pintura electrostática
+                  + de 90 colores · pintura electrostática
                 </p>
                 <ColorPicker
                   selectedId={selectedColor?.id ?? null}

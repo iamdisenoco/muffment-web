@@ -5,8 +5,9 @@ import { motion, AnimatePresence } from "motion/react";
 
 const MESSAGES = [
   "Diseñado para durar",
-  "Acero galvanizado · no se oxida",
+  "No se oxida",
   "Garantía 3 años",
+  "+ de 90 colores",
   "Pintura electrostática",
   "Hecho en Colombia",
 ];
