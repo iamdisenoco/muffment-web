@@ -60,14 +60,21 @@ function StepBadge({ step }: { step: Step }) {
           viewBox="0 0 280 280"
           width="220"
           height="220"
-          className="h-[180px] w-[180px] md:h-[220px] md:w-[220px]"
+          className="h-[180px] w-[180px] overflow-visible md:h-[220px] md:w-[220px]"
           aria-hidden
         >
           <defs>
             <path id={TEXT_PATH_ID} d={TEXT_PATH} fill="none" />
+            <filter id={`glow-${step.n}`} x="-50%" y="-50%" width="200%" height="200%">
+              <feGaussianBlur stdDeviation="12" result="blur" />
+              <feMerge>
+                <feMergeNode in="blur" />
+                <feMergeNode in="SourceGraphic" />
+              </feMerge>
+            </filter>
           </defs>
 
-          {/* Texto curvo arriba — gris sobre cream. */}
+          {/* Texto curvo arriba */}
           <text
             fill="#6b6b6b"
             style={{
@@ -82,11 +89,44 @@ function StepBadge({ step }: { step: Step }) {
             </textPath>
           </text>
 
-          {/* Círculo del número */}
+          {/* Glow detrás del círculo - aparece al hover */}
+          <motion.circle
+            cx="140"
+            cy="160"
+            r="62"
+            fill="var(--color-cobalt)"
+            filter={`url(#glow-${step.n})`}
+            initial={false}
+            animate={{
+              opacity: hovered ? 0.65 : 0,
+              scale: hovered ? 1.25 : 1,
+            }}
+            transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+            style={{ transformOrigin: "140px 160px" }}
+          />
+
+          {/* Halo secundario más amplio y suave (extra alumbre) */}
+          <motion.circle
+            cx="140"
+            cy="160"
+            r="62"
+            fill="var(--color-cobalt)"
+            initial={false}
+            animate={{
+              opacity: hovered ? 0.25 : 0,
+              scale: hovered ? 1.7 : 1,
+            }}
+            transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+            style={{
+              transformOrigin: "140px 160px",
+              filter: "blur(18px)",
+            }}
+          />
+
+          {/* Círculo del número - sólido encima */}
           <circle cx="140" cy="160" r="62" fill="var(--color-cobalt)" />
 
-          {/* Centro del círculo: número en idle, flecha → en hover.
-              Ambos en Bagel ("tipografía redondita"). */}
+          {/* Centro: número en idle, flecha en hover */}
           <AnimatePresence mode="wait" initial={false}>
             <motion.text
               key={hovered ? "arrow" : "number"}
@@ -114,7 +154,7 @@ function StepBadge({ step }: { step: Step }) {
 
 export function Steps() {
   return (
-    <section className="bg-cream pt-24 pb-0 md:pt-28 md:pb-1">
+    <section className="bg-white pt-24 pb-0 md:pt-28 md:pb-1">
       <div className="mx-auto max-w-[1400px] px-6 md:px-10">
         {/* Título de sección — pt grande arriba para que el header fixed
             no se monte sobre 'proceso de compra'. */}
