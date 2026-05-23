@@ -18,19 +18,29 @@ type Props = {
 };
 
 /**
- * Product Detail Hero v3 — inspired by reels (Coffee Lounge + Starry Labs +
- * Spaceadv brutalist typography). Hero cinematográfico:
+ * Product Detail Hero v4 — feedback Jon "el producto debe ser el centro,
+ * que la imagen se vea más imponente". Cambios respecto v3:
  *
- *   ╔════════════════════════════════════════════════╗
- *   ║  NOMBRE PRODUCTO  ⬅ backdrop typography GIANTE  ║
- *   ║  ─────────────────────────────────────────────  ║
- *   ║  [precio]    [PHOTO PARALLAX]    [colores]      ║
- *   ║  [desc]                                         ║
- *   ║  [mag CTA]                                      ║
- *   ╚════════════════════════════════════════════════╝
+ *   ❌ Quitado: eyebrow + título centrados que comían altura
+ *   ❌ Quitado: title con character stagger reveal (movido al rail)
+ *   ✓ La foto ocupa h-[calc(100vh - header - breadcrumb)] → dominante
+ *   ✓ Eyebrow + título compactos viven en el rail izquierdo
+ *   ✓ Color picker swatches más pequeñas (mini chips 11-col)
+ *   ✓ Backdrop typography masiva se ve más DETRÁS del producto
  *
- * Las animaciones GSAP+ScrollTrigger se inicializan dentro de useGSAP
- * con un scope al containerRef para que se limpien al desmontar.
+ *   ┌──────────────────────────────────────────────┐
+ *   │ ┌─────┐   ┌──────────────────┐   ┌────────┐  │
+ *   │ │CAT· │   │                  │   │COLOR   │  │
+ *   │ │NAME │   │                  │   │PICKER  │  │
+ *   │ │     │   │   [HUGE PRODUCT] │   │mini    │  │
+ *   │ │$780K│   │   (fills height) │   │        │  │
+ *   │ │desc │   │                  │   │        │  │
+ *   │ │CTA  │   │                  │   │        │  │
+ *   │ │meta │   │                  │   │        │  │
+ *   │ └─────┘   └──────────────────┘   └────────┘  │
+ *   └──────────────────────────────────────────────┘
+ *
+ * Todo entra en una vista (sin scroll para ver la foto entera).
  */
 export function ProductDetailSection({ product, colorPrefix }: Props) {
   const [selectedColor, setSelectedColor] = useState<Color | null>(null);
@@ -67,7 +77,7 @@ export function ProductDetailSection({ product, colorPrefix }: Props) {
 
       // 2. Foto del producto — parallax inverso (sube más lento)
       gsap.to(".pd-hero-photo", {
-        yPercent: -12,
+        yPercent: -8,
         ease: "none",
         scrollTrigger: {
           trigger: containerRef.current,
@@ -77,27 +87,17 @@ export function ProductDetailSection({ product, colorPrefix }: Props) {
         },
       });
 
-      // 3. Reveals iniciales — character stagger del nombre
-      gsap.from(".pd-name-char", {
-        yPercent: 110,
-        opacity: 0,
-        duration: 0.9,
-        stagger: 0.04,
-        ease: "expo.out",
-        delay: 0.15,
-      });
-
-      // 4. Reveals del rail izquierdo + derecho
+      // 3. Rail reveals — iniciales (stagger sutil al cargar la página)
       gsap.from(".pd-rail-item", {
         opacity: 0,
         y: 16,
         duration: 0.8,
-        stagger: 0.08,
+        stagger: 0.07,
         ease: "power3.out",
-        delay: 0.4,
+        delay: 0.25,
       });
 
-      // 5. Specs — reveal en scroll, batched
+      // 4. Specs — reveal en scroll
       gsap.from(".pd-spec", {
         opacity: 0,
         y: 30,
@@ -113,233 +113,227 @@ export function ProductDetailSection({ product, colorPrefix }: Props) {
     { scope: containerRef },
   );
 
-  // Split the product name into characters for the reveal animation.
-  // Spaces preserved as &nbsp; for proper kerning.
-  const nameChars = product.name.split("");
-
   return (
     <article ref={containerRef} className="relative bg-white">
-      {/* ═══════════════════ HERO CINEMATOGRÁFICO ═══════════════════ */}
-      <section className="relative overflow-hidden pb-16 md:pb-24">
+      {/* ═══════════════ HERO COMPACT — todo en 1 vista ═══════════════ */}
+      <section className="relative overflow-hidden">
         {/* ─── BACKDROP TYPOGRAPHY GIANTE ─── */}
-        {/* El nombre del producto en tamaño masivo (clamp 11vw → 22vw)
-            con gradiente cobalt + blend mode multiply para no tapar el
-            producto. Vive detrás del grid (z-0) y se mueve con parallax. */}
+        {/* Vive detrás del grid (z-0). Tamaño relativo al viewport para que
+            sea dominante en desktop pero no rompa mobile. */}
         <div
           aria-hidden
-          className="pd-backdrop-type pointer-events-none absolute inset-x-0 top-0 z-0 flex items-start justify-center pt-8 md:pt-16"
+          className="pd-backdrop-type pointer-events-none absolute inset-0 z-0 flex items-center justify-center"
         >
           <h2
-            className="select-none whitespace-nowrap text-center leading-[0.82] text-cobalt/[0.045] md:tracking-[-0.04em]"
+            className="select-none whitespace-nowrap text-center leading-[0.82] text-cobalt/[0.04] md:tracking-[-0.04em]"
             style={{
               ...displayStyle,
-              fontSize: "clamp(5rem, 18vw, 22rem)",
+              fontSize: "clamp(6rem, 22vw, 26rem)",
             }}
           >
             {product.shortName.toUpperCase()}
           </h2>
         </div>
 
-        <div className="relative z-10 mx-auto max-w-[1700px] px-6 pt-6 md:px-12 md:pt-10">
-          {/* Eyebrow técnico (categoria + código) */}
-          <div className="mb-3 flex items-center justify-center gap-3 text-center md:mb-5">
-            <span
-              aria-hidden
-              className="h-px w-10 bg-cobalt/30"
-            />
-            <p
-              className="text-[10px] uppercase tracking-[0.4em] text-cobalt/65"
-              style={monoStyle}
-            >
-              {product.categoryLabel} · N°{product.code}
-            </p>
-            <span
-              aria-hidden
-              className="h-px w-10 bg-cobalt/30"
-            />
-          </div>
-
-          {/* Nombre real con character stagger reveal */}
-          <h1
-            className="mb-10 overflow-hidden text-center leading-none tracking-tight text-cobalt md:mb-14"
-            style={{
-              ...displayStyle,
-              fontSize: "clamp(1.75rem, 4vw, 3.75rem)",
-            }}
-          >
-            <span className="inline-block overflow-hidden align-bottom">
-              {nameChars.map((ch, idx) => (
-                <span
-                  key={idx}
-                  className="pd-name-char inline-block"
-                  style={{ whiteSpace: ch === " " ? "pre" : "normal" }}
-                >
-                  {ch === " " ? " " : ch}
-                </span>
-              ))}
-            </span>
-          </h1>
-
-          {/* GRID 3-COL: info izq · foto centro · colores derecha */}
-          <div className="grid items-start gap-8 md:grid-cols-12 md:gap-x-8">
-            {/* ────── IZQUIERDA (col-3) ────── */}
-            <div className="md:col-span-3 md:sticky md:top-32 md:self-start">
-              <div className="pd-rail-item">
-                <p
-                  className="text-[10px] uppercase tracking-[0.3em] text-cobalt/55"
-                  style={monoStyle}
-                >
-                  Valor
-                </p>
-                <p
-                  className="mt-1 text-4xl text-cobalt tabular-nums md:text-5xl"
-                  style={displayStyle}
-                >
-                  {product.priceLabel}
-                </p>
-                {product.priceEstimated && (
-                  <p
-                    className="mt-0.5 text-[9px] uppercase tracking-[0.2em] text-cobalt/55"
-                    style={monoStyle}
-                  >
-                    desde · final según diseño
-                  </p>
-                )}
-              </div>
-
-              <p className="pd-rail-item mt-5 text-sm leading-relaxed text-cobalt/75 md:text-[15px]">
-                {product.description}
-              </p>
-
-              {selectedColor && (
-                <div className="pd-rail-item mt-4 flex items-center gap-2">
-                  <span
-                    aria-hidden
-                    className="block h-7 w-7 shrink-0 rounded-full border border-cobalt/10 shadow-sm"
-                    style={{ backgroundColor: selectedColor.hex }}
-                  />
-                  <div>
-                    <p
-                      className="text-[8px] uppercase tracking-[0.25em] text-cobalt/55"
-                      style={monoStyle}
-                    >
-                      Color
-                    </p>
-                    <p className="text-sm text-cobalt" style={displayStyle}>
-                      {selectedColor.name}
-                    </p>
-                  </div>
-                </div>
-              )}
-
-              <div className="pd-rail-item mt-6 space-y-2.5">
-                <AddToCartButton
-                  product={product}
-                  selectedColor={selectedColor}
-                />
-                <WhatsAppButton message={message} size="lg" variant="ghost">
-                  Preguntar
-                </WhatsAppButton>
-              </div>
-
-              <div
-                className="pd-rail-item mt-6 flex flex-col gap-1.5 text-[10px] uppercase tracking-[0.22em] text-cobalt/55"
+        <div
+          className="relative z-10 mx-auto grid max-w-[1700px] items-center gap-6 px-4 pb-8 pt-2 md:grid-cols-12 md:gap-x-8 md:px-10 md:pb-12 md:pt-3"
+          style={{
+            // Altura objetivo: viewport menos header (pt-32 = 128px del
+            // <main>) menos breadcrumb (~70px). Permite scroll si el
+            // usuario quiere ver el resto, pero todo entra arriba.
+            minHeight: "calc(100vh - 200px)",
+          }}
+        >
+          {/* ══════════ COL IZQUIERDA — meta + precio + CTA ══════════ */}
+          <aside className="space-y-4 md:col-span-3">
+            {/* Eyebrow + nombre compacto del producto */}
+            <div className="pd-rail-item">
+              <p
+                className="text-[10px] uppercase tracking-[0.35em] text-cobalt/55"
                 style={monoStyle}
               >
-                <span className="flex items-center gap-2">
-                  <span className="h-1 w-1 rounded-full bg-cobalt/45" />
-                  Bajo pedido · 4 sem
-                </span>
-                <span className="flex items-center gap-2">
-                  <span className="h-1 w-1 rounded-full bg-cobalt/45" />
-                  Garantía 3 años
-                </span>
-                <span className="flex items-center gap-2">
-                  <span className="h-1 w-1 rounded-full bg-cobalt/45" />
-                  Hecho en Colombia
-                </span>
-              </div>
+                {product.categoryLabel} · N°{product.code}
+              </p>
+              <h1
+                className="mt-1.5 leading-[0.95] tracking-tight text-cobalt"
+                style={{
+                  ...displayStyle,
+                  fontSize: "clamp(1.5rem, 2vw, 2rem)",
+                }}
+              >
+                {product.name}
+              </h1>
             </div>
 
-            {/* ────── CENTRO (col-6): FOTO + PARALLAX ────── */}
-            <div
-              className={cn(
-                "relative",
-                colorPrefix ? "md:col-span-6" : "md:col-span-9",
+            {/* Precio */}
+            <div className="pd-rail-item">
+              <p
+                className="text-[9px] uppercase tracking-[0.3em] text-cobalt/55"
+                style={monoStyle}
+              >
+                Valor
+              </p>
+              <p
+                className="text-3xl text-cobalt tabular-nums md:text-4xl"
+                style={displayStyle}
+              >
+                {product.priceLabel}
+              </p>
+              {product.priceEstimated && (
+                <p
+                  className="text-[9px] uppercase tracking-[0.2em] text-cobalt/55"
+                  style={monoStyle}
+                >
+                  desde · final según diseño
+                </p>
               )}
-            >
-              {/* Premium badge — esquina sup derecha sobre la foto */}
-              <div className="pd-rail-item absolute right-0 top-0 z-30 hidden md:block">
-                <PremiumBadge />
-              </div>
+            </div>
 
-              <div className="pd-hero-photo">
-                <DragGallery
-                  images={images}
-                  alt={product.name}
-                  index={imgIdx}
-                  onChange={setImgIdx}
+            {/* Descripción corta */}
+            <p className="pd-rail-item text-[13px] leading-relaxed text-cobalt/75">
+              {product.description}
+            </p>
+
+            {/* Selected color chip */}
+            {selectedColor && (
+              <div className="pd-rail-item flex items-center gap-2">
+                <span
+                  aria-hidden
+                  className="block h-6 w-6 shrink-0 rounded-full border border-cobalt/10 shadow-sm"
+                  style={{ backgroundColor: selectedColor.hex }}
                 />
-              </div>
-
-              {/* Dots */}
-              {hasMultiple && (
-                <div className="mt-5 flex items-center justify-center gap-1.5">
-                  {images.map((_, i) => (
-                    <button
-                      key={i}
-                      type="button"
-                      aria-label={`Imagen ${i + 1}`}
-                      onClick={() => setImgIdx(i)}
-                      data-cursor="hover"
-                      className={cn(
-                        "h-1.5 rounded-full transition-all",
-                        i === imgIdx
-                          ? "w-6 bg-cobalt"
-                          : "w-1.5 bg-cobalt/30 hover:bg-cobalt/55",
-                      )}
-                    />
-                  ))}
-                </div>
-              )}
-
-              {/* Premium badge inline en mobile */}
-              <div className="mt-5 flex justify-center md:hidden">
-                <PremiumBadge />
-              </div>
-            </div>
-
-            {/* ────── DERECHA (col-3): COLOR PICKER ────── */}
-            {colorPrefix && (
-              <div className="md:col-span-3 md:sticky md:top-32 md:self-start">
-                <div className="pd-rail-item">
+                <div>
                   <p
-                    className="text-[10px] uppercase tracking-[0.3em] text-cobalt/55"
+                    className="text-[8px] uppercase tracking-[0.25em] text-cobalt/55"
                     style={monoStyle}
                   >
-                    Escogé tu color
+                    Color
                   </p>
                   <p
-                    className="mt-0.5 mb-4 text-[11px] text-cobalt/60"
-                    style={monoStyle}
+                    className="text-[13px] leading-tight text-cobalt"
+                    style={displayStyle}
                   >
-                    + de 90 colores · pintura electrostática
+                    {selectedColor.name}
                   </p>
-                  <ColorPicker
-                    selectedId={selectedColor?.id ?? null}
-                    onSelect={setSelectedColor}
-                  />
                 </div>
               </div>
             )}
+
+            {/* CTAs */}
+            <div className="pd-rail-item space-y-2">
+              <AddToCartButton
+                product={product}
+                selectedColor={selectedColor}
+              />
+              <WhatsAppButton message={message} size="md" variant="ghost">
+                Preguntar
+              </WhatsAppButton>
+            </div>
+
+            {/* Meta dots */}
+            <div
+              className="pd-rail-item flex flex-col gap-1 text-[9px] uppercase tracking-[0.22em] text-cobalt/55"
+              style={monoStyle}
+            >
+              <span className="flex items-center gap-2">
+                <span className="h-1 w-1 rounded-full bg-cobalt/45" />
+                Bajo pedido · 4 sem
+              </span>
+              <span className="flex items-center gap-2">
+                <span className="h-1 w-1 rounded-full bg-cobalt/45" />
+                Garantía 3 años
+              </span>
+              <span className="flex items-center gap-2">
+                <span className="h-1 w-1 rounded-full bg-cobalt/45" />
+                Hecho en Colombia
+              </span>
+            </div>
+          </aside>
+
+          {/* ══════════ COL CENTRAL — FOTO DOMINANTE ══════════ */}
+          <div
+            className={cn(
+              "relative flex h-full items-center justify-center",
+              colorPrefix ? "md:col-span-6" : "md:col-span-9",
+            )}
+          >
+            {/* Premium badge — esquina sup derecha sobre la foto */}
+            <div className="pd-rail-item absolute right-0 top-0 z-30 hidden md:block">
+              <PremiumBadge />
+            </div>
+
+            {/* Wrapper del photo que ocupa toda la altura disponible */}
+            <div
+              className="pd-hero-photo relative flex h-full w-full items-center justify-center"
+              style={{
+                // Foto MUCHO más grande — calc para que no se desborde
+                minHeight: "min(70vh, 720px)",
+              }}
+            >
+              <DragGallery
+                images={images}
+                alt={product.name}
+                index={imgIdx}
+                onChange={setImgIdx}
+              />
+            </div>
           </div>
+
+          {/* ══════════ COL DERECHA — COLOR PICKER MINI ══════════ */}
+          {colorPrefix && (
+            <aside className="pd-rail-item md:col-span-3">
+              <p
+                className="text-[9px] uppercase tracking-[0.3em] text-cobalt/55"
+                style={monoStyle}
+              >
+                Escogé tu color
+              </p>
+              <p
+                className="mt-0.5 mb-3 text-[10px] text-cobalt/60"
+                style={monoStyle}
+              >
+                + de 90 · pintura electrostática
+              </p>
+              <ColorPicker
+                selectedId={selectedColor?.id ?? null}
+                onSelect={setSelectedColor}
+              />
+            </aside>
+          )}
         </div>
+
+        {/* Dots + Premium badge mobile (debajo del grid) */}
+        {(hasMultiple || true) && (
+          <div className="relative z-10 mx-auto max-w-[1700px] px-4 pb-6 md:px-10">
+            {hasMultiple && (
+              <div className="flex items-center justify-center gap-1.5">
+                {images.map((_, i) => (
+                  <button
+                    key={i}
+                    type="button"
+                    aria-label={`Imagen ${i + 1}`}
+                    onClick={() => setImgIdx(i)}
+                    data-cursor="hover"
+                    className={cn(
+                      "h-1.5 rounded-full transition-all",
+                      i === imgIdx
+                        ? "w-6 bg-cobalt"
+                        : "w-1.5 bg-cobalt/30 hover:bg-cobalt/55",
+                    )}
+                  />
+                ))}
+              </div>
+            )}
+
+            {/* Premium badge inline en mobile */}
+            <div className="mt-4 flex justify-center md:hidden">
+              <PremiumBadge />
+            </div>
+          </div>
+        )}
       </section>
 
       {/* ═══════════════════ SCROLL-NARRATIVE PINNED ═══════════════════ */}
-      {/* Sección cinematográfica con los 3 pilares brand: la foto se queda
-          pineada mientras la tipografía masiva atraviesa la pantalla.
-          Inspirada en Coffee Lounge + Ford "REDISCOVER". */}
       <ProductScrollNarrative
         product={product}
         heroOverride={dynamicHero}

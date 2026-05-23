@@ -96,7 +96,10 @@ export function DragGallery({ images, alt, index, onChange }: Props) {
         </>
       )}
 
-      {/* Foto draggable */}
+      {/* Foto draggable — tamaño dominante (el producto es el héroe).
+          La foto es aspect-square y se limita por la dimensión más chica
+          del viewport. min(80vh, 820px) → en pantallas chicas no se sale,
+          en pantallas grandes llega a 820px imponente. */}
       <motion.div
         drag={hasMultiple ? "x" : false}
         dragConstraints={{ left: 0, right: 0 }}
@@ -104,9 +107,17 @@ export function DragGallery({ images, alt, index, onChange }: Props) {
         dragMomentum={false}
         onDragStart={() => setIsDragging(true)}
         onDragEnd={handleDragEnd}
-        style={{ x, rotate, opacity: photoOpacity }}
+        style={{
+          x,
+          rotate,
+          opacity: photoOpacity,
+          // max-width = min(76% viewport-height, 820px) ⇒ la foto nunca
+          // se sale del fold incluso en laptops chicos. Aspect-square se
+          // mantiene → quedará cuadrada al ancho permitido por la altura.
+          maxWidth: "min(76vh, 820px)",
+        }}
         className={cn(
-          "relative aspect-square w-full max-w-[560px] touch-pan-y md:aspect-[5/4] md:max-w-[720px]",
+          "relative aspect-square w-full touch-pan-y",
           hasMultiple && "cursor-grab active:cursor-grabbing",
         )}
         data-cursor={hasMultiple ? "drag" : undefined}

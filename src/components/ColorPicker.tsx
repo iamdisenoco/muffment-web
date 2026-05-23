@@ -61,8 +61,8 @@ export function ColorPicker({ selectedId, onSelect }: Props) {
         )}
       </div>
 
-      {/* Grilla MUY compacta — 11 columnas, bolitas mini */}
-      <div className="grid grid-cols-11 gap-[3px]">
+      {/* Grilla MUY compacta — bolitas mini (12 cols, ~7 filas para 88 colors) */}
+      <div className="grid grid-cols-12 gap-[2px]">
         {COLORS.map((color) => {
           const active = color.id === selectedId;
           return (
