@@ -65,29 +65,24 @@ export default async function ProductPage({ params }: Props) {
       <Cursor />
       <Header />
       <main className="relative bg-white pt-32">
-        {/* Franja cobalt arriba REPLICA EXACTA del fade hero→specs de
-            ProductDetailSection (que SÍ funciona). Mismo h-32/40 + h-24/32
-            y mismos gradient values, solo invertido en dirección. */}
-
-        {/* Capa 1: banda cobalt SÓLIDA — cubre header + breadcrumb.
-            data-header-theme="dark" → Header global auto-detect white. */}
+        {/* Franja cobalt UN SOLO gradient continuo (sin línea dura).
+            Antes tenía 2 divs (banda sólida + fade) que creaban un
+            quiebre visual donde terminaba la banda. Ahora 1 div con
+            el "sólido" + "fade" integrados:
+              0%    → cobalt sólido (top)
+              35%   → cobalt sólido (banda llena cubre header+breadcrumb)
+              70%   → cobalt 0.15 (mismo stop intermedio que el bottom-hero)
+              100%  → transparente (revela bg-white)
+            Mismo stop intermedio (0.15) y misma estructura que el fade
+            bottom-hero que sí funciona, pero más largo (256/320px) y
+            CONTINUO sin discontinuidades. */}
         <div
           aria-hidden
           data-header-theme="dark"
-          className="pointer-events-none absolute inset-x-0 top-0 z-0 h-32 bg-cobalt md:h-40"
-        />
-
-        {/* Capa 2: fade cobalt-1 → cobalt-0.15 → white-transparent.
-            ESPEJO EXACTO del "Bottom fade hero→specs" (que dice
-            transparent → cobalt-0.15 (60%) → cobalt-1 (100%)).
-            Mismo h-32/h-40 — eso es lo que da el difuminado LARGO
-            de 128/160px que Jon señaló como referencia. */}
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-x-0 top-32 z-0 h-32 md:top-40 md:h-40"
+          className="pointer-events-none absolute inset-x-0 top-0 z-0 h-[256px] md:h-[320px]"
           style={{
             background:
-              "linear-gradient(to bottom, rgba(50,54,183,1) 0%, rgba(50,54,183,0.15) 40%, rgba(255,255,255,0) 100%)",
+              "linear-gradient(to bottom, rgb(50,54,183) 0%, rgb(50,54,183) 35%, rgba(50,54,183,0.15) 70%, rgba(255,255,255,0) 100%)",
           }}
         />
 
