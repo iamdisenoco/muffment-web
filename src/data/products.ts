@@ -64,7 +64,7 @@ export const PRODUCTS: Product[] = [
     paint: "En polvo, electrostática, para exterior e interior",
     description:
       "Tipo A-frame, plegable para guardar fácil al cierre. El clásico de cafés y restaurantes que cambian menú a diario.",
-    hero: "/img/products/2026/plegable-1.jpg",
+    hero: "/img/products/2026/plegable-1-cinematic.jpg",
     gallery: [
       "/img/products/2026/plegable-2.jpg",
       "/img/products/2026/plegable-3.jpg",

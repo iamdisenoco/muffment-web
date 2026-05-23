@@ -170,13 +170,12 @@ export function ProductDetailSection({ product, colorPrefix }: Props) {
                   sizes="(max-width: 768px) 88vw, 680px"
                   className="object-contain"
                   style={{
-                    // mix-blend-mode multiply funde el fondo blanco con el
-                    // negro de la página → el producto se ve recortado.
-                    // Los colores se oscurecen — temporal, hasta tener
-                    // la versión cinematográfica AI-generated.
-                    mixBlendMode: "screen",
+                    // La foto cinematográfica AI-generated ya viene con
+                    // su propio fondo silk dark, no necesita blend mode.
+                    // Solo drop-shadow sutil para sumar profundidad al
+                    // espacio entre la foto y el bg negro de la página.
                     filter:
-                      "drop-shadow(0 30px 60px rgba(255,255,255,0.08)) contrast(1.05) brightness(1.05)",
+                      "drop-shadow(0 40px 80px rgba(0,0,0,0.5))",
                   }}
                 />
               </motion.div>
@@ -195,9 +194,7 @@ export function ProductDetailSection({ product, colorPrefix }: Props) {
               sizes="88vw"
               className="object-contain"
               style={{
-                mixBlendMode: "screen",
-                filter:
-                  "drop-shadow(0 30px 60px rgba(255,255,255,0.08)) contrast(1.05) brightness(1.05)",
+                filter: "drop-shadow(0 40px 80px rgba(0,0,0,0.5))",
               }}
             />
           </div>
