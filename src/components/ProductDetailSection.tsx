@@ -1,12 +1,12 @@
 "use client";
 
-import Image from "next/image";
 import { useRef, useState } from "react";
-import { motion, AnimatePresence } from "motion/react";
 import { ColorPicker } from "./ColorPicker";
 import { AddToCartButton } from "./AddToCartButton";
 import { WhatsAppButton } from "./WhatsAppButton";
 import { PremiumBadge } from "./PremiumBadge";
+import { DragGallery } from "./DragGallery";
+import { ProductScrollNarrative } from "./ProductScrollNarrative";
 import type { Product } from "@/data/products";
 import type { Color } from "@/data/colors";
 import { cn } from "@/lib/utils";
@@ -43,17 +43,12 @@ export function ProductDetailSection({ product, colorPrefix }: Props) {
       : product.hero;
 
   const images = [dynamicHero, ...(product.gallery ?? [])];
-  const currentImg = images[imgIdx] ?? dynamicHero;
   const hasMultiple = images.length > 1;
 
   const message = `Hola MUFFMENT, quiero el ${product.name}${selectedColor ? ` en color ${selectedColor.name}` : ""} (${product.priceLabel}). ¿Me ayudas con la cotización?`;
 
   const monoStyle = { fontFamily: '"Satoshi", system-ui, sans-serif' };
   const displayStyle = { fontFamily: "var(--font-bagel)" };
-
-  const goPrev = () =>
-    setImgIdx((i) => (i - 1 + images.length) % images.length);
-  const goNext = () => setImgIdx((i) => (i + 1) % images.length);
 
   // ─── GSAP animations ──────────────────────────────────────────────
   useGSAP(
@@ -278,84 +273,13 @@ export function ProductDetailSection({ product, colorPrefix }: Props) {
                 <PremiumBadge />
               </div>
 
-              <div className="pd-hero-photo relative mx-auto flex items-center justify-center">
-                {hasMultiple && (
-                  <button
-                    type="button"
-                    onClick={goPrev}
-                    aria-label="Anterior"
-                    data-cursor="hover"
-                    className="absolute -left-4 z-20 flex h-14 w-14 items-center justify-center text-cobalt/55 transition-all hover:scale-110 hover:text-cobalt md:-left-6"
-                  >
-                    <svg
-                      width="32"
-                      height="32"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="1.5"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      aria-hidden
-                    >
-                      <polyline points="15 18 9 12 15 6" />
-                    </svg>
-                  </button>
-                )}
-
-                <div className="relative aspect-square w-full max-w-[560px] md:aspect-[5/4] md:max-w-[720px]">
-                  <AnimatePresence mode="wait">
-                    <motion.div
-                      key={currentImg}
-                      initial={{ opacity: 0, scale: 0.96 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      exit={{ opacity: 0, scale: 0.96 }}
-                      transition={{
-                        duration: 0.4,
-                        ease: [0.21, 0.6, 0.35, 1],
-                      }}
-                      className="absolute inset-0"
-                    >
-                      <Image
-                        src={currentImg}
-                        alt={product.name}
-                        fill
-                        priority
-                        sizes="(max-width: 768px) 100vw, 720px"
-                        className="object-contain"
-                        style={{
-                          mixBlendMode: "multiply",
-                          filter:
-                            "drop-shadow(0 25px 35px rgba(50,54,183,0.12))",
-                        }}
-                      />
-                    </motion.div>
-                  </AnimatePresence>
-                </div>
-
-                {hasMultiple && (
-                  <button
-                    type="button"
-                    onClick={goNext}
-                    aria-label="Siguiente"
-                    data-cursor="hover"
-                    className="absolute -right-4 z-20 flex h-14 w-14 items-center justify-center text-cobalt/55 transition-all hover:scale-110 hover:text-cobalt md:-right-6"
-                  >
-                    <svg
-                      width="32"
-                      height="32"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="1.5"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      aria-hidden
-                    >
-                      <polyline points="9 18 15 12 9 6" />
-                    </svg>
-                  </button>
-                )}
+              <div className="pd-hero-photo">
+                <DragGallery
+                  images={images}
+                  alt={product.name}
+                  index={imgIdx}
+                  onChange={setImgIdx}
+                />
               </div>
 
               {/* Dots */}
@@ -411,6 +335,15 @@ export function ProductDetailSection({ product, colorPrefix }: Props) {
           </div>
         </div>
       </section>
+
+      {/* ═══════════════════ SCROLL-NARRATIVE PINNED ═══════════════════ */}
+      {/* Sección cinematográfica con los 3 pilares brand: la foto se queda
+          pineada mientras la tipografía masiva atraviesa la pantalla.
+          Inspirada en Coffee Lounge + Ford "REDISCOVER". */}
+      <ProductScrollNarrative
+        product={product}
+        heroOverride={dynamicHero}
+      />
 
       {/* ═══════════════════ SPECS (scroll reveals) ═══════════════════ */}
       <section className="pd-specs-section mx-auto max-w-[1600px] px-6 pb-20 md:px-12 md:pb-28 md:pt-8">
