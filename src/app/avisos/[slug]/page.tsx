@@ -77,15 +77,17 @@ export default async function ProductPage({ params }: Props) {
           className="pointer-events-none absolute inset-x-0 top-0 z-0 h-32 bg-cobalt md:h-40"
         />
 
-        {/* Capa 2: fade cobalt-1 → cobalt-0.5 → cobalt-0 — mismo gradient
-            EXACTO que el top del specs section ("Top fade entrante").
-            top=h32(128px) mobile / md:top=h40(160px) desktop. */}
+        {/* Capa 2: fade cobalt-1 → cobalt-0.15 → white-transparent.
+            ESPEJO EXACTO del "Bottom fade hero→specs" (que dice
+            transparent → cobalt-0.15 (60%) → cobalt-1 (100%)).
+            Mismo h-32/h-40 — eso es lo que da el difuminado LARGO
+            de 128/160px que Jon señaló como referencia. */}
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-x-0 top-32 z-0 h-24 md:top-40 md:h-32"
+          className="pointer-events-none absolute inset-x-0 top-32 z-0 h-32 md:top-40 md:h-40"
           style={{
             background:
-              "linear-gradient(to bottom, rgba(50,54,183,1) 0%, rgba(50,54,183,0.5) 50%, rgba(50,54,183,0) 100%)",
+              "linear-gradient(to bottom, rgba(50,54,183,1) 0%, rgba(50,54,183,0.15) 40%, rgba(255,255,255,0) 100%)",
           }}
         />
 
