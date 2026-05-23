@@ -5,11 +5,22 @@ import { useRef, useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { ColorPicker } from "./ColorPicker";
 import { AddToCartButton } from "./AddToCartButton";
-import { WhatsAppButton } from "./WhatsAppButton";
 import type { Product } from "@/data/products";
 import type { Color } from "@/data/colors";
-import { cn } from "@/lib/utils";
+import { cn, whatsappLink } from "@/lib/utils";
 import { gsap, useGSAP } from "@/lib/gsap";
+
+// helpers ------------------------------------------------------------
+
+/** Saca un tagline de 1 línea de la descripción larga (primera oración). */
+function shortenTagline(desc: string): string {
+  const firstSentence = desc.split(/[.·]/)[0]?.trim() ?? desc;
+  return firstSentence.length > 90
+    ? firstSentence.slice(0, 87) + "…"
+    : firstSentence;
+}
+
+const whatsAppHref = whatsappLink;
 
 type Props = {
   product: Product;
@@ -110,10 +121,12 @@ export function ProductDetailSection({ product, colorPrefix }: Props) {
   return (
     <article ref={containerRef} className="bg-white">
       {/* ═══════════ HERO 2-COL — foto izq · sticky rail der ═══════════ */}
-      <section className="mx-auto max-w-[1600px] px-6 pt-2 md:px-12 md:pt-6">
-        <div className="grid grid-cols-1 gap-8 md:grid-cols-12 md:gap-x-12">
+      {/* Layout Musotoku: foto domina (col-8), rail minimal (col-4).
+          El rail solo tiene lo esencial — nombre, precio, color, CTA único. */}
+      <section className="mx-auto max-w-[1600px] px-6 pt-4 md:px-12 md:pt-8">
+        <div className="grid grid-cols-1 gap-10 md:grid-cols-12 md:gap-x-16">
           {/* ───── COL IZQUIERDA: HERO PHOTO + THUMBNAILS ───── */}
-          <div className="md:col-span-7 lg:col-span-7">
+          <div className="md:col-span-8">
             <PhotoHero
               activeImg={activeImg}
               images={images}
@@ -123,9 +136,9 @@ export function ProductDetailSection({ product, colorPrefix }: Props) {
             />
           </div>
 
-          {/* ───── COL DERECHA: STICKY RAIL ───── */}
-          <aside className="md:col-span-5 lg:col-span-5">
-            <div className="md:sticky md:top-28 md:max-h-[calc(100vh-7rem)] md:overflow-y-auto md:pr-1 md:pb-6 md:pt-2 md:[scrollbar-width:thin]">
+          {/* ───── COL DERECHA: STICKY RAIL MINIMAL ───── */}
+          <aside className="md:col-span-4">
+            <div className="md:sticky md:top-28 md:max-h-[calc(100vh-7rem)] md:overflow-y-auto md:pr-1 md:pb-6 md:pt-1 md:[scrollbar-width:thin]">
               {/* eyebrow técnico */}
               <p
                 className="pd-rail-block text-[10px] uppercase tracking-[0.35em] text-cobalt/55"
@@ -136,113 +149,150 @@ export function ProductDetailSection({ product, colorPrefix }: Props) {
 
               {/* nombre del producto */}
               <h1
-                className="pd-rail-block mt-2 leading-[0.92] tracking-tight text-cobalt"
+                className="pd-rail-block mt-2 leading-[0.95] tracking-tight text-cobalt"
                 style={{
                   ...displayStyle,
-                  fontSize: "clamp(2rem, 3.4vw, 3.5rem)",
+                  fontSize: "clamp(1.75rem, 2.6vw, 2.5rem)",
                 }}
               >
                 {product.name}
               </h1>
 
-              {/* precio */}
-              <div className="pd-rail-block mt-5 flex items-baseline gap-3">
+              {/* tagline ultra-corto (1 línea max) — derivado de la
+                  descripción, primera oración. Si la descripción del
+                  producto ya es corta (≤80 chars), se usa entera. */}
+              <p
+                className="pd-rail-block mt-3 text-[13px] leading-snug text-cobalt/70"
+                style={monoStyle}
+              >
+                {shortenTagline(product.description)}
+              </p>
+
+              {/* precio — GRANDE, dominante */}
+              <div className="pd-rail-block mt-7">
                 <p
-                  className="text-3xl text-cobalt tabular-nums md:text-4xl"
-                  style={displayStyle}
+                  className="text-[9px] uppercase tracking-[0.3em] text-cobalt/55"
+                  style={monoStyle}
+                >
+                  Desde
+                </p>
+                <p
+                  className="leading-none tabular-nums text-cobalt"
+                  style={{
+                    ...displayStyle,
+                    fontSize: "clamp(2.5rem, 3.4vw, 3.5rem)",
+                  }}
                 >
                   {product.priceLabel}
                 </p>
-                {product.priceEstimated && (
-                  <p
-                    className="text-[10px] uppercase tracking-[0.2em] text-cobalt/55"
-                    style={monoStyle}
-                  >
-                    desde · final según diseño
-                  </p>
-                )}
               </div>
 
-              {/* descripción */}
-              <p className="pd-rail-block mt-5 text-[14px] leading-relaxed text-cobalt/75 md:text-[15px]">
-                {product.description}
-              </p>
-
-              {/* COLOR PICKER */}
+              {/* COLOR PICKER mini (solo si el producto tiene picker) */}
               {colorPrefix && (
-                <div className="pd-rail-block mt-7 border-t border-cobalt/10 pt-6">
-                  <div className="mb-3 flex items-baseline justify-between">
-                    <p
-                      className="text-[10px] uppercase tracking-[0.3em] text-cobalt/65"
-                      style={monoStyle}
-                    >
-                      Escogé tu color
-                    </p>
-                    <p
-                      className="text-[10px] text-cobalt/55"
-                      style={monoStyle}
-                    >
-                      + de 90 disponibles
-                    </p>
-                  </div>
-
-                  {selectedColor && (
-                    <div className="mb-3 flex items-center gap-2">
-                      <span
-                        aria-hidden
-                        className="block h-5 w-5 shrink-0 rounded-full border border-cobalt/10 shadow-sm"
-                        style={{ backgroundColor: selectedColor.hex }}
-                      />
+                <div className="pd-rail-block mt-7">
+                  <div className="mb-3 flex items-center gap-2">
+                    {selectedColor ? (
+                      <>
+                        <span
+                          aria-hidden
+                          className="block h-4 w-4 shrink-0 rounded-full border border-cobalt/15"
+                          style={{ backgroundColor: selectedColor.hex }}
+                        />
+                        <p
+                          className="text-[11px] text-cobalt"
+                          style={monoStyle}
+                        >
+                          <span className="text-cobalt/55">Color:</span>{" "}
+                          <span className="font-medium">
+                            {selectedColor.name}
+                          </span>
+                        </p>
+                      </>
+                    ) : (
                       <p
-                        className="text-[13px] leading-tight text-cobalt"
-                        style={displayStyle}
+                        className="text-[11px] text-cobalt/65"
+                        style={monoStyle}
                       >
-                        {selectedColor.name}
+                        + de 90 colores · pintura electrostática
                       </p>
-                    </div>
-                  )}
+                    )}
+                  </div>
 
                   <ColorPicker
                     selectedId={selectedColor?.id ?? null}
                     onSelect={(c) => {
                       setSelectedColor(c);
-                      setActiveIdx(0); // volver al hero cuando cambia color
+                      setActiveIdx(0);
                     }}
                   />
                 </div>
               )}
 
-              {/* CTA */}
-              <div className="pd-rail-block mt-7 space-y-2.5 border-t border-cobalt/10 pt-6">
+              {/* CTA único grande */}
+              <div className="pd-rail-block mt-7">
                 <AddToCartButton
                   product={product}
                   selectedColor={selectedColor}
                 />
-                <WhatsAppButton message={message} size="md" variant="ghost">
-                  Preguntar
-                </WhatsAppButton>
+
+                {/* Preguntar como link text discreto (no botón) */}
+                <a
+                  href={whatsAppHref(message)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  data-cursor="hover"
+                  className="mt-4 flex items-center justify-center gap-2 text-[11px] uppercase tracking-[0.2em] text-cobalt/65 transition-colors hover:text-cobalt"
+                  style={monoStyle}
+                >
+                  <svg
+                    viewBox="0 0 24 24"
+                    width="12"
+                    height="12"
+                    fill="currentColor"
+                    aria-hidden
+                  >
+                    <path d="M12.04 2c-5.5 0-9.96 4.46-9.96 9.96 0 1.76.46 3.46 1.34 4.97L2 22l5.2-1.36c1.46.79 3.1 1.21 4.79 1.21h.01c5.5 0 9.96-4.46 9.96-9.96 0-2.66-1.04-5.16-2.92-7.04C17.16 3.04 14.66 2 12.04 2z" />
+                  </svg>
+                  Preguntar por WhatsApp
+                </a>
               </div>
 
-              {/* meta selling points (reemplazan al PremiumBadge) */}
-              <div
-                className="pd-rail-block mt-7 grid grid-cols-3 gap-2 border-t border-cobalt/10 pt-6 text-[10px] uppercase leading-tight tracking-[0.18em] text-cobalt/60"
+              {/* selling points en línea horizontal compacta */}
+              <ul
+                className="pd-rail-block mt-7 flex flex-wrap gap-x-4 gap-y-1 border-t border-cobalt/10 pt-5 text-[10px] uppercase tracking-[0.18em] text-cobalt/55"
                 style={monoStyle}
               >
-                <div className="flex flex-col gap-1">
-                  <span className="text-cobalt">Bajo pedido</span>
-                  <span>4 semanas</span>
-                </div>
-                <div className="flex flex-col gap-1">
-                  <span className="text-cobalt">Garantía</span>
-                  <span>3 años</span>
-                </div>
-                <div className="flex flex-col gap-1">
-                  <span className="text-cobalt">Origen</span>
-                  <span>Colombia</span>
-                </div>
-              </div>
+                <li className="flex items-center gap-1.5">
+                  <span aria-hidden className="h-1 w-1 rounded-full bg-cobalt/45" />
+                  Bajo pedido · 4 sem
+                </li>
+                <li className="flex items-center gap-1.5">
+                  <span aria-hidden className="h-1 w-1 rounded-full bg-cobalt/45" />
+                  Garantía 3 años
+                </li>
+                <li className="flex items-center gap-1.5">
+                  <span aria-hidden className="h-1 w-1 rounded-full bg-cobalt/45" />
+                  Hecho en Colombia
+                </li>
+              </ul>
             </div>
           </aside>
+        </div>
+
+        {/* Descripción larga del producto — debajo del hero, full-width
+            izquierda, como párrafo editorial. Mantiene el rail limpio. */}
+        <div className="mt-16 grid grid-cols-1 md:mt-24 md:grid-cols-12 md:gap-x-16">
+          <div className="md:col-span-8">
+            <p
+              className="text-[10px] uppercase tracking-[0.3em] text-cobalt/55"
+              style={monoStyle}
+            >
+              Sobre este aviso
+            </p>
+            <p className="mt-3 max-w-[58ch] text-base leading-relaxed text-cobalt/80 md:text-[17px]">
+              {product.description}
+            </p>
+          </div>
         </div>
       </section>
 
