@@ -367,7 +367,9 @@ export function ProductDetailSection({ product, colorPrefix }: Props) {
                 </p>
               </div>
 
-              {/* MEDIDAS */}
+              {/* MEDIDAS + MATERIALES (usando product.materials del archivo
+                  oficial de Jon: "Acero con tratamiento de metalizado que
+                  garantiza 0 oxidación, ..."). Era hardcoded a "Acero" antes. */}
               <div className="pd-hero-info-block mt-6 border-t border-gray-200 pt-5">
                 <p
                   className="mb-3 text-[10px] uppercase tracking-[0.3em] text-gray-500"
@@ -376,21 +378,39 @@ export function ProductDetailSection({ product, colorPrefix }: Props) {
                   Medidas
                 </p>
                 <dl className="space-y-2 text-[12px]" style={monoStyle}>
-                  <div className="flex justify-between border-b border-gray-100 pb-1">
-                    <dt className="text-gray-400">Total</dt>
-                    <dd className="text-gray-700">{product.totalSize}</dd>
+                  <div className="flex items-baseline justify-between gap-3 border-b border-gray-100 pb-1.5">
+                    <dt className="shrink-0 text-gray-400">Total</dt>
+                    <dd className="text-right text-gray-700">
+                      {product.totalSize}
+                    </dd>
                   </div>
-                  <div className="flex justify-between border-b border-gray-100 pb-1">
-                    <dt className="text-gray-400">Arte</dt>
-                    <dd className="text-gray-700">{product.artSize}</dd>
-                  </div>
-                  <div className="flex justify-between border-b border-gray-100 pb-1">
-                    <dt className="text-gray-400">Material</dt>
-                    <dd className="max-w-[60%] text-right text-gray-700">
-                      Acero
+                  <div className="flex items-baseline justify-between gap-3 border-b border-gray-100 pb-1.5">
+                    <dt className="shrink-0 text-gray-400">Arte</dt>
+                    <dd className="text-right text-gray-700">
+                      {product.artSize}
                     </dd>
                   </div>
                 </dl>
+              </div>
+
+              {/* MATERIAL — bloque propio (no en la dl) para soportar
+                  el texto completo "Acero con tratamiento de metalizado
+                  que garantiza 0 oxidación, ..." sin truncar. */}
+              <div className="pd-hero-info-block mt-6 border-t border-gray-200 pt-5">
+                <p
+                  className="mb-2 text-[10px] uppercase tracking-[0.3em] text-gray-500"
+                  style={monoStyle}
+                >
+                  Material
+                </p>
+                <p className="text-[13px] leading-relaxed text-gray-700">
+                  {product.materials}
+                </p>
+                {product.paint && product.paint !== "—" && (
+                  <p className="mt-1.5 text-[12px] leading-relaxed text-gray-500">
+                    {product.paint}
+                  </p>
+                )}
               </div>
 
               {/* BOTÓN HABLEMOS con logo WhatsApp */}
