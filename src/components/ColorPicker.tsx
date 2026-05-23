@@ -110,8 +110,13 @@ export function ColorPicker({ selectedId, onSelect }: Props) {
         </AnimatePresence>
       </div>
 
-      {/* Grilla MUY compacta — bolitas mini (12 cols, ~7 filas para 88 colors) */}
-      <div className="grid grid-cols-12 gap-[2px]">
+      {/* Grilla MUY compacta — bolitas mini (12 cols, ~7 filas para 88 colors).
+          onMouseLeave en el container resetea hover si el cursor sale del grid
+          sin pasar por un onMouseLeave individual (bug "stuck description"). */}
+      <div
+        className="grid grid-cols-12 gap-[2px]"
+        onMouseLeave={() => setHover(null)}
+      >
         {COLORS.map((color) => {
           const active = color.id === selectedId;
           return (
@@ -120,8 +125,15 @@ export function ColorPicker({ selectedId, onSelect }: Props) {
               type="button"
               data-cursor="hover"
               onMouseEnter={() => setHover(color)}
-              onMouseLeave={() => setHover(null)}
-              onClick={() => onSelect(active ? null : color)}
+              // onMouseLeave individual NO se necesita — el container handle.
+              // Si lo dejara, el onMouseEnter del siguiente y onMouseLeave
+              // del anterior pueden race condition stuck el state.
+              onClick={() => {
+                // Al click forzamos el tooltip al color seleccionado
+                // (en caso de race condition con hover state).
+                setHover(active ? null : color);
+                onSelect(active ? null : color);
+              }}
               aria-label={color.name}
               aria-pressed={active}
               className={cn(

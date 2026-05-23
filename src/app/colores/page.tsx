@@ -249,19 +249,54 @@ function CollageWall({ colors }: { colors: Color[] }) {
     return out;
   }, []);
 
-  // Una sola bola activa a la vez + un solo tooltip global (renderizado
-  // abajo). Esto previene tooltips múltiples cuando el mouse se mueve
-  // rápido entre bolas overlapping y alguna bola se queda sin disparar
-  // mouseLeave. AnimatePresence con un solo hijo siempre converge.
+  // Una sola bola activa a la vez + un solo tooltip global.
+  //
+  // FIX bug "stuck" (Jon 2026-05-23): cuando el mouse pasa rápido entre
+  // bolas overlapping, algunos onMouseLeave NO se disparan → la card
+  // queda activa para siempre. Solución: timeout que limpia activeId
+  // si pasan >150ms sin nuevo activate. Cada activate cancela el
+  // timeout previo.
   const [activeId, setActiveId] = useState<string | null>(null);
   const [activeAnchor, setActiveAnchor] = useState({ x: 0, y: 0 });
-  const handleActivate = useCallback((id: string, anchor: { x: number; y: number }) => {
-    setActiveId(id);
-    setActiveAnchor(anchor);
-  }, []);
+  const cleanupTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const handleActivate = useCallback(
+    (id: string, anchor: { x: number; y: number }) => {
+      if (cleanupTimeoutRef.current) {
+        clearTimeout(cleanupTimeoutRef.current);
+        cleanupTimeoutRef.current = null;
+      }
+      setActiveId(id);
+      setActiveAnchor(anchor);
+    },
+    [],
+  );
+
   const handleDeactivate = useCallback((id: string) => {
-    setActiveId((current) => (current === id ? null : current));
+    // Schedule cleanup — si otro activate llega antes del timeout, se
+    // cancela. Si no, después de 150ms se resetea activeId.
+    if (cleanupTimeoutRef.current) clearTimeout(cleanupTimeoutRef.current);
+    cleanupTimeoutRef.current = setTimeout(() => {
+      setActiveId((current) => (current === id ? null : current));
+      cleanupTimeoutRef.current = null;
+    }, 150);
   }, []);
+
+  // Cleanup global: si el mouse sale completamente del CollageWall
+  // container, forzar reset (extra safety por encima del timeout).
+  useEffect(() => {
+    const handleGlobalMouseOut = (e: MouseEvent) => {
+      // Si el cursor sale por completo del documento (ej. window blur),
+      // limpiar todo state.
+      if (!e.relatedTarget && !(e as any).toElement) {
+        if (cleanupTimeoutRef.current) clearTimeout(cleanupTimeoutRef.current);
+        setActiveId(null);
+      }
+    };
+    document.addEventListener("mouseleave", handleGlobalMouseOut);
+    return () => document.removeEventListener("mouseleave", handleGlobalMouseOut);
+  }, []);
+
   const activeColor = activeId ? ordered.find((c) => c.id === activeId) ?? null : null;
 
   // El mandala se construye en geometría fija 800×800. Si el viewport es

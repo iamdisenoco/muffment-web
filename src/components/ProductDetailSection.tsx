@@ -46,12 +46,20 @@ export function ProductDetailSection({ product, colorPrefix }: Props) {
     return () => clearInterval(id);
   }, []);
 
+  // Si el producto tiene picker activo Y hay color seleccionado, intenta
+  // mostrar la foto del color. Si la foto NO existe (404), fallback al
+  // hero default (manejado con onError del Image abajo).
   const dynamicHero =
     colorPrefix && selectedColor
       ? `/img/products/colors/${colorPrefix}-${selectedColor.id}.jpg`
       : product.hero;
+  const [heroError, setHeroError] = useState(false);
+  // Reset error al cambiar de imagen target.
+  useEffect(() => setHeroError(false), [dynamicHero]);
+  // La imagen efectiva: hero default si el dynamic falló cargar.
+  const heroToShow = heroError ? product.hero : dynamicHero;
 
-  const images = [dynamicHero, ...(product.gallery ?? [])];
+  const images = [heroToShow, ...(product.gallery ?? [])];
   const activeImg = images[activeIdx] ?? images[0];
   const hasMultiple = images.length > 1;
 
@@ -224,6 +232,14 @@ export function ProductDetailSection({ product, colorPrefix }: Props) {
                         style={{
                           filter:
                             "drop-shadow(0 30px 50px rgba(50,54,183,0.18))",
+                        }}
+                        onError={() => {
+                          // Si la foto del color seleccionado no existe
+                          // (404 — productos sin variantes generadas),
+                          // fallback al hero default del producto.
+                          if (activeIdx === 0 && activeImg !== product.hero) {
+                            setHeroError(true);
+                          }
                         }}
                       />
                     </motion.div>

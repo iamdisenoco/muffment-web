@@ -31,6 +31,11 @@ const COLOR_PICKER_PRODUCTS: Record<string, string> = {
   "aviso-pared-rectangular": "pared-rectangular",
   "hablador-pared-cuad": "pared-cuad",
   "hablador-pared-luna": "luna",
+  // Mesa Rect 5411 — Jon pidió que también tenga picker. Usa el prefix
+  // "mesa-rect" (si no hay fotos por color generadas, el componente
+  // sigue mostrando el hero default — pero el picker visualmente sí
+  // aparece y el chip de color seleccionado va al carrito).
+  "hablador-mesa-rect": "mesa-rect",
 };
 type Props = {
   params: Promise<{ slug: string }>;
