@@ -3,9 +3,9 @@
 import { motion } from "motion/react";
 import { usePathname } from "next/navigation";
 
-/** Rutas donde las floating decorations NO se renderizan
- *  (estética más clean/técnica): detalle producto, carrito, post-pago. */
-const HIDE_ON_PATHS = ["/avisos/", "/carrito", "/gracias"];
+/** Rutas donde las floating decorations NO se renderizan.
+ *  Jon (2026-05-23): que aparezcan SIEMPRE incluido en detalle producto. */
+const HIDE_ON_PATHS = ["/carrito", "/gracias"];
 
 // Paleta rainbow translúcida — funciona sobre fondos cobalt, cream y blanco.
 const COLORS = ["#ff6b35", "#f9c80e", "#06d6a0", "#ef476f", "#4cc9f0", "#3236b7"];
