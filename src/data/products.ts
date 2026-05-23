@@ -47,12 +47,6 @@ export const PRODUCTS: Product[] = [
     description:
       "El hablador grande oval que cuenta tu marca a metros. Para entradas, terrazas y vitrinas. Pintura electrostática para sol y lluvia.",
     hero: "/img/products/2026/ov-1.jpg",
-    gallery: [
-      "/img/products/2026/ov-2.jpg",
-      "/img/products/2026/ov-3.jpg",
-      "/img/products/2026/ov-4.jpg",
-      "/img/products/2026/ov-5.jpg",
-    ],
     has3D: true,    shippingSize: "grande",
   },
   {
