@@ -8,6 +8,7 @@ import { AddToCartButton } from "./AddToCartButton";
 import { WhatsAppButton } from "./WhatsAppButton";
 import type { Product } from "@/data/products";
 import type { Color } from "@/data/colors";
+import { cn } from "@/lib/utils";
 import { gsap, useGSAP } from "@/lib/gsap";
 
 type Props = {
@@ -54,6 +55,7 @@ type Props = {
  */
 export function ProductDetailSection({ product, colorPrefix }: Props) {
   const [selectedColor, setSelectedColor] = useState<Color | null>(null);
+  const [activeIdx, setActiveIdx] = useState(0);
   const containerRef = useRef<HTMLElement>(null);
 
   const dynamicHero =
@@ -63,6 +65,7 @@ export function ProductDetailSection({ product, colorPrefix }: Props) {
 
   // Photos: hero dinámico (cambia con el color) + gallery del producto.
   const images = [dynamicHero, ...(product.gallery ?? [])];
+  const activeImg = images[activeIdx] ?? images[0];
 
   const message = `Hola MUFFMENT, quiero el ${product.name}${selectedColor ? ` en color ${selectedColor.name}` : ""} (${product.priceLabel}). ¿Me ayudas con la cotización?`;
 
@@ -109,12 +112,14 @@ export function ProductDetailSection({ product, colorPrefix }: Props) {
       {/* ═══════════ HERO 2-COL — foto izq · sticky rail der ═══════════ */}
       <section className="mx-auto max-w-[1600px] px-6 pt-2 md:px-12 md:pt-6">
         <div className="grid grid-cols-1 gap-8 md:grid-cols-12 md:gap-x-12">
-          {/* ───── COL IZQUIERDA: PHOTOS STACK ───── */}
+          {/* ───── COL IZQUIERDA: HERO PHOTO + THUMBNAILS ───── */}
           <div className="md:col-span-7 lg:col-span-7">
-            <PhotoStack
+            <PhotoHero
+              activeImg={activeImg}
               images={images}
+              activeIdx={activeIdx}
+              onSelect={setActiveIdx}
               alt={product.name}
-              colorChangeKey={dynamicHero}
             />
           </div>
 
@@ -199,7 +204,10 @@ export function ProductDetailSection({ product, colorPrefix }: Props) {
 
                   <ColorPicker
                     selectedId={selectedColor?.id ?? null}
-                    onSelect={setSelectedColor}
+                    onSelect={(c) => {
+                      setSelectedColor(c);
+                      setActiveIdx(0); // volver al hero cuando cambia color
+                    }}
                   />
                 </div>
               )}
@@ -295,54 +303,86 @@ export function ProductDetailSection({ product, colorPrefix }: Props) {
 }
 
 /**
- * Photo Stack — todas las fotos del producto apiladas verticalmente.
- * El usuario hace scroll por ellas mientras el rail derecho permanece
- * sticky. Cada foto fade-in al entrar en viewport.
- *
- * El colorChangeKey provoca un re-fade cuando cambia el color
- * seleccionado (porque la primera imagen cambia de URL).
+ * Photo Hero — patrón Musotoku:
+ *   - UNA foto principal grande (aspect-square)
+ *   - Si hay multiples imágenes, debajo aparece una tira de thumbnails
+ *   - Click en thumb cambia la foto activa con fade
+ *   - Color picker también cambia activeImg automáticamente (via key)
  */
-function PhotoStack({
+function PhotoHero({
+  activeImg,
   images,
+  activeIdx,
+  onSelect,
   alt,
-  colorChangeKey,
 }: {
+  activeImg: string;
   images: string[];
+  activeIdx: number;
+  onSelect: (i: number) => void;
   alt: string;
-  colorChangeKey: string;
 }) {
+  const hasMultiple = images.length > 1;
+
   return (
-    <div className="space-y-3 md:space-y-4">
-      {images.map((src, i) => (
-        <div
-          key={`${i}-${i === 0 ? colorChangeKey : src}`}
-          className="pd-photo-frame relative aspect-square w-full overflow-hidden"
-        >
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={src}
-              initial={{ opacity: 0, scale: 0.97 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.97 }}
-              transition={{ duration: 0.5, ease: [0.21, 0.6, 0.35, 1] }}
-              className="absolute inset-0"
+    <div className="space-y-4">
+      {/* HERO photo grande */}
+      <div className="pd-photo-frame relative aspect-square w-full overflow-hidden">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={activeImg}
+            initial={{ opacity: 0, scale: 0.97 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.97 }}
+            transition={{ duration: 0.45, ease: [0.21, 0.6, 0.35, 1] }}
+            className="absolute inset-0"
+          >
+            <Image
+              src={activeImg}
+              alt={alt}
+              fill
+              priority
+              sizes="(max-width: 768px) 100vw, 60vw"
+              className="object-contain"
+              style={{
+                mixBlendMode: "multiply",
+                filter: "drop-shadow(0 30px 40px rgba(50,54,183,0.10))",
+              }}
+            />
+          </motion.div>
+        </AnimatePresence>
+      </div>
+
+      {/* Tira de thumbnails (solo si hay 2+ fotos) */}
+      {hasMultiple && (
+        <div className="flex gap-2 overflow-x-auto pb-1">
+          {images.map((src, i) => (
+            <button
+              key={`${i}-${src}`}
+              type="button"
+              onClick={() => onSelect(i)}
+              data-cursor="hover"
+              aria-label={`Imagen ${i + 1}`}
+              aria-pressed={i === activeIdx}
+              className={cn(
+                "relative aspect-square w-20 shrink-0 overflow-hidden rounded-md border bg-white transition-all md:w-24",
+                i === activeIdx
+                  ? "border-cobalt opacity-100"
+                  : "border-cobalt/15 opacity-65 hover:opacity-100 hover:border-cobalt/40",
+              )}
             >
               <Image
                 src={src}
-                alt={alt}
+                alt={`${alt} ${i + 1}`}
                 fill
-                priority={i === 0}
-                sizes="(max-width: 768px) 100vw, 60vw"
+                sizes="96px"
                 className="object-contain"
-                style={{
-                  mixBlendMode: "multiply",
-                  filter: "drop-shadow(0 30px 40px rgba(50,54,183,0.10))",
-                }}
+                style={{ mixBlendMode: "multiply" }}
               />
-            </motion.div>
-          </AnimatePresence>
+            </button>
+          ))}
         </div>
-      ))}
+      )}
     </div>
   );
 }
