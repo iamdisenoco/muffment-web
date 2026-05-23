@@ -117,7 +117,7 @@ export function Header() {
             rel="noopener noreferrer"
             data-cursor="hover"
             className={cn(
-              "rounded-full border px-5 py-2.5 text-sm font-medium tracking-wide backdrop-blur-md transition-all hover:scale-105 md:text-base",
+              "inline-flex items-center gap-2 rounded-full border px-5 py-2.5 text-sm font-medium tracking-wide backdrop-blur-md transition-all hover:scale-105 md:text-base",
               // Glass mucho mas contrastado para que se vea bien en cualquier
               // fondo (especialmente en /colores donde el bg es negro puro).
               onDark
@@ -126,6 +126,14 @@ export function Header() {
               scrolled && "shadow-md",
             )}
           >
+            <span
+              aria-hidden
+              className="inline-grid h-5 w-5 place-items-center rounded-full bg-[#25D366] text-white"
+            >
+              <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor">
+                <path d="M12.04 2c-5.5 0-9.96 4.46-9.96 9.96 0 1.76.46 3.46 1.34 4.97L2 22l5.2-1.36c1.46.79 3.1 1.21 4.79 1.21h.01c5.5 0 9.96-4.46 9.96-9.96 0-2.66-1.04-5.16-2.92-7.04C17.16 3.04 14.66 2 12.04 2zm4.47 12.05c-.24-.12-1.45-.72-1.67-.8-.22-.08-.39-.12-.55.12-.16.24-.63.8-.78.96-.14.16-.29.18-.53.06-.24-.12-1.03-.38-1.97-1.21-.73-.65-1.22-1.45-1.36-1.69-.14-.24-.02-.37.1-.49.11-.11.24-.29.36-.43.12-.14.16-.24.24-.4.08-.16.04-.3-.02-.42-.06-.12-.55-1.32-.75-1.81-.2-.48-.4-.41-.55-.42-.14-.01-.3-.01-.47-.01-.16 0-.43.06-.65.3-.22.24-.85.83-.85 2.03 0 1.2.87 2.36.99 2.52.12.16 1.71 2.61 4.14 3.66.58.25 1.03.4 1.38.51.58.18 1.11.16 1.53.1.47-.07 1.45-.59 1.65-1.16.2-.57.2-1.06.14-1.16-.06-.1-.22-.16-.46-.28z" />
+              </svg>
+            </span>
             ¡Hablemos!
           </a>
         </div>

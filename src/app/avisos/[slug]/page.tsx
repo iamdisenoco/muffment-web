@@ -65,15 +65,29 @@ export default async function ProductPage({ params }: Props) {
       <Cursor />
       <Header />
       <main className="relative bg-white pt-32">
-        {/* Franja cobalt arriba con fade LARGO y smooth al blanco.
-            Altura aumentada (640px) + más stops para que la transición se
-            sienta orgánica, no una línea dura. Fade va del 18% al 100%. */}
+        {/* Franja cobalt arriba con fade IDÉNTICO al de abajo (que ya
+            funciona). Implementado como 2 divs separados — mismo patrón
+            que la transición hero→specs en ProductDetailSection. */}
+
+        {/* Capa 1: banda cobalt SÓLIDA arriba (cubre header + breadcrumb).
+            data-header-theme="dark" → el Header global auto-detecta esto
+            y cambia su pill+icons a modo white/glass cuando está sobre
+            esta franja. */}
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-x-0 top-0 z-0 h-[560px] md:h-[640px]"
+          data-header-theme="dark"
+          className="pointer-events-none absolute inset-x-0 top-0 z-0 h-[200px] bg-cobalt md:h-[240px]"
+        />
+
+        {/* Capa 2: fade cobalt → transparente (igual al top del specs
+            section que dice "Ficha técnica"). Smooth y largo. */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-x-0 z-0 h-[160px] md:h-[200px]"
           style={{
+            top: "200px",
             background:
-              "linear-gradient(to bottom, rgb(50,54,183) 0%, rgb(50,54,183) 18%, rgba(50,54,183,0.93) 28%, rgba(50,54,183,0.82) 40%, rgba(50,54,183,0.6) 55%, rgba(50,54,183,0.38) 70%, rgba(50,54,183,0.18) 84%, rgba(50,54,183,0.05) 94%, rgba(255,255,255,0) 100%)",
+              "linear-gradient(to bottom, rgba(50,54,183,1) 0%, rgba(50,54,183,0.5) 50%, rgba(50,54,183,0) 100%)",
           }}
         />
 
