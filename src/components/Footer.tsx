@@ -4,17 +4,32 @@ import { WhatsAppButton } from "./WhatsAppButton";
 
 export function Footer() {
   return (
-    <footer className="bg-cobalt text-cream">
-      <div className="mx-auto max-w-[1600px] px-6 py-20 md:px-10">
+    <footer data-header-theme="dark" className="has-grain relative overflow-hidden bg-cobalt text-cream">
+      {/* Marca enorme decorativa abajo, como firma editorial */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute -bottom-[6vw] left-1/2 select-none -translate-x-1/2 whitespace-nowrap text-[28vw] leading-none text-cream/[0.05]"
+        style={{ fontFamily: "var(--font-bagel)" }}
+      >
+        MUFFMENT
+      </div>
+
+      <div className="relative mx-auto max-w-[1600px] px-6 py-24 md:px-10 md:py-32">
         <div className="grid gap-16 md:grid-cols-12">
           <div className="md:col-span-5">
             <Logo variant="white" size={120} withLink={false} />
-            <p className="mt-8 max-w-md text-2xl leading-tight" style={{ fontFamily: "var(--font-bagel)" }}>
+            <p className="mt-8 max-w-md text-[clamp(1.75rem,3vw,2.75rem)] leading-[0.95] tracking-tight" style={{ fontFamily: "var(--font-bagel)" }}>
               Creative signs <br />
-              for creative <br />
+              <em
+                className="not-italic text-[#f9c80e]"
+                style={{ fontFamily: "var(--font-bagel)" }}
+              >
+                for creative
+              </em>
+              <br />
               brands.
             </p>
-            <p className="mt-6 max-w-sm text-sm text-cream/80">
+            <p className="mt-6 max-w-sm text-sm leading-relaxed text-cream/75">
               Somos una nueva versión de los avisos tradicionales. Diseñados y
               fabricados en Colombia. Garantía por 3 años.
             </p>
