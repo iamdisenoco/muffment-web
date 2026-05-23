@@ -155,6 +155,13 @@ html.has-custom-cursor, html.has-custom-cursor * {
   font-weight: 400;
 }
 
+/* Marquee horizontal Musotoku-style — animación continua del nombre
+   del producto. Se aplica al elemento que tiene la animación inline. */
+@keyframes muff-marquee {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
 /* Quote decorativas — comillas gigantes editorial */
 .editorial-quote::before {
   content: "“";
