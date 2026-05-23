@@ -64,33 +64,46 @@ export default async function ProductPage({ params }: Props) {
       <SmoothScroll />
       <Cursor />
       <Header />
-      <main className="bg-white pt-32">
-        {/* Breadcrumb editorial-técnico */}
-        <div className="mx-auto max-w-[1600px] px-6 pb-12 md:px-12">
+      <main className="relative bg-white pt-32">
+        {/* Franja cobalt arriba que se difumina a blanco antes del marquee
+            del producto. Cubre el área del header global + breadcrumb. */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-x-0 top-0 z-0 h-[320px] md:h-[360px]"
+          style={{
+            background:
+              "linear-gradient(to bottom, rgb(50,54,183) 0%, rgb(50,54,183) 25%, rgba(50,54,183,0.85) 50%, rgba(50,54,183,0.4) 75%, rgba(255,255,255,0) 100%)",
+          }}
+        />
+
+        {/* Breadcrumb editorial-técnico — sobre la franja cobalt usa cream */}
+        <div className="relative z-10 mx-auto max-w-[1600px] px-6 pb-12 md:px-12">
           <nav
-            className="flex items-center gap-3 text-[10px] uppercase tracking-[0.3em] text-cobalt/55"
+            className="flex items-center gap-3 text-[10px] uppercase tracking-[0.3em] text-cream/75"
             style={{ fontFamily: '"Satoshi", system-ui, sans-serif' }}
           >
-            <Link href="/avisos" className="transition-opacity hover:text-cobalt">
+            <Link href="/avisos" className="transition-opacity hover:text-cream">
               ← Catálogo
             </Link>
-            <span aria-hidden className="inline-block h-px w-6 bg-cobalt/25" />
+            <span aria-hidden className="inline-block h-px w-6 bg-cream/35" />
             <Link
               href={`/avisos?cat=${product.category}`}
-              className="transition-opacity hover:text-cobalt"
+              className="transition-opacity hover:text-cream"
             >
               {product.categoryLabel}
             </Link>
-            <span aria-hidden className="inline-block h-px w-6 bg-cobalt/25" />
-            <span className="text-cobalt/40">N°{product.code}</span>
+            <span aria-hidden className="inline-block h-px w-6 bg-cream/35" />
+            <span className="text-cream/55">N°{product.code}</span>
           </nav>
         </div>
 
         {/* DETALLE (client component, maneja state del color) */}
-        <ProductDetailSection
-          product={product}
-          colorPrefix={COLOR_PICKER_PRODUCTS[product.slug]}
-        />
+        <div className="relative z-10">
+          <ProductDetailSection
+            product={product}
+            colorPrefix={COLOR_PICKER_PRODUCTS[product.slug]}
+          />
+        </div>
 
         {/* RELACIONADOS */}
         {related.length > 0 && (
