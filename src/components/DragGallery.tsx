@@ -47,7 +47,11 @@ export function DragGallery({ images, alt, index, onChange }: Props) {
   };
 
   return (
-    <div className="relative mx-auto flex items-center justify-center" ref={containerRef}>
+    <div
+      ref={containerRef}
+      className="relative mx-auto flex w-full items-center justify-center"
+      style={{ maxWidth: "min(76vh, 820px)" }}
+    >
       {/* Flechas (fallback) */}
       {hasMultiple && (
         <>
@@ -111,10 +115,6 @@ export function DragGallery({ images, alt, index, onChange }: Props) {
           x,
           rotate,
           opacity: photoOpacity,
-          // max-width = min(76% viewport-height, 820px) ⇒ la foto nunca
-          // se sale del fold incluso en laptops chicos. Aspect-square se
-          // mantiene → quedará cuadrada al ancho permitido por la altura.
-          maxWidth: "min(76vh, 820px)",
         }}
         className={cn(
           "relative aspect-square w-full touch-pan-y",
@@ -136,7 +136,7 @@ export function DragGallery({ images, alt, index, onChange }: Props) {
               alt={alt}
               fill
               priority
-              sizes="(max-width: 768px) 100vw, 720px"
+              sizes="(max-width: 768px) 100vw, 820px"
               className="object-contain"
               style={{
                 mixBlendMode: "multiply",
