@@ -130,12 +130,16 @@ export function ProductDetailSection({ product, colorPrefix }: Props) {
   return (
     <article ref={containerRef} className="relative bg-black text-white">
       {/* ═══════════════════════════════════════════════════════════════ */}
-      {/* HERO COMPLETO bg:black — foto giant + info derecha + marquee abajo */}
+      {/* HERO COMPACTO bg:black — todo entra en above-the-fold            */}
+      {/* Orden vertical (feedback Jon):                                    */}
+      {/*   1. Cabecera rotando                                             */}
+      {/*   2. Marquee con nombre + button AGREGAR (ARRIBA, no abajo)       */}
+      {/*   3. Grid foto izq + info derecha                                 */}
       {/* ═══════════════════════════════════════════════════════════════ */}
       <section className="relative overflow-hidden">
-        <div className="mx-auto max-w-[1700px] px-4 pb-10 pt-6 md:px-10 md:pb-16 md:pt-10">
+        <div className="mx-auto max-w-[1700px] px-4 pb-10 pt-4 md:px-10 md:pb-14 md:pt-6">
           {/* ───── CABECERA ROTANDO ARRIBA ───── */}
-          <div className="mb-6 flex h-6 items-center md:mb-8 md:h-8">
+          <div className="mb-3 flex h-6 items-center md:h-8">
             <AnimatePresence mode="wait">
               <motion.p
                 key={msgIdx}
@@ -149,6 +153,63 @@ export function ProductDetailSection({ product, colorPrefix }: Props) {
                 {ROTATING_PILLARS[msgIdx]}
               </motion.p>
             </AnimatePresence>
+          </div>
+
+          {/* ───── MARQUEE + BUTTON-ROUND ARRIBA ───── */}
+          <div
+            className="pd-hero-marquee relative mb-8 border-y border-white/70 py-3 md:mb-10 md:py-4"
+            style={{ overflow: "visible" }}
+          >
+            <div
+              className="flex w-fit items-center whitespace-nowrap pr-32 md:pr-40"
+              style={{
+                animation: "muff-marquee 25s linear infinite",
+              }}
+            >
+              {Array.from({ length: 6 }).map((_, i) => (
+                <span
+                  key={i}
+                  className="flex items-center"
+                  style={{ paddingRight: "2.5rem" }}
+                >
+                  <span
+                    className="leading-none"
+                    style={{
+                      ...displayStyle,
+                      fontSize: "clamp(1.75rem, 4.2vw, 3.75rem)",
+                      letterSpacing: "-0.02em",
+                    }}
+                  >
+                    {marqueeName}
+                  </span>
+                  <span
+                    aria-hidden
+                    className="ml-6 text-white/70"
+                    style={{
+                      fontSize: "clamp(1.1rem, 2.2vw, 1.75rem)",
+                    }}
+                  >
+                    ✦
+                  </span>
+                </span>
+              ))}
+            </div>
+
+            {/* BUTTON-ROUND verde fluo cortado por el border-bottom */}
+            <div
+              className="pd-hero-button absolute z-30"
+              style={{
+                right: "0.5rem",
+                top: "100%",
+                transform: "translateY(-50%)",
+              }}
+              id="agregar"
+            >
+              <RoundAddButton
+                product={product}
+                selectedColor={selectedColor}
+              />
+            </div>
           </div>
 
           {/* ───── GRID PRINCIPAL: foto-flechas IZQ · info DER ───── */}
@@ -181,8 +242,16 @@ export function ProductDetailSection({ product, colorPrefix }: Props) {
                   </button>
                 )}
 
-                {/* IMAGEN GIANT */}
-                <div className="relative aspect-square w-full max-w-[820px] md:aspect-[5/4]">
+                {/* IMAGEN dominante pero respetando viewport */}
+                <div
+                  className="relative aspect-square w-full"
+                  style={{
+                    // max-h dinámico: 55% del viewport-height máximo, así
+                    // queda lugar arriba para cabecera+marquee+button y
+                    // abajo para los dots, sin scroll forzado.
+                    maxWidth: "min(55vh, 680px)",
+                  }}
+                >
                   <AnimatePresence mode="wait">
                     <motion.div
                       key={activeImg}
@@ -398,62 +467,6 @@ export function ProductDetailSection({ product, colorPrefix }: Props) {
             </aside>
           </div>
 
-          {/* ───── MARQUEE + BUTTON-ROUND ABAJO ───── */}
-          <div
-            className="pd-hero-marquee relative mt-10 border-y border-white/70 py-4 md:mt-14 md:py-5"
-            style={{ overflow: "visible" }}
-          >
-            <div
-              className="flex w-fit items-center whitespace-nowrap"
-              style={{
-                animation: "muff-marquee 25s linear infinite",
-              }}
-            >
-              {Array.from({ length: 6 }).map((_, i) => (
-                <span
-                  key={i}
-                  className="flex items-center"
-                  style={{ paddingRight: "2.5rem" }}
-                >
-                  <span
-                    className="leading-none"
-                    style={{
-                      ...displayStyle,
-                      fontSize: "clamp(2rem, 5vw, 4.5rem)",
-                      letterSpacing: "-0.02em",
-                    }}
-                  >
-                    {marqueeName}
-                  </span>
-                  <span
-                    aria-hidden
-                    className="ml-6 text-white/70"
-                    style={{
-                      fontSize: "clamp(1.25rem, 2.5vw, 2rem)",
-                    }}
-                  >
-                    ✦
-                  </span>
-                </span>
-              ))}
-            </div>
-
-            {/* BUTTON-ROUND verde fluo en intersección right del marquee */}
-            <div
-              className="pd-hero-button absolute z-30"
-              style={{
-                right: "0.5rem",
-                top: "100%",
-                transform: "translateY(-50%)",
-              }}
-              id="agregar"
-            >
-              <RoundAddButton
-                product={product}
-                selectedColor={selectedColor}
-              />
-            </div>
-          </div>
         </div>
       </section>
 
