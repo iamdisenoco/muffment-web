@@ -65,19 +65,24 @@ export default async function ProductPage({ params }: Props) {
       <Cursor />
       <Header />
       <main className="bg-white pt-32">
-        {/* Breadcrumb */}
-        <div className="mx-auto max-w-[1600px] px-6 md:px-10">
-          <nav className="text-xs uppercase tracking-widest text-black/60">
-            <Link href="/avisos" className="hover:opacity-70">
+        {/* Breadcrumb editorial-técnico */}
+        <div className="mx-auto max-w-[1600px] px-6 pb-12 md:px-12">
+          <nav
+            className="flex items-center gap-3 text-[10px] uppercase tracking-[0.3em] text-cobalt/55"
+            style={{ fontFamily: '"Satoshi", system-ui, sans-serif' }}
+          >
+            <Link href="/avisos" className="transition-opacity hover:text-cobalt">
               ← Catálogo
             </Link>
-            <span className="mx-3">/</span>
+            <span aria-hidden className="inline-block h-px w-6 bg-cobalt/25" />
             <Link
               href={`/avisos?cat=${product.category}`}
-              className="hover:opacity-70"
+              className="transition-opacity hover:text-cobalt"
             >
               {product.categoryLabel}
             </Link>
+            <span aria-hidden className="inline-block h-px w-6 bg-cobalt/25" />
+            <span className="text-cobalt/40">N°{product.code}</span>
           </nav>
         </div>
 

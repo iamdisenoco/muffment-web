@@ -15,9 +15,10 @@ type Props = {
 };
 
 /**
- * Sección detalle del producto: maneja state del color seleccionado y
- * conecta el ColorPicker con el AddToCartButton (para que el carrito
- * registre el color elegido).
+ * Detalle de producto - estetica editorial-tecnica.
+ * Layout vertical en bloques (hero / specs / color / CTA) en lugar de
+ * el split 2-col sticky tipico de ecommerce. Tipografia: Bagel para
+ * titles, Satoshi mono para labels y datos.
  */
 export function ProductDetailSection({ product, colorPrefix }: Props) {
   const [selectedColor, setSelectedColor] = useState<Color | null>(null);
@@ -29,43 +30,128 @@ export function ProductDetailSection({ product, colorPrefix }: Props) {
 
   const message = `Hola MUFFMENT, quiero el ${product.name}${selectedColor ? ` en color ${selectedColor.name}` : ""} (${product.priceLabel}). ¿Me ayudas con la cotización?`;
 
+  const monoStyle = { fontFamily: '"Satoshi", system-ui, sans-serif' };
+  const displayStyle = { fontFamily: "var(--font-bagel)" };
+
   return (
-    <section className="mx-auto mt-8 grid max-w-[1600px] gap-10 px-6 pb-24 md:grid-cols-12 md:gap-16 md:px-10 md:pb-36">
-      {/* IZQUIERDA: galería + color picker */}
-      <div className="md:col-span-7">
-        {colorPrefix ? (
-          <div className="grid gap-6 md:grid-cols-12 md:gap-5">
-            <div className="md:col-span-8">
-              <ProductGallery
-                hero={dynamicHero}
-                gallery={product.gallery}
-                video={product.video}
-                alt={product.name}
-                fallbackCode={product.code}
-                fallbackName={product.shortName}
-              />
+    <article className="mx-auto max-w-[1600px] px-6 md:px-12">
+      {/* ━━━━━━━━━━━━ HERO BLOCK ━━━━━━━━━━━━ */}
+      <section className="grid gap-12 pb-16 md:grid-cols-12 md:gap-x-16 md:pb-24">
+        {/* IZQUIERDA: meta + título + descripción + CTA */}
+        <div className="md:col-span-6">
+          {/* Meta superior: tipo / código / unidad */}
+          <div className="mb-8 grid grid-cols-3 gap-4 border-b border-cobalt/15 pb-4">
+            <Meta label="Cat" value={product.categoryLabel.split(" ").pop() ?? ""} />
+            <Meta label="Cód" value={`N°${product.code}`} />
+            <Meta label="Tipo" value="Pieza única" />
+          </div>
+
+          {/* Título imponente */}
+          <h1
+            className="text-[clamp(2.5rem,6vw,5.5rem)] leading-[0.92] tracking-tight text-cobalt"
+            style={displayStyle}
+          >
+            {product.name}
+          </h1>
+
+          {/* Descripción */}
+          <p className="mt-8 max-w-[52ch] text-lg leading-relaxed text-cobalt/80 md:text-xl">
+            {product.description}
+          </p>
+
+          {/* Precio + color seleccionado en bloque técnico */}
+          <div className="mt-12 grid gap-6 sm:grid-cols-2">
+            <div>
+              <p className="text-[10px] uppercase tracking-[0.3em] text-cobalt/55" style={monoStyle}>
+                Valor
+              </p>
+              <p
+                className="mt-2 text-5xl text-cobalt tabular-nums md:text-6xl"
+                style={displayStyle}
+              >
+                {product.priceLabel}
+              </p>
+              {product.priceEstimated && (
+                <p className="mt-1 text-[10px] uppercase tracking-[0.2em] text-cobalt/55" style={monoStyle}>
+                  desde · final según diseño
+                </p>
+              )}
             </div>
-            <div className="md:col-span-4">
-              <div className="md:sticky md:top-32 rounded-3xl border border-cobalt/10 bg-white/60 p-3 backdrop-blur-sm md:p-4">
-                <div className="mb-3 flex items-baseline justify-between gap-2">
-                  <h2
-                    className="text-base text-cobalt md:text-lg"
-                    style={{ fontFamily: "var(--font-bagel)" }}
-                  >
-                    Escogé tu color
-                  </h2>
-                  <span className="text-[9px] uppercase tracking-[0.18em] text-cobalt/55">
-                    ZMK · 88
-                  </span>
+
+            {selectedColor ? (
+              <div>
+                <p className="text-[10px] uppercase tracking-[0.3em] text-cobalt/55" style={monoStyle}>
+                  Color seleccionado
+                </p>
+                <div className="mt-2 flex items-center gap-3">
+                  <span
+                    aria-hidden
+                    className="block h-12 w-12 shrink-0 rounded-full border border-cobalt/10 shadow-sm"
+                    style={{ backgroundColor: selectedColor.hex }}
+                  />
+                  <div>
+                    <p className="text-xl text-cobalt" style={displayStyle}>
+                      {selectedColor.name}
+                    </p>
+                    <p className="text-[10px] uppercase tracking-[0.2em] text-cobalt/55" style={monoStyle}>
+                      ZMK · {selectedColor.id}
+                    </p>
+                  </div>
                 </div>
-                <ColorPicker
-                  selectedId={selectedColor?.id ?? null}
-                  onSelect={setSelectedColor}
-                />
               </div>
+            ) : colorPrefix ? (
+              <div>
+                <p className="text-[10px] uppercase tracking-[0.3em] text-cobalt/55" style={monoStyle}>
+                  Color
+                </p>
+                <p className="mt-2 text-sm text-cobalt/65">
+                  Sin color · escogé abajo entre 88 tonos
+                </p>
+              </div>
+            ) : null}
+          </div>
+
+          {/* CTA stack */}
+          <div className="mt-10 space-y-3">
+            <AddToCartButton product={product} selectedColor={selectedColor} />
+            <div className="grid gap-3 sm:grid-cols-2">
+              <WhatsAppButton message={message} size="lg">
+                Preguntar
+              </WhatsAppButton>
+              <a
+                href={whatsappLink(
+                  `Hola MUFFMENT, quiero el ${product.name} pero a la medida. ¿Cómo cotizamos?`,
+                )}
+                target="_blank"
+                rel="noopener noreferrer"
+                data-cursor="hover"
+                className="inline-flex items-center justify-center rounded-full border border-cobalt/30 px-6 py-4 text-sm font-medium uppercase tracking-[0.2em] text-cobalt transition-colors hover:border-cobalt hover:bg-cobalt hover:text-cream"
+                style={monoStyle}
+              >
+                A la medida
+              </a>
             </div>
           </div>
-        ) : (
+
+          {/* Despacho + garantia inline */}
+          <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-2 text-[11px] uppercase tracking-[0.25em] text-cobalt/55" style={monoStyle}>
+            <span className="flex items-center gap-2">
+              <span className="inline-block h-1 w-1 rounded-full bg-cobalt/55" />
+              Bajo pedido · 4 sem
+            </span>
+            <span className="flex items-center gap-2">
+              <span className="inline-block h-1 w-1 rounded-full bg-cobalt/55" />
+              Garantía 3 años
+            </span>
+            <span className="flex items-center gap-2">
+              <span className="inline-block h-1 w-1 rounded-full bg-cobalt/55" />
+              Hecho en Colombia
+            </span>
+          </div>
+        </div>
+
+        {/* DERECHA: galería */}
+        <div className="md:col-span-6">
           <ProductGallery
             hero={dynamicHero}
             gallery={product.gallery}
@@ -74,102 +160,109 @@ export function ProductDetailSection({ product, colorPrefix }: Props) {
             fallbackCode={product.code}
             fallbackName={product.shortName}
           />
-        )}
-      </div>
+        </div>
+      </section>
 
-      {/* DERECHA: info + precio + CTA */}
-      <div className="md:col-span-5 md:sticky md:top-32 md:self-start">
-        <h1
-          className="text-[clamp(1.75rem,3.2vw,3rem)] leading-[1] text-cobalt"
-          style={{ fontFamily: "var(--font-bagel)" }}
-        >
-          {product.name}
-        </h1>
-
-        <div className="mt-6 flex items-baseline gap-3">
-          <span
-            className="text-5xl text-cobalt"
-            style={{ fontFamily: "var(--font-bagel)" }}
+      {/* ━━━━━━━━━━━━ SPECS DATASHEET ━━━━━━━━━━━━ */}
+      <section className="border-t border-cobalt/15 py-16 md:py-24">
+        <div className="mb-10 flex items-baseline justify-between">
+          <h2
+            className="text-[clamp(1.5rem,3vw,2.5rem)] leading-none tracking-tight text-cobalt"
+            style={displayStyle}
           >
-            {product.priceLabel}
+            Specs
+          </h2>
+          <span className="text-[10px] uppercase tracking-[0.3em] text-cobalt/45" style={monoStyle}>
+            Datasheet · {product.code}
           </span>
-          {product.priceEstimated && (
-            <span className="text-xs font-medium uppercase tracking-wider text-black/60">
-              desde · final según diseño
-            </span>
-          )}
         </div>
 
-        {selectedColor && (
-          <p className="mt-3 flex items-center gap-2 text-sm text-cobalt/70">
-            <span
-              className="h-4 w-4 rounded-full border border-cobalt/15"
-              style={{ backgroundColor: selectedColor.hex }}
-              aria-hidden
-            />
-            Color: <strong className="text-cobalt">{selectedColor.name}</strong>
+        <div className="grid grid-cols-2 gap-x-8 gap-y-10 md:grid-cols-4">
+          <Spec label="Dimensiones totales" value={product.totalSize} />
+          <Spec label="Dimensiones del arte" value={product.artSize} />
+          <Spec label="Materiales" value={product.materials} />
+          <Spec label="Pintura" value={product.paint} />
+        </div>
+
+        {product.notes && (
+          <p className="mt-10 max-w-[60ch] border-l-2 border-cobalt/30 pl-4 text-sm text-cobalt/75">
+            <span className="mr-2 text-[10px] uppercase tracking-[0.3em] text-cobalt/55" style={monoStyle}>
+              Nota
+            </span>
+            {product.notes}
           </p>
         )}
+      </section>
 
-        <p className="mt-8 text-lg leading-relaxed text-black/85">
-          {product.description}
-        </p>
-
-        <dl className="mt-10 space-y-4 border-t border-black/15 pt-8 text-sm">
-          <Row label="Dimensiones totales" value={product.totalSize} />
-          <Row label="Dimensiones para el arte" value={product.artSize} />
-          <Row label="Materiales" value={product.materials} />
-          <Row label="Pintura" value={product.paint} />
-          {product.notes && <Row label="Nota" value={product.notes} />}
-        </dl>
-
-        {/* Aviso de despacho - importante antes de comprar */}
-        <div className="mt-8 rounded-2xl border border-cobalt/15 bg-cobalt/5 px-4 py-3 text-sm text-cobalt">
-          <p className="flex items-center gap-2">
-            <span aria-hidden>📦</span>
-            <span>
-              <strong>Trabajamos bajo pedido — nos demoramos 4 semanas.</strong>{" "}
-              Nos contactaremos los próximos días para darte la fecha exacta
-              del despacho de tu pedido.
-            </span>
-          </p>
-        </div>
-
-        <div className="mt-6 space-y-3">
-          <AddToCartButton product={product} selectedColor={selectedColor} />
-          <div className="grid gap-3 sm:grid-cols-2">
-            <WhatsAppButton message={message} size="lg">
-              Preguntar por WhatsApp
-            </WhatsAppButton>
-            <a
-              href={whatsappLink(
-                `Hola MUFFMENT, quiero el ${product.name} pero a la medida. ¿Cómo cotizamos?`,
-              )}
-              target="_blank"
-              rel="noopener noreferrer"
-              data-cursor="hover"
-              className="inline-flex items-center justify-center rounded-full border border-cobalt px-6 py-4 text-base font-medium uppercase tracking-wider text-cobalt transition-colors hover:bg-cobalt hover:text-cream"
+      {/* ━━━━━━━━━━━━ COLOR PICKER FULL WIDTH ━━━━━━━━━━━━ */}
+      {colorPrefix && (
+        <section className="border-t border-cobalt/15 py-16 md:py-24">
+          <div className="mb-10 flex items-baseline justify-between">
+            <h2
+              className="text-[clamp(1.5rem,3vw,2.5rem)] leading-none tracking-tight text-cobalt"
+              style={displayStyle}
             >
-              A la medida
-            </a>
+              Escogé tu color
+            </h2>
+            <span className="text-[10px] uppercase tracking-[0.3em] text-cobalt/45" style={monoStyle}>
+              ZMK · 88 tonos
+            </span>
           </div>
-        </div>
 
-        <p className="mt-6 text-xs uppercase tracking-widest text-black/50">
-          ✦ Garantía 3 años ✦ Hecho en Colombia ✦
-        </p>
-      </div>
-    </section>
+          <div className="grid gap-12 md:grid-cols-12 md:gap-x-16">
+            <div className="md:col-span-7">
+              <ColorPicker
+                selectedId={selectedColor?.id ?? null}
+                onSelect={setSelectedColor}
+              />
+            </div>
+            <div className="md:col-span-5">
+              <p className="text-sm leading-relaxed text-cobalt/70 md:text-base">
+                Carta industrial ZMK. Cada color es{" "}
+                <strong className="text-cobalt">pintura electrostática en polvo</strong>{" "}
+                aplicada y horneada en nuestro taller.
+              </p>
+              <p className="mt-4 text-sm leading-relaxed text-cobalt/65 md:text-base">
+                Acabados disponibles: brillante, mate, semi-mate, texturizado,
+                microtexturizado, con destellos. Cada bolita arriba muestra la
+                textura real del acabado.
+              </p>
+              <p className="mt-4 text-[11px] uppercase tracking-[0.25em] text-cobalt/45" style={monoStyle}>
+                ¿No ves tu color? Cotizamos colores especiales por WhatsApp.
+              </p>
+            </div>
+          </div>
+        </section>
+      )}
+    </article>
   );
 }
 
-function Row({ label, value }: { label: string; value: string }) {
+// ─── helpers ──────────────────────────────────────────────────────────
+function Meta({ label, value }: { label: string; value: string }) {
   return (
-    <div className="grid grid-cols-[140px_1fr] gap-4 md:grid-cols-[180px_1fr]">
-      <dt className="text-xs font-medium uppercase tracking-wider text-black/60">
+    <div>
+      <p
+        className="text-[9px] uppercase tracking-[0.3em] text-cobalt/45"
+        style={{ fontFamily: '"Satoshi", system-ui, sans-serif' }}
+      >
         {label}
-      </dt>
-      <dd className="text-cobalt">{value}</dd>
+      </p>
+      <p className="mt-1 text-sm font-medium text-cobalt">{value}</p>
+    </div>
+  );
+}
+
+function Spec({ label, value }: { label: string; value: string }) {
+  return (
+    <div>
+      <p
+        className="mb-3 text-[10px] uppercase tracking-[0.3em] text-cobalt/50"
+        style={{ fontFamily: '"Satoshi", system-ui, sans-serif' }}
+      >
+        {label}
+      </p>
+      <p className="text-base leading-snug text-cobalt md:text-lg">{value}</p>
     </div>
   );
 }

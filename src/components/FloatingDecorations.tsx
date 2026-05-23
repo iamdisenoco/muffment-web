@@ -1,6 +1,11 @@
 "use client";
 
 import { motion } from "motion/react";
+import { usePathname } from "next/navigation";
+
+/** Rutas donde las floating decorations NO se renderizan
+ *  (estética más clean/técnica): detalle producto, carrito, post-pago. */
+const HIDE_ON_PATHS = ["/avisos/", "/carrito", "/gracias"];
 
 // Paleta rainbow translúcida — funciona sobre fondos cobalt, cream y blanco.
 const COLORS = ["#ff6b35", "#f9c80e", "#06d6a0", "#ef476f", "#4cc9f0", "#3236b7"];
@@ -68,6 +73,10 @@ const DOTS: Pos[] = [
 ];
 
 export function FloatingDecorations() {
+  const pathname = usePathname();
+  if (pathname && HIDE_ON_PATHS.some((p) => pathname.startsWith(p))) {
+    return null;
+  }
   return (
     <div
       aria-hidden
