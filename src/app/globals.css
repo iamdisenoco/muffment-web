@@ -88,6 +88,18 @@ html.has-custom-cursor, html.has-custom-cursor * {
   cursor: none !important;
 }
 
+@keyframes iridescent-spin {
+  0%   { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Rainbow shift horizontal — para fill/border/text que se mueve de hue.
+   El gradient es 200% wide y se anima de 0% a -100% → loop perfecto. */
+@keyframes rainbow-shift {
+  0%   { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
+}
+
 @keyframes cursor-rainbow {
   0%   { color: #3236b7; }
   16%  { color: #ff6b35; }

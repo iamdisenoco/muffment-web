@@ -32,6 +32,9 @@ export function Header() {
     (p) => pathname === p || (p !== "/" && pathname?.startsWith(p + "/")),
   );
   const [onDark, setOnDark] = useState(startsDark);
+  // Naked: solo texto en el nav, sin pill bg/border/backdrop. Se activa
+  // cuando una sección con `data-header-style="naked"` cruza la línea.
+  const [isNaked, setIsNaked] = useState(false);
 
   useEffect(() => {
     // Recalcula tanto en scroll como en resize: en cada tick mira qué
@@ -51,6 +54,20 @@ export function Header() {
         }
       }
       setOnDark(isDark);
+
+      // Detección del estilo "naked" (nav sin pill, solo texto)
+      const nakedSections = document.querySelectorAll<HTMLElement>(
+        '[data-header-style="naked"]',
+      );
+      let naked = false;
+      for (const sec of nakedSections) {
+        const rect = sec.getBoundingClientRect();
+        if (rect.top <= HEADER_PROBE_Y && rect.bottom > HEADER_PROBE_Y) {
+          naked = true;
+          break;
+        }
+      }
+      setIsNaked(naked);
     };
     // Doble ejecución para evitar timing donde el DOM aún no terminó
     // de hidratar al primer render del effect.
@@ -69,9 +86,12 @@ export function Header() {
   const scrolled = scrollY > 12;
 
   // Estilo de la píldora del nav central: bg + borde varían según fondo.
-  const navPillBg = onDark
-    ? "bg-white/10 border border-white/20 backdrop-blur-md"
-    : "bg-cobalt/10 border border-cobalt/20 backdrop-blur-md";
+  // Si isNaked: solo texto, sin pill (vacío).
+  const navPillBg = isNaked
+    ? ""
+    : onDark
+      ? "bg-white/10 border border-white/20 backdrop-blur-md"
+      : "bg-cobalt/10 border border-cobalt/20 backdrop-blur-md";
 
   return (
     <header className="fixed inset-x-0 top-0 z-50 transition-all duration-300">
