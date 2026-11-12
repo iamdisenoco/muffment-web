@@ -1,0 +1,2124 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Armado silla Versus V40</title>
+<meta name="description" content="Cómo se arma la silla Versus V40, paso a paso, según su manual de armado.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@500;600&family=Source+Sans+3:wght@400;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Hoja de taller en el celular: una columna, barra de secciones arriba, las láminas de la FF como fichas que se abren en grande. Colores tomados de la FF: cota roja, tubo azul acero, lámina azul claro. */
+:root {
+  --papel: #f3f5f7;
+  --hoja: #ffffff;
+  --tinta: #16212b;
+  --tinta-2: #4a5866;
+  --linea: #d3dae1;
+  --cota: #b00020;
+  --tubo: #9db6cf;
+  --lamina: #d9e4ee;
+  --eje: #1f3b5c;
+  --foco: #1f3b5c;
+  --lienzo: #ffffff;
+  /* vidrio de la animación (Jon, 29-oct: «con efecto Liquid Glass»). La opacidad es la mínima con la que --tinta
+     da 4,5:1 aunque detrás haya negro puro o blanco puro (cuentas en el README); por eso sobre el vidrio solo va --tinta */
+  --vidrio: rgba(255, 255, 255, 0.66); --vidrio-borde: rgba(255, 255, 255, 0.75); --vidrio-luz: rgba(255, 255, 255, 0.30);
+  --vidrio-sombra: rgba(16, 24, 32, 0.18);
+  /* etiquetas de las piezas casi transparentes (Jon, 29-oct: «casi que transparentes para que no ocupen visualización»):
+     el texto se lee por el halo blanco alrededor de cada letra, no por un fondo. Van iguales en claro y en oscuro: lo que
+     tienen detrás es la escena 3D, que es clara en los dos temas (con letra clara y halo oscuro, en oscuro medía 1,7:1) */
+  --eti-fondo: rgba(255, 255, 255, 0.20); --eti-borde: rgba(255, 255, 255, 0.45); --halo: rgba(255, 255, 255, 0.95);
+  --eti-texto: #16212b;
+  --barra-fondo: rgba(255, 255, 255, 0.40);
+  --display: "Barlow Semi Condensed", "Arial Narrow", "Helvetica Neue", Arial, sans-serif;
+  --texto: "Source Sans 3", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --papel: #0e141a; --hoja: #151d25; --tinta: #e6ecf1; --tinta-2: #a3b1be; --linea: #2b3742;
+    --cota: #ff6b7f; --tubo: #5f7f9f; --lamina: #22313f; --eje: #9cc0e3; --foco: #9cc0e3; --lienzo: #c9d2da; --vidrio: rgba(21, 29, 37, 0.74); --vidrio-borde: rgba(255, 255, 255, 0.16); --vidrio-luz: rgba(255, 255, 255, 0.06); --vidrio-sombra: rgba(0, 0, 0, 0.45);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --papel: #0e141a; --hoja: #151d25; --tinta: #e6ecf1; --tinta-2: #a3b1be; --linea: #2b3742;
+  --cota: #ff6b7f; --tubo: #5f7f9f; --lamina: #22313f; --eje: #9cc0e3; --foco: #9cc0e3; --lienzo: #c9d2da; --vidrio: rgba(21, 29, 37, 0.74); --vidrio-borde: rgba(255, 255, 255, 0.16); --vidrio-luz: rgba(255, 255, 255, 0.06); --vidrio-sombra: rgba(0, 0, 0, 0.45);
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }   /* también fuera del esqueleto del artefacto */
+body {
+  background: var(--papel); color: var(--tinta); font-family: var(--texto); font-size: 16px; line-height: 1.5;
+  -webkit-text-size-adjust: 100%;
+}
+body::before {
+  content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10;
+  background: var(--hoja);
+}
+.envoltura {
+  max-width: 1080px; margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 0 48px;
+}
+h1, h2, h3 { font-family: var(--display); font-weight: 600; line-height: 1.15; text-wrap: balance; margin: 0; }
+h2 { font-size: 1.6rem; }
+h3 { font-size: 1.15rem; }
+p { margin: 0; max-width: 65ch; }
+.cod, .num, .mono { font-family: var(--mono); font-size: 0.86em; font-variant-numeric: tabular-nums; }
+:focus-visible { outline: 3px solid var(--foco); outline-offset: 2px; }
+
+/* barra de secciones */
+.barra-sec {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--hoja);
+  border-bottom: 1px solid var(--linea);
+}
+.barra-sec nav {
+  max-width: 1080px; margin: 0 auto; display: flex; gap: 4px; overflow-x: auto; scrollbar-width: none;
+  padding-left: max(12px, env(safe-area-inset-left, 0px)); padding-right: max(12px, env(safe-area-inset-right, 0px));
+  padding-block: 8px;
+}
+.barra-sec nav::-webkit-scrollbar { display: none; }
+.barra-sec a {
+  flex: none; color: var(--tinta-2); text-decoration: none; font-family: var(--display); font-weight: 500;
+  font-size: 0.95rem; padding: 6px 14px; border-radius: 999px; border: 1px solid var(--linea);
+  min-height: 44px; display: inline-flex; align-items: center;
+}
+.barra-sec a:hover { color: var(--tinta); border-color: var(--tinta-2); }
+
+section { padding-top: 40px; scroll-margin-top: 64px; display: grid; gap: 16px; }
+.cabeza-sec { display: grid; gap: 4px; border-top: 2px solid var(--tinta); padding-top: 10px; }
+.cabeza-sec .eti { font-family: var(--mono); font-size: 0.78rem; color: var(--cota); letter-spacing: 0.04em; }
+
+/* cajetín */
+.portada { padding-top: 24px; display: grid; gap: 20px; }
+.titulo { display: grid; gap: 6px; }
+.titulo .eti { font-family: var(--mono); font-size: 0.8rem; color: var(--cota); letter-spacing: 0.05em; }
+.titulo h1 { font-size: clamp(1.9rem, 6vw, 3rem); }
+.titulo h1 .cod { font-size: 0.7em; color: var(--tinta-2); margin-right: 6px; }
+.cajetin {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); border: 1.5px solid var(--tinta);
+  background: var(--hoja);
+}
+.cajetin div { padding: 8px 10px; border-right: 1px solid var(--linea); border-bottom: 1px solid var(--linea); min-width: 0; }
+.cajetin dt { font-size: 0.72rem; color: var(--tinta-2); letter-spacing: 0.04em; text-transform: uppercase; }
+.cajetin dd { margin: 0; font-family: var(--mono); font-size: 0.92rem; overflow-wrap: anywhere; }
+.dos { display: grid; gap: 20px; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); align-items: start; }
+@media (max-width: 760px) { .dos { grid-template-columns: minmax(0, 1fr); } }
+.texto { display: grid; gap: 14px; }
+.texto ol, .texto ul { margin: 0; padding-left: 1.3em; display: grid; gap: 4px; }
+.col-car { display: grid; gap: 8px; min-width: 0; }
+
+/* carrusel: una imagen a la vez, flechas a los lados, se desliza con el dedo (scroll-snap), teclado ← → */
+.carrusel { display: grid; gap: 8px; min-width: 0; }
+.car-marco { position: relative; background: var(--hoja); border: 1px solid var(--linea); container-type: inline-size; }
+.car-pista {
+  display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none;
+  -webkit-overflow-scrolling: touch; overscroll-behavior-x: contain;
+}
+.car-pista::-webkit-scrollbar { display: none; }
+.car-item { flex: 0 0 100%; min-width: 0; margin: 0; scroll-snap-align: center; scroll-snap-stop: always; display: grid; align-content: start; }
+.car-img { padding: 0; border: 0; background: #fff; cursor: zoom-in; display: block; width: 100%; }
+.car-img img { display: block; width: 100%; height: auto; aspect-ratio: var(--car-prop, 1754 / 1240); object-fit: contain; background: #fff; }
+#car-fotos { --car-prop: 4 / 3; --car-mitad: 37.5cqw; }
+.car-item figcaption {
+  display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 2px 10px; padding: 10px 12px; align-items: center;
+  border-top: 1px solid var(--linea); min-height: 64px;
+}
+.car-item figcaption .baja { grid-column: 2; grid-row: 1 / span 3; }
+.car-flecha {
+  position: absolute; top: var(--car-mitad, 35.35cqw); transform: translateY(-50%);   /* a media altura de la imagen */
+  width: 44px; height: 44px; border-radius: 50%; border: 1.5px solid var(--tinta); background: var(--hoja);
+  color: var(--tinta); font-size: 1.7rem; line-height: 1; display: grid; place-items: center; cursor: pointer;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.18);
+}
+.car-ant { left: 8px; }
+.car-sig { right: 8px; }
+.car-flecha:disabled { opacity: 0.35; cursor: default; }
+.car-cont { font-family: var(--mono); font-size: 0.86rem; color: var(--tinta-2); text-align: center; margin: 0; }
+.ir-a { display: flex; flex-wrap: wrap; gap: 8px; }
+.ir {
+  cursor: pointer; min-height: 44px; padding: 6px 14px; border: 1px solid var(--linea); border-radius: 999px;
+  background: var(--hoja); color: var(--tinta); font-family: var(--display); font-weight: 500; font-size: 0.95rem;
+}
+.ir[aria-current="true"] { border-color: var(--tinta); background: var(--tinta); color: var(--hoja); }
+
+/* DXF dibujado dentro de la hoja de la pieza */
+.dxf { border-top: 1px solid var(--linea); padding: 10px 12px 12px; display: grid; gap: 8px;
+  grid-template-columns: minmax(0, 1fr) auto; align-items: center; }
+.dxf-cab { display: grid; gap: 2px; min-width: 0; }
+.dxf-svg { grid-column: 1 / -1; width: 100%; max-height: 220px; height: auto; color: var(--cota); background: var(--papel);
+  border: 1px solid var(--linea); padding: 8px; }
+.dxf .baja { grid-column: 2; grid-row: 1; }
+
+/* el bloque de los 3 PDF de la portada */
+.pdfs { display: grid; gap: 10px; }
+.pdfs ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); }
+.pdfs li { display: grid; grid-template-columns: 96px minmax(0, 1fr) auto; gap: 2px 12px; align-items: center;
+  background: var(--hoja); border: 1px solid var(--linea); padding: 8px; }
+.pdf-mini { grid-row: 1 / span 2; padding: 0; border: 1px solid var(--linea); background: #fff; cursor: zoom-in; min-height: 44px; }
+.pdf-mini img { display: block; width: 100%; height: auto; }
+.pdfs .dl-n { grid-column: 2; font-family: var(--display); font-weight: 600; }
+.pdfs .dl-m { grid-column: 2; }
+.pdfs .baja { grid-column: 3; grid-row: 1 / span 2; display: inline-flex; align-items: center; text-decoration: none; }
+
+/* lista de corte: el material bajo el código */
+td.mat { min-width: 15em; }
+td.mat .sub { display: block; font-size: 0.8rem; color: var(--tinta-2); }
+
+/* partes y procesos en tarjetas bajo 640 px (constitución, regla 22) */
+.partes-tarjetas { list-style: none; margin: 0; padding: 0; display: none; gap: 10px; }
+.parte { background: var(--hoja); border: 1px solid var(--linea); padding: 10px 12px; display: grid; gap: 8px; }
+.parte-cab { display: flex; flex-wrap: wrap; gap: 4px 10px; align-items: baseline; }
+.parte-cab b { color: var(--cota); }
+.parte-nom { flex-basis: 100%; font-family: var(--display); font-weight: 600; }
+.parte dl { margin: 0; display: grid; gap: 4px; }
+.parte dl div { display: grid; grid-template-columns: 8.5em minmax(0, 1fr); gap: 8px; }
+.parte dt { font-size: 0.8rem; color: var(--tinta-2); }
+.parte dd { margin: 0; font-size: 0.9rem; overflow-wrap: anywhere; }
+@media (max-width: 640px) {
+  .partes-tabla { display: none; }
+  .partes-tarjetas { display: grid; }
+}
+@media (prefers-reduced-motion: reduce) { .car-pista { scroll-behavior: auto; } }
+
+/* visor 3D */
+.visor { position: relative; background: var(--lienzo); border: 1px solid var(--linea); }
+.visor canvas { display: block; width: 100%; aspect-ratio: 4 / 3; max-height: 70vh; touch-action: none; cursor: grab; }
+@media (max-width: 600px) { .visor canvas { aspect-ratio: 1 / 1.05; } }
+.visor-estado {
+  position: absolute; inset: 0; display: grid; place-items: center; text-align: center; padding: 24px;
+  color: #4a5866; font-size: 0.95rem; pointer-events: none;
+}
+.visor-pieza {
+  position: absolute; left: 10px; right: 10px; bottom: 10px; background: var(--hoja); border: 1px solid var(--tinta);
+  padding: 8px 10px; font-size: 0.9rem; display: grid; gap: 2px;
+}
+.visor-pieza b { font-family: var(--mono); color: var(--cota); }
+/* «Señalar piezas»: líneas guía y etiquetas, como un plano de despiece */
+.guias { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+.guias svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.guias line { stroke: var(--cota); stroke-width: 1.2; }
+.guias circle { fill: var(--cota); }
+.eti3d {
+  position: absolute; max-width: 230px; background: var(--hoja); color: var(--tinta); border: 1px solid var(--cota);
+  padding: 3px 6px; font-size: 0.74rem; line-height: 1.25; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+}
+.eti3d b { font-family: var(--mono); color: var(--cota); }
+.eti3d span { display: block; }
+.eti3d .m { color: var(--tinta-2); }
+.leyenda3d { list-style: none; margin: 0; padding: 0; display: none; gap: 4px; font-size: 0.86rem; }
+.leyenda3d li { display: grid; grid-template-columns: 3.4em minmax(0, 1fr); gap: 8px; border-bottom: 1px solid var(--linea); padding: 4px 0; }
+.leyenda3d b { font-family: var(--mono); color: var(--cota); }
+.leyenda3d .m { display: block; color: var(--tinta-2); font-size: 0.8rem; }
+@media (max-width: 640px) {
+  .eti3d { padding: 2px 5px; }
+  .eti3d span { display: none; }
+  .leyenda3d.activa { display: grid; }
+}
+.controles { display: flex; flex-wrap: wrap; gap: 8px; }
+
+button { font: inherit; color: inherit; }
+.boton, .baja, .hoja-link {
+  cursor: pointer; border: 1.5px solid var(--tinta); background: var(--hoja); color: var(--tinta); text-decoration: none;
+  display: inline-flex; align-items: center; justify-content: center;
+  font-family: var(--display); font-weight: 500; font-size: 0.98rem; padding: 8px 14px; min-height: 44px;
+}
+.boton[aria-pressed="true"] { background: var(--tinta); color: var(--hoja); }
+.hoja-link {
+  border: 1px dashed var(--eje); padding: 0 10px; min-height: 44px; color: var(--eje); background: none;
+  font-family: var(--mono); font-size: 0.82rem; white-space: nowrap; display: inline-flex; align-items: center;
+}
+.baja.chico { min-height: 44px; padding: 4px 14px; font-size: 0.9rem; }
+.baja.fuerte { background: var(--tinta); color: var(--hoja); }
+.baja[aria-busy="true"] { opacity: 0.6; }
+
+/* tablas */
+.tabla-scroll { overflow-x: auto; background: var(--hoja); border: 1px solid var(--linea); -webkit-overflow-scrolling: touch; }
+table { border-collapse: collapse; width: 100%; font-size: 0.92rem; }
+th, td { text-align: left; vertical-align: top; padding: 7px 10px; border-bottom: 1px solid var(--linea); }
+thead th { font-family: var(--display); font-weight: 600; font-size: 0.9rem; border-bottom: 1.5px solid var(--tinta); white-space: nowrap; }
+td.num { text-align: right; white-space: nowrap; }
+td.cod, th.cod { white-space: nowrap; }
+.matriz { font-size: 0.86rem; }   /* sin min-width: la tabla cabe en los 1048 px de la envoltura (Jon, 23-oct) */
+.matriz th.vert { vertical-align: bottom; padding: 6px 2px; width: 28px; }
+.matriz th.vert span { writing-mode: vertical-rl; transform: rotate(180deg); white-space: nowrap; }
+.matriz td, .matriz tbody th { vertical-align: middle; }
+.matriz td.x { text-align: center; font-weight: 600; color: var(--cota); padding: 7px 2px; }
+.matriz tbody th[scope="row"] { position: sticky; left: 0; background: var(--hoja); font-weight: 500; box-shadow: 1px 0 0 var(--linea); }
+.matriz td.ruta { font-size: 0.82rem; min-width: 8em; }
+.matriz thead th:not(.vert) { white-space: normal; }   /* «Cant. por unidad» en dos renglones */
+.nota { font-size: 0.86rem; color: var(--tinta-2); }
+
+.barras { display: grid; gap: 10px; background: var(--hoja); border: 1px solid var(--linea); padding: 12px; }
+.barra { display: grid; gap: 4px; }
+.barra-n { font-family: var(--mono); font-size: 0.8rem; color: var(--tinta-2); }
+.barra-l { display: flex; height: 46px; border: 1px solid var(--tinta); min-width: 0; }
+.trozo {
+  min-width: 0; overflow: hidden; background: var(--tubo); border-right: 1px solid var(--tinta);
+  display: grid; align-content: center; justify-items: center; font-size: 0.66rem; line-height: 1.15;
+  font-family: var(--mono); color: var(--tinta);
+}
+.trozo b { font-weight: 500; }
+.trozo i { font-style: normal; }
+.trozo.sobra { background: repeating-linear-gradient(45deg, var(--hoja) 0 5px, var(--linea) 5px 6px); border-right: 0; color: var(--tinta-2); }
+@media (max-width: 600px) { .trozo i { display: none; } .trozo.sobra i { display: inline; } }
+
+.listas { display: grid; gap: 20px; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+@media (max-width: 760px) { .listas { grid-template-columns: minmax(0, 1fr); } }
+.listas ol, .listas ul { margin: 6px 0 0; padding-left: 1.4em; display: grid; gap: 6px; }
+
+/* textos de cada hoja en el carrusel */
+.lamina-n { font-family: var(--mono); font-size: 0.76rem; color: var(--cota); grid-column: 1; }
+.lamina-t { font-family: var(--display); font-weight: 600; font-size: 1.02rem; line-height: 1.2; grid-column: 1; }
+.lamina-s { font-size: 0.84rem; color: var(--tinta-2); grid-column: 1; }
+
+/* descargas */
+.descargas { display: grid; gap: 20px; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: start; }
+@media (max-width: 760px) { .descargas { grid-template-columns: minmax(0, 1fr); } }
+.bloque-dl { background: var(--hoja); border: 1px solid var(--linea); padding: 14px; display: grid; gap: 12px; }
+.bloque-dl ul { list-style: none; margin: 0; padding: 0; display: grid; }
+.bloque-dl li {
+  display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 0 12px; padding: 8px 0; border-top: 1px solid var(--linea);
+  align-items: center;
+}
+.dl-n { font-size: 0.92rem; overflow-wrap: anywhere; }
+.dl-m { font-size: 0.78rem; color: var(--tinta-2); grid-column: 1; }
+.bloque-dl li .baja { grid-column: 2; grid-row: 1 / span 2; min-height: 44px; padding: 6px 14px; font-size: 0.9rem; }
+.aviso-dl { font-size: 0.88rem; color: var(--tinta-2); }
+.aviso-dl[data-tono="error"] { color: var(--cota); }
+
+
+/* hoja en grande */
+dialog.lupa {
+  width: 100vw; height: 100%; max-width: none; max-height: none; margin: 0; padding: 0; border: 0;
+  background: var(--papel); color: var(--tinta);
+}
+dialog.lupa::backdrop { background: rgba(0, 0, 0, 0.6); }
+.lupa-marco { display: grid; grid-template-rows: auto minmax(0, 1fr); height: 100%; padding-top: env(safe-area-inset-top, 0px); }
+.lupa-barra {
+  display: flex; flex-wrap: wrap; gap: 8px; align-items: center; background: var(--hoja); border-bottom: 1px solid var(--linea);
+  padding-left: max(12px, env(safe-area-inset-left, 0px)); padding-right: max(12px, env(safe-area-inset-right, 0px)); padding-block: 8px;
+}
+.lupa-titulo { flex: 1 1 200px; min-width: 0; font-family: var(--display); font-weight: 600; }
+.lupa-scroll { overflow: auto; -webkit-overflow-scrolling: touch; background: #fff; padding-bottom: env(safe-area-inset-bottom, 0px); }
+.lupa-scroll img { display: block; max-width: none; width: 100%; height: auto; }
+@media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
+/* ensamble paso a paso (v8) */
+.paso { background: var(--hoja); border: 1px solid var(--linea); padding: 14px; display: grid; gap: 12px; }
+.paso h3 { display: flex; gap: 10px; align-items: center; }
+.paso h4 { font-family: var(--display); font-weight: 600; font-size: 1.02rem; margin: 0; }
+.paso ol, .paso ul { margin: 0; padding-left: 1.3em; display: grid; gap: 6px; }
+.paso-n { flex: none; width: 32px; height: 32px; border-radius: 50%; background: var(--tinta); color: var(--hoja);
+  display: inline-grid; place-items: center; font-family: var(--mono); font-size: 0.95rem; }
+.paso-cuerpo { display: grid; gap: 14px; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: start; }
+.sub-pasos { display: grid; gap: 14px; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.sub-paso { display: grid; gap: 8px; align-content: start; border-top: 1px solid var(--linea); padding-top: 10px; }
+.dos-fotos { display: grid; gap: 12px; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.paso-foto { margin: 0; display: grid; gap: 4px; min-width: 0; }
+.paso-foto .car-img { border: 1px solid var(--linea); }
+.paso-foto img { display: block; width: 100%; height: auto; }
+.paso-foto figcaption { font-size: 0.86rem; color: var(--tinta-2); }
+.orden-tornillo { max-width: none; }
+.aviso-taller { border: 1.5px solid var(--cota); border-left-width: 6px; padding: 10px 12px; display: grid; gap: 6px; }
+.aviso-taller > b { color: var(--cota); font-family: var(--display); font-size: 1.05rem; }
+.aviso-taller ul { margin: 0; padding-left: 1.2em; }
+#ensamble { gap: 16px; }
+@media (max-width: 760px) { .paso-cuerpo, .sub-pasos { grid-template-columns: minmax(0, 1fr); } }
+/* animación de ensamble (Jon, 29-oct): visor propio, pasos 0 a 4, etiquetas que siguen a cada pieza */
+.anim-cuerpo { display: grid; gap: 16px; grid-template-columns: minmax(0, 1fr); align-items: start; }
+@media (min-width: 900px) { .anim-cuerpo { grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr); } }
+.anim-col { display: grid; gap: 6px; min-width: 0; }
+.visor.anim-visor canvas { aspect-ratio: 4 / 3; }
+@media (max-width: 600px) { .visor.anim-visor canvas { aspect-ratio: 1 / 1.2; max-height: 72vh; } }
+.anim-avance { height: 4px; background: var(--linea); }
+.anim-avance-b { height: 100%; width: 0; background: var(--cota); }
+.anim-panel { display: grid; gap: 12px; min-width: 0; align-content: start; }
+.anim-puntos { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+/* «Paso 0», «Paso 1»… y no solo el número (Jon, 29-oct: «que salga más claro, no 0 1, sino paso 0, paso 1»).
+   El activo va relleno de tinta y en negrita: se distingue de un vistazo. Si no caben en una fila, pasan a la otra */
+.anim-punto {
+  cursor: pointer; min-width: 44px; height: 44px; border-radius: 10px; border: 1.5px solid var(--tinta); background: var(--hoja);
+  color: var(--tinta); font-family: var(--display); font-weight: 500; font-size: 1rem; display: inline-flex;
+  align-items: center; justify-content: center; padding: 0 14px; white-space: nowrap;
+}
+.anim-punto[aria-current="step"] { background: var(--tinta); color: var(--hoja); font-weight: 600; box-shadow: 0 0 0 3px var(--hoja), 0 0 0 5px var(--tinta); }
+.anim-paso-n { flex: none; border-radius: 10px; background: var(--tinta); color: var(--hoja); padding: 3px 10px;
+  font-family: var(--display); font-weight: 600; font-size: 0.95rem; white-space: nowrap; }
+.anim-punto.hecho { border-color: var(--cota); color: var(--cota); }
+.anim-mando { display: grid; gap: 8px; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.anim-mando .boton { padding-inline: 8px; border-radius: 10px; white-space: nowrap; }
+.visor.anim-visor { border-radius: 12px; overflow: hidden; }
+.boton.fuerte { background: var(--tinta); color: var(--hoja); }
+.boton:disabled { opacity: 0.4; cursor: default; }
+.anim-textos { display: grid; gap: 10px; }
+.anim-texto { background: var(--hoja); border: 1px solid var(--linea); border-radius: 12px; padding: 12px 14px; display: grid; gap: 8px; }
+.anim-texto h3 { display: flex; gap: 10px; align-items: center; }
+/* el vidrio: translúcido, desenfoca y satura lo de atrás, borde claro fino y un brillo arriba */
+.anim-pantalla-btn, .anim-ayuda-btn, .anim-marco.en-pantalla .anim-panel,
+.anim-marco.en-pantalla .anim-panel .boton:not(.fuerte), .anim-marco.en-pantalla .anim-punto:not([aria-current]) {
+  background-color: var(--vidrio); background-image: linear-gradient(160deg, var(--vidrio-luz), transparent 55%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%); backdrop-filter: blur(16px) saturate(180%);
+  border: 1px solid var(--vidrio-borde); color: var(--tinta);
+  box-shadow: inset 0 1px 0 var(--vidrio-luz), 0 6px 18px var(--vidrio-sombra);
+}
+.eti-anim {
+  position: absolute; max-width: min(46%, 260px); border-radius: 8px; padding: 1px 6px; font-size: 0.76rem; line-height: 1.25;
+  background: var(--eti-fondo); border: 1px solid var(--eti-borde); color: var(--eti-texto);
+  -webkit-backdrop-filter: blur(6px) saturate(160%); backdrop-filter: blur(6px) saturate(160%);
+  text-shadow: 0 0 1px var(--halo), 0 0 2px var(--halo), 0 0 4px var(--halo), 0 0 7px var(--halo);
+}
+@media (min-width: 641px) { .eti-anim { white-space: nowrap; max-width: none; } }
+.anim-guia { font-size: 0.95rem; }
+.guias.apretada .eti-anim span { display: none; }
+/* pantalla completa (Jon, 29-oct: «poder ponerla en tamaño de toda la pantalla y poder ahí controlar los pasos»; después:
+   «el textico debe salir ahí de los pasos, debe salir en un costado»). El modelo ocupa toda la pantalla y el panel de
+   vidrio flota encima: a un costado si hay ancho (escritorio, celular acostado), abajo con el celular parado. La
+   cámara corre el centro del dibujo al espacio libre (setViewOffset en el JS). Con la API de pantalla completa o,
+   donde no existe (iPhone, o un visor que no la deja), con el contenedor fijo sobre toda la ventana */
+.anim-pantalla-btn {
+  position: absolute; top: 8px; right: 8px; z-index: 2; min-height: 44px; min-width: 44px; padding: 6px 12px;
+  display: inline-flex; gap: 6px; align-items: center; cursor: pointer; border-radius: 10px;
+  font-family: var(--display); font-weight: 500; font-size: 0.95rem;
+}
+.anim-texto-btn { display: none; border-radius: 10px; }
+.anim-marco.en-pantalla {
+  position: fixed; inset: 0; z-index: 60; background: var(--papel); display: flex; flex-direction: column;
+  padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px);
+  padding-left: env(safe-area-inset-left, 0px); padding-right: env(safe-area-inset-right, 0px);
+}
+.anim-marco.en-pantalla .anim-cuerpo { display: block; position: relative; flex: 1; min-height: 0; }
+.anim-marco.en-pantalla .anim-col { position: absolute; inset: 0; display: flex; flex-direction: column; gap: 0; }
+.anim-marco.en-pantalla .anim-visor { flex: 1; min-height: 0; border: 0; border-radius: 0; }
+.anim-marco.en-pantalla .anim-visor canvas { width: 100%; height: 100%; aspect-ratio: auto; max-height: none; }
+.anim-marco.en-pantalla .anim-pantalla-btn { top: 12px; right: auto; left: 12px; }
+.anim-marco.en-pantalla .anim-panel {
+  position: absolute; z-index: 3; display: flex; flex-direction: column; gap: 8px; border-radius: 14px; padding: 12px;
+  overflow: hidden;
+}
+.anim-marco.en-pantalla .anim-guia { display: none; }
+.anim-marco.en-pantalla .anim-textos { order: -2; flex: 1 1 auto; min-height: 0; overflow: auto; align-content: start; }
+.anim-marco.en-pantalla .anim-texto { padding: 0 2px; border: 0; background: none; gap: 6px; }
+.anim-marco.en-pantalla .anim-texto h3 { font-size: 1.05rem; }
+.anim-marco.en-pantalla .anim-texto-btn { display: inline-flex; order: -1; flex: none; align-self: flex-start; }
+.anim-marco.en-pantalla .anim-puntos, .anim-marco.en-pantalla .anim-mando { flex: none; }
+.anim-marco.en-pantalla .anim-punto.hecho { color: var(--tinta); border-color: var(--cota); }
+/* sobre el vidrio solo --tinta: los grises y el rojo no llegan a 4,5:1 si detrás queda negro */
+.anim-marco.en-pantalla .anim-panel :is(.cod, .nota, .anim-med, .anim-lista b, .anim-lista .cod) { color: var(--tinta); }
+.anim-marco.en-pantalla .anim-lista li { border-top-color: var(--vidrio-borde); }
+/* a un costado: escritorio, tableta o celular acostado */
+@media (min-width: 700px), (orientation: landscape) {
+  .anim-marco.en-pantalla .anim-panel { top: 12px; right: 12px; bottom: 12px; width: min(380px, 40vw); }
+}
+/* celular parado: flota abajo, sobre el modelo */
+@media (max-width: 699.98px) and (orientation: portrait) {
+  .anim-marco.en-pantalla .anim-panel { left: 8px; right: 8px; bottom: 10px; max-height: 58%; }
+}
+.anim-marco.plegado .anim-texto > :not(h3):not(.anim-linea) { display: none; }
+/* celular acostado (poca altura): el texto necesita el alto, así que los pasos van en una sola fila que se desplaza
+   de lado dentro de su barra, Repetir vuelve al medio y el botón de plegar sobra: el texto se desplaza solo */
+@media (orientation: landscape) and (max-height: 500px) {
+  .anim-marco.en-pantalla .anim-panel { gap: 6px; padding: 10px; }
+  .anim-marco.en-pantalla .anim-puntos { flex-wrap: nowrap; overflow-x: auto; padding: 4px; margin: -4px; scrollbar-width: thin; }
+  .anim-marco.en-pantalla .anim-punto { flex: none; }
+  .anim-marco.en-pantalla .anim-texto-btn { display: none; }
+}
+/* la esquina de los botones del visor: pantalla completa y «?» (la guía de gestos) */
+.anim-esquina { position: absolute; top: 8px; right: 8px; z-index: 2; display: flex; gap: 8px; }
+.anim-esquina .anim-pantalla-btn { position: static; }
+.anim-marco.en-pantalla .anim-esquina { top: 12px; right: auto; left: 12px; }
+.anim-ayuda-btn {
+  min-width: 44px; min-height: 44px; border-radius: 10px; cursor: pointer; font-family: var(--display); font-weight: 600;
+  font-size: 1.2rem; display: grid; place-items: center;
+}
+/* guía de gestos: la mano blanca semitransparente hace el gesto sobre el modelo, con su rastro punteado y una palabra
+   (Gira, Acerca, Mueve). Se salta tocando; «?» la repite. Con reduced-motion la mano queda quieta y solo cambia el
+   fotograma. La escena 3D es clara en los dos temas, así que va igual en claro y en oscuro */
+.anim-gestos { position: absolute; inset: 0; z-index: 6; cursor: pointer; background: rgba(14, 20, 26, 0.22);
+  display: grid; grid-template-rows: minmax(0, 1fr) auto auto; justify-items: center; padding: 56px 12px 16px; }
+.anim-gestos[hidden] { display: none; }
+.anim-gestos:focus { outline: none; }
+.anim-gestos:focus-visible { outline: 3px solid #ffffff; outline-offset: -6px; }
+.anim-gestos-defs { position: absolute; }
+.anim-gestos-escena { position: relative; width: min(390px, 100%); align-self: center; }
+.anim-gestos .g { display: none; }
+.anim-gestos[data-modo="tactil"][data-g="1"] .g1[data-tactil], .anim-gestos[data-modo="tactil"][data-g="2"] .g2[data-tactil],
+.anim-gestos[data-modo="tactil"][data-g="3"] .g3[data-tactil], .anim-gestos[data-modo="mouse"][data-g="1"] .g1[data-mouse],
+.anim-gestos[data-modo="mouse"][data-g="2"] .g2[data-mouse], .anim-gestos[data-modo="mouse"][data-g="3"] .g3[data-mouse] { display: grid; }
+.anim-gestos svg { display: block; width: 100%; height: auto; overflow: visible; }
+.anim-gestos .mano { filter: drop-shadow(0 8px 14px rgba(10, 16, 22, 0.32)); }
+.anim-gestos .rastro { fill: none; stroke: rgba(255, 255, 255, 0.95); stroke-width: 5; stroke-linecap: round; stroke-dasharray: 2 11;
+  filter: drop-shadow(0 0 2px rgba(10, 16, 22, 0.6)); }
+.anim-gestos .punta { fill: rgba(255, 255, 255, 0.95); filter: drop-shadow(0 0 2px rgba(10, 16, 22, 0.6)); }
+.anim-gestos .toque { fill: rgba(255, 255, 255, 0.35); stroke: rgba(255, 255, 255, 0.9); stroke-width: 2; }
+.anim-gestos .clic { fill: rgba(22, 33, 43, 0.55); }
+.anim-gestos .rueda { fill: rgba(22, 33, 43, 0.7); }
+.anim-gestos .palabra { margin: -10px 0 0; text-align: center; color: #fff; font-family: var(--display); font-size: 2.5rem; font-weight: 600;
+  line-height: 1.1; text-shadow: 0 2px 10px rgba(10, 16, 22, 0.75), 0 0 2px rgba(10, 16, 22, 0.9); }
+.anim-gestos .sub { margin: 4px auto 0; text-align: center; color: #fff; font-size: 1.1rem; max-width: none;
+  text-shadow: 0 1px 6px rgba(10, 16, 22, 0.9), 0 0 2px rgba(10, 16, 22, 0.9); }
+.anim-gestos-puntos { display: flex; gap: 8px; margin: 12px 0 6px; }
+.anim-gestos-puntos i { width: 8px; height: 8px; border-radius: 4px; background: rgba(255, 255, 255, 0.55); box-shadow: 0 0 3px rgba(10, 16, 22, 0.6); transition: width 0.3s; }
+.anim-gestos[data-g="1"] .anim-gestos-puntos i:nth-child(1), .anim-gestos[data-g="2"] .anim-gestos-puntos i:nth-child(2),
+.anim-gestos[data-g="3"] .anim-gestos-puntos i:nth-child(3) { width: 22px; background: #fff; }
+.anim-gestos[data-modo="tactil"] [data-pie-mouse], .anim-gestos[data-modo="mouse"] [data-pie-tactil] { display: none; }
+.anim-gestos-pie { margin: 0; color: #fff; font-size: 1rem; text-shadow: 0 1px 6px rgba(10, 16, 22, 0.9); }
+.solo-armado .anim-gestos { padding-bottom: calc(var(--alto-barra, 76px) + 22px); }
+/* dentro de la FF, sin pantalla completa, el visor es chico: la mano y la palabra un poco menores */
+.anim-marco:not(.en-pantalla) .anim-gestos { padding-top: 48px; }
+.anim-marco:not(.en-pantalla) .anim-gestos-escena { width: min(290px, 100%); }
+.anim-marco:not(.en-pantalla) .anim-gestos .palabra { font-size: 2rem; }
+.anim-marco:not(.en-pantalla) .anim-gestos .sub { font-size: 1rem; }
+/* pantalla baja (celular acostado): la mano a la izquierda y la palabra a la derecha, para que quepa encima de la barra */
+@media (max-height: 500px) {
+  .anim-gestos { padding-top: 10px; }
+  .anim-gestos-escena { width: min(560px, 100%); }
+  .anim-gestos .g { grid-template-columns: 250px minmax(0, 1fr); align-items: center; column-gap: 8px; }
+  .anim-gestos .g svg { grid-row: 1 / span 2; width: 250px; }
+  .anim-gestos .palabra { margin: 0; text-align: left; align-self: end; font-size: 2.1rem; }
+  .anim-gestos .sub { margin: 2px 0 0; text-align: left; align-self: start; }
+  .anim-gestos-puntos { margin: 4px 0; }
+  .solo-armado .anim-gestos { padding-bottom: calc(var(--alto-barra, 76px) + 14px); }
+}
+.anim-marco.con-guia .guias { visibility: hidden; }
+@media (prefers-reduced-motion: no-preference) {
+  .anim-gestos .m-arco { animation: gesto-arco 1.8s ease-in-out infinite; }
+  .anim-gestos .m-recta { animation: gesto-recta 1.8s ease-in-out infinite; }
+  .anim-gestos .m-abre { animation: gesto-abre 1.8s ease-in-out infinite; transform-origin: 170px 140px; transform-box: view-box; }
+  .anim-gestos .m-abre .t-a { animation: gesto-ta 1.8s ease-in-out infinite; }
+  .anim-gestos .m-abre .t-b { animation: gesto-tb 1.8s ease-in-out infinite; }
+  .anim-gestos .rueda { animation: gesto-rueda 0.9s ease-in-out infinite; }
+}
+@keyframes gesto-arco { 0%, 8% { transform: translate(0, 0); } 50% { transform: translate(85px, -42px); } 92%, 100% { transform: translate(170px, 0); } }
+@keyframes gesto-recta { 0%, 8% { transform: translateX(0); } 92%, 100% { transform: translateX(120px); } }
+@keyframes gesto-abre { 0%, 8% { transform: scale(0.92); } 92%, 100% { transform: scale(1.06); } }
+@keyframes gesto-ta { 0%, 8% { transform: translate(0, 8px); } 92%, 100% { transform: translate(0, -14px); } }
+@keyframes gesto-tb { 0%, 8% { transform: translate(8px, -6px); } 92%, 100% { transform: translate(-12px, 10px); } }
+@keyframes gesto-rueda { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
+.solo-lector { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.anim-barra, .anim-cerrar { display: none; }
+/* el sitio de armado (solo la animación, para quien arma). Jon, 29-oct: «que de una vez abra pantalla completa…
+   el paso 1, paso 2 me ocupa demasiado espacio… que quede un menú abajo muy resumido, solo con el texto, para que se
+   pueda apreciar el diseño». Abre ya con el modelo en toda la ventana (la pantalla completa nativa necesita un toque:
+   queda el botón chico de arriba). Abajo, una barra de vidrio casi transparente: ‹ «Paso 1 · …» 1/4 ›; la frase y el
+   detalle se abren tocándola, en un panel que se cierra */
+.solo-armado .envoltura, .solo-armado #animacion { padding: 0; }
+.solo-armado #animacion > .cabeza-sec, .solo-armado #animacion > p { display: none; }
+.solo-armado .anim-pantalla-txt { display: none; }
+.solo-armado .anim-pantalla-btn { padding: 0; width: 44px; justify-content: center; font-size: 1.1rem; }
+.solo-armado .anim-marco.en-pantalla .anim-panel { display: none; }
+.solo-armado .anim-marco.en-pantalla.detalle .anim-panel { display: flex; }
+.solo-armado .anim-panel :is(.anim-guia, .anim-puntos, .anim-mando, .anim-texto-btn) { display: none !important; }
+.solo-armado .anim-cerrar { display: inline-flex; align-self: flex-end; order: -3; flex: none; min-height: 44px; border-radius: 10px; }
+.solo-armado .anim-texto h3 { font-size: 1.35rem; align-items: baseline; flex-wrap: wrap; row-gap: 6px; }
+.solo-armado .anim-linea { font-size: 1.15rem; line-height: 1.4; }
+.solo-armado .anim-avance { position: absolute; left: 0; right: 0; bottom: 0; height: 3px; }
+/* la barra: el texto del paso en una línea y el 1/4; las dos flechas son lo más visible (Jon, 29-oct: «hay que hacer
+   más grandes las flechas … debe ser mucho más visible eso»; después «un poquito más pequeñas»): 48 px, vidrio casi opaco o tinta sólida, trazo grueso.
+   Con el celular parado el texto va arriba y las flechas abajo, cada una de medio ancho */
+.solo-armado .anim-barra {
+  display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 8px;
+  position: absolute; z-index: 4; left: 50%; transform: translateX(-50%);
+  bottom: max(10px, env(safe-area-inset-bottom, 0px)); width: min(620px, calc(100% - 16px));
+  padding: 6px; border-radius: 18px; color: var(--eti-texto);
+  background: var(--barra-fondo); border: 1px solid var(--eti-borde);
+  -webkit-backdrop-filter: blur(14px) saturate(170%); backdrop-filter: blur(14px) saturate(170%);
+}
+.solo-armado .anim-barra button { border: 0; cursor: pointer; padding: 0; font: inherit; }
+.solo-armado .anim-b-flecha {
+  width: 56px; height: 48px; border-radius: 12px; display: grid; place-items: center;
+  background: rgba(255, 255, 255, 0.88); color: #16212b; border: 1.5px solid rgba(22, 33, 43, 0.35) !important;
+  box-shadow: 0 4px 14px rgba(16, 24, 32, 0.22);
+}
+.solo-armado .anim-b-flecha svg { width: 24px; height: 24px; }
+.solo-armado .anim-b-flecha.fuerte { background: #16212b; color: #ffffff; border-color: #16212b !important; }
+.solo-armado .anim-b-flecha:disabled { opacity: 0.35; cursor: default; box-shadow: none; }
+.solo-armado .anim-b-info {
+  min-width: 0; min-height: 48px; display: flex; align-items: center; justify-content: center; gap: 8px;
+  background: none; color: inherit; font-family: var(--display); font-weight: 600; font-size: 1.05rem; border-radius: 12px;
+  text-shadow: 0 0 1px var(--halo), 0 0 3px var(--halo), 0 0 6px var(--halo);
+}
+.solo-armado .anim-b-txt { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.solo-armado .anim-b-n { flex: none; font-family: var(--mono); font-size: 0.85rem; font-weight: 500; }
+.solo-armado .anim-b-i { flex: none; font-size: 1.05rem; }
+@media (max-width: 699.98px) and (orientation: portrait) {
+  .solo-armado .anim-barra { grid-template-columns: 1fr 1fr; gap: 6px 8px; }
+  .solo-armado .anim-b-info { grid-column: 1 / -1; grid-row: 1; min-height: 44px; }
+  /* el título entero, en dos líneas si hace falta: «Verifica que estén todas las piezas» no cabe en una */
+  .solo-armado .anim-b-txt { white-space: normal; text-align: center; line-height: 1.2;
+    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+  .solo-armado .anim-b-flecha { width: min(100%, 132px); grid-row: 2; justify-self: center; }
+}
+/* el panel del detalle queda encima de la barra */
+.solo-armado .anim-marco.en-pantalla .anim-panel { bottom: calc(var(--alto-barra, 76px) + 18px); }
+@media (max-width: 699.98px) and (orientation: portrait) {
+  .solo-armado .anim-marco.en-pantalla .anim-panel { max-height: 58%; }
+}
+.anim-linea { font-weight: 550; font-size: 1rem; }
+
+.anim-lista { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; font-size: 0.9rem; }
+.anim-lista li { display: grid; grid-template-columns: 4.2em minmax(0, 1fr); gap: 0 8px; padding: 6px 0; border-top: 1px solid var(--linea); }
+.anim-lista li > b { grid-row: 1 / span 3; color: var(--cota); text-align: right; font-weight: 500; }
+.anim-lista li > span { grid-column: 2; overflow-wrap: anywhere; }
+.anim-lista .anim-med { color: var(--tinta-2); font-size: 0.86rem; }
+.anim-lista .cod { color: var(--tinta-2); }
+.eti-anim b { font-family: var(--mono); color: inherit; margin-right: 4px; font-weight: 600; }
+.eti-anim .m { font-family: var(--mono); color: var(--eti-texto); font-size: 0.7rem; margin-left: 5px; }
+@media (max-width: 640px) { .eti-anim { font-size: 0.72rem; padding: 1px 5px; } .eti-anim .m { display: none; } }
+</style>
+</head>
+<body class="solo-armado">
+<main class="envoltura">
+<h1 class="solo-lector">Armado silla Versus V40</h1>
+
+<style>
+/* la lista de partes del paso 0 (propia de la V40): renglones que llevan a su parada del recorrido */
+.anim-lista-partes li { padding: 0; }
+.anim-lista-btn { all: unset; box-sizing: border-box; display: flex; align-items: baseline; gap: 10px; width: 100%; min-height: 44px;
+  padding: 8px 10px; border-radius: 10px; cursor: pointer; color: inherit; }
+.anim-lista-btn .cod { min-width: 1.2em; }
+.anim-lista-btn .num { margin-left: auto; }
+.anim-lista-btn .nota { font-size: 0.8rem; }
+.anim-lista-btn:hover { background: color-mix(in srgb, currentColor 7%, transparent); }
+.anim-lista-btn:focus-visible { outline: 2px solid currentColor; outline-offset: -2px; }
+/* el logo de Versus: en las tarjetas y, discreto, arriba a la derecha del visor */
+.v40-logo { height: 60px; margin: 0 0 14px; }
+.v40-logo svg, .v40-marca svg { height: 100%; width: auto; display: block; }
+.v40-marca { position: absolute; top: 20px; right: 20px; height: 18px; opacity: 0.6; pointer-events: none; z-index: 2; }
+/* las tarjetas de bienvenida y del final: oscuras, letra blanca, acento celeste */
+.v40-tarjeta { position: absolute; inset: 0; z-index: 9; display: grid; place-items: center; padding: 16px 16px calc(var(--alto-barra, 76px) + 24px);
+  background: rgba(5, 6, 8, 0.55); }
+.v40-tarjeta[hidden] { display: none; }
+.v40-caja { width: min(440px, 100%); background: #0b0f17; color: #ffffff; border: 1px solid rgba(92, 200, 255, 0.55); border-radius: 16px;
+  padding: 22px 22px 18px; box-shadow: 0 0 0 1px rgba(92, 200, 255, 0.12), 0 18px 50px rgba(0, 0, 0, 0.6); font-family: Inter, var(--texto), system-ui, sans-serif; }
+.v40-caja h2 { margin: 0 0 8px; font-size: 1.5rem; font-weight: 600; color: #ffffff; letter-spacing: -0.01em; }
+.v40-caja h2::after { content: ""; display: block; width: 44px; height: 3px; margin-top: 10px; border-radius: 2px; background: #5cc8ff; }
+.v40-caja p { margin: 0 0 18px; font-size: 1rem; line-height: 1.5; color: #e6edf5; }
+.v40-botones { display: flex; flex-wrap: wrap; gap: 10px; }
+.v40-boton { min-height: 44px; min-width: 44px; padding: 0 18px; border-radius: 10px; border: 1px solid #5cc8ff; background: transparent; color: #ffffff;
+  font: inherit; font-size: 1rem; cursor: pointer; }
+.v40-boton.v40-fuerte { background: #5cc8ff; color: #04131d; font-weight: 550; }
+.v40-boton:focus-visible, .v40-redes a:focus-visible { outline: 3px solid #ffffff; outline-offset: 2px; }
+.v40-caja p.v40-chico { font-size: 0.8125rem; color: #b9c6d4; margin: -8px 0 16px; }
+.v40-wa { display: inline-flex; align-items: center; gap: 8px; text-decoration: none; margin: -4px 0 12px; border-color: #25d366; }
+.v40-redes a { color: #5cc8ff; display: inline-flex; align-items: center; min-height: 44px; }
+/* el visor es oscuro en los dos temas: etiquetas claras sobre vidrio oscuro */
+.eti-anim { background: rgba(11, 15, 23, 0.88) !important; color: #ffffff !important; border: 1px solid rgba(150, 160, 175, 0.6) !important; text-shadow: none !important; backdrop-filter: none !important; -webkit-backdrop-filter: none !important; }
+.eti-anim b { color: #ffffff !important; }
+.eti-anim .m { color: #c9d2dc !important; }
+.solo-armado .anim-barra { background: rgba(14, 17, 22, 0.86) !important; color: #eef2f6 !important; border-color: rgba(255, 255, 255, 0.16) !important; }
+.solo-armado .anim-b-info, .solo-armado .anim-b-txt, .solo-armado .anim-b-n, .solo-armado .anim-b-i { color: #eef2f6 !important; }
+.solo-armado .anim-b-info { background: transparent !important; }
+/* a lo ancho la lista entra entera, en dos columnas; en el celular se desplaza y lo dice */
+@media (min-width: 700px), (orientation: landscape) {
+  .anim-lista-partes { grid-template-columns: 1fr 1fr; column-gap: 6px; }
+  .anim-lista-partes .anim-lista-btn { min-height: 44px; padding: 4px 8px; font-size: 0.85rem; }
+  .anim-lista-sigue { display: none; }
+}
+@media (max-width: 699.98px) and (orientation: portrait) {
+  .anim-marco.en-pantalla .anim-textos { -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - 36px), transparent); mask-image: linear-gradient(to bottom, #000 calc(100% - 36px), transparent); padding-bottom: 28px; }
+}
+.anim-lista-btn[aria-current="true"] { background: color-mix(in srgb, currentColor 13%, transparent); font-weight: 550; }
+</style>
+<section id="animacion" aria-labelledby="t-anim">
+  <div class="cabeza-sec"><span class="eti">ANIMACIÓN DE ENSAMBLE · PASOS 0 A 6</span><h2 id="t-anim">Cómo se arma la silla Versus V40</h2></div>
+  <p>Los 6 pasos del manual de armado, y antes el paso 0 para identificar las piezas. Gira el modelo con el dedo o el mouse mientras se mueve; la pieza que se está poniendo se ilumina y lleva su letra del manual.</p>
+  <div class="anim-marco" id="anim-marco" role="region" aria-label="Animación de ensamble">
+  <div class="anim-cuerpo">
+    <div class="anim-col">
+      <div class="visor anim-visor">
+        <div class="anim-esquina">
+          <button type="button" class="anim-pantalla-btn" id="anim-pantalla" aria-pressed="false"><span aria-hidden="true">⛶</span> <span class="anim-pantalla-txt">Pantalla completa</span></button>
+          <button type="button" class="anim-ayuda-btn" id="anim-ayuda-abrir" aria-label="Ver cómo se mueve el modelo" aria-controls="anim-gestos">?</button>
+        </div>
+        <div class="anim-gestos" id="anim-gestos" role="dialog" aria-label="Cómo se usa: toca la pantalla, o pulsa Enter, para empezar" tabindex="-1" hidden>
+          <svg width="0" height="0" class="anim-gestos-defs" aria-hidden="true"><defs><g id="mano-indice"> <path class="silueta" fill="rgba(255,255,255,0.88)" stroke="rgba(30,40,50,0.30)" stroke-width="1.4" stroke-linejoin="round" d="M-12 14 C-12 -3 12 -3 12 14 L12 64 C14 56 33 54 36 64 C39 57 54 58 56 68 C59 63 71 64 72 76 C78 98 76 130 66 150 C57 166 12 170 -4 155 C-15 145 -24 130 -35 119 C-47 107 -50 95 -42 89 C-34 83 -25 91 -18 98 C-14 92 -12 84 -12 76 Z"/> <path class="pliegue" fill="none" stroke="rgba(30,40,50,0.24)" stroke-width="1.6" stroke-linecap="round" d="M-9 38 C-3 40 3 40 9 38 M36 64 C37 72 35 78 31 82 M56 68 C57 76 55 81 51 85 M14 70 C16 80 15 88 10 92 M-18 98 C-10 104 -4 110 0 118"/> </g> <g id="mano-pinza"> <path class="silueta" fill="rgba(255,255,255,0.88)" stroke="rgba(30,40,50,0.30)" stroke-width="1.4" stroke-linejoin="round" d="M-12 14 C-12 -3 12 -3 12 14 L12 64 C14 56 33 54 36 64 C39 57 54 58 56 68 C59 63 71 64 72 76 C78 98 76 130 66 150 C57 166 12 170 -4 155 C-16 146 -30 124 -46 104 C-56 92 -66 84 -63 75 C-60 67 -49 70 -40 79 C-30 88 -18 93 -12 84 Z"/> <path class="pliegue" fill="none" stroke="rgba(30,40,50,0.24)" stroke-width="1.6" stroke-linecap="round" d="M-9 38 C-3 40 3 40 9 38 M36 64 C37 72 35 78 31 82 M56 68 C57 76 55 81 51 85 M14 70 C16 80 15 88 10 92 M-40 79 C-32 92 -22 100 -12 104"/> </g> <g id="mano-dos"> <path class="silueta" fill="rgba(255,255,255,0.88)" stroke="rgba(30,40,50,0.30)" stroke-width="1.4" stroke-linejoin="round" d="M-12 18 C-12 1 11 1 11 16 C11 0 36 -2 36 14 L36 66 C40 60 54 60 56 70 C59 65 71 66 72 78 C78 100 76 132 66 152 C57 168 12 172 -4 157 C-15 147 -24 132 -35 121 C-47 109 -50 97 -42 91 C-34 85 -25 93 -18 100 C-14 94 -12 86 -12 78 Z"/> <path class="pliegue" fill="none" stroke="rgba(30,40,50,0.24)" stroke-width="1.6" stroke-linecap="round" d="M11 18 L11 70 M-9 42 C-3 44 3 44 8 42 M14 40 C20 42 27 42 33 40 M56 70 C57 78 55 83 51 87 M-18 100 C-10 106 -4 112 0 120"/> </g><g id="raton"><rect x="-17" y="-26" width="34" height="52" rx="17" fill="rgba(255,255,255,0.9)" stroke="rgba(30,40,50,0.35)" stroke-width="1.6"/><path d="M0 -26v18M-17 -8h34" fill="none" stroke="rgba(30,40,50,0.35)" stroke-width="1.6"/></g></defs></svg>
+          <div class="anim-gestos-escena">
+            <div class="g g1" data-tactil><svg viewBox="0 0 390 330" aria-hidden="true">
+              <path class="rastro" d="M110 150 Q195 70 280 150"/><path class="punta" d="M292 160 L270 156 L284 140 Z"/>
+              <g class="mueve m-arco"><circle class="toque" cx="110" cy="150" r="20"/><use class="mano" href="#mano-indice" transform="translate(110 150) rotate(-12)"/></g>
+            </svg><p class="palabra">Gira</p><p class="sub">Apoya un dedo y arrastra</p></div>
+            <div class="g g2" data-tactil><svg viewBox="0 0 390 330" aria-hidden="true">
+              <path class="rastro" d="M196 82 L196 40"/><path class="punta" d="M196 26 L206 46 L186 46 Z"/>
+              <path class="rastro" d="M122 186 L92 210"/><path class="punta" d="M78 221 L90 201 L102 216 Z"/>
+              <g class="mueve m-abre"><circle class="toque t-a" cx="196" cy="100" r="18"/><circle class="toque t-b" cx="133" cy="175" r="18"/>
+              <use class="mano" href="#mano-pinza" transform="translate(196 100)"/></g>
+            </svg><p class="palabra">Acerca</p><p class="sub">Con dos dedos, pellizca</p></div>
+            <div class="g g3" data-tactil><svg viewBox="0 0 390 330" aria-hidden="true">
+              <path class="rastro" d="M150 110 L280 110"/><path class="punta" d="M296 110 L276 99 L276 121 Z"/>
+              <g class="mueve m-recta"><circle class="toque" cx="140" cy="110" r="16"/><circle class="toque" cx="163" cy="112" r="16"/>
+              <use class="mano" href="#mano-indice" transform="translate(140 110) rotate(-6)"/></g>
+            </svg><p class="palabra">Avanza</p><p class="sub">Toca la flecha › para ver la pieza siguiente</p></div>
+            <div class="g g1" data-mouse><svg viewBox="0 0 390 330" aria-hidden="true">
+              <path class="rastro" d="M110 170 Q195 90 280 170"/><path class="punta" d="M292 180 L270 176 L284 160 Z"/>
+              <g class="mueve m-arco"><use href="#raton" transform="translate(110 170)"/><path class="clic" d="M93 144 h17 v18 h-17 z"/></g>
+            </svg><p class="palabra">Gira</p><p class="sub">Arrastra con el mouse</p></div>
+            <div class="g g2" data-mouse><svg viewBox="0 0 390 330" aria-hidden="true">
+              <use href="#raton" transform="translate(195 165) scale(1.5)"/><rect class="rueda" x="191" y="134" width="8" height="16" rx="4"/>
+              <path class="rastro" d="M195 96 L195 66"/><path class="punta" d="M195 52 L205 72 L185 72 Z"/>
+            </svg><p class="palabra">Acerca</p><p class="sub">La rueda acerca hacia el cursor</p></div>
+            <div class="g g3" data-mouse><svg viewBox="0 0 390 330" aria-hidden="true">
+              <path class="rastro" d="M150 170 L280 170"/><path class="punta" d="M296 170 L276 159 L276 181 Z"/>
+              <g class="mueve m-recta"><use href="#raton" transform="translate(130 170)"/><path class="clic" d="M130 144 h17 v18 h-17 z"/></g>
+            </svg><p class="palabra">Avanza</p><p class="sub">Haz clic en la flecha › o usa la tecla →</p></div>
+          </div>
+          <div class="anim-gestos-puntos" aria-hidden="true"><i></i><i></i><i></i></div>
+          <p class="anim-gestos-pie"><span data-pie-tactil>Toca la pantalla para empezar</span><span data-pie-mouse>Haz clic para empezar</span></p>
+        </div>
+        <div class="v40-marca" aria-hidden="true"><svg role="img" aria-label="Versus" focusable="false" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 412 72" xml:space="preserve"><g>	<polygon fill="#FFFFFF" points="26,1.5 82,1.5 66.7,28.6 61,19.7 66.1,10.7 42.9,10.7 60.8,39.3 43.3,70.5 1.2,1.5 12.5,1.5   43,50.9 49.7,39.3  "></polygon>	<g>		<path fill="#FFFFFF" d="M162.6,13.6l-20.9,42.6c-0.3,0.7-0.8,1.2-1.5,1.6c-0.6,0.4-1.4,0.6-2.1,0.6c-0.8,0-1.5-0.2-2.1-0.6   c-0.6-0.4-1.1-0.9-1.5-1.6l-20.9-42.6h9l15.5,31.8l15.6-31.8H162.6z"></path>		<path fill="#FFFFFF" d="M207,57.8h-28.9c-1.1,0-2.3-0.2-3.6-0.6c-1.3-0.4-2.5-1-3.6-1.9c-1.1-0.9-2.1-2.1-2.8-3.5   c-0.7-1.4-1.1-3.2-1.1-5.2V17.7c0-0.6,0.1-1.1,0.3-1.6c0.2-0.5,0.5-0.9,0.8-1.3c0.4-0.4,0.8-0.7,1.3-0.9c0.5-0.2,1-0.3,1.6-0.3h36   v8h-32.1v24.9c0,1,0.3,1.8,0.8,2.4c0.6,0.6,1.4,0.8,2.4,0.8H207V57.8z M203.4,39.7h-25.3v-8.1h25.3V39.7z"></path>		<path fill="#FFFFFF" d="M258.8,28.5c0,1.8-0.2,3.5-0.7,4.9c-0.5,1.4-1.1,2.7-1.8,3.8c-0.8,1.1-1.7,2-2.7,2.8   c-1,0.8-2.1,1.4-3.2,1.9c-1.1,0.5-2.2,0.9-3.3,1.1c-1.1,0.2-2.2,0.3-3.2,0.3l16.7,14.4h-12.4l-16.7-14.4h-5.8v-8H244   c1-0.1,1.9-0.3,2.8-0.6c0.8-0.3,1.5-0.8,2.2-1.4c0.6-0.6,1.1-1.3,1.4-2.1c0.3-0.8,0.5-1.7,0.5-2.8v-5c0-0.5-0.1-0.8-0.2-1   c-0.1-0.2-0.3-0.4-0.4-0.5c-0.2-0.1-0.4-0.2-0.6-0.2c-0.2,0-0.4,0-0.5,0h-26.4v36.1h-8V17.7c0-0.6,0.1-1.1,0.3-1.6   c0.2-0.5,0.5-0.9,0.8-1.3c0.4-0.4,0.8-0.7,1.3-0.9c0.5-0.2,1-0.3,1.6-0.3h30.4c1.8,0,3.3,0.3,4.5,1c1.2,0.6,2.2,1.5,3,2.4   c0.8,1,1.3,2,1.7,3.2c0.3,1.1,0.5,2.2,0.5,3.2V28.5z"></path>		<path fill="#FFFFFF" d="M309.2,44.8c0,1.6-0.2,3-0.6,4.3c-0.4,1.3-0.9,2.4-1.6,3.3c-0.7,1-1.4,1.8-2.3,2.5   c-0.9,0.7-1.8,1.2-2.7,1.7c-0.9,0.4-1.9,0.7-2.9,1c-1,0.2-1.9,0.3-2.8,0.3h-30.9v-8h30.9c1.5,0,2.7-0.5,3.6-1.4   c0.9-0.9,1.3-2.1,1.3-3.6c0-0.7-0.1-1.4-0.3-2c-0.2-0.6-0.5-1.1-1-1.6c-0.4-0.5-0.9-0.8-1.5-1c-0.6-0.2-1.3-0.4-2-0.4H278   c-1.3,0-2.7-0.2-4.2-0.7c-1.5-0.5-2.9-1.2-4.2-2.2c-1.3-1-2.3-2.4-3.2-4c-0.9-1.7-1.3-3.7-1.3-6.1s0.4-4.4,1.3-6.1   c0.9-1.7,1.9-3,3.2-4c1.3-1,2.7-1.8,4.2-2.2c1.5-0.5,2.9-0.7,4.2-0.7h27.2v8H278c-1.5,0-2.7,0.5-3.6,1.4c-0.9,0.9-1.3,2.1-1.3,3.7   c0,1.5,0.4,2.8,1.3,3.6c0.9,0.9,2,1.3,3.6,1.3h18.4h0.1c0.9,0,1.8,0.1,2.7,0.4c1,0.2,1.9,0.5,2.9,1c1,0.5,1.9,1,2.7,1.7   c0.9,0.7,1.6,1.5,2.3,2.5c0.7,1,1.2,2.1,1.6,3.3C309,41.8,309.2,43.2,309.2,44.8z"></path>		<path fill="#FFFFFF" d="M359.1,53.7c0,0.6-0.1,1.1-0.3,1.6c-0.2,0.5-0.5,0.9-0.9,1.3c-0.4,0.4-0.8,0.6-1.3,0.8   c-0.5,0.2-1,0.3-1.6,0.3h-18c-1.7,0-3.4-0.2-5.2-0.6c-1.7-0.4-3.4-0.9-5.1-1.7s-3.2-1.7-4.6-2.9c-1.4-1.2-2.7-2.6-3.8-4.2   c-1.1-1.6-1.9-3.5-2.5-5.6c-0.6-2.1-0.9-4.4-0.9-7V13.6h8v22.1c0,2.3,0.3,4.2,0.9,5.7c0.6,1.6,1.4,2.9,2.4,3.9c1,1,2,1.9,3.2,2.5   c1.1,0.6,2.2,1,3.3,1.3c1,0.3,1.9,0.5,2.7,0.5c0.8,0.1,1.3,0.1,1.6,0.1h14.1V13.6h8V53.7z"></path>		<path fill="#FFFFFF" d="M410.8,44.8c0,1.6-0.2,3-0.6,4.3c-0.4,1.3-0.9,2.4-1.6,3.3c-0.7,1-1.4,1.8-2.3,2.5   c-0.9,0.7-1.8,1.2-2.7,1.7c-0.9,0.4-1.9,0.7-2.9,1c-1,0.2-1.9,0.3-2.8,0.3h-30.9v-8h30.9c1.5,0,2.7-0.5,3.6-1.4   c0.9-0.9,1.3-2.1,1.3-3.6c0-0.7-0.1-1.4-0.3-2c-0.2-0.6-0.5-1.1-1-1.6c-0.4-0.5-0.9-0.8-1.5-1c-0.6-0.2-1.3-0.4-2-0.4h-18.4   c-1.3,0-2.7-0.2-4.2-0.7c-1.5-0.5-2.9-1.2-4.2-2.2c-1.3-1-2.3-2.4-3.2-4c-0.9-1.7-1.3-3.7-1.3-6.1s0.4-4.4,1.3-6.1   c0.9-1.7,1.9-3,3.2-4c1.3-1,2.7-1.8,4.2-2.2c1.5-0.5,2.9-0.7,4.2-0.7h27.2v8h-27.2c-1.5,0-2.7,0.5-3.6,1.4   c-0.9,0.9-1.3,2.1-1.3,3.7c0,1.5,0.4,2.8,1.3,3.6c0.9,0.9,2,1.3,3.6,1.3h18.4h0.1c0.9,0,1.8,0.1,2.7,0.4c1,0.2,1.9,0.5,2.9,1   c1,0.5,1.9,1,2.7,1.7c0.9,0.7,1.6,1.5,2.3,2.5c0.7,1,1.2,2.1,1.6,3.3C410.6,41.8,410.8,43.2,410.8,44.8z"></path>	</g></g></svg></div>
+        <div class="v40-tarjeta" id="v40-hola" role="dialog" aria-modal="true" aria-labelledby="v40-hola-t" aria-describedby="v40-hola-d" hidden>
+          <div class="v40-caja"><div class="v40-logo"><svg role="img" aria-label="Versus" focusable="false" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 268 196" xml:space="preserve"><g>	<polygon fill="#FFFFFF" points="94.6,1 213.7,1 181.3,58.7 169.2,39.8 180,20.7 130.6,20.7 168.7,81.5 131.6,147.8 42,1 65.9,1   130.9,106 145.1,81.3  "></polygon>	<g>		<path fill="#FFFFFF" d="M45,155l-18.7,38c-0.3,0.6-0.7,1.1-1.3,1.4c-0.6,0.4-1.2,0.5-1.9,0.5c-0.7,0-1.3-0.2-1.9-0.5   c-0.6-0.4-1-0.8-1.3-1.4L1.3,155h8l13.9,28.4L37,155H45z"></path>		<path fill="#FFFFFF" d="M84.7,194.4H58.9c-1,0-2.1-0.2-3.2-0.5c-1.2-0.3-2.3-0.9-3.3-1.7c-1-0.8-1.8-1.8-2.5-3.1   c-0.7-1.3-1-2.8-1-4.7v-25.8c0-0.5,0.1-1,0.3-1.4c0.2-0.4,0.4-0.8,0.8-1.2c0.3-0.3,0.7-0.6,1.1-0.8c0.4-0.2,0.9-0.3,1.4-0.3h32.2   v7.1H56v22.2c0,0.9,0.2,1.6,0.7,2.1c0.5,0.5,1.2,0.7,2.2,0.7h25.7V194.4z M81.5,178.3H58.9v-7.2h22.6V178.3z"></path>		<path fill="#FFFFFF" d="M130.9,168.3c0,1.6-0.2,3.1-0.6,4.4c-0.4,1.3-0.9,2.4-1.6,3.4c-0.7,1-1.5,1.8-2.4,2.5   c-0.9,0.7-1.8,1.3-2.8,1.7c-1,0.4-2,0.8-3,1c-1,0.2-1.9,0.3-2.8,0.3l14.9,12.9h-11l-14.9-12.9h-5.1v-7.1h16.2   c0.9-0.1,1.7-0.3,2.5-0.6c0.7-0.3,1.4-0.7,1.9-1.2c0.5-0.5,1-1.1,1.3-1.9c0.3-0.7,0.4-1.6,0.4-2.5v-4.5c0-0.4-0.1-0.7-0.2-0.9   c-0.1-0.2-0.2-0.4-0.4-0.5c-0.2-0.1-0.3-0.2-0.5-0.2c-0.2,0-0.3,0-0.5,0H98.7v32.3h-7.1v-35.8c0-0.5,0.1-1,0.3-1.4   c0.2-0.4,0.4-0.8,0.8-1.2c0.3-0.3,0.7-0.6,1.1-0.8c0.4-0.2,0.9-0.3,1.4-0.3h27.1c1.6,0,2.9,0.3,4,0.9s2,1.3,2.7,2.2   c0.7,0.9,1.2,1.8,1.5,2.8c0.3,1,0.5,2,0.5,2.8V168.3z"></path>		<path fill="#FFFFFF" d="M176,182.8c0,1.4-0.2,2.7-0.5,3.8s-0.8,2.1-1.4,3c-0.6,0.9-1.3,1.6-2.1,2.2c-0.8,0.6-1.6,1.1-2.4,1.5   c-0.8,0.4-1.7,0.7-2.6,0.9c-0.9,0.2-1.7,0.3-2.5,0.3h-27.6v-7.1h27.6c1.4,0,2.4-0.4,3.2-1.2c0.8-0.8,1.1-1.9,1.1-3.2   c0-0.7-0.1-1.3-0.3-1.8c-0.2-0.5-0.5-1-0.9-1.4c-0.4-0.4-0.8-0.7-1.4-0.9c-0.5-0.2-1.1-0.3-1.8-0.3h-16.4c-1.2,0-2.4-0.2-3.7-0.6   c-1.3-0.4-2.6-1.1-3.7-2c-1.1-0.9-2.1-2.1-2.9-3.6c-0.8-1.5-1.1-3.3-1.1-5.4s0.4-4,1.1-5.4c0.8-1.5,1.7-2.7,2.9-3.6   c1.1-0.9,2.4-1.6,3.7-2c1.3-0.4,2.6-0.6,3.7-0.6h24.3v7.1h-24.3c-1.4,0-2.4,0.4-3.2,1.2c-0.8,0.8-1.1,1.9-1.1,3.3   c0,1.4,0.4,2.5,1.1,3.3c0.8,0.8,1.8,1.2,3.2,1.2h16.4h0.1c0.8,0,1.6,0.1,2.4,0.3c0.9,0.2,1.7,0.5,2.6,0.9c0.9,0.4,1.7,0.9,2.4,1.5   c0.8,0.6,1.5,1.4,2,2.2c0.6,0.9,1.1,1.9,1.4,3C175.8,180.2,176,181.4,176,182.8z"></path>		<path fill="#FFFFFF" d="M220.5,190.8c0,0.5-0.1,1-0.3,1.4c-0.2,0.4-0.4,0.8-0.8,1.1c-0.3,0.3-0.7,0.6-1.2,0.8   c-0.4,0.2-0.9,0.3-1.4,0.3h-16.1c-1.5,0-3.1-0.2-4.6-0.5c-1.6-0.3-3.1-0.8-4.5-1.5c-1.5-0.7-2.8-1.6-4.1-2.6   c-1.3-1.1-2.4-2.3-3.4-3.8c-1-1.5-1.7-3.1-2.3-5c-0.5-1.9-0.8-4-0.8-6.3V155h7.1v19.7c0,2,0.3,3.7,0.8,5.1   c0.6,1.4,1.3,2.6,2.1,3.5c0.9,0.9,1.8,1.7,2.8,2.2c1,0.5,2,0.9,2.9,1.2c0.9,0.3,1.7,0.4,2.4,0.5c0.7,0.1,1.2,0.1,1.4,0.1h12.6V155   h7.1V190.8z"></path>		<path fill="#FFFFFF" d="M266.7,182.8c0,1.4-0.2,2.7-0.5,3.8s-0.8,2.1-1.4,3c-0.6,0.9-1.3,1.6-2.1,2.2c-0.8,0.6-1.6,1.1-2.4,1.5   c-0.8,0.4-1.7,0.7-2.6,0.9c-0.9,0.2-1.7,0.3-2.5,0.3h-27.6v-7.1h27.6c1.4,0,2.4-0.4,3.2-1.2c0.8-0.8,1.1-1.9,1.1-3.2   c0-0.7-0.1-1.3-0.3-1.8c-0.2-0.5-0.5-1-0.9-1.4c-0.4-0.4-0.8-0.7-1.4-0.9c-0.5-0.2-1.1-0.3-1.8-0.3h-16.4c-1.2,0-2.4-0.2-3.7-0.6   c-1.3-0.4-2.6-1.1-3.7-2c-1.1-0.9-2.1-2.1-2.9-3.6c-0.8-1.5-1.1-3.3-1.1-5.4s0.4-4,1.1-5.4c0.8-1.5,1.7-2.7,2.9-3.6   c1.1-0.9,2.4-1.6,3.7-2c1.3-0.4,2.6-0.6,3.7-0.6h24.3v7.1h-24.3c-1.4,0-2.4,0.4-3.2,1.2c-0.8,0.8-1.1,1.9-1.1,3.3   c0,1.4,0.4,2.5,1.1,3.3c0.8,0.8,1.8,1.2,3.2,1.2h16.4h0.1c0.8,0,1.6,0.1,2.4,0.3c0.9,0.2,1.7,0.5,2.6,0.9c0.9,0.4,1.7,0.9,2.4,1.5   c0.8,0.6,1.5,1.4,2,2.2c0.6,0.9,1.1,1.9,1.4,3C266.5,180.2,266.7,181.4,266.7,182.8z"></path>	</g></g></svg></div><h2 id="v40-hola-t">Bienvenido a Versus</h2>
+            <p id="v40-hola-d">Acabas de adquirir tu silla V40. Aquí te mostramos, paso a paso, cómo armarla.</p>
+            <p class="v40-chico">El armado toma entre 15 y 30 minutos.</p>
+            <div class="v40-botones"><button type="button" class="v40-boton v40-fuerte" id="v40-empezar">Empezar</button></div></div>
+        </div>
+        <div class="v40-tarjeta" id="v40-fin" role="dialog" aria-modal="true" aria-labelledby="v40-fin-t" aria-describedby="v40-fin-d" hidden>
+          <div class="v40-caja"><div class="v40-logo"><svg role="img" aria-label="Versus" focusable="false" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 268 196" xml:space="preserve"><g>	<polygon fill="#FFFFFF" points="94.6,1 213.7,1 181.3,58.7 169.2,39.8 180,20.7 130.6,20.7 168.7,81.5 131.6,147.8 42,1 65.9,1   130.9,106 145.1,81.3  "></polygon>	<g>		<path fill="#FFFFFF" d="M45,155l-18.7,38c-0.3,0.6-0.7,1.1-1.3,1.4c-0.6,0.4-1.2,0.5-1.9,0.5c-0.7,0-1.3-0.2-1.9-0.5   c-0.6-0.4-1-0.8-1.3-1.4L1.3,155h8l13.9,28.4L37,155H45z"></path>		<path fill="#FFFFFF" d="M84.7,194.4H58.9c-1,0-2.1-0.2-3.2-0.5c-1.2-0.3-2.3-0.9-3.3-1.7c-1-0.8-1.8-1.8-2.5-3.1   c-0.7-1.3-1-2.8-1-4.7v-25.8c0-0.5,0.1-1,0.3-1.4c0.2-0.4,0.4-0.8,0.8-1.2c0.3-0.3,0.7-0.6,1.1-0.8c0.4-0.2,0.9-0.3,1.4-0.3h32.2   v7.1H56v22.2c0,0.9,0.2,1.6,0.7,2.1c0.5,0.5,1.2,0.7,2.2,0.7h25.7V194.4z M81.5,178.3H58.9v-7.2h22.6V178.3z"></path>		<path fill="#FFFFFF" d="M130.9,168.3c0,1.6-0.2,3.1-0.6,4.4c-0.4,1.3-0.9,2.4-1.6,3.4c-0.7,1-1.5,1.8-2.4,2.5   c-0.9,0.7-1.8,1.3-2.8,1.7c-1,0.4-2,0.8-3,1c-1,0.2-1.9,0.3-2.8,0.3l14.9,12.9h-11l-14.9-12.9h-5.1v-7.1h16.2   c0.9-0.1,1.7-0.3,2.5-0.6c0.7-0.3,1.4-0.7,1.9-1.2c0.5-0.5,1-1.1,1.3-1.9c0.3-0.7,0.4-1.6,0.4-2.5v-4.5c0-0.4-0.1-0.7-0.2-0.9   c-0.1-0.2-0.2-0.4-0.4-0.5c-0.2-0.1-0.3-0.2-0.5-0.2c-0.2,0-0.3,0-0.5,0H98.7v32.3h-7.1v-35.8c0-0.5,0.1-1,0.3-1.4   c0.2-0.4,0.4-0.8,0.8-1.2c0.3-0.3,0.7-0.6,1.1-0.8c0.4-0.2,0.9-0.3,1.4-0.3h27.1c1.6,0,2.9,0.3,4,0.9s2,1.3,2.7,2.2   c0.7,0.9,1.2,1.8,1.5,2.8c0.3,1,0.5,2,0.5,2.8V168.3z"></path>		<path fill="#FFFFFF" d="M176,182.8c0,1.4-0.2,2.7-0.5,3.8s-0.8,2.1-1.4,3c-0.6,0.9-1.3,1.6-2.1,2.2c-0.8,0.6-1.6,1.1-2.4,1.5   c-0.8,0.4-1.7,0.7-2.6,0.9c-0.9,0.2-1.7,0.3-2.5,0.3h-27.6v-7.1h27.6c1.4,0,2.4-0.4,3.2-1.2c0.8-0.8,1.1-1.9,1.1-3.2   c0-0.7-0.1-1.3-0.3-1.8c-0.2-0.5-0.5-1-0.9-1.4c-0.4-0.4-0.8-0.7-1.4-0.9c-0.5-0.2-1.1-0.3-1.8-0.3h-16.4c-1.2,0-2.4-0.2-3.7-0.6   c-1.3-0.4-2.6-1.1-3.7-2c-1.1-0.9-2.1-2.1-2.9-3.6c-0.8-1.5-1.1-3.3-1.1-5.4s0.4-4,1.1-5.4c0.8-1.5,1.7-2.7,2.9-3.6   c1.1-0.9,2.4-1.6,3.7-2c1.3-0.4,2.6-0.6,3.7-0.6h24.3v7.1h-24.3c-1.4,0-2.4,0.4-3.2,1.2c-0.8,0.8-1.1,1.9-1.1,3.3   c0,1.4,0.4,2.5,1.1,3.3c0.8,0.8,1.8,1.2,3.2,1.2h16.4h0.1c0.8,0,1.6,0.1,2.4,0.3c0.9,0.2,1.7,0.5,2.6,0.9c0.9,0.4,1.7,0.9,2.4,1.5   c0.8,0.6,1.5,1.4,2,2.2c0.6,0.9,1.1,1.9,1.4,3C175.8,180.2,176,181.4,176,182.8z"></path>		<path fill="#FFFFFF" d="M220.5,190.8c0,0.5-0.1,1-0.3,1.4c-0.2,0.4-0.4,0.8-0.8,1.1c-0.3,0.3-0.7,0.6-1.2,0.8   c-0.4,0.2-0.9,0.3-1.4,0.3h-16.1c-1.5,0-3.1-0.2-4.6-0.5c-1.6-0.3-3.1-0.8-4.5-1.5c-1.5-0.7-2.8-1.6-4.1-2.6   c-1.3-1.1-2.4-2.3-3.4-3.8c-1-1.5-1.7-3.1-2.3-5c-0.5-1.9-0.8-4-0.8-6.3V155h7.1v19.7c0,2,0.3,3.7,0.8,5.1   c0.6,1.4,1.3,2.6,2.1,3.5c0.9,0.9,1.8,1.7,2.8,2.2c1,0.5,2,0.9,2.9,1.2c0.9,0.3,1.7,0.4,2.4,0.5c0.7,0.1,1.2,0.1,1.4,0.1h12.6V155   h7.1V190.8z"></path>		<path fill="#FFFFFF" d="M266.7,182.8c0,1.4-0.2,2.7-0.5,3.8s-0.8,2.1-1.4,3c-0.6,0.9-1.3,1.6-2.1,2.2c-0.8,0.6-1.6,1.1-2.4,1.5   c-0.8,0.4-1.7,0.7-2.6,0.9c-0.9,0.2-1.7,0.3-2.5,0.3h-27.6v-7.1h27.6c1.4,0,2.4-0.4,3.2-1.2c0.8-0.8,1.1-1.9,1.1-3.2   c0-0.7-0.1-1.3-0.3-1.8c-0.2-0.5-0.5-1-0.9-1.4c-0.4-0.4-0.8-0.7-1.4-0.9c-0.5-0.2-1.1-0.3-1.8-0.3h-16.4c-1.2,0-2.4-0.2-3.7-0.6   c-1.3-0.4-2.6-1.1-3.7-2c-1.1-0.9-2.1-2.1-2.9-3.6c-0.8-1.5-1.1-3.3-1.1-5.4s0.4-4,1.1-5.4c0.8-1.5,1.7-2.7,2.9-3.6   c1.1-0.9,2.4-1.6,3.7-2c1.3-0.4,2.6-0.6,3.7-0.6h24.3v7.1h-24.3c-1.4,0-2.4,0.4-3.2,1.2c-0.8,0.8-1.1,1.9-1.1,3.3   c0,1.4,0.4,2.5,1.1,3.3c0.8,0.8,1.8,1.2,3.2,1.2h16.4h0.1c0.8,0,1.6,0.1,2.4,0.3c0.9,0.2,1.7,0.5,2.6,0.9c0.9,0.4,1.7,0.9,2.4,1.5   c0.8,0.6,1.5,1.4,2,2.2c0.6,0.9,1.1,1.9,1.4,3C266.5,180.2,266.7,181.4,266.7,182.8z"></path>	</g></g></svg></div><h2 id="v40-fin-t">¡Felicitaciones!</h2>
+            <p id="v40-fin-d">Ya tienes tu silla V40 armada. Si te queda alguna duda, escríbenos o vuelve a ver cualquier paso del manual.</p>
+            <a class="v40-boton v40-wa" href="https://wa.me/573152611911" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M12 2.2a9.7 9.7 0 0 0-8.4 14.6L2.3 21.7l5-1.3A9.7 9.7 0 1 0 12 2.2Zm0 17.7a8 8 0 0 1-4.1-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8 8 0 1 1 12 19.9Zm4.4-6c-.2-.1-1.4-.7-1.7-.8-.2-.1-.4-.1-.5.1l-.8.9c-.1.2-.3.2-.5.1a6.6 6.6 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.5-.4h-.5a.9.9 0 0 0-.7.3 2.8 2.8 0 0 0-.9 2.1 5 5 0 0 0 1 2.6 11.2 11.2 0 0 0 4.3 3.8c1.6.7 2.2.7 3 .6a2.6 2.6 0 0 0 1.7-1.2 2.1 2.1 0 0 0 .1-1.2c0-.1-.2-.2-.5-.3Z"/></svg>Escríbenos por WhatsApp</a>
+            <p class="v40-chico v40-redes"><a href="https://www.instagram.com/versus_colombia" target="_blank" rel="noopener">Instagram @versus_colombia</a> · <a href="https://www.facebook.com/versus_colombia" target="_blank" rel="noopener">Facebook</a> · <a href="https://versuscolombia.co" target="_blank" rel="noopener">versuscolombia.co</a></p>
+            <p class="v40-chico">Tu silla tiene garantía de 12 meses por defectos de fábrica.</p>
+            <div class="v40-botones"><button type="button" class="v40-boton v40-fuerte" id="v40-otra-vez">Ver el manual de nuevo</button>
+              <button type="button" class="v40-boton" id="v40-cerrar">Cerrar</button></div></div>
+        </div>
+        <canvas id="anim-lienzo" aria-label="Animación del armado de la silla Versus V40. Arrastra para girar, pellizca para acercar."></canvas>
+        <div class="visor-estado" id="anim-estado">La animación se carga al llegar aquí…</div>
+        <div class="guias" id="anim-guias"></div>
+      </div>
+      <div class="anim-avance" aria-hidden="true"><div class="anim-avance-b" id="anim-avance"></div></div>
+    </div>
+    <div class="anim-panel" id="anim-panel">
+      <button type="button" class="boton anim-cerrar" id="anim-cerrar">Cerrar ✕</button>
+      <p class="anim-guia" id="anim-guia"><b>Estos son los pasos del armado.</b> Toca un paso, o Siguiente, para ver cómo se arma.</p>
+      <ol class="anim-puntos" aria-labelledby="anim-guia"><li><button type="button" class="anim-punto" data-paso="0" aria-label="Paso 0: Identifica las piezas">Paso 0</button></li><li><button type="button" class="anim-punto" data-paso="1" aria-label="Paso 1: Base, ruedas y pistón">Paso 1</button></li><li><button type="button" class="anim-punto" data-paso="2" aria-label="Paso 2: Las arandelas en el asiento">Paso 2</button></li><li><button type="button" class="anim-punto" data-paso="3" aria-label="Paso 3: Mariposa y reposabrazos">Paso 3</button></li><li><button type="button" class="anim-punto" data-paso="4" aria-label="Paso 4: El asiento sobre el pistón">Paso 4</button></li><li><button type="button" class="anim-punto" data-paso="5" aria-label="Paso 5: El espaldar">Paso 5</button></li><li><button type="button" class="anim-punto" data-paso="6" aria-label="Paso 6: Los cojines">Paso 6</button></li></ol>
+      <div class="anim-mando">
+        <button type="button" class="boton" id="anim-ant">‹ Anterior</button>
+        <button type="button" class="boton" id="anim-rep">Repetir</button>
+        <button type="button" class="boton fuerte" id="anim-sig">Siguiente ›</button>
+      </div>
+      <button type="button" class="boton anim-texto-btn" id="anim-texto-btn" aria-expanded="true" aria-controls="anim-textos">Ocultar texto</button>
+      <div class="anim-textos" id="anim-textos" aria-live="polite">
+<article class="anim-texto" data-paso="0" data-titulo="Identifica las piezas"><h3><span class="anim-paso-n">Paso 0</span>Identifica las piezas</h3><p class="anim-linea">Mira cada pieza con su letra y su cantidad, de la A a la R.</p><p>Esta es la lista de partes del manual. Toca una para verla:</p><p class='nota anim-lista-sigue'>Son 18 piezas, de la A a la R: desliza para verlas todas ↓</p><ul class='anim-lista anim-lista-partes'><li><button type="button" class="anim-lista-btn" data-letra="A" aria-label="Ver Espaldar, 1 und, letra A"><b class="cod">A</b> <span>Espaldar</span> <b class="num">×1</b></button></li><li><button type="button" class="anim-lista-btn" data-letra="B" aria-label="Ver Asiento, 1 und, letra B"><b class="cod">B</b> <span>Asiento</span> <b class="num">×1</b></button></li><li><button type="button" class="anim-lista-btn" data-letra="C" aria-label="Ver Reposabrazos, 2 und, letra C"><b class="cod">C</b> <span>Reposabrazos</span> <b class="num">×2</b></button></li><li><button type="button" class="anim-lista-btn" data-letra="D" aria-label="Ver Base, 1 und, letra D"><b class="cod">D</b> <span>Base</span> <b class="num">×1</b></button></li><li><button type="button" class="anim-lista-btn" data-letra="E" aria-label="Ver Pistón, 1 und, letra E"><b class="cod">E</b> <span>Pistón</span> <b class="num">×1</b></button></li><li><button type="button" class="anim-lista-btn" data-letra="F" aria-label="Ver Cubre pistón, 1 und, letra F"><b class="cod">F</b> <span>Cubre pistón</span> <b class="num">×1</b></button></li><li><button type="button" class="anim-lista-btn" data-letra="G" aria-label="Ver Rueda, 5 und, letra G"><b class="cod">G</b> <span>Rueda</span> <b class="num">×5</b></button></li><li><button type="button" class="anim-lista-btn" data-letra="H" aria-label="Ver Mariposa, 1 und, letra H"><b class="cod">H</b> <span>Mariposa</span> <b class="num">×1</b></button></li><li><button type="button" class="anim-lista-btn" data-letra="I" aria-label="Ver Protector derecho, 1 und, letra I"><b class="cod">I</b> <span>Protector derecho</span> <b class="num">×1</b></button></li><li><button type="button" class="anim-lista-btn" data-letra="J" aria-label="Ver Protector izquierdo, 1 und, letra J"><b class="cod">J</b> <span>Protector izquierdo</span> <b class="num">×1</b></button></li><li><button type="button" class="anim-lista-btn" data-letra="K" aria-label="Ver Tornillo, 2 und, letra K"><b class="cod">K</b> <span>Tornillo</span> <b class="num">×2</b></button></li><li><button type="button" class="anim-lista-btn" data-letra="L" aria-label="Ver Tornillo M8×20, 10 und, letra L"><b class="cod">L</b> <span>Tornillo M8×20</span> <b class="num">×10</b> <span class="nota">(el manual dice 12)</span></button></li><li><button type="button" class="anim-lista-btn" data-letra="M" aria-label="Ver Tornillo M8×25, 4 und, letra M"><b class="cod">M</b> <span>Tornillo M8×25</span> <b class="num">×4</b></button></li><li><button type="button" class="anim-lista-btn" data-letra="N" aria-label="Ver Tapón lateral, 2 und, letra N"><b class="cod">N</b> <span>Tapón lateral</span> <b class="num">×2</b></button></li><li><button type="button" class="anim-lista-btn" data-letra="O" aria-label="Ver Herramienta (llave Allen 5 mm), 1 und, letra O"><b class="cod">O</b> <span>Herramienta (llave Allen 5 mm)</span> <b class="num">×1</b></button></li><li><button type="button" class="anim-lista-btn" data-letra="P" aria-label="Ver Cojín cervical, 1 und, letra P"><b class="cod">P</b> <span>Cojín cervical</span> <b class="num">×1</b></button></li><li><button type="button" class="anim-lista-btn" data-letra="Q" aria-label="Ver Cojín lumbar, 1 und, letra Q"><b class="cod">Q</b> <span>Cojín lumbar</span> <b class="num">×1</b></button></li><li><button type="button" class="anim-lista-btn" data-letra="R" aria-label="Ver Arandela, 4 und, letra R"><b class="cod">R</b> <span>Arandela</span> <b class="num">×4</b></button></li></ul><p class='nota'>En la animación los reposabrazos van con 3 tornillos <span class="cod">(L)</span> cada uno, como trae el modelo; el manual dice 12 (4 por reposabrazos). Son estimadas las medidas del tornillo <span class="cod">(K)</span> y del tapón <span class="cod">(N)</span>, el largo del pistón <span class="cod">(E)</span> y el grueso de las arandelas <span class="cod">(R)</span>: el manual no las da.</p></article>
+<article class="anim-texto" data-paso="1" data-titulo="Base, ruedas y pistón"><h3><span class="anim-paso-n">Paso 1</span>Base, ruedas y pistón</h3><p class="anim-linea">Ruedas <span class="cod">(G)</span> a presión en la base <span class="cod">(D)</span>, el pistón <span class="cod">(E)</span> al centro y el cubre pistón <span class="cod">(F)</span>.</p><p>Introduce a presión las 5 ruedas <span class="cod">(G)</span> en los agujeros de la base <span class="cod">(D)</span>, luego introduce el pistón <span class="cod">(E)</span> en el agujero central de la base y posteriormente ubica el cubre pistón <span class="cod">(F)</span>.</p></article>
+<article class="anim-texto" data-paso="2" data-titulo="Las arandelas en el asiento"><h3><span class="anim-paso-n">Paso 2</span>Las arandelas en el asiento</h3><p class="anim-linea">Voltea el asiento <span class="cod">(B)</span> y pon las 4 arandelas <span class="cod">(R)</span>.</p><p>Voltea el asiento <span class="cod">(B)</span> y ubica las 4 arandelas de caucho <span class="cod">(R)</span> en los 4 agujeros como se ve en el dibujo.</p></article>
+<article class="anim-texto" data-paso="3" data-titulo="Mariposa y reposabrazos"><h3><span class="anim-paso-n">Paso 3</span>Mariposa y reposabrazos</h3><p class="anim-linea">La mariposa <span class="cod">(H)</span> con tornillos <span class="cod">(L)</span>; luego los reposabrazos <span class="cod">(C)</span>, también con <span class="cod">(L)</span>. Aprieta con la llave <span class="cod">(O)</span>.</p><p>Sobre las arandelas ubica la mariposa <span class="cod">(H)</span> y fíjala con los tornillos <span class="cod">(L)</span>, luego ubica los dos reposabrazos <span class="cod">(C)</span> que coincidan con los 4 agujeros y fíjalos con los tornillos <span class="cod">(L)</span>.</p></article>
+<article class="anim-texto" data-paso="4" data-titulo="El asiento sobre el pistón"><h3><span class="anim-paso-n">Paso 4</span>El asiento sobre el pistón</h3><p class="anim-linea">Mete el pistón en el agujero de la mariposa <span class="cod">(H)</span>, a presión.</p><p>Introduce el pistón en el agujero de la mariposa a presión.</p></article>
+<article class="anim-texto" data-paso="5" data-titulo="El espaldar"><h3><span class="anim-paso-n">Paso 5</span>El espaldar</h3><p class="anim-linea">5.1 tornillos <span class="cod">(M)</span> · 5.2 protector y <span class="cod">(K)</span> · 5.3 tapón <span class="cod">(N)</span> · 5.4 el otro lado.</p><p>Fija el asiento y el espaldar con tornillos <span class="cod">(M)</span>, luego pon el protector plástico con el tornillo <span class="cod">(K)</span> y por último el tapón <span class="cod">(N)</span>. Repite este mismo procedimiento en el otro lado.</p></article>
+<article class="anim-texto" data-paso="6" data-titulo="Los cojines"><h3><span class="anim-paso-n">Paso 6</span>Los cojines</h3><p class="anim-linea">Pon el cojín lumbar <span class="cod">(Q)</span> y el cervical <span class="cod">(P)</span>.</p><p>Ubica los cojines lumbar <span class="cod">(Q)</span> y cervical <span class="cod">(P)</span> y listo. Tu silla está lista para brindarte toda la comodidad.</p></article>
+      </div>
+    </div>
+    <nav class="anim-barra" aria-label="Pasos del armado">
+      <button type="button" class="anim-b-flecha" id="anim-b-ant" aria-label="Paso anterior"><svg viewBox="0 0 24 24" width="30" height="30" aria-hidden="true"><path d="M15 4 7 12l8 8" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <button type="button" class="anim-b-info" id="anim-b-info" aria-expanded="false" aria-controls="anim-panel">
+        <span class="anim-b-txt" id="anim-b-txt">Paso 0</span><span class="anim-b-n" id="anim-b-n"></span><span class="anim-b-i" aria-hidden="true">ⓘ</span>
+      </button>
+      <button type="button" class="anim-b-flecha fuerte" id="anim-b-sig" aria-label="Paso siguiente"><svg viewBox="0 0 24 24" width="30" height="30" aria-hidden="true"><path d="m9 4 8 8-8 8" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    </nav>
+  </div>
+  </div>
+</section>
+
+</main>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+<!-- zoom:js -->
+<script>
+/* Zoom como SolidWorks, uno solo para el visor 3D y la animación (Jon, 23 y 29-oct: «zoom hacia donde está el mouse,
+   no hacia el centro del dibujo»). La rueda acerca hacia el punto de la pieza bajo el cursor; el pellizco, hacia el
+   punto medio de los dos dedos, fijado UNA vez al juntarlos (si se buscaba en cada movimiento saltaba de pieza en
+   pieza y el modelo se corría). La distancia entre dedos se mide una vez por cuadro, con los dos ya movidos. Con el
+   dedo en la pantalla no hay inercia; el mouse la vuelve a prender.
+   o = { lienzo, camara, controles, puntoBajo(cx, cy) → Vector3, alMover(), alTocar() }. Devuelve { dedos }. */
+window.zoomSolidWorks = function (o) {
+  const lienzo = o.lienzo, camara = o.camara, controles = o.controles;
+  controles.enableZoom = false;
+  function zoomHacia(P, k) {
+    if (camara.position.distanceTo(P) * k < controles.minDistance * 0.5 && k < 1) return;
+    if (camara.position.distanceTo(controles.target) * k > controles.maxDistance && k > 1) return;
+    if (o.alMover) o.alMover();
+    camara.position.sub(P).multiplyScalar(k).add(P); controles.target.sub(P).multiplyScalar(k).add(P);
+  }
+  lienzo.addEventListener("wheel", function (ev) { ev.preventDefault(); zoomHacia(o.puntoBajo(ev.clientX, ev.clientY), Math.exp(Math.max(-60, Math.min(60, ev.deltaY)) * 0.0022)); }, { passive: false });
+  const dedos = new Map(); let pinza = null, ancla = null, cuadro = 0;
+  lienzo.addEventListener("pointerdown", function (ev) {
+    if (ev.pointerType !== "touch") { controles.enableDamping = true; return; }
+    controles.enableDamping = false;
+    if (o.alTocar) o.alTocar();
+    dedos.set(ev.pointerId, [ev.clientX, ev.clientY]); pinza = null; ancla = null;
+  });
+  function medir() {
+    cuadro = 0;
+    if (dedos.size !== 2) { pinza = null; ancla = null; return; }
+    const ab = Array.from(dedos.values()), a = ab[0], b = ab[1], d = Math.hypot(a[0] - b[0], a[1] - b[1]);
+    if (!pinza || !ancla) { pinza = d; ancla = o.puntoBajo((a[0] + b[0]) / 2, (a[1] + b[1]) / 2); return; }
+    if (d > 0 && Math.abs(d - pinza) >= 1) { zoomHacia(ancla, pinza / d); pinza = d; }
+  }
+  lienzo.addEventListener("pointermove", function (ev) {
+    if (ev.pointerType !== "touch" || !dedos.has(ev.pointerId)) return;
+    dedos.set(ev.pointerId, [ev.clientX, ev.clientY]);
+    if (!cuadro) cuadro = requestAnimationFrame(medir);
+  });
+  function soltar(ev) { dedos.delete(ev.pointerId); pinza = null; ancla = null; }
+  lienzo.addEventListener("pointerup", soltar); lienzo.addEventListener("pointercancel", soltar);
+  return { dedos: dedos };
+};
+</script>
+<!-- /zoom:js -->
+<!-- anim:js -->
+<script>
+/* ---------- animación de ensamble (Jon, 2026-10-29) ----------
+   Silla Versus V40 (motor del espejo 5437). Un visor aparte, con el mismo GLB del modelo 3D (una malla por pieza, con nombre). Las posiciones finales
+   son las del modelo; las del piso y las trayectorias se calculan aquí. Cada pieza se mueve como cuerpo rígido
+   alrededor de su centro (los marcos, alrededor del centro de la hoja), y los tornillos y las tuercas giran sobre su
+   eje (x) mientras entran. Con prefers-reduced-motion cada paso salta a su estado final. */
+(function () {
+  "use strict";
+  const ETQ = {"A": {"n": "Espaldar", "s": "A", "f": "×1"}, "B": {"n": "Asiento", "s": "B", "f": "×1"}, "C": {"n": "Reposabrazos", "s": "C", "f": "×2"}, "D": {"n": "Base", "s": "D", "f": "×1"}, "E": {"n": "Pistón", "s": "E", "f": "×1"}, "F": {"n": "Cubre pistón", "s": "F", "f": "×1"}, "G": {"n": "Rueda", "s": "G", "f": "×5"}, "H": {"n": "Mariposa", "s": "H", "f": "×1"}, "I": {"n": "Protector derecho", "s": "I", "f": "×1"}, "J": {"n": "Protector izquierdo", "s": "J", "f": "×1"}, "K": {"n": "Tornillo M5×12", "s": "K", "f": "×2 · aprox."}, "L": {"n": "Tornillo M8×20", "s": "L", "f": "×10 · manual: 12"}, "M": {"n": "Tornillo M8×25", "s": "M", "f": "×4"}, "N": {"n": "Tapón lateral", "s": "N", "f": "×2 · aprox."}, "O": {"n": "Llave Allen 5 mm", "s": "O", "f": "×1"}, "P": {"n": "Cojín cervical", "s": "P", "f": "×1"}, "Q": {"n": "Cojín lumbar", "s": "Q", "f": "×1"}, "R": {"n": "Arandela", "s": "R", "f": "×4"}};
+  const EJ = {};   // la silla no tiene hojas giradas: cajas alineadas a los ejes
+  const sec = document.getElementById("animacion");
+  if (!sec) return;
+  const lienzo = document.getElementById("anim-lienzo"), estado = document.getElementById("anim-estado");
+  const guias = document.getElementById("anim-guias");
+  const avance = document.getElementById("anim-avance");
+  const bAnt = document.getElementById("anim-ant"), bRep = document.getElementById("anim-rep"), bSig = document.getElementById("anim-sig");
+  const puntos = Array.from(sec.querySelectorAll(".anim-punto")), textos = Array.from(sec.querySelectorAll(".anim-texto"));
+  const N_PASOS = textos.length;
+  const reducido = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  let paso = 0;
+  function pintarMando() {
+    textos.forEach(function (t, i) { t.hidden = i !== paso; });
+    puntos.forEach(function (b, i) {
+      if (i === paso) b.setAttribute("aria-current", "step"); else b.removeAttribute("aria-current");
+      b.classList.toggle("hecho", i < paso);
+    });
+    bAnt.disabled = paso === 0; bSig.disabled = paso === N_PASOS - 1;
+    // la barra resumida del sitio de armado: «Paso 1 · Une los dos marcos» y 1/4
+    if (bTxt) {
+      bTxt.textContent = "Paso " + paso + " · " + (textos[paso] ? textos[paso].dataset.titulo : "");
+      bNum.textContent = paso + "/" + (N_PASOS - 1);
+      bBAnt.disabled = paso === 0; bBSig.disabled = paso === N_PASOS - 1;
+    }
+  }
+  const bTxt = document.getElementById("anim-b-txt"), bNum = document.getElementById("anim-b-n");
+  const bBAnt = document.getElementById("anim-b-ant"), bBSig = document.getElementById("anim-b-sig");
+  const bInfo = document.getElementById("anim-b-info"), bCerrar = document.getElementById("anim-cerrar");
+  const barraAnim = sec.querySelector(".anim-barra");
+  // el sitio de armado abre ya a toda pantalla: la vista no se sale, el botón de arriba solo pide la nativa
+  const SIEMPRE = document.body.classList.contains("solo-armado");
+  pintarMando();
+  if (!window.THREE || !THREE.GLTFLoader || !THREE.OrbitControls) {
+    estado.textContent = "No cargó la animación 3D. Los pasos están escritos aquí al lado.";
+    textos.forEach(function (t) { t.hidden = false; });
+    return;
+  }
+  const V = function (x, y, z) { return new THREE.Vector3(x, y, z); };
+  const QI = new THREE.Quaternion();
+  const EJE_X = V(1, 0, 0);
+
+  /* ---------- visor ---------- */
+  const renderer = new THREE.WebGLRenderer({ canvas: lienzo, antialias: true, alpha: true });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+  renderer.outputEncoding = THREE.sRGBEncoding;
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  const escena = new THREE.Scene();
+  const camara = new THREE.PerspectiveCamera(35, 1, 0.01, 50);
+  const controles = new THREE.OrbitControls(camara, lienzo);
+  controles.enableDamping = true; controles.dampingFactor = 0.12; controles.rotateSpeed = 0.6;
+  controles.screenSpacePanning = true; controles.minDistance = 0.05; controles.maxDistance = 8;
+  controles.mouseButtons = { LEFT: THREE.MOUSE.ROTATE, MIDDLE: THREE.MOUSE.ROTATE, RIGHT: THREE.MOUSE.PAN };
+  controles.touches = { ONE: THREE.TOUCH.ROTATE, TWO: THREE.TOUCH.DOLLY_PAN };
+  lienzo.addEventListener("contextmenu", function (ev) { ev.preventDefault(); });
+  // zoom como SolidWorks: el componente compartido (zoomSolidWorks), el mismo del visor 3D de arriba
+  const rayo = new THREE.Raycaster(), ndc = new THREE.Vector2();
+  function puntoBajo(cx, cy) {
+    const r = lienzo.getBoundingClientRect();
+    ndc.set(((cx - r.left) / r.width) * 2 - 1, -((cy - r.top) / r.height) * 2 + 1); rayo.setFromCamera(ndc, camara);
+    const h = modelo ? rayo.intersectObject(modelo, true).find(function (x) { return x.object.isMesh; }) : null;
+    if (h) return h.point.clone();
+    const n = camara.getWorldDirection(new THREE.Vector3()), pl = new THREE.Plane().setFromNormalAndCoplanarPoint(n, controles.target);
+    const p = new THREE.Vector3(); return rayo.ray.intersectPlane(pl, p) ? p : controles.target.clone();
+  }
+  window.zoomSolidWorks({ lienzo: lienzo, camara: camara, controles: controles, puntoBajo: puntoBajo,
+    alMover: function () { vuelo = null; manual = true; } });
+  const pmrem = new THREE.PMREMGenerator(renderer);
+  const cuarto = new THREE.Scene();
+  cuarto.background = new THREE.Color(0xb8c2cc);
+  const panel = new THREE.Mesh(new THREE.PlaneGeometry(4, 2), new THREE.MeshBasicMaterial({ color: 0xffffff, side: THREE.DoubleSide }));
+  panel.position.set(0, 3, 2); panel.lookAt(0, 0, 0); cuarto.add(panel);
+  const panel2 = panel.clone(); panel2.position.set(-3, 1, -2); panel2.lookAt(0, 0, 0); cuarto.add(panel2);
+  escena.environment = pmrem.fromScene(cuarto, 0.02).texture;
+  escena.add(new THREE.HemisphereLight(0xffffff, 0x445566, 0.5));
+  const sol = new THREE.DirectionalLight(0xffffff, 0.9); sol.position.set(1.5, 3, 2); escena.add(sol);
+  // el piso del taller: un plano gris claro con una cuadrícula de 10 cm
+  const piso = new THREE.Mesh(new THREE.PlaneGeometry(4, 4), new THREE.MeshStandardMaterial({ color: 0xd9dee3, roughness: 0.95, metalness: 0 }));
+  piso.rotation.x = -Math.PI / 2; piso.position.y = -0.0008; escena.add(piso);
+  const rejilla = new THREE.GridHelper(4, 40, 0xaab4be, 0xc3cbd2); rejilla.position.y = -0.0004; escena.add(rejilla);
+
+  // En pantalla completa el panel de vidrio flota sobre el lienzo: libre() es el pedazo que no tapa (a la izquierda del
+  // panel lateral, o encima del panel de abajo) y la cámara corre el centro del dibujo ahí con setViewOffset.
+  const panelAnim = sec.querySelector(".anim-panel"), marcoAnim = document.getElementById("anim-marco");
+  function libre() {
+    const W = lienzo.clientWidth, H = lienzo.clientHeight, L = { W: W, H: H, w: W, h: H, dx: 0, dy: 0 };
+    if (!marcoAnim.classList.contains("en-pantalla")) return L;
+    const r = panelAnim.getBoundingClientRect(), c = lienzo.getBoundingClientRect();
+    let fondo = H;   // lo más alto de lo que flota abajo (el panel de abajo y la barra del sitio)
+    if (r.width && r.height) {
+      if (r.height > H * 0.6) { L.w = Math.max(W * 0.3, r.left - c.left - 12); L.dx = (W - L.w) / 2; }
+      else fondo = Math.min(fondo, r.top - c.top - 8);
+    }
+    const b = barraAnim ? barraAnim.getBoundingClientRect() : null;
+    if (b && b.width && b.height) fondo = Math.min(fondo, b.top - c.top - 6);
+    if (fondo < H) { L.h = Math.max(H * 0.3, fondo); L.dy = (H - L.h) / 2; }
+    return L;
+  }
+  function tamano() {
+    const w = lienzo.clientWidth, h = lienzo.clientHeight;
+    if (!w || !h) return;
+    renderer.setSize(w, h, false); camara.aspect = w / h;
+    const L = libre();
+    if (L.dx || L.dy) camara.setViewOffset(w, h, L.dx, L.dy, w, h); else camara.clearViewOffset();
+    camara.updateProjectionMatrix();
+  }
+  new ResizeObserver(tamano).observe(lienzo);
+
+  /* ---------- piezas de la V40: una unidad por nodo del GLB (A, B, C1, G3, L7, M2…), con su código del manual ----------
+     Este bloque y el de los pasos son lo único propio de la silla: artefacto_v40.py los pone en el motor de la
+     animación del espejo 5437 (anim:js de diseno/aviso-a-espejo/artefacto_plantilla.html) en lugar de los del espejo. */
+  function tipoDe(n) { const m = /^([A-Z])\d*$/.exec(n); return m ? m[1] : null; }
+  // paso del manual en que cada pieza queda puesta (99: la herramienta O se queda en el piso)
+  const PASO_DE = { D: 1, G: 1, E: 1, F: 1, B: 2, R: 2, H: 3, L: 3, C: 3, A: 5, M: 5, I: 5, J: 5, K: 5, N: 5, Q: 6, P: 6, O: 99 };
+  // el banco: el asiento volteado de los pasos 2 y 3 («Voltea el asiento (B)») con todo lo que se le pone encima
+  const BANCO = ["B", "R", "H", "L", "C"];
+  const enBanco = function (u) { return BANCO.indexOf(u.tipo) >= 0; };
+  const Q_VOLTEO = new THREE.Quaternion().setFromAxisAngle(V(0, 0, 1), Math.PI);
+  const Q_PATAS = new THREE.Quaternion().setFromAxisAngle(V(1, 0, 0), Math.PI);   // la base patas arriba
+  const Q_ESPALDA = new THREE.Quaternion().setFromAxisAngle(V(1, 0, 0), -Math.PI / 2);   // el espaldar acostado, cara arriba
+  const Q_ACOSTADO = new THREE.Quaternion().setFromAxisAngle(V(0, 0, 1), Math.PI / 2);   // los tornillos L acostados
+  // dónde queda cada pieza en el piso (x, z en metros; la silla armada va en el centro, el frente hacia +z)
+  const SITIO = { B: [1.15, -0.05], H: [1.1, 0.86], C1: [1.5, 0.8], C2: [1.75, 0.8], A: [-1.08, -0.1], P: [-1.08, 0.72],
+    Q: [-0.66, 0.8], E: [-0.62, 0.3], F: [-0.62, 0.5], I: [-0.36, 1.02], J: [-0.22, 1.02], O: [0.86, 0.42] };
+  function sitioEnPiso(u) {
+    const n = u.nombre, k = Number((n.match(/(\d+)$/) || [0, 1])[1]);
+    if (SITIO[n]) return SITIO[n];
+    if (u.tipo === "D") return [u.piv.x, u.piv.z];
+    if (u.tipo === "G") return [-0.42 + 0.11 * (k - 1), 0.74];
+    if (u.tipo === "R") return [0.36 + 0.05 * (k - 1), 0.74];
+    if (u.tipo === "L") return [0.34 + 0.035 * (k - 1), 0.6];
+    if (u.tipo === "M") return [-0.08 + 0.05 * (k - 1), 1.02];
+    if (u.tipo === "K") return [0.16 + 0.04 * (k - 1), 1.02];
+    if (u.tipo === "N") return [0.26 + 0.04 * (k - 1), 1.02];
+    return [0, 1.3];
+  }
+  function cajaDe(objs) { const b = new THREE.Box3(); objs.forEach(function (o) { o.geometry.computeBoundingBox(); b.union(o.geometry.boundingBox); }); return b; }
+  let unidades = [], porTipo = {}, modelo = null, banco = null;
+  // luz de verdad para piezas negras: sombras suaves en el piso, una luz de contorno por detrás (para que lo negro se
+  // despegue del fondo, también en el tema oscuro) y cada malla proyecta sombra
+  // el ambiente (Jon, 12-nov: «que ya sea con las luces neón, que todo sea muy negro pero que la silla esté muy
+  // iluminada … con mucha profundidad»): fondo casi negro en los dos temas, la cuadrícula tenue que se pierde en la
+  // niebla, luz principal fuerte con sombras suaves, luces de borde celeste y magenta que recortan lo negro, un aro
+  // neón en el piso bajo la silla y el contorno blanco fino que marca la pieza en el recorrido
+  const FONDO = 0x050608, NEON_CELESTE = 0x5cc8ff, NEON_VERDE = 0x3dff8a;
+  // cada cuadro, aunque la animación esté quieta: la niebla empieza detrás de lo que se mira (en el celular parado la
+  // cámara queda más lejos y la silla no se puede perder en ella) y la barra dice la parada del recorrido
+  let inicio = false, esperando = false, celebra = null, fin2 = null, hola = null, adios = null, focoAntes = null;
+  // las dos tarjetas (bienvenida y final): diálogos con foco, Escape y botones de 44 px
+  function mostrarTarjeta(el) {
+    focoAntes = document.activeElement; el.hidden = false;
+    const b = el.querySelector("button"); if (b) b.focus({ preventScroll: true });
+  }
+  function ocultarTarjeta(el, devolver) {
+    if (el.hidden) return; el.hidden = true;
+    if (devolver && focoAntes && focoAntes.focus && document.contains(focoAntes)) focoAntes.focus({ preventScroll: true });
+  }
+  function tarjetas() {
+    hola = document.getElementById("v40-hola"); adios = document.getElementById("v40-fin");
+    const empezar = function () { ocultarTarjeta(hola, false); abrirGuia(true); };
+    document.getElementById("v40-empezar").addEventListener("click", empezar);
+    document.getElementById("v40-otra-vez").addEventListener("click", function () { ocultarTarjeta(adios, false); irParada(0); });
+    document.getElementById("v40-cerrar").addEventListener("click", function () { ocultarTarjeta(adios, true); });
+    [hola, adios].forEach(function (el) {
+      el.addEventListener("keydown", function (ev) {
+        if (ev.key !== "Escape") return;
+        ev.preventDefault(); ev.stopPropagation();
+        if (el === hola) empezar(); else ocultarTarjeta(adios, true);
+      });
+    });
+  }
+  function cadaCuadro(ahora) {
+    requestAnimationFrame(cadaCuadro);
+    if (escena.fog) { const d = camara.position.distanceTo(controles.target); escena.fog.near = d + 0.8; escena.fog.far = d + 6.5; }
+    if (!PASOS.length) return;
+    // al abrir: la escena quieta con las piezas en el piso y encima la ayuda de gestos; nada arranca hasta el primer
+    // toque, que la quita y lleva a la parada A (Jon, 12-nov: «hasta que no se toque la pantalla … una vez uno hunde la
+    // pantalla ya inicia y va recorriendo pieza por pieza»)
+    if (!inicio) {
+      inicio = true; esperando = true;
+      t = Math.min(PASOS[0].dur, TOUR.length ? TOUR[0].t0 - 0.05 : 2.4); enMarcha = false; manual = false; vuelo = null;
+      toma = 1; volarA(PASOS[0].tomas[0], true); aplicar(0, t);
+      tarjetas();
+      mostrarTarjeta(hola);   // primero la bienvenida; «Empezar» abre la ayuda de gestos
+    }
+    if (esperando && hola.hidden && guia.hidden) { esperando = false; irParada(0); }
+    // nada salta solo de una parada a la siguiente: si el paso 0 corre (al entrar con la flecha desde otro paso), se
+    // queda en el plano general hasta que se toque la flecha
+    if (paso === 0 && enMarcha && TOUR.length && t >= TOUR[0].t0 - 0.05) { enMarcha = false; t = TOUR[0].t0 - 0.05; aplicar(0, t); }
+    navegarPintar(paso, t);
+    // la celebración: al terminar el paso 6 la cuadrícula pasa a verde y titila tres veces (1,5 s); con movimiento
+    // reducido, verde sin titilar; si se vuelve atrás, celeste otra vez
+    const fin = paso === PASOS.length - 1 && t >= PASOS[paso].dur - 1e-6;
+    if (fin && celebra === null) celebra = ahora || performance.now();
+    if (!fin) celebra = null;
+    // el mensaje final, después de la celebración (1,6 s; con movimiento reducido, enseguida)
+    if (celebra !== null && fin2 === null && ((ahora || performance.now()) - celebra) / 1000 > (reducido ? 0.2 : 1.7)) { fin2 = true; mostrarTarjeta(adios); }
+    if (celebra === null) { if (fin2) ocultarTarjeta(adios, false); fin2 = null; }
+    const col = piso.material.color;
+    if (celebra === null) col.set(NEON_CELESTE).multiplyScalar(0.75);   // tenue: brillo suave
+    else {
+      const e = ((ahora || performance.now()) - celebra) / 1000;
+      col.set(NEON_VERDE).multiplyScalar(0.8);
+      if (!reducido && e < 1.5) col.multiplyScalar(0.55 + 0.45 * Math.cos(e * 2 * Math.PI / 0.5));
+    }
+  }
+  function realismo(raiz) {
+    requestAnimationFrame(cadaCuadro);
+    renderer.setClearColor(FONDO, 1); escena.background = new THREE.Color(FONDO);
+    escena.fog = new THREE.Fog(FONDO, 2.2, 6.5);
+    renderer.shadowMap.enabled = true; renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    renderer.toneMappingExposure = 1.25;
+    sol.castShadow = true; sol.intensity = 1.7; sol.position.set(1.0, 3.4, 2.0);
+    sol.shadow.mapSize.set(2048, 2048); sol.shadow.radius = 5; sol.shadow.bias = -0.0015; sol.shadow.normalBias = 0.02;   // sin rayas de «acné» en el piso
+    const cs = sol.shadow.camera; cs.left = -2; cs.right = 2.2; cs.top = 2; cs.bottom = -2; cs.near = 0.5; cs.far = 7; cs.updateProjectionMatrix();
+    escena.children.forEach(function (o) { if (o.isHemisphereLight) o.intensity = 0.3; });
+    piso.geometry = new THREE.PlaneGeometry(16, 16);
+    // el piso no toma luz (con luces tan fuertes, hasta un negro se aclaraba): negro plano, y encima un plano que
+    // solo pinta las sombras de contacto
+    piso.material = new THREE.MeshBasicMaterial({ color: 0x07080a });
+    const sombras = new THREE.Mesh(new THREE.PlaneGeometry(16, 16), new THREE.ShadowMaterial({ opacity: 0.6, depthWrite: false }));
+    sombras.rotation.x = -Math.PI / 2; sombras.position.y = -0.0002; sombras.receiveShadow = true; escena.add(sombras);
+    // la cuadrícula va pintada en el piso (una textura de 25 cm que se repite), no con líneas: las líneas de 1 px que
+    // corren hacia el fondo se perdían y solo se veía una dirección
+    rejilla.visible = false;
+    // líneas en neón (Jon, 12-nov: «las líneas de la cuadrícula es lo que deben ser en neón»): la textura es blanca
+    // con un halo suave sobre negro y el color lo pone el material (celeste; verde al terminar el ensamble)
+    const cg = document.createElement("canvas"); cg.width = cg.height = 128;
+    const gx = cg.getContext("2d"); gx.fillStyle = "#000"; gx.fillRect(0, 0, 128, 128);
+    const linea = function (ancho, alfa) { gx.fillStyle = "rgba(255,255,255," + alfa + ")"; gx.fillRect(0, 0, 128, ancho); gx.fillRect(0, 0, ancho, 128); gx.fillRect(0, 128 - ancho / 2, 128, ancho / 2); gx.fillRect(128 - ancho / 2, 0, ancho / 2, 128); };
+    linea(8, 0.035); linea(4, 0.08); linea(2, 0.4); linea(1, 0.75);
+    const tex = new THREE.CanvasTexture(cg); tex.wrapS = tex.wrapT = THREE.RepeatWrapping; tex.repeat.set(64, 64);
+    tex.anisotropy = renderer.capabilities.getMaxAnisotropy(); tex.encoding = THREE.sRGBEncoding;
+    piso.material.map = tex; piso.material.color.set(NEON_CELESTE); piso.material.needsUpdate = true;
+    const celeste = new THREE.DirectionalLight(0xd6e6ff, 1.0);   // luces de borde casi blancas: el neón va en el piso (aro), no en el cuero celeste.position.set(-1.6, 0.9, -3.0); escena.add(celeste);
+    const magenta = new THREE.DirectionalLight(0xf2e2ff, 0.9); magenta.position.set(1.6, 0.9, -3.0); escena.add(magenta);
+    const relleno = new THREE.DirectionalLight(0xffffff, 0.45); relleno.position.set(-1.5, 1.6, 2.4); escena.add(relleno);
+    const mallas = [];
+    raiz.traverse(function (o) { if (o.isMesh) mallas.push(o); });   // primero se juntan: el contorno es otra malla hija
+    mallas.forEach(function (o) {
+      o.castShadow = true; o.receiveShadow = true;
+      if (o.material) { o.material.envMapIntensity = 0.9; o.userData.colorBase = o.material.color.clone(); }
+      // contorno: la misma malla inflada 1,6 mm por sus normales, vista por dentro, blanca; solo en el recorrido
+      const gq = o.geometry.clone(), pos = gq.attributes.position, nor = gq.attributes.normal;
+      if (nor) for (let k = 0; k < pos.count; k++) pos.setXYZ(k, pos.getX(k) + nor.getX(k) * 0.0016, pos.getY(k) + nor.getY(k) * 0.0016, pos.getZ(k) + nor.getZ(k) * 0.0016);
+      const c = new THREE.Mesh(gq, new THREE.MeshBasicMaterial({ color: 0xf2f5f8, side: THREE.BackSide, fog: false }));
+      c.visible = false; c.name = "contorno"; c.raycast = function () {}; o.add(c); o.userData.contorno = c;
+    });
+  }
+  function armarUnidades(raiz) {
+    realismo(raiz); navegacion();
+    unidades = [];
+    const porNombre = {};
+    raiz.children.slice().forEach(function (o) {
+      if (!o.isMesh) return;
+      // una pieza puede venir en varias mallas («E» y «E_vastago»): van juntas, como una sola unidad
+      const base = o.name.replace(/_.*/, ""), t = tipoDe(base);
+      if (!t) return;
+      if (porNombre[base]) { porNombre[base].objs.push(o); return; }
+      const ex = o.userData || {};
+      const u = porNombre[base] = { nombre: base, tipo: t, objs: [o], ex: ex };
+      u.piv = cajaDe(u.objs).getCenter(V(0, 0, 0)); u.ancla = u.piv.clone(); u.paso = PASO_DE[t];
+      u.eje = ex.eje === "y" ? V(0, 1, 0) : ex.eje === "x" ? V(1, 0, 0) : ex.eje === "z" ? V(0, 0, 1) : null;   // los tornillos giran sobre su eje al entrar
+      // la llave O gira sobre su brazo largo: su pivote es la punta (extras.punta), no el centro de la caja
+      if (ex.punta) { u.piv = V(ex.punta[0], ex.punta[1], ex.punta[2]); u.ancla = cajaDe(u.objs).getCenter(V(0, 0, 0)); }
+      // tornillos que se aprietan con la llave: la boca del hexágono (extras.cabeza) y hacia dónde entra (extras.dir_cana)
+      if (ex.cabeza) { u.cabeza = V(ex.cabeza[0], ex.cabeza[1], ex.cabeza[2]); u.dirCana = V(ex.dir_cana[0], ex.dir_cana[1], ex.dir_cana[2]); u.conLlave = !!ex.llave; }
+      u.qPiso = t === "A" ? Q_ESPALDA : t === "L" ? Q_ACOSTADO : QI;
+      unidades.push(u);
+    });
+    // con todas sus mallas juntas: el pivote, la pose en el piso
+    unidades.forEach(function (u) {
+      if (u.objs.length > 1 && !u.ex.punta) { u.piv = cajaDe(u.objs).getCenter(V(0, 0, 0)); u.ancla = u.piv.clone(); }
+      const b = new THREE.Box3(), p = V(0, 0, 0);
+      u.objs.forEach(function (o) {
+        const pos = o.geometry.attributes.position;
+        for (let i = 0; i < pos.count; i++) { p.fromBufferAttribute(pos, i).sub(u.piv).applyQuaternion(u.qPiso); b.expandByPoint(p); }
+      });
+      const s = sitioEnPiso(u), cb = b.getCenter(V(0, 0, 0));
+      u.cPiso = V(s[0] - cb.x, -b.min.y + 0.0005, s[1] - cb.z);
+      u.q = QI.clone(); u.c = u.piv.clone();
+    });
+    unidades.sort(function (a, b) { return a.nombre < b.nombre ? -1 : 1; });
+    porTipo = {};
+    unidades.forEach(function (u) { (porTipo[u.tipo] = porTipo[u.tipo] || []).push(u); });
+    // el banco: todo el grupo girado media vuelta alrededor del centro del asiento, en el sitio del asiento y con lo
+    // más bajo (las almohadillas de los reposabrazos) a 1 cm del piso
+    const B = uni("B"), bb = new THREE.Box3(), p = V(0, 0, 0);
+    unidades.filter(enBanco).forEach(function (u) {
+      const pos = u.objs[0].geometry.attributes.position;
+      for (let i = 0; i < pos.count; i++) { p.fromBufferAttribute(pos, i).sub(B.piv).applyQuaternion(Q_VOLTEO); bb.expandByPoint(p); }
+    });
+    banco = { q: Q_VOLTEO, c: V(SITIO.B[0], -bb.min.y + 0.002, SITIO.B[1]) };
+    // nada flota (Jon, 12-nov): volteado, el asiento solo se apoya en las puntas de sus brazos (banco0); con los
+    // reposabrazos puestos, en las almohadillas, que quedan 2,4 cm más abajo (banco): se levanta eso al ponerlos
+    const b0 = new THREE.Box3(), pb = B.objs[0].geometry.attributes.position;
+    for (let i = 0; i < pb.count; i++) { p.fromBufferAttribute(pb, i).sub(B.piv).applyQuaternion(Q_VOLTEO); b0.expandByPoint(p); }
+    const banco0 = V(SITIO.B[0], -b0.min.y + 0.002, SITIO.B[1]);
+    unidades.filter(enBanco).forEach(function (u) {
+      const rel = u.piv.clone().sub(B.piv).applyQuaternion(Q_VOLTEO);
+      u.banco = { q: Q_VOLTEO, c: rel.clone().add(banco.c) };
+      u.banco0 = { q: Q_VOLTEO, c: rel.clone().add(banco0) };
+    });
+    banco.c0 = banco0;
+    // la base volteada en el piso (patas arriba), donde está, para ponerle las ruedas
+    const D = uni("D"), bd = new THREE.Box3(), pd = D.objs[0].geometry.attributes.position;
+    for (let i = 0; i < pd.count; i++) { p.fromBufferAttribute(pd, i).sub(D.piv).applyQuaternion(Q_PATAS); bd.expandByPoint(p); }
+    D.volteada = { q: Q_PATAS, c: V(D.cPiso.x, -bd.min.y + 0.002, D.cPiso.z) };
+  }
+  function uni(nombre) { return unidades.find(function (u) { return u.nombre === nombre || u.tipo === nombre; }); }
+  // la pose con que arranca el paso k: lo de pasos anteriores, puesto (en el banco mientras el asiento siga volteado);
+  // lo demás, en el piso
+  function poseInicial(u, k) {
+    if (u.paso >= k) return { q: u.qPiso, c: u.cPiso };
+    if (u.banco && k <= 3) return u.banco0;
+    if (u.banco && k === 4) return u.banco;
+    return { q: QI, c: u.piv };
+  }
+  // paso 0: el recorrido por las piezas (Jon, 12-nov: «el primer plano se ven todas las piezas ahí en el piso y luego
+  // … se va viendo cada una de las piezas y la cantidad que hay de cada una»), en el orden de la lista del manual (A a R)
+  const LETRAS = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R"];
+  let TOUR = [];                       // [{letra, t0, t1}] del paso 0
+  let RUEDAS = [];                     // cuándo arranca cada rueda en el paso 1 (para las capturas)
+  let FINAL = null;                    // el encuadre de la silla armada al terminar
+  function letraEn(tt) { const p = TOUR.find(function (x) { return x.t0 <= tt && tt < x.t1; }); return p ? p.letra : null; }
+  // subpasos de un paso con varias acciones (paso 5: 5.1 M, 5.2 protector y K, 5.3 tapón N, 5.4 el otro lado)
+  let SUBPASOS = {};                   // {k: [{t0, n, txt}]}
+  let subVisto = null;
+  function pintarSubpaso(k, tt) {
+    const lista = SUBPASOS[k];
+    const art = document.querySelector('.anim-texto[data-paso="' + k + '"] .anim-linea');
+    if (!lista || !art) return;
+    let sp = lista[0];
+    lista.forEach(function (x) { if (x.t0 <= tt) sp = x; });
+    const clave = k + "·" + sp.n;
+    const bt = document.getElementById("anim-b-txt");
+    if (bt && bt.textContent.indexOf("Paso " + sp.n + " ") !== 0) bt.textContent = "Paso " + sp.n + " · " + sp.corto;
+    if (subVisto === clave) return;
+    subVisto = clave;
+    art.innerHTML = "<b>" + sp.n + "</b> · " + sp.txt;
+  }
+  // sin teñir nada (Jon, 12-nov: «la pieza que señala la pone como en amarillo, no me gusta»): en el ensamble no se
+  // resalta nada, el movimiento basta; en el recorrido del paso 0, la pieza nombrada lleva un contorno blanco fino y
+  // las demás se oscurecen un poco
+  let marcaVista = null;
+  function resaltar(k, tt) {
+    const l = k === 0 ? letraEn(tt) : null;
+    if (marcaVista !== l) {
+      marcaVista = l;
+      unidades.forEach(function (u) {
+        const on = l && u.tipo === l, apaga = l && !on;
+        u.objs.forEach(function (o) {
+          if (o.userData.contorno) o.userData.contorno.visible = !!on;
+          if (o.material && o.userData.colorBase) o.material.color.copy(o.userData.colorBase).multiplyScalar(apaga ? 0.45 : 1);
+        });
+      });
+    }
+    if (SUBPASOS[k]) pintarSubpaso(k, tt); else subVisto = null;
+  }
+  /* ---------- el recorrido de piezas, parada por parada con las flechas de la barra (Jon, 12-nov: «en el recorrido yo
+     me puedo adelantar y volver en cada pieza para mirar cuánto era») ---------- */
+  function paradaActual() {
+    if (paso !== 0 || !TOUR.length) return null;
+    const i = TOUR.findIndex(function (x) { return x.t0 <= t && t < x.t1; });
+    if (i >= 0) return i;
+    // con movimiento reducido el paso arranca ya en el plano general del final: de ahí la flecha empieza por la A
+    return t < TOUR[0].t0 || reducido ? -1 : TOUR.length;
+  }
+  function irParada(i) {
+    if (paso !== 0) irPaso(0);
+    const P0 = PASOS[0];
+    t = TOUR[i].t0 + 0.35; enMarcha = false; manual = false; vuelo = null;
+    toma = P0.tomas.filter(function (x) { return x.at <= t; }).length;
+    volarA(P0.tomas[toma - 1], reducido);
+    aplicar(0, t);
+  }
+  let navTexto = null;
+  function navegarPintar(k, tt) {
+    const bt = document.getElementById("anim-b-txt"), ba = document.getElementById("anim-b-ant");
+    if (!bt) return;
+    const i = k === 0 ? paradaActual() : null;
+    if (k === 0 && ba) ba.disabled = !(i > 0);
+    let txt = null;
+    if (k === 0 && i >= 0 && i < TOUR.length) {
+      const l = TOUR[i].letra, e = ETQ[l] || { n: l, f: "" };
+      txt = "Paso 0 · " + l + " " + e.n + " " + e.f.split(" · ")[0] + " · " + (i + 1) + "/" + TOUR.length;
+    } else if (k === 0) txt = "Paso 0 · " + (document.querySelector('.anim-texto[data-paso="0"]') || { dataset: {} }).dataset.titulo;
+    if (txt && bt.textContent !== txt) bt.textContent = txt;
+    // la lista del paso 0: la pieza de la parada actual, marcada
+    if (navTexto !== i) {
+      navTexto = i;
+      document.querySelectorAll(".anim-lista-btn").forEach(function (b) {
+        const on = i !== null && i >= 0 && i < TOUR.length && b.dataset.letra === TOUR[i].letra;
+        if (on) b.setAttribute("aria-current", "true"); else b.removeAttribute("aria-current");
+      });
+    }
+  }
+  let navListo = false;
+  function navegacion() {
+    if (navListo) return; navListo = true;
+    const avanzar = function (d) {   // true si la flecha la maneja el recorrido
+      if (paso === 1 && d < 0 && TOUR.length) { irParada(TOUR.length - 1); return true; }
+      if (paso !== 0) return false;
+      const i = paradaActual();
+      if (d > 0) { if (i < TOUR.length - 1) { irParada(i + 1); return true; } irPaso(1); return true; }
+      if (i > 0) { irParada(Math.min(i, TOUR.length) - 1); return true; }
+      return true;
+    };
+    document.addEventListener("click", function (ev) {
+      const b = ev.target.closest && ev.target.closest("#anim-b-sig, #anim-b-ant, .anim-lista-btn");
+      if (!b || !PASOS.length) return;
+      if (b.classList.contains("anim-lista-btn")) {
+        const i = TOUR.findIndex(function (x) { return x.letra === b.dataset.letra; });
+        if (i < 0) return;
+        ev.stopPropagation(); irParada(i);
+        const cerrar = document.getElementById("anim-cerrar"); if (cerrar && cerrar.offsetParent) cerrar.click();
+        return;
+      }
+      if (avanzar(b.id === "anim-b-sig" ? 1 : -1)) ev.stopPropagation();
+    }, true);
+    document.addEventListener("keydown", function (ev) {
+      if (ev.key !== "ArrowRight" && ev.key !== "ArrowLeft") return;
+      if (ev.target.closest && ev.target.closest("input, textarea")) return;
+      if (!document.body.classList.contains("solo-armado") || !PASOS.length) return;
+      if (avanzar(ev.key === "ArrowRight" ? 1 : -1)) ev.stopImmediatePropagation();
+    }, true);
+  }
+
+  /* ---------- la llave O atornillando (Jon, 12-nov: «mostrar la llave que se utiliza para tornillar cada uno de los
+     tornillos … la llave girando y metiendo el tornillo») ----------
+     Cada tornillo: 1) llega y entra un poco (ENTRA), 2) la llave baja por el eje del tornillo y se encaja en la cabeza,
+     3) giran juntos y el tornillo avanza hasta asentar, 4) la llave sale por el eje. El primero de cada grupo va lento;
+     los demás, rápido. Una sola llave por paso: un solo recorrido con todas sus paradas. */
+  const ENTRA = 0.012, FUERA = 0.06, BOCA = 0.002;     // m: lo que falta para asentar; la llave a 6 cm; 2 mm dentro del hexágono
+  let ENCAJES = [];                                     // [{paso, tornillo, t0, t1}] la llave en el eje de ese tornillo
+  const RITMO = { lento: { llega: 2.0, viaje: 1.5, encaja: 0.8, gira: 2.8, vueltas: 3, sale: 0.7 },
+    rapido: { llega: 1.1, viaje: 0.8, encaja: 0.35, gira: 1.1, vueltas: 2, sale: 0.35 } };
+  function bocaEn(u, pose) { return u.cabeza.clone().sub(u.piv).applyQuaternion(pose.q).add(pose.c); }
+  function entraEn(u, q) { return u.dirCana.clone().applyQuaternion(q).normalize(); }
+  function poseLlave(boca, a, manija) {
+    // el brazo largo de la llave (su +x, de la doblez a la punta) entra por el eje del tornillo; el corto (su +z) es la
+    // manija, hacia `manija`
+    const x = a.clone().normalize(), z = manija.clone().addScaledVector(x, -manija.dot(x)).normalize(), y = z.clone().cross(x);
+    return { q: new THREE.Quaternion().setFromRotationMatrix(new THREE.Matrix4().makeBasis(x, y, z)), c: boca.clone().addScaledVector(a, BOCA) };
+  }
+  // la llave: un recorrido por paso, armado de a tramos
+  function nuevaLlave() { const O = uni("O"); return { u: O, t: 0, pose: enPiso(O), pts: [] }; }
+  function llaveA(L, t, pose, d, giro) {
+    if (t > L.t + 1e-6) L.pts.push({ c: L.pose.c.clone(), q: L.pose.q, d: t - L.t });
+    L.pts.push({ c: pose.c.clone(), q: pose.q, d: d, giro: giro || 0 });
+    L.t = Math.max(t, L.t) + d; L.pose = pose;
+  }
+  function llaveAlPiso(L, t, alto, por) {
+    const O = L.u;
+    llaveA(L, t, { q: L.pose.q, c: V(L.pose.c.x, alto, L.pose.c.z) }, 0.5);
+    (por || []).forEach(function (c) { llaveA(L, L.t, { q: O.qPiso, c: c }, 0.6); });
+    llaveA(L, L.t, { q: O.qPiso, c: V(O.cPiso.x, alto, O.cPiso.z) }, 0.9);
+    llaveA(L, L.t, enPiso(O), 0.6);
+  }
+  function recLlave(L) { return recorrido(L.u, 0, enPiso(L.u), L.pts); }
+  // aprieta los tornillos de `lista` con la llave L desde t0. op: fin(u) → pose final; llega(u, t, pre, ritmo) → rec del
+  // tornillo hasta `pre`; via(L, t, boca, pose) → lleva la llave hasta 6 cm fuera de la boca; largo(u) → hacia dónde va el
+  // brazo largo. El primero, lento. Devuelve cuándo terminó.
+  function atornillar(recs, L, k, lista, t0, op) {
+    let t = t0;
+    lista.forEach(function (u, i) {
+      const R = RITMO[i === 0 && op.lento !== false ? "lento" : "rapido"];
+      const F = op.fin(u), a = entraEn(u, F.q), pre = { q: F.q, c: F.c.clone().addScaledVector(a, -ENTRA) };
+      const vueltas = R.vueltas, sg = Math.sign(u.eje.dot(u.dirCana)) || 1;
+      // el siguiente tornillo llega mientras la llave aprieta el anterior
+      const tLlega = i === 0 ? t : Math.max(t0, t - R.llega);
+      const pts = op.llega(u, tLlega, pre, R);
+      const fl = pts.reduce(function (s, p) { return s + p.d; }, tLlega);
+      // la llave: hasta 6 cm fuera de la boca del tornillo (ya entrado un poco), por su eje
+      const largo = op.largo(u, F), E0 = poseLlave(bocaEn(u, pre), a, largo), E1 = poseLlave(bocaEn(u, F), a, largo);
+      op.via(L, Math.max(L.t, fl - R.viaje * 0.5), { q: E0.q, c: E0.c.clone().addScaledVector(a, -FUERA) }, R);
+      const tA = L.enEje, tGira = Math.max(L.t + R.encaja, fl + 0.1);
+      if (tGira > fl) pts.push({ c: pre.c, q: pre.q, d: tGira - fl });
+      // rosca derecha: mirando la cabeza de frente, el tornillo y la llave giran como las agujas del reloj mientras el
+      // tornillo avanza (rotación positiva alrededor de `a`). ponerPose aplica giro·2π·(1 − s): el ángulo baja con el
+      // tiempo, así que el giro va con signo menos, y el del tornillo además con el signo de su eje local frente a `a`
+      pts.push({ c: F.c, q: F.q, d: R.gira, giro: -sg * vueltas, ease: lineal });
+      recs.push(recorrido(u, tLlega, enPiso(u), pts));
+      llaveA(L, tGira - R.encaja, E0, R.encaja);                       // encaja en la cabeza
+      llaveA(L, tGira, E1, R.gira, -vueltas);                        // gira con el tornillo (su +x es `a`) y avanza con él
+      L.pts[L.pts.length - 1].ease = lineal;
+      llaveA(L, L.t, { q: E1.q, c: E1.c.clone().addScaledVector(a, -FUERA) }, R.sale);   // sale por el eje
+      if (op.salir) op.salir(L, a, R);                                 // y sigue por el eje hasta quedar libre
+      ENCAJES.push({ paso: k, tornillo: u.nombre, t0: tA, t1: L.t, giro0: tGira, giro1: tGira + R.gira });
+      t = L.t;
+    });
+    return t;
+  }
+  // pares que la revisión NO descuenta aunque se toquen armados: se revisan malla contra malla (cada arista de una contra
+  // los triángulos de la otra). El pistón dentro del cubre pistón se descontaba por cajas y tapaba una colisión real
+  // (Jon, 12-nov: «Cubre pistón no tiene perforación para que salga el pistón»)
+  const FINOS = ["E|F", "A|I", "B|I", "I|M", "C|I", "A|J", "B|J", "J|M", "C|J"];
+  const tipoN = function (x) { return x.replace(/[_\d].*$/, ""); };
+  function esFino(par) { const n = par.split("|").map(tipoN).sort().join("|"); return FINOS.indexOf(n) >= 0; }
+  function trisMundo(o) {
+    o.updateMatrixWorld(true);
+    const pos = o.geometry.attributes.position, idx = o.geometry.index, n = idx ? idx.count : pos.count;
+    const v = new Float32Array(pos.count * 3), p = V(0, 0, 0);
+    for (let i = 0; i < pos.count; i++) { p.fromBufferAttribute(pos, i).applyMatrix4(o.matrixWorld); v[3 * i] = p.x; v[3 * i + 1] = p.y; v[3 * i + 2] = p.z; }
+    const t = new Uint32Array(n);
+    for (let i = 0; i < n; i++) t[i] = idx ? idx.getX(i) : i;
+    return { v: v, t: t };
+  }
+  function cajaTri(m, k) {
+    const a = 3 * m.t[k], b = 3 * m.t[k + 1], c = 3 * m.t[k + 2], v = m.v;
+    return [Math.min(v[a], v[b], v[c]), Math.min(v[a + 1], v[b + 1], v[c + 1]), Math.min(v[a + 2], v[b + 2], v[c + 2]),
+      Math.max(v[a], v[b], v[c]), Math.max(v[a + 1], v[b + 1], v[c + 1]), Math.max(v[a + 2], v[b + 2], v[c + 2])];
+  }
+  function cajaMalla(m) { const c = [1e9, 1e9, 1e9, -1e9, -1e9, -1e9]; for (let i = 0; i < m.v.length; i += 3) for (let j = 0; j < 3; j++) { c[j] = Math.min(c[j], m.v[i + j]); c[j + 3] = Math.max(c[j + 3], m.v[i + j]); } return c; }
+  const toca = function (A, B) { return A[0] <= B[3] && B[0] <= A[3] && A[1] <= B[4] && B[1] <= A[4] && A[2] <= B[5] && B[2] <= A[5]; };
+  function cerca(m, caja) { const out = []; for (let k = 0; k < m.t.length; k += 3) if (toca(cajaTri(m, k), caja)) out.push(k); return out; }
+  // ¿el segmento p→q atraviesa el triángulo (a, b, c)? (Möller–Trumbore, sin contar los extremos)
+  function segTri(p, q, a, b, c) {
+    const e1x = b[0] - a[0], e1y = b[1] - a[1], e1z = b[2] - a[2], e2x = c[0] - a[0], e2y = c[1] - a[1], e2z = c[2] - a[2];
+    const dx = q[0] - p[0], dy = q[1] - p[1], dz = q[2] - p[2];
+    const hx = dy * e2z - dz * e2y, hy = dz * e2x - dx * e2z, hz = dx * e2y - dy * e2x, det = e1x * hx + e1y * hy + e1z * hz;
+    if (Math.abs(det) < 1e-14) return false;
+    const f = 1 / det, sx = p[0] - a[0], sy = p[1] - a[1], sz = p[2] - a[2], u = f * (sx * hx + sy * hy + sz * hz);
+    if (u < 0 || u > 1) return false;
+    const qx = sy * e1z - sz * e1y, qy = sz * e1x - sx * e1z, qz = sx * e1y - sy * e1x, w = f * (dx * qx + dy * qy + dz * qz);
+    if (w < 0 || u + w > 1) return false;
+    const tt = f * (e2x * qx + e2y * qy + e2z * qz);
+    return tt > 1e-4 && tt < 1 - 1e-4;
+  }
+  const pt = function (m, i) { return [m.v[3 * i], m.v[3 * i + 1], m.v[3 * i + 2]]; };
+  function aristasCruzan(ma, ka, mb, kb) {
+    for (let x = 0; x < ka.length; x++) {
+      const k = ka[x], P = [pt(ma, ma.t[k]), pt(ma, ma.t[k + 1]), pt(ma, ma.t[k + 2])], cj = cajaTri(ma, k);
+      for (let y = 0; y < kb.length; y++) {
+        const kk = kb[y];
+        if (!toca(cj, cajaTri(mb, kk))) continue;
+        const a = pt(mb, mb.t[kk]), b = pt(mb, mb.t[kk + 1]), c = pt(mb, mb.t[kk + 2]);
+        if (segTri(P[0], P[1], a, b, c) || segTri(P[1], P[2], a, b, c) || segTri(P[2], P[0], a, b, c)) return true;
+      }
+    }
+    return false;
+  }
+  function chocaFino(par) {
+    const n = par.split("|"), oa = modelo.getObjectByName(n[0]), ob = modelo.getObjectByName(n[1]);
+    if (!oa || !ob) return false;
+    const ma = trisMundo(oa), mb = trisMundo(ob), ca = cajaMalla(ma), cb = cajaMalla(mb);
+    const ka = cerca(ma, cb), kb = cerca(mb, ca);
+    if (!ka.length || !kb.length) return false;
+    return aristasCruzan(ma, ka, mb, kb) || aristasCruzan(mb, kb, ma, ka);
+  }
+  // exención de la revisión de choques: la llave dentro de la cabeza de un tornillo (y entrando o saliendo por su eje)
+  // toca lo que esa cabeza toca armada; nada más (las cajas orientadas de la llave y de la cabeza se cruzan ahí)
+  function llaveExenta(par, k, tt, libres) {
+    const n = par.split("|");
+    if (n[0] !== "O" && n[1] !== "O") return false;
+    const otro = n[0] === "O" ? n[1] : n[0];
+    return ENCAJES.some(function (e) {
+      return e.paso === k && e.t0 <= tt && tt <= e.t1 &&
+        (otro === e.tornillo || libres.has(otro + "|" + e.tornillo) || libres.has(e.tornillo + "|" + otro));
+    });
+  }
+
+  /* ---------- poses y trayectorias ---------- */
+  function ponerPose(u, q, c, giro) {
+    u.q.copy(q); u.c.copy(c);
+    let qq = q;
+    if (giro) qq = q.clone().multiply(new THREE.Quaternion().setFromAxisAngle(u.eje || EJE_X, giro));
+    u.objs.forEach(function (o) {
+      o.quaternion.copy(qq);
+      o.position.copy(c).sub(u.piv.clone().applyQuaternion(qq));
+    });
+  }
+  const suave = function (s) { return s < 0.5 ? 4 * s * s * s : 1 - Math.pow(-2 * s + 2, 3) / 2; };
+  const cae = function (s) { return 1 - Math.pow(1 - s, 2); };
+  // un recorrido: arranca en `ini` (pose {q, c}) a los t0 segundos del paso y pasa por cada punto
+  // {c, q?, d (segundos), giro? (vueltas mientras entra), ease?}
+  function recorrido(u, t0, ini, pts) {
+    const way = [{ q: ini.q, c: ini.c.clone(), t: t0 }];
+    let t = t0;
+    pts.forEach(function (p) {
+      t += p.d;
+      way.push({ q: p.q || QI, c: p.c.clone(), t: t, giro: p.giro || 0, ease: p.ease || suave });
+    });
+    return { u: u, t0: t0, t1: t, way: way };
+  }
+  function evaluar(tr, t) {
+    const w = tr.way;
+    if (t <= w[0].t) return ponerPose(tr.u, w[0].q, w[0].c, 0);
+    for (let i = 1; i < w.length; i++) {
+      if (t <= w[i].t) {
+        const s = w[i].ease((t - w[i - 1].t) / (w[i].t - w[i - 1].t));
+        const q = new THREE.Quaternion().copy(w[i - 1].q).slerp(w[i].q, s);
+        const c = w[i - 1].c.clone().lerp(w[i].c, s);
+        return ponerPose(tr.u, q, c, w[i].giro ? w[i].giro * 2 * Math.PI * (1 - s) : 0);
+      }
+    }
+    const f = w[w.length - 1];
+    ponerPose(tr.u, f.q, f.c, 0);
+  }
+  const enPiso = function (u) { return { q: u.qPiso, c: u.cPiso }; };
+  const arriba = function (u, y) { return V(u.cPiso.x, y, u.cPiso.z); };
+  const ALTO = 1.05;   // (del espejo; la silla usa ALTO_V)   // por encima de la A (la bandera llega a 0,90 m): las piezas viajan por aquí
+
+  // cada paso: recorridos (los que se mueven), tomas de cámara y etiquetas. Los pasos siguen EXACTO el manual
+  // («Manual Silla V40 y V45.pdf», hoja 2).
+  const lineal = function (s) { return s; };
+  function poseEn(tr, t) {   // la pose de un recorrido en el tiempo t, sin aplicarla
+    const w = tr.way;
+    if (t <= w[0].t) return { q: w[0].q.clone(), c: w[0].c.clone() };
+    for (let i = 1; i < w.length; i++) {
+      if (t <= w[i].t) {
+        const s = w[i].ease((t - w[i - 1].t) / (w[i].t - w[i - 1].t));
+        return { q: new THREE.Quaternion().copy(w[i - 1].q).slerp(w[i].q, s), c: w[i - 1].c.clone().lerp(w[i].c, s) };
+      }
+    }
+    const f = w[w.length - 1];
+    return { q: f.q.clone(), c: f.c.clone() };
+  }
+  // u viaja pegado al recorrido de su padre, como un solo cuerpo (el asiento con la mariposa y los reposabrazos):
+  // un punto cada 1/30 s, así el giro no lo separa
+  function seguir(u, padre) {
+    const P0 = poseEn(padre, padre.t0), qi = P0.q.clone().invert();
+    const qRel = qi.clone().multiply(u.banco.q), cRel = u.banco.c.clone().sub(P0.c).applyQuaternion(qi);
+    const pts = [], n = Math.ceil((padre.t1 - padre.t0) * 30);
+    for (let i = 1; i <= n; i++) {
+      const P = poseEn(padre, padre.t0 + (padre.t1 - padre.t0) * i / n);
+      pts.push({ c: cRel.clone().applyQuaternion(P.q).add(P.c), q: P.q.clone().multiply(qRel), d: (padre.t1 - padre.t0) / n, ease: lineal });
+    }
+    return recorrido(u, padre.t0, u.banco, pts);
+  }
+  function construirPasos() {
+    const P = [];
+    ENCAJES = []; SUBPASOS = {};
+    // 0 · identificar las piezas: todas caen al piso, plano general, y la cámara recorre cada letra de la lista del manual
+    //     (A a R) con la pieza iluminada y su etiqueta «letra · nombre · cantidad»; al final vuelve al plano general
+    const caidas = unidades.map(function (u, i) {
+      return recorrido(u, 0.03 * i, { q: u.qPiso, c: u.cPiso.clone().add(V(0, 0.18, 0)) }, [{ c: u.cPiso, q: u.qPiso, d: 0.55, ease: cae }]);
+    });
+    const general = { at: 0, mira: V(0.22, 0.2, 0.32), dir: V(0.4, 0.95, 0.85), r: 1.5 };
+    const tomas0 = [general];
+    TOUR = [];
+    let t0 = 2.6;
+    LETRAS.forEach(function (l) {
+      const us = porTipo[l] || [];
+      if (!us.length) return;
+      const caja = new THREE.Box3();
+      us.forEach(function (u) {
+        const b = cajaDe(u.objs), h = b.getSize(V(0, 0, 0)).multiplyScalar(0.5);
+        caja.expandByPoint(u.cPiso.clone().sub(h)); caja.expandByPoint(u.cPiso.clone().add(h));
+      });
+      const mira = caja.getCenter(V(0, 0, 0)), r = Math.max(0.07, caja.getSize(V(0, 0, 0)).length() * 0.5);
+      tomas0.push({ at: t0, mira: mira, dir: V(0.35, 0.95, 0.8), r: r });
+      TOUR.push({ letra: l, t0: t0 + 0.3, t1: t0 + 2.5 });
+      t0 += 2.5;
+    });
+    tomas0.push({ at: t0, mira: general.mira, dir: general.dir, r: general.r });
+    // nadie se mueve durante el recorrido: un recorrido quieto de la llave (va primero, para no pisar su caída)
+    const quieto = recorrido(uni("O"), 2.0, enPiso(uni("O")), [{ c: uni("O").cPiso, q: uni("O").qPiso, d: t0 + 1.2 - 2.0 }]);
+    quieto.quieto = true;
+    const p0 = { recs: [quieto].concat(caidas), tomas: tomas0, todas: true };
+    // la etiqueta: todas en el plano general; durante el recorrido, solo la de la letra que se está mirando
+    Object.defineProperty(p0, "etiq", { get: function () { const l = paso === 0 ? letraEn(t) : null; return l ? [l] : LETRAS; } });
+    P.push(p0);
+    // 1 · «Introduce a presión las 5 ruedas (G) en los agujeros de la base (D), luego introduce el pistón (E) en el
+    //     agujero central de la base y posteriormente ubica el cubre pistón (F).»
+    const r1 = [], D = uni("D"), G = porTipo.G;
+    // como lo haría quien la arma en su casa (Jon, 12-nov): la base se voltea y queda patas arriba en el piso; cada
+    // rueda baja desde arriba y entra a presión en su agujero, una por una (empujón corto hacia abajo); la base, ya con
+    // ruedas, se voltea y queda de pie sobre ellas; después el pistón y el cubre pistón
+    const Vb = D.volteada, ALTO_D = 0.62, EMPUJE = 0.015, CADA = 2.2;
+    const rD = recorrido(D, 0, enPiso(D), [{ c: V(D.cPiso.x, ALTO_D, D.cPiso.z), q: QI, d: 0.8 },
+      { c: V(D.cPiso.x, ALTO_D, D.cPiso.z), q: Q_PATAS, d: 1.0 }, { c: Vb.c, q: Q_PATAS, d: 0.7 }]);
+    const tRuedas = 2.8, tRueda = [];
+    const dentro = function (u) { return { q: Q_PATAS, c: u.piv.clone().sub(D.piv).applyQuaternion(Q_PATAS).add(Vb.c) }; };
+    const recG = [];
+    G.forEach(function (u, i) {
+      const ti = tRuedas + CADA * i, F = dentro(u), arriba = F.c.clone().add(V(0, 0.12, 0));
+      recG.push({ u: u, ti: ti, pts: [{ c: V(u.cPiso.x, F.c.y + 0.12, u.cPiso.z), q: Q_PATAS, d: 0.5 }, { c: arriba, q: Q_PATAS, d: 0.7 },
+        { c: F.c.clone().add(V(0, EMPUJE, 0)), q: Q_PATAS, d: 0.55 }, { c: F.c, q: Q_PATAS, d: 0.25, ease: lineal }], F: F });
+      tRueda.push(ti);
+    });
+    const fin = tRuedas + CADA * (G.length - 1) + 2.0 + 0.3;
+    // la base con sus ruedas se voltea: sube, gira y baja de pie
+    rD.way.push({ q: Q_PATAS, c: Vb.c.clone(), t: fin, giro: 0, ease: suave });
+    [[V(D.cPiso.x, ALTO_D, D.cPiso.z), Q_PATAS, 0.8], [V(D.cPiso.x, ALTO_D, D.cPiso.z), QI, 1.2], [D.piv, QI, 0.8]].forEach(function (w) {
+      rD.way.push({ q: w[1], c: w[0].clone(), t: rD.way[rD.way.length - 1].t + w[2], giro: 0, ease: suave });
+    });
+    rD.t1 = rD.way[rD.way.length - 1].t;
+    r1.push(rD);
+    recG.forEach(function (g) {
+      const pts = g.pts, fl = g.ti + 2.0;
+      pts.push({ c: g.F.c, q: Q_PATAS, d: fin - fl });
+      const rel = { q: Q_PATAS.clone().invert().multiply(g.F.q), c: g.F.c.clone().sub(Vb.c).applyQuaternion(Q_PATAS.clone().invert()) };
+      const n = Math.ceil((rD.t1 - fin) * 30);
+      for (let k = 1; k <= n; k++) {
+        const P = poseEn(rD, fin + (rD.t1 - fin) * k / n);
+        pts.push({ c: rel.c.clone().applyQuaternion(P.q).add(P.c), q: P.q.clone().multiply(rel.q), d: (rD.t1 - fin) / n, ease: lineal });
+      }
+      r1.push(recorrido(g.u, g.ti, enPiso(g.u), pts));
+    });
+    RUEDAS = tRueda;
+    let t1 = rD.t1 + 0.4;
+    ["E", "F"].forEach(function (n, i) {
+      const u = uni(n), y = u.piv.y + 0.45;
+      r1.push(recorrido(u, t1 + 2.4 * i, enPiso(u), [{ c: V(u.cPiso.x, y, u.cPiso.z), d: 0.6 }, { c: V(u.piv.x, y, u.piv.z), d: 0.8 },
+        { c: u.piv, d: 0.8 }]));
+    });
+    P.push({
+      recs: r1,
+      tomas: [{ at: 0, mira: V(-0.05, 0.25, 0.2), dir: V(0.55, 0.7, 0.9), r: 0.7 },
+        { at: tRuedas - 0.4, mira: V(Vb.c.x, 0.12, Vb.c.z + 0.1), dir: V(0.45, 0.95, 0.75), r: 0.55 },
+        { at: fin - 0.2, mira: V(D.cPiso.x, 0.35, D.cPiso.z), dir: V(0.55, 0.5, 0.9), r: 0.7 },
+        { at: t1 - 0.2, mira: V(-0.2, 0.3, 0.05), dir: V(0.6, 0.45, 0.85), r: 0.5 }],
+      etiq: ["D", "G", "E", "F"]
+    });
+    // 2 · «Voltea el asiento (B) y ubica las 4 arandelas de caucho (R) en los 4 agujeros como se ve en el dibujo.»
+    const r2 = [], B = uni("B");
+    const H1 = Math.max(B.cPiso.y, banco.c0.y) + 0.45;
+    r2.push(recorrido(B, 0, enPiso(B), [{ c: V(B.cPiso.x, H1, B.cPiso.z), d: 0.9 }, { c: V(banco.c0.x, H1, banco.c0.z), q: Q_VOLTEO, d: 1.3 },
+      { c: banco.c0, q: Q_VOLTEO, d: 0.8 }]));
+    porTipo.R.forEach(function (u, i) {
+      const b = u.banco0.c;
+      r2.push(recorrido(u, 3.2 + 0.45 * i, enPiso(u), [{ c: V(u.cPiso.x, 0.95, u.cPiso.z), q: Q_VOLTEO, d: 0.5 },
+        { c: V(b.x, b.y + 0.2, b.z), q: Q_VOLTEO, d: 0.7 }, { c: b, q: Q_VOLTEO, d: 0.4 }]));
+    });
+    P.push({
+      recs: r2,
+      tomas: [{ at: 0, mira: V(banco.c0.x, 0.4, banco.c0.z), dir: V(0.45, 0.6, 0.9), r: 0.62 },
+        { at: 3.0, mira: V(banco.c0.x, banco.c0.y + 0.12, banco.c0.z), dir: V(0.25, 1, 0.55), r: 0.34 }],
+      etiq: ["B", "R"]
+    });
+    // 3 · «Sobre las arandelas ubica la mariposa (H) y fíjala con los tornillos (L), luego ubica los dos reposabrazos (C)
+    //     que coincidan con los 4 agujeros y fíjalos con los tornillos (L).» Los reposabrazos van con 3 L cada uno, como
+    //     trae el modelo (Jon, 11-nov: «por ahora, hagámoslo con tres tornillos»).
+    const r3 = [];
+    function alBanco(u, t0, alto, sobre, d, giro) {
+      const b = u.banco0.c;
+      return recorrido(u, t0, enPiso(u), [{ c: V(u.cPiso.x, alto, u.cPiso.z), q: Q_VOLTEO, d: d[0] },
+        { c: V(b.x, b.y + sobre, b.z), q: Q_VOLTEO, d: d[1] }, { c: b, q: Q_VOLTEO, d: d[2], giro: giro || 0 }]);
+    }
+    // los reposabrazos entran de lado, de afuera hacia adentro, a la altura del banco: por arriba pasarían por la mariposa
+    function deLado(u, t0) {
+      const b = u.banco.c, xo = b.x + Math.sign(b.x - banco.c.x) * 0.25;
+      return recorrido(u, t0, enPiso(u), [{ c: V(u.cPiso.x, 1.1, u.cPiso.z), q: Q_VOLTEO, d: 0.8 }, { c: V(xo, 1.1, b.z), q: Q_VOLTEO, d: 0.8 },
+        { c: V(xo, b.y, b.z), q: Q_VOLTEO, d: 0.6 }, { c: b, q: Q_VOLTEO, d: 0.8 }]);
+    }
+    const H = uni("H");
+    r3.push(alBanco(H, 0, 1.0, 0.3, [0.8, 0.9, 0.8]));
+    const Ls = porTipo.L.slice().sort(function (a, b) { return Number(a.nombre.slice(1)) - Number(b.nombre.slice(1)); });
+    const Lmar = Ls.filter(function (u) { return Math.abs(u.piv.x) < 0.15; });
+    const Lder = Ls.filter(function (u) { return u.piv.x <= -0.15; }), Lizq = Ls.filter(function (u) { return u.piv.x >= 0.15; });
+    // los tornillos en el banco: llegan por arriba y quedan entrados un poco; la llave baja por encima, por su eje
+    const ALTO_B = 1.05;
+    const opBanco = {
+      fin: function (u) { return u.banco; },
+      llega: function (u, t, pre, R) {
+        return [{ c: V(u.cPiso.x, 0.95, u.cPiso.z), q: Q_VOLTEO, d: R.llega * 0.3 }, { c: V(pre.c.x, pre.c.y + 0.09, pre.c.z), q: Q_VOLTEO, d: R.llega * 0.45 },
+          { c: pre.c, q: Q_VOLTEO, d: R.llega * 0.25 }];
+      },
+      // la manija hacia afuera del banco
+      salir: function (L, a, R) { llaveA(L, L.t, { q: L.pose.q, c: V(L.pose.c.x, ALTO_B, L.pose.c.z) }, R.sale * 1.2); },
+      largo: function (u, F) { const d = F.c.clone().sub(banco.c); d.y = 0; return d.lengthSq() > 1e-6 ? d.normalize() : V(1, 0, 0); },
+      via: function (L, t, afuera, R) {
+        const lejos = L.pose.c.distanceTo(afuera.c) > 0.25;
+        if (lejos) {
+          llaveA(L, t, { q: L.pose.q, c: V(L.pose.c.x, ALTO_B, L.pose.c.z) }, R.viaje * 0.3);
+          llaveA(L, L.t, { q: afuera.q, c: V(afuera.c.x, ALTO_B, afuera.c.z) }, R.viaje * 0.4);
+          L.enEje = L.t; llaveA(L, L.t, afuera, R.viaje * 0.3);
+        } else {
+          llaveA(L, t, { q: afuera.q, c: V(afuera.c.x, Math.max(afuera.c.y, L.pose.c.y), afuera.c.z) }, R.viaje * 0.6);
+          L.enEje = L.t; llaveA(L, L.t, afuera, R.viaje * 0.4);
+        }
+      }
+    };
+    const L3 = nuevaLlave();
+    let tt3 = atornillar(r3, L3, 3, Lmar, 2.7, Object.assign({}, opBanco, { fin: function (u) { return u.banco0; } }));
+    llaveAlPiso(L3, tt3, ALTO_B); tt3 = L3.t;
+    const C1 = uni("C1"), C2 = uni("C2");
+    const tC1 = tt3 + 0.2;
+    // al poner los reposabrazos el asiento queda apoyado en sus almohadillas, 2,4 cm más abajo que las puntas de sus
+    // brazos: quien arma levanta el asiento eso mientras arrima el primero
+    const enBanco0 = unidades.filter(function (u) { return u.banco && u.tipo !== "C" && !(u.tipo === "L" && Lmar.indexOf(u) < 0); });
+    enBanco0.forEach(function (u) {
+      const r = r3.find(function (x) { return x.u === u; });
+      if (!r) { r3.push(recorrido(u, tC1, u.banco0, [{ c: u.banco.c, q: Q_VOLTEO, d: 0.6 }])); return; }
+      r.way.push({ q: Q_VOLTEO, c: u.banco0.c.clone(), t: Math.max(tC1, r.t1), giro: 0, ease: suave });
+      r.way.push({ q: Q_VOLTEO, c: u.banco.c.clone(), t: Math.max(tC1, r.t1) + 0.6, giro: 0, ease: suave });
+      r.t1 = Math.max(tC1, r.t1) + 0.6;
+    });
+    r3.push(deLado(C1, tC1));
+    tt3 = atornillar(r3, L3, 3, Lder, tC1 + 2.9, opBanco);
+    llaveAlPiso(L3, tt3, ALTO_B); tt3 = L3.t;
+    const tC2 = tt3 + 0.2;
+    r3.push(deLado(C2, tC2));
+    tt3 = atornillar(r3, L3, 3, Lizq, tC2 + 2.9, Object.assign({}, opBanco, { lento: false }));
+    llaveAlPiso(L3, tt3, ALTO_B);
+    r3.unshift(recLlave(L3));
+    const g3 = ENCAJES.filter(function (e) { return e.paso === 3; });
+    const enBanco1 = Lmar[0].banco.c, enBanco2 = Lder[0].banco.c;
+    P.push({
+      recs: r3,
+      tomas: [{ at: 0, mira: V(banco.c.x, banco.c.y + 0.1, banco.c.z), dir: V(0.35, 1, 0.6), r: 0.4 },
+        { at: g3[0].t0 - 0.6, mira: enBanco1, dir: V(0.45, 0.9, 0.7), r: 0.13 },
+        { at: g3[0].t1 + 0.1, mira: V(banco.c.x, banco.c.y + 0.1, banco.c.z), dir: V(0.35, 1, 0.6), r: 0.4 },
+        { at: tC1 - 0.3, mira: C1.banco.c, dir: V(0.75, 0.8, 0.6), r: 0.36 },
+        { at: g3[Lmar.length].t0 - 0.6, mira: enBanco2, dir: V(0.6, 0.9, 0.6), r: 0.13 },
+        { at: g3[Lmar.length].t1 + 0.1, mira: C1.banco.c, dir: V(0.75, 0.8, 0.6), r: 0.36 },
+        { at: tC2 - 0.3, mira: C2.banco.c, dir: V(-0.5, 0.8, 0.75), r: 0.36 },
+        { at: L3.t - 0.5, mira: V(banco.c.x, banco.c.y, banco.c.z), dir: V(0.4, 0.9, 0.8), r: 0.55 }],
+      etiq: ["H", "L", "C", "O"]
+    });
+    // 4 · «Introduce el pistón en el agujero de la mariposa a presión.»: el asiento armado se voltea y baja al pistón
+    const r4 = [];
+    // «a presión»: baja hasta 15 mm del final y un empujón corto, como las ruedas
+    const rB = recorrido(B, 0, B.banco, [{ c: V(banco.c.x, 1.05, banco.c.z), q: Q_VOLTEO, d: 1.0 },
+      { c: V(banco.c.x, 1.05, banco.c.z), q: QI, d: 1.5 }, { c: B.piv.clone().add(V(0, 0.35, 0)), q: QI, d: 1.5 },
+      { c: B.piv.clone().add(V(0, 0.015, 0)), q: QI, d: 0.9 }, { c: B.piv, q: QI, d: 0.25, ease: lineal }]);
+    r4.push(rB);
+    unidades.forEach(function (u) { if (u.banco && u !== B) r4.push(seguir(u, rB)); });
+    P.push({
+      recs: r4,
+      tomas: [{ at: 0, mira: V(0.5, 0.55, 0), dir: V(0.3, 0.45, 1), r: 0.95 },
+        { at: 3.6, mira: V(0, 0.45, 0), dir: V(0.6, 0.4, 0.85), r: 0.62 }],
+      etiq: ["B", "H", "C"]
+    });
+    // 5 · «Fija el asiento y el espaldar con tornillos (M), luego pon el protector plástico con el tornillo (K) y por
+    //     último el tapón (N). Repite este mismo procedimiento en el otro lado.»
+    // Tabla «manual contra animación» en el LEEME. El espaldar llega y se apoya en los brazos del asiento ANTES de los M;
+    // los M, el protector, K y N entran de lado, de afuera hacia adentro, como las flechas del dibujo.
+    const r5 = [], A = uni("A");
+    // el espaldar se levanta de pie donde está, se lleva de pie a la altura del asiento por detrás de la silla, entra
+    // de atrás hacia adelante entre los brazos del asiento y baja los últimos 4 cm hasta apoyarse en ellos
+    const yA = A.piv.y + 0.04, zA = A.piv.z - 0.42;
+    r5.push(recorrido(A, 0, enPiso(A), [{ c: V(A.cPiso.x, yA, A.cPiso.z), q: QI, d: 1.3 },
+      { c: V(-0.75, yA, zA), q: QI, d: 0.9 }, { c: V(A.piv.x, yA, zA), q: QI, d: 0.8 },
+      { c: V(A.piv.x, yA, A.piv.z), q: QI, d: 0.9 }, { c: A.piv, q: QI, d: 0.6 }]));
+    const lado = function (s) { return function (u) { return Math.sign(u.piv.x) === s; }; };
+    const XF = 0.62, ZF = 0.5, ALTO_5 = 1.2;           // afuera de los reposabrazos; por delante de la silla
+    // de lado: sube, va por delante de la silla hasta afuera del costado, baja por fuera y entra de afuera hacia adentro
+    function deCostado(u, t0, s, q, giro, dEntra) {
+      const xo = s * XF;
+      return recorrido(u, t0, enPiso(u), [{ c: V(u.cPiso.x, ALTO_5, u.cPiso.z), q: q, d: 0.5 }, { c: V(xo, ALTO_5, ZF), q: q, d: 0.7 },
+        { c: V(xo, u.piv.y, u.piv.z), q: q, d: 0.7 }, { c: V(u.piv.x + s * 0.12, u.piv.y, u.piv.z), q: q, d: 0.5 },
+        { c: u.piv, q: q, d: dEntra || 0.7, giro: giro || 0 }]);
+    }
+    const opLado = function (s) {
+      return {
+        fin: function (u) { return { q: QI, c: u.piv }; },
+        llega: function (u, t, pre, R) {
+          const xo = s * XF;
+          return [{ c: V(u.cPiso.x, ALTO_5, u.cPiso.z), q: QI, d: R.llega * 0.2 }, { c: V(xo, ALTO_5, ZF), q: QI, d: R.llega * 0.25 },
+            { c: V(xo, pre.c.y, pre.c.z), q: QI, d: R.llega * 0.25 }, { c: pre.c, q: QI, d: R.llega * 0.3 }];
+        },
+        largo: function () { return V(0, 0, -1); },     // la manija hacia atrás
+        salir: function (L, a, R) { llaveA(L, L.t, { q: L.pose.q, c: V(s * XF, L.pose.c.y, L.pose.c.z) }, R.sale * 1.2); },
+        via: function (L, t, afuera, R) {
+          const xo = s * XF;
+          if (Math.abs(L.pose.c.x - xo) > 0.05) {
+            llaveA(L, t, { q: L.pose.q, c: V(L.pose.c.x, ALTO_5, L.pose.c.z) }, R.viaje * 0.2);
+            llaveA(L, L.t, { q: afuera.q, c: V(xo, ALTO_5, ZF) }, R.viaje * 0.25);
+            llaveA(L, L.t, { q: afuera.q, c: V(xo, afuera.c.y, afuera.c.z) }, R.viaje * 0.25);
+            L.enEje = L.t; llaveA(L, L.t, afuera, R.viaje * 0.3);
+          } else {
+            llaveA(L, t, { q: afuera.q, c: V(xo, afuera.c.y, afuera.c.z) }, R.viaje * 0.5);
+            L.enEje = L.t; llaveA(L, L.t, afuera, R.viaje * 0.5);
+          }
+        }
+      };
+    };
+    const L5 = nuevaLlave();
+    let tt = 4.6;
+    const sub5 = [];
+    [-1, 1].forEach(function (s, iLado) {   // primero el lado derecho de quien se sienta (x < 0), después el izquierdo
+      const M = porTipo.M.filter(lado(s)).sort(function (a, b) { return a.piv.y - b.piv.y; });
+      const pro = uni(s < 0 ? "I" : "J"), K = porTipo.K.filter(lado(s))[0], N = porTipo.N.filter(lado(s))[0];
+      if (iLado === 0) sub5.push({ t0: 0, n: "5.1", corto: "Tornillos M", txt: "Arrima el espaldar " + "(A) a los brazos del asiento y fíjalo con los 2 tornillos (M) del lado derecho, de afuera hacia adentro. Aprieta con la llave (O)." });
+      else sub5.push({ t0: tt - 0.2, n: "5.4", corto: "El otro lado", txt: "Repite en el lado izquierdo: 2 tornillos (M), el protector izquierdo (J) con su tornillo (K) y el tapón (N)." });
+      tt = atornillar(r5, L5, 5, M, tt, Object.assign(opLado(s), { lento: iLado === 0 }));
+      llaveAlPiso(L5, tt, ALTO_5, [V(s * XF, ALTO_5, ZF)]);
+      if (iLado === 0) sub5.push({ t0: tt + 0.1, n: "5.2", corto: "Protector y K", txt: "Pon el protector derecho (I) sobre la unión y fíjalo con el tornillo (K)." });
+      tt = L5.t - 0.6;                                // la llave ya va por delante, de vuelta al piso
+      r5.push(deCostado(pro, tt + 0.2, s, QI)); tt += 0.2 + 3.1;
+      r5.push(deCostado(K, tt, s, QI, s * 4, 1.2)); tt += 3.6;   // K entra hacia −s·x (de afuera hacia adentro) y su eje local es +x: horario visto desde la cabeza
+      if (iLado === 0) sub5.push({ t0: tt, n: "5.3", corto: "Tapón N", txt: "Por último, tapa el tornillo (K) con el tapón (N), a presión." });
+      r5.push(deCostado(N, tt, s, QI)); tt += 3.6;
+    });
+    r5.unshift(recLlave(L5));
+    SUBPASOS[5] = sub5;
+    const g5 = ENCAJES.filter(function (e) { return e.paso === 5; });
+    P.push({
+      recs: r5,
+      tomas: [{ at: 0, mira: V(-0.2, 0.8, -0.12), dir: V(-0.55, 0.45, 0.75), r: 0.95 },
+        { at: 3.2, mira: V(-0.31, 0.64, -0.22), dir: V(-0.95, 0.3, -0.25), r: 0.2 },
+        { at: g5[0].t0 - 0.4, mira: V(-0.33, 0.64, -0.23), dir: V(-0.9, 0.35, 0.45), r: 0.12 },
+        { at: g5[1].t1 + 0.2, mira: V(-0.33, 0.6, -0.2), dir: V(-0.95, 0.3, -0.25), r: 0.2 },
+        { at: g5[2].t0 - 1.6, mira: V(0.3, 0.6, -0.25), dir: V(0.95, 0.3, -0.25), r: 0.2 },
+        { at: tt - 1.2, mira: V(0, 0.75, -0.1), dir: V(0.55, 0.4, -0.75), r: 0.85 }],
+      etiq: ["A", "M", "I", "J", "K", "N", "O"]
+    });
+    // 6 · «Ubica los cojines lumbar (Q) y cervical (P) y listo.»
+    const r6 = [], Q = uni("Q"), Pc = uni("P");
+    // el lumbar, con la mano: por delante, a la altura de los reposabrazos, y baja derecho entre ellos (de frente
+    // rozaría los reposabrazos)
+    const yQ = Q.piv.y + 0.3;
+    r6.push(recorrido(Q, 0, enPiso(Q), [{ c: V(Q.cPiso.x, yQ, Q.cPiso.z), d: 0.7 }, { c: V(Q.piv.x, yQ, Q.piv.z + 0.6), d: 0.9 },
+      { c: V(Q.piv.x, yQ, Q.piv.z), d: 0.7 }, { c: Q.piv, d: 0.8 }]));
+    // el cervical, con la mano: la correa se pasa por encima de la cabecera y el cojín baja derecho hasta su sitio
+    // (el modelo trae la correa rodeando la cabecera; el manual dibuja el cojín arriba, sobre el espaldar)
+    const yP = Pc.piv.y + 0.32;
+    r6.push(recorrido(Pc, 3.6, enPiso(Pc), [{ c: V(Pc.cPiso.x, yP, Pc.cPiso.z), d: 0.9 }, { c: V(Pc.piv.x, yP, Pc.piv.z + 0.35), d: 0.9 },
+      { c: V(Pc.piv.x, yP, Pc.piv.z), d: 0.6 }, { c: Pc.piv, d: 1.2 }]));
+    // al final, la silla armada al centro, de frente en tres cuartos suave y cerca
+    const silla = new THREE.Box3();
+    unidades.forEach(function (u) { if (u.tipo !== "O") u.objs.forEach(function (o) { o.geometry.computeBoundingBox(); silla.union(o.geometry.boundingBox); }); });
+    const centroSilla = silla.getCenter(V(0, 0, 0)), radioSilla = silla.getSize(V(0, 0, 0)).length() * 0.36;
+    FINAL = { mira: centroSilla, dir: V(0.42, 0.22, 1), r: radioSilla, caja: silla };
+    P.push({
+      recs: r6,
+      // de cerca cada cojín mientras se pone: primero el lumbar, después el cervical, como el texto del manual
+      tomas: [{ at: 0, mira: Q.piv.clone().add(V(0, 0.05, 0)), dir: V(0.35, 0.45, 1), r: 0.34 },
+        { at: 3.4, mira: Pc.piv.clone().add(V(0, 0.1, 0)), dir: V(0.3, 0.4, 1), r: 0.32 },
+        { at: 3.6 + 3.6 + 0.3, mira: FINAL.mira, dir: FINAL.dir, r: FINAL.r }],
+      etiq: ["Q", "P"]
+    });
+    P.forEach(function (p) { p.dur = Math.max.apply(null, p.recs.map(function (r) { return r.t1; })) + 0.3; });
+    return P;
+  }
+  let PASOS = [], t = 0, enMarcha = false;
+
+  // el estado al empezar el paso k: lo de pasos anteriores, armado; lo demás, en el piso
+  function estadoInicial(k) {
+    unidades.forEach(function (u) { const p = poseInicial(u, k); ponerPose(u, p.q, p.c, 0); });
+  }
+  function aplicar(k, tt) {
+    estadoInicial(k);
+    PASOS[k].recs.forEach(function (r) { evaluar(r, tt); });
+    resaltar(k, tt);
+  }
+
+  /* ---------- cámara: cada paso trae sus tomas; si la persona toca el modelo, la cámara es suya hasta el próximo paso ---------- */
+  let manual = false, toma = 0, vuelo = null;
+  function distPara(r) {
+    // el campo de visión del pedazo libre: con el panel encima, el modelo tiene que caber en lo que queda a la vista
+    const L = libre(), tv = Math.tan(THREE.MathUtils.degToRad(camara.fov) / 2);
+    const fovV = 2 * Math.atan(tv * L.h / L.H), fovH = 2 * Math.atan(tv * camara.aspect * L.w / L.W);
+    return 1.12 * r / Math.sin(Math.min(fovV, fovH) / 2);
+  }
+  function destino(tm) { return { p: tm.mira.clone().addScaledVector(tm.dir.clone().normalize(), distPara(tm.r)), m: tm.mira.clone() }; }
+  function volarA(tm, ya) {
+    const d = destino(tm);
+    camara.near = 0.005; camara.far = 30; camara.updateProjectionMatrix();
+    if (ya) { vuelo = null; camara.position.copy(d.p); controles.target.copy(d.m); controles.update(); return; }
+    vuelo = { p0: camara.position.clone(), m0: controles.target.clone(), p1: d.p, m1: d.m, s: 0 };
+  }
+  ["pointerdown", "wheel"].forEach(function (ev) { lienzo.addEventListener(ev, function () { manual = true; vuelo = null; }, { passive: true }); });
+
+  function irPaso(k) {
+    // se acota antes de todo: con el modelo cargando, varios «Siguiente» seguidos no pueden pasar del último paso
+    paso = Math.max(0, Math.min(N_PASOS - 1, k));
+    if (!PASOS.length) { pintarMando(); return; }
+    pintarMando();
+    manual = false; toma = 0; vuelo = null;
+    t = reducido ? PASOS[paso].dur : 0;
+    if (reducido) {
+      const tm = PASOS[paso].tomas; volarA(tm[tm.length - 1], true); toma = tm.length;
+    }
+    aplicar(paso, t);
+    enMarcha = true;
+  }
+  /* ---------- pantalla completa ---------- */
+  const marco = document.getElementById("anim-marco"), bPant = document.getElementById("anim-pantalla");
+  const bTexto = document.getElementById("anim-texto-btn");
+  const esquina = sec.querySelector(".anim-esquina");
+  /* ---------- guía de gestos: la primera vez y con «?» ---------- */
+  const guia = document.getElementById("anim-gestos"), bAyuda = document.getElementById("anim-ayuda-abrir");
+  const CLAVE_GUIA = "anim-guia-gestos-v2";
+  let relojGuia = 0, vueltasGuia = 0;
+  function guiaVista() { try { return localStorage.getItem(CLAVE_GUIA) === "1"; } catch (e) { return false; } }
+  function fotograma(n) { guia.dataset.g = String(n); }
+  // a la vista de verdad: la mitad del lienzo en pantalla. La guía solo corre (y solo cuenta como vista) así
+  let guiaEnPantalla = false;
+  // isIntersecting sola vale con un píxel: hace falta la mitad del lienzo de verdad
+  const aMedias = function (x) { return x.isIntersecting && x.intersectionRatio >= 0.5; };
+  new IntersectionObserver(function (es) { guiaEnPantalla = es.some(aMedias); },
+    { threshold: 0.5 }).observe(lienzo);
+  function abrirGuia(aMano) {
+    guia.dataset.modo = window.matchMedia && window.matchMedia("(pointer: coarse)").matches ? "tactil" : "mouse";
+    vueltasGuia = 0; fotograma(1); guia.hidden = false; marco.classList.add("con-guia");
+    // el foco solo se mueve si la abrió la persona con «?»: abierta sola, no le roba el foco al teclado ni al lector
+    if (aMano) guia.focus({ preventScroll: true });
+    clearInterval(relojGuia);
+    // cada gesto 1,8 s; dos vueltas y se cierra sola (tocar la salta antes). Fuera de pantalla no avanza
+    relojGuia = setInterval(function () {
+      if (!guiaEnPantalla) return;
+      const n = Number(guia.dataset.g) + 1;
+      if (n > 3) { vueltasGuia++;   /* V40: se queda hasta el primer toque */ fotograma(1); } else fotograma(n);
+    }, 1800);
+  }
+  // la primera vez: se abre cuando el visor está de verdad en pantalla (en la FF se llega bajando; el observer de
+  // carga mira 300 px antes y la guía corría sin que nadie la viera)
+  function pedirGuia() {
+    if (guiaVista()) return;
+    const ob = new IntersectionObserver(function (es) {
+      if (!es.some(aMedias)) return;
+      ob.disconnect(); if (guia.hidden && !guiaVista()) abrirGuia(false);
+    }, { threshold: 0.5 });
+    ob.observe(lienzo);
+  }
+  function cerrarGuia() {
+    clearInterval(relojGuia);
+    if (guia.hidden) return;
+    guia.hidden = true; marco.classList.remove("con-guia");
+    try { localStorage.setItem(CLAVE_GUIA, "1"); } catch (e) { /* sin almacenamiento: la próxima vez sale otra vez */ }
+    if (document.activeElement === guia) bAyuda.focus({ preventScroll: true });
+  }
+  bAyuda.addEventListener("click", function () { abrirGuia(true); });
+  guia.addEventListener("click", cerrarGuia);
+  // abierta sola el foco no está en ella: Escape se escucha en el documento, sin mover el foco
+  document.addEventListener("keydown", function (ev) { if (ev.key === "Escape" && !guia.hidden && document.activeElement !== guia) { ev.stopImmediatePropagation(); cerrarGuia(); } }, true);
+  guia.addEventListener("keydown", function (ev) { if (ev.key === "Escape" || ev.key === "Enter" || ev.key === " ") { ev.preventDefault(); ev.stopPropagation(); cerrarGuia(); } });
+  let enPantalla = false, conHistoria = false;
+  function reencuadrar() {
+    requestAnimationFrame(function () {
+      tamano();
+      if (PASOS.length && !manual) { const tm = PASOS[paso].tomas; volarA(tm[Math.max(0, Math.min(tm.length, toma) - 1)], true); }
+    });
+  }
+  function plegar(si) {
+    if (SIEMPRE) si = false;
+    marco.classList.toggle("plegado", si);
+    bTexto.setAttribute("aria-expanded", String(!si)); bTexto.textContent = si ? "Ver texto" : "Ocultar texto";
+    if (enPantalla) reencuadrar();   // con el panel abajo cambia el espacio libre
+  }
+  function entrar() {
+    if (enPantalla) return;
+    enPantalla = true;
+    marco.classList.add("en-pantalla"); document.documentElement.style.overflow = "hidden";
+    bPant.setAttribute("aria-pressed", "true"); bPant.querySelector(".anim-pantalla-txt").textContent = "Salir";
+    bPant.firstElementChild.textContent = "✕";
+    // con el panel a un costado el texto sale entero (Jon, 29-oct: «el textico debe salir ahí … en un costado»); con
+    // el celular parado, abajo, empieza plegado: el título, la línea del paso y «Ver texto»
+    plegar(!(window.matchMedia && window.matchMedia("(min-width: 700px), (orientation: landscape)").matches));
+    const pedir = marco.requestFullscreen || marco.webkitRequestFullscreen;
+    if (pedir) { try { const pr = pedir.call(marco); if (pr && pr.catch) pr.catch(function () {}); } catch (e) { /* queda el respaldo fijo */ } }
+    try { history.pushState({ animPantalla: true }, ""); conHistoria = true; } catch (e) { conHistoria = false; }
+    reencuadrar();
+  }
+  function salir(desdeHistoria) {
+    if (!enPantalla) return;
+    enPantalla = false;
+    marco.classList.remove("en-pantalla", "plegado"); document.documentElement.style.overflow = "";
+    bPant.setAttribute("aria-pressed", "false"); bPant.querySelector(".anim-pantalla-txt").textContent = "Pantalla completa";
+    bPant.firstElementChild.textContent = "⛶";
+    const fs = document.fullscreenElement || document.webkitFullscreenElement;
+    if (fs) { const s = document.exitFullscreen || document.webkitExitFullscreen; try { const pr = s.call(document); if (pr && pr.catch) pr.catch(function () {}); } catch (e) { /* nada */ } }
+    if (conHistoria && !desdeHistoria) { conHistoria = false; try { history.back(); } catch (e) { /* nada */ } }
+    conHistoria = false;
+    reencuadrar();
+  }
+  function nativa() { return document.fullscreenElement || document.webkitFullscreenElement; }
+  function alternarNativa() {   // solo en el sitio: la vista ya es de pantalla completa; esto pide la del navegador
+    try {
+      if (nativa()) { const x = document.exitFullscreen || document.webkitExitFullscreen; const pr = x.call(document); if (pr && pr.catch) pr.catch(function () {}); }
+      else { const q = marco.requestFullscreen || marco.webkitRequestFullscreen; if (q) { const pr = q.call(marco); if (pr && pr.catch) pr.catch(function () {}); } }
+    } catch (e) { /* sin pantalla completa nativa: la vista sigue igual */ }
+  }
+  function pintarPant() {
+    const n = !!nativa();
+    bPant.setAttribute("aria-pressed", String(n)); bPant.setAttribute("aria-label", n ? "Salir de pantalla completa" : "Pantalla completa");
+    bPant.firstElementChild.textContent = n ? "✕" : "⛶";
+  }
+  if (SIEMPRE) {
+    const altoBarra = function () { marco.style.setProperty("--alto-barra", barraAnim.offsetHeight + "px"); };
+    altoBarra(); new ResizeObserver(altoBarra).observe(barraAnim);
+    enPantalla = true; marco.classList.add("en-pantalla"); document.documentElement.style.overflow = "hidden"; pintarPant();
+    function detalle(si) {
+      marco.classList.toggle("detalle", si); bInfo.setAttribute("aria-expanded", String(si));
+      if (si) bCerrar.focus(); else bInfo.focus();
+      reencuadrar();
+    }
+    bInfo.addEventListener("click", function () { detalle(!marco.classList.contains("detalle")); });
+    bCerrar.addEventListener("click", function () { detalle(false); });
+    bBAnt.addEventListener("click", function () { irPaso(paso - 1); });
+    bBSig.addEventListener("click", function () { irPaso(paso + 1); });
+    document.addEventListener("keydown", function (ev) {
+      if (ev.key === "Escape" && marco.classList.contains("detalle")) detalle(false);
+      else if (ev.key === "ArrowRight" && !ev.target.closest("input, textarea")) irPaso(paso + 1);
+      else if (ev.key === "ArrowLeft" && !ev.target.closest("input, textarea")) irPaso(paso - 1);
+    });
+  }
+  bPant.addEventListener("click", function () { if (SIEMPRE) alternarNativa(); else if (enPantalla) salir(false); else entrar(); });
+  bTexto.addEventListener("click", function () { plegar(!marco.classList.contains("plegado")); });
+  document.addEventListener("keydown", function (ev) { if (ev.key === "Escape" && enPantalla && !SIEMPRE) salir(false); });
+  ["fullscreenchange", "webkitfullscreenchange"].forEach(function (n) {
+    document.addEventListener(n, function () {
+      if (SIEMPRE) { pintarPant(); reencuadrar(); return; }
+      if (!(document.fullscreenElement || document.webkitFullscreenElement) && enPantalla) salir(false); else reencuadrar();
+    });
+  });
+  window.addEventListener("popstate", function () { if (enPantalla && !SIEMPRE) { conHistoria = false; salir(true); } });
+  window.addEventListener("resize", function () { if (enPantalla) reencuadrar(); });
+
+  bAnt.addEventListener("click", function () { irPaso(paso - 1); });
+  bRep.addEventListener("click", function () { irPaso(paso); });
+  bSig.addEventListener("click", function () { irPaso(paso + 1); });
+  puntos.forEach(function (b) { b.addEventListener("click", function () { irPaso(Number(b.dataset.paso)); }); });
+
+  /* ---------- etiquetas: una por tipo de pieza, pegada a la pieza que se está moviendo ----------
+     Sin líneas guía (Jon, 29-oct: «las líneas … estorban mucho … solo el textico y el bloquecito en transparencia»):
+     un bloque chico semitransparente junto a la pieza. Si choca con otra etiqueta o con el botón de pantalla
+     completa, prueba los otros tres lados de la pieza y, si tampoco, se corre hacia abajo hasta quedar libre. */
+  const etiquetas = {};
+  function etiquetaDe(tipo) {
+    if (etiquetas[tipo]) return etiquetas[tipo];
+    const d = ETQ[tipo] || { n: tipo, s: "", f: "" };
+    const div = document.createElement("div"); div.className = "eti-anim";
+    const b = document.createElement("b"); b.textContent = d.s;
+    const s = document.createElement("span"); s.textContent = d.n;
+    div.append(b, s);
+    if (d.f) { const m = document.createElement("span"); m.className = "m"; m.textContent = d.f; div.append(m); }
+    guias.append(div);
+    return (etiquetas[tipo] = { div: div });
+  }
+  function anclaDe(tipo, k, tt) {
+    const p = PASOS[k];
+    let u = null;
+    if (p.todas) u = (porTipo[tipo] || [])[0];
+    else {
+      let mejor = -1;
+      p.recs.forEach(function (r) { if (r.u.tipo === tipo && r.t0 <= tt && r.t0 > mejor) { mejor = r.t0; u = r.u; } });
+    }
+    if (!u) return null;
+    return u.ancla.clone().sub(u.piv).applyQuaternion(u.q).add(u.c);
+  }
+  const tmp = V(0, 0, 0);
+  function cruza(a, b) { return a.x < b.x + b.w && b.x < a.x + a.w && a.y < b.y + b.h && b.y < a.y + a.h; }
+  function pintarEtiquetas() {
+    const W = lienzo.clientWidth, H = lienzo.clientHeight, pies = [], vivos = {};
+    if (PASOS.length) PASOS[paso].etiq.forEach(function (tipo) {
+      const a = anclaDe(tipo, paso, t);
+      if (!a) return;
+      tmp.copy(a).project(camara);
+      if (tmp.z > 1 || Math.abs(tmp.x) > 1.02 || Math.abs(tmp.y) > 1.02) return;
+      vivos[tipo] = true;
+      pies.push({ tipo: tipo, x: (tmp.x + 1) / 2 * W, y: (1 - tmp.y) / 2 * H });
+    });
+    Object.keys(etiquetas).forEach(function (k) { if (!vivos[k]) etiquetas[k].div.hidden = true; });
+    // primero con el nombre; si no caben sin taparse (pantalla baja, el celular acostado), solo con el código
+    // del SIM, que la lista del paso 0 explica
+    guias.classList.remove("apretada");
+    if (!colocar(pies, W, H)) { guias.classList.add("apretada"); colocar(pies, W, H); }
+  }
+  function colocar(pies, W, H) {
+    const ce = esquina.getBoundingClientRect(), cl = lienzo.getBoundingClientRect();
+    const puestos = [{ x: ce.left - cl.left - 4, y: ce.top - cl.top - 4, w: ce.width + 8, h: ce.height + 8 }];
+    if (enPantalla) {   // ninguna etiqueta debajo del panel de vidrio ni de la barra del sitio
+      const c = lienzo.getBoundingClientRect();
+      [panelAnim, barraAnim].forEach(function (el) {
+        const r = el && el.getBoundingClientRect();
+        if (r && r.width && r.height) puestos.push({ x: r.left - c.left - 6, y: r.top - c.top - 6, w: r.width + 12, h: r.height + 12 });
+      });
+    }
+    let todas = true;
+    pies.sort(function (p, q) { return p.y - q.y; });
+    pies.forEach(function (p) {
+      const e = etiquetaDe(p.tipo); e.div.hidden = false;
+      // se mide arrimada a la izquierda y se fija el ancho: pegada al borde derecho el navegador la angostaría
+      // al colocarla y crecería hacia abajo sobre la de al lado
+      e.div.style.width = ""; e.div.style.left = "0px"; e.div.style.top = "0px";
+      const rc = e.div.getBoundingClientRect(), w = Math.ceil(rc.width), h = Math.ceil(rc.height) || 20, sep = 6;
+      const dentro = function (r) { return { x: Math.round(Math.max(2, Math.min(W - w - 2, r.x))), y: Math.round(Math.max(2, Math.min(H - h - 2, r.y))), w: w, h: h }; };
+      const libre = function (r) { return !puestos.some(function (q) { return cruza(r, q); }); };
+      const base = [{ x: p.x + sep, y: p.y - h - sep }, { x: p.x + sep, y: p.y + sep }, { x: p.x - w - sep, y: p.y - h - sep }, { x: p.x - w - sep, y: p.y + sep }];
+      let r = null;
+      // el lado de la pieza que esté libre; si ninguno, el más cercano corriéndose hacia arriba o hacia abajo
+      for (let d = 0; d <= 40 && !r; d++) {
+        for (let i = 0; i < base.length && !r; i++) {
+          for (const sg of d ? [1, -1] : [0]) {
+            const c = dentro({ x: base[i].x, y: base[i].y + sg * d * (h / 2 + 2) });
+            if (libre(c)) { r = c; break; }
+          }
+        }
+      }
+      if (!r) { r = dentro(base[1]); todas = false; }
+      puestos.push(r);
+      e.div.style.width = w + "px"; e.div.style.left = Math.round(r.x) + "px"; e.div.style.top = Math.round(r.y) + "px";
+    });
+    return todas;
+  }
+
+  /* ---------- el bucle: corre solo con la sección a la vista ---------- */
+  let aLaVista = false, antes = 0;
+  function bucle(ahora) {
+    requestAnimationFrame(bucle);
+    const dt = Math.min(0.1, (ahora - (antes || ahora)) / 1000); antes = ahora;
+    if (!aLaVista || !PASOS.length) return;
+    const p = PASOS[paso];
+    if (enMarcha && t < p.dur) { t = Math.min(p.dur, t + dt); aplicar(paso, t); }
+    if (!manual && !reducido) {
+      while (toma < p.tomas.length && p.tomas[toma].at <= t) { volarA(p.tomas[toma], false); toma++; }
+    }
+    if (vuelo) {
+      vuelo.s = Math.min(1, vuelo.s + dt / 0.9); const k = suave(vuelo.s);
+      camara.position.lerpVectors(vuelo.p0, vuelo.p1, k); controles.target.lerpVectors(vuelo.m0, vuelo.m1, k);
+      if (vuelo.s >= 1) vuelo = null;
+    }
+    avance.style.width = (100 * t / p.dur).toFixed(1) + "%";
+    controles.update();
+    renderer.render(escena, camara);
+    pintarEtiquetas();
+  }
+
+  let cargado = false;
+  async function cargar() {
+    if (cargado) return; cargado = true;
+    estado.textContent = "Cargando la animación…";
+    try {
+      const r = await fetch("modelo/abierto.glb.b64.txt");
+      if (!r.ok) throw new Error("HTTP " + r.status);
+      const bin = atob((await r.text()).trim()), u8 = new Uint8Array(bin.length);
+      for (let i = 0; i < bin.length; i++) u8[i] = bin.charCodeAt(i);
+      const g = await new Promise(function (ok, mal) { new THREE.GLTFLoader().parse(u8.buffer, "", ok, mal); });
+      modelo = g.scene; escena.add(modelo);
+      // el Dual Lock en azul, como en las vistas del instructivo: negro sobre el tubo negro no se distingue
+      modelo.traverse(function (o) { if (o.isMesh) o.material = o.material.clone(); });
+      // aristas, como en las vistas CAD (Jon, 29-oct: «que todo se vea más nítido»): una línea donde dos caras
+      // forman más de 30°; van como hijas de cada malla, así que se mueven y giran con la pieza
+      const linea = new THREE.LineBasicMaterial({ color: 0x0b1015 });
+      let segmentos = 0;
+      modelo.children.slice().forEach(function (o) {
+        if (!o.isMesh) return;
+        const eg = new THREE.EdgesGeometry(o.geometry, 30);
+        segmentos += eg.attributes.position.count / 2;
+        /* V40: sin aristas, piezas con material */
+      });
+      modelo.userData.segmentos = segmentos;
+      armarUnidades(modelo);
+      PASOS = construirPasos();
+      tamano();
+      estado.hidden = true;
+      pedirGuia();
+      volarA(PASOS[paso].tomas[0], true);
+      irPaso(paso);
+    } catch (e) {
+      estado.textContent = "No se pudo cargar la animación 3D. Los pasos están escritos aquí al lado.";
+      textos.forEach(function (x) { x.hidden = false; });
+    }
+  }
+  new IntersectionObserver(function (es) {
+    aLaVista = es.some(function (x) { return x.isIntersecting; });
+    if (aLaVista) cargar();
+  }, { rootMargin: "300px 0px" }).observe(lienzo);
+  requestAnimationFrame(bucle);
+
+  /* ---------- para las pruebas (Playwright) ---------- */
+  // Revisa con cajas orientadas (SAT) que ninguna pieza en movimiento atraviese otra: muestrea cada paso cada
+  // 1/30 s y descuenta los pares que ya se tocan armados o en el piso (un tornillo en su hueco, una arandela entre
+  // banderas). Holgura de 1,5 mm por cara. Deja el visor en el estado en que estaba.
+  function cajaOrientada(o) {
+    const h = /^del_/.test(o.name) ? "del" : /^tra_/.test(o.name) ? "tra" : null;
+    const ax = h ? [V(1, 0, 0), V(EJ[h].u[0], EJ[h].u[1], EJ[h].u[2]).normalize(), V(EJ[h].n[0], EJ[h].n[1], EJ[h].n[2]).normalize()] : [V(1, 0, 0), V(0, 1, 0), V(0, 0, 1)];
+    const lo = [Infinity, Infinity, Infinity], hi = [-Infinity, -Infinity, -Infinity], pos = o.geometry.attributes.position, p = V(0, 0, 0);
+    for (let i = 0; i < pos.count; i++) {
+      p.fromBufferAttribute(pos, i);
+      for (let k = 0; k < 3; k++) { const d = p.dot(ax[k]); if (d < lo[k]) lo[k] = d; if (d > hi[k]) hi[k] = d; }
+    }
+    const c = V(0, 0, 0);
+    for (let k = 0; k < 3; k++) c.addScaledVector(ax[k], (lo[k] + hi[k]) / 2);
+    return { c: c, ax: ax, e: [0, 1, 2].map(function (k) { return Math.max(0, (hi[k] - lo[k]) / 2 - 0.0015); }) };
+  }
+  function enMundo(o) {
+    const b = o.userData.obb || (o.userData.obb = cajaOrientada(o));
+    return { c: b.c.clone().applyQuaternion(o.quaternion).add(o.position), ax: b.ax.map(function (a) { return a.clone().applyQuaternion(o.quaternion); }), e: b.e };
+  }
+  function chocan(A, B) {
+    const R = [[0, 0, 0], [0, 0, 0], [0, 0, 0]], AR = [[0, 0, 0], [0, 0, 0], [0, 0, 0]];
+    for (let i = 0; i < 3; i++) for (let j = 0; j < 3; j++) { R[i][j] = A.ax[i].dot(B.ax[j]); AR[i][j] = Math.abs(R[i][j]) + 1e-6; }
+    const d = B.c.clone().sub(A.c), T = [d.dot(A.ax[0]), d.dot(A.ax[1]), d.dot(A.ax[2])], a = A.e, b = B.e;
+    for (let i = 0; i < 3; i++) if (Math.abs(T[i]) > a[i] + b[0] * AR[i][0] + b[1] * AR[i][1] + b[2] * AR[i][2]) return false;
+    for (let j = 0; j < 3; j++) if (Math.abs(T[0] * R[0][j] + T[1] * R[1][j] + T[2] * R[2][j]) > a[0] * AR[0][j] + a[1] * AR[1][j] + a[2] * AR[2][j] + b[j]) return false;
+    for (let i = 0; i < 3; i++) for (let j = 0; j < 3; j++) {
+      const i1 = (i + 1) % 3, i2 = (i + 2) % 3, j1 = (j + 1) % 3, j2 = (j + 2) % 3;
+      const ra = a[i1] * AR[i2][j] + a[i2] * AR[i1][j], rb = b[j1] * AR[i][j2] + b[j2] * AR[i][j1];
+      if (Math.abs(T[i2] * R[i1][j] - T[i1] * R[i2][j]) > ra + rb) return false;
+    }
+    return true;
+  }
+  function paresQueChocan(objs, soloDe) {
+    const cajas = objs.map(enMundo), out = [];
+    for (let i = 0; i < objs.length; i++) for (let j = i + 1; j < objs.length; j++) {
+      if (objs[i].userData.uni === objs[j].userData.uni) continue;
+      if (soloDe && !soloDe.has(objs[i].userData.uni) && !soloDe.has(objs[j].userData.uni)) continue;
+      if (chocan(cajas[i], cajas[j])) out.push(objs[i].name + "|" + objs[j].name);
+    }
+    return out;
+  }
+  window.__anim = {
+    paso: function () { return paso; },
+    guia: function (n) { clearInterval(relojGuia); fotograma(n); },   // deja quieto un fotograma de la guía (capturas)
+    pantalla: function () { return { en: enPantalla, nativa: !!(document.fullscreenElement || document.webkitFullscreenElement), plegado: marco.classList.contains("plegado") }; },
+    estado: function () { return { paso: paso, t: +t.toFixed(2), dur: PASOS.length ? +PASOS[paso].dur.toFixed(2) : 0, fin: PASOS.length ? t >= PASOS[paso].dur : false, manual: manual, cargado: !!PASOS.length, reducido: reducido, unidades: unidades.length }; },
+    proyectar: function (nombre) { const o = modelo && modelo.getObjectByName(nombre); if (!o) return null; const c = new THREE.Box3().setFromObject(o).getCenter(V(0, 0, 0)).project(camara); const r = lienzo.getBoundingClientRect(); return { x: r.left + (c.x + 1) / 2 * r.width, y: r.top + (1 - c.y) / 2 * r.height }; },
+    dist: function () { return camara.position.distanceTo(controles.target); },
+    aristas: function () { return modelo ? modelo.userData.segmentos : 0; },
+    duraciones: function () { return PASOS.map(function (p) { return +p.dur.toFixed(2); }); },
+    etiquetas: function () { return Object.keys(etiquetas).filter(function (k) { return !etiquetas[k].div.hidden; }).map(function (k) { const r = etiquetas[k].div.getBoundingClientRect(); return { tipo: k, x: r.x, y: r.y, w: r.width, h: r.height, txt: etiquetas[k].div.textContent }; }); },
+    ir: function (tt) { t = Math.min(PASOS[paso].dur, tt); manual = false; vuelo = null;
+      const tm = PASOS[paso].tomas; toma = tm.filter(function (x) { return x.at <= t; }).length; volarA(tm[Math.max(0, toma - 1)], true); aplicar(paso, t); },
+    recorridoPiezas: function () { return TOUR.slice(); },
+    encajes: function () { return ENCAJES.slice(); },
+    ruedas: function () { return RUEDAS.slice(); },
+    pasoA: function (k) { irPaso(k); },
+    cuadricula: function () { return celebra === null ? "5cc8ff" : "3dff8a"; },
+    esperando: function () { return esperando; },
+    centroSilla: function () { if (!FINAL) return null; const c = FINAL.caja.getCenter(V(0, 0, 0)).project(camara); return { x: c.x / 2, y: c.y / 2 }; },
+    recDe: function (n) { const r = PASOS[paso].recs.find(function (x) { return x.u.nombre === n && !x.quieto; }); return r ? [r.t0, r.t1] : null; },
+    parada: function () { return paradaActual(); },
+    subpasos: function (k) { return (SUBPASOS[k] || []).slice(); },
+    alFinal: function () { t = PASOS[paso].dur; aplicar(paso, t); },
+    choques: function () {
+      const objs = []; unidades.forEach(function (u) { u.objs.forEach(function (o) { o.userData.uni = u.nombre; objs.push(o); }); });
+      const libres = new Set();
+      unidades.forEach(function (u) { ponerPose(u, QI, u.piv, 0); }); paresQueChocan(objs).forEach(function (k) { libres.add(k); });
+      unidades.forEach(function (u) { ponerPose(u, u.qPiso, u.cPiso, 0); }); paresQueChocan(objs).forEach(function (k) { libres.add(k); });
+      const malos = {}, bajoPiso = {};
+      PASOS.forEach(function (p, k) {
+        for (let tt = 0; tt <= p.dur; tt += 1 / 30) {
+          aplicar(k, tt);
+          const mov = new Set(p.recs.filter(function (r) { return r.t0 <= tt && tt <= r.t1; }).map(function (r) { return r.u.nombre; }));
+          if (!mov.size) continue;
+          paresQueChocan(objs, mov).forEach(function (par) { if ((esFino(par) ? chocaFino(par) : !libres.has(par)) && !malos[par] && !llaveExenta(par, k, tt, libres)) malos[par] = { paso: k, t: +tt.toFixed(2) }; });
+          objs.forEach(function (o) {
+            if (!mov.has(o.userData.uni)) return;
+            const b = enMundo(o); let y = b.c.y; for (let i = 0; i < 3; i++) y -= Math.abs(b.ax[i].y) * b.e[i];
+            if (y < -0.003 && !bajoPiso[o.name]) bajoPiso[o.name] = { paso: k, t: +tt.toFixed(2), y: +y.toFixed(4) };
+          });
+        }
+      });
+      aplicar(paso, t);
+      return { choques: malos, bajoPiso: bajoPiso, descontados: libres.size };
+    }
+  };
+})();
+</script>
+<!-- /anim:js -->
+</body>
+</html>
