@@ -576,6 +576,25 @@ dialog.lupa::backdrop { background: rgba(0, 0, 0, 0.6); }
 <h1 class="solo-lector">Armado silla Versus V40</h1>
 
 <style>
+/* «Siguiente» destacado y «Atrás» discreto (Jon, 19-nov) */
+.solo-armado .anim-b-flecha { background: transparent !important; color: #eef2f6 !important; border: 1.5px solid rgba(238, 242, 246, 0.5) !important; box-shadow: none !important; }
+.solo-armado .anim-b-flecha.fuerte { background: #5cc8ff !important; color: #04131d !important; border-color: #5cc8ff !important; box-shadow: 0 4px 16px rgba(92, 200, 255, 0.3) !important; }
+.solo-armado .anim-b-flecha:focus-visible { outline: 3px solid #ffffff; outline-offset: 2px; }
+/* la velocidad: arriba a la derecha, en el vidrio oscuro de la barra (Jon, 19-nov) */
+.vs-vel { position: absolute; top: 12px; right: 12px; z-index: 3; }
+.anim-marco:not(.en-pantalla) .vs-vel { top: 60px; right: 8px; }
+.vs-vel-btn { min-width: 64px; min-height: 44px; padding: 0 12px; border-radius: 10px; border: 1px solid rgba(255, 255, 255, 0.22);
+  background: rgba(14, 17, 22, 0.86); color: #eef2f6; font: inherit; font-size: 0.95rem; font-weight: 550; font-variant-numeric: tabular-nums; cursor: pointer; }
+.vs-vel-menu { position: absolute; top: calc(100% + 6px); right: 0; margin: 0; padding: 4px; list-style: none; min-width: 108px;
+  background: #0e1116; border: 1px solid rgba(255, 255, 255, 0.22); border-radius: 12px; box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5); }
+.vs-vel-menu[hidden] { display: none; }
+.vs-vel-menu button { all: unset; box-sizing: border-box; display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  width: 100%; min-height: 44px; padding: 0 12px; border-radius: 8px; color: #eef2f6; cursor: pointer; font-variant-numeric: tabular-nums; }
+.vs-vel-menu button[aria-pressed="true"] { color: #5cc8ff; font-weight: 550; }
+.vs-vel-menu button[aria-pressed="true"]::after { content: "✓"; }
+.vs-vel-menu button:hover { background: rgba(255, 255, 255, 0.08); }
+.vs-vel-btn:focus-visible, .vs-vel-menu button:focus-visible { outline: 3px solid #ffffff; outline-offset: 2px; }
+
 /* tipografías de Versus (David Bernal, 17-nov): IBM Plex Sans en todo, también en las letras y cantidades (con cifras
    tabulares, a su tamaño: la reducción del motor es para una monoespaciada), y Michroma en mayúsculas para los títulos,
    como el manual y la caja usan su letra de títulos. Michroma trae un solo peso: sin negrita inventada */
@@ -602,7 +621,7 @@ body { font-synthesis: none; }
 /* el logo de Versus: en las tarjetas y, discreto, arriba a la derecha del visor */
 .v40-logo { height: 60px; margin: 0 0 14px; }
 .v40-logo svg, .v40-marca svg { height: 100%; width: auto; display: block; }
-.v40-marca { position: absolute; top: 20px; right: 20px; height: 18px; opacity: 0.6; pointer-events: none; z-index: 2; }
+.v40-marca { position: absolute; top: 25px; right: 90px; height: 18px; opacity: 0.6; pointer-events: none; z-index: 2; }
 /* las tarjetas de bienvenida y del final: oscuras, letra blanca, acento celeste */
 .v40-tarjeta { position: absolute; inset: 0; z-index: 9; display: grid; place-items: center; padding: 16px 16px calc(var(--alto-barra, 76px) + 24px);
   background: rgba(5, 6, 8, 0.55); }
@@ -684,6 +703,7 @@ body { font-synthesis: none; }
           <p class="anim-gestos-pie"><span data-pie-tactil>Toca la pantalla para empezar</span><span data-pie-mouse>Haz clic para empezar</span></p>
         </div>
         <div class="v40-marca" aria-hidden="true"><svg role="img" aria-label="Versus" focusable="false" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 412 72" xml:space="preserve"><g>	<polygon fill="#FFFFFF" points="26,1.5 82,1.5 66.7,28.6 61,19.7 66.1,10.7 42.9,10.7 60.8,39.3 43.3,70.5 1.2,1.5 12.5,1.5   43,50.9 49.7,39.3  "></polygon>	<g>		<path fill="#FFFFFF" d="M162.6,13.6l-20.9,42.6c-0.3,0.7-0.8,1.2-1.5,1.6c-0.6,0.4-1.4,0.6-2.1,0.6c-0.8,0-1.5-0.2-2.1-0.6   c-0.6-0.4-1.1-0.9-1.5-1.6l-20.9-42.6h9l15.5,31.8l15.6-31.8H162.6z"></path>		<path fill="#FFFFFF" d="M207,57.8h-28.9c-1.1,0-2.3-0.2-3.6-0.6c-1.3-0.4-2.5-1-3.6-1.9c-1.1-0.9-2.1-2.1-2.8-3.5   c-0.7-1.4-1.1-3.2-1.1-5.2V17.7c0-0.6,0.1-1.1,0.3-1.6c0.2-0.5,0.5-0.9,0.8-1.3c0.4-0.4,0.8-0.7,1.3-0.9c0.5-0.2,1-0.3,1.6-0.3h36   v8h-32.1v24.9c0,1,0.3,1.8,0.8,2.4c0.6,0.6,1.4,0.8,2.4,0.8H207V57.8z M203.4,39.7h-25.3v-8.1h25.3V39.7z"></path>		<path fill="#FFFFFF" d="M258.8,28.5c0,1.8-0.2,3.5-0.7,4.9c-0.5,1.4-1.1,2.7-1.8,3.8c-0.8,1.1-1.7,2-2.7,2.8   c-1,0.8-2.1,1.4-3.2,1.9c-1.1,0.5-2.2,0.9-3.3,1.1c-1.1,0.2-2.2,0.3-3.2,0.3l16.7,14.4h-12.4l-16.7-14.4h-5.8v-8H244   c1-0.1,1.9-0.3,2.8-0.6c0.8-0.3,1.5-0.8,2.2-1.4c0.6-0.6,1.1-1.3,1.4-2.1c0.3-0.8,0.5-1.7,0.5-2.8v-5c0-0.5-0.1-0.8-0.2-1   c-0.1-0.2-0.3-0.4-0.4-0.5c-0.2-0.1-0.4-0.2-0.6-0.2c-0.2,0-0.4,0-0.5,0h-26.4v36.1h-8V17.7c0-0.6,0.1-1.1,0.3-1.6   c0.2-0.5,0.5-0.9,0.8-1.3c0.4-0.4,0.8-0.7,1.3-0.9c0.5-0.2,1-0.3,1.6-0.3h30.4c1.8,0,3.3,0.3,4.5,1c1.2,0.6,2.2,1.5,3,2.4   c0.8,1,1.3,2,1.7,3.2c0.3,1.1,0.5,2.2,0.5,3.2V28.5z"></path>		<path fill="#FFFFFF" d="M309.2,44.8c0,1.6-0.2,3-0.6,4.3c-0.4,1.3-0.9,2.4-1.6,3.3c-0.7,1-1.4,1.8-2.3,2.5   c-0.9,0.7-1.8,1.2-2.7,1.7c-0.9,0.4-1.9,0.7-2.9,1c-1,0.2-1.9,0.3-2.8,0.3h-30.9v-8h30.9c1.5,0,2.7-0.5,3.6-1.4   c0.9-0.9,1.3-2.1,1.3-3.6c0-0.7-0.1-1.4-0.3-2c-0.2-0.6-0.5-1.1-1-1.6c-0.4-0.5-0.9-0.8-1.5-1c-0.6-0.2-1.3-0.4-2-0.4H278   c-1.3,0-2.7-0.2-4.2-0.7c-1.5-0.5-2.9-1.2-4.2-2.2c-1.3-1-2.3-2.4-3.2-4c-0.9-1.7-1.3-3.7-1.3-6.1s0.4-4.4,1.3-6.1   c0.9-1.7,1.9-3,3.2-4c1.3-1,2.7-1.8,4.2-2.2c1.5-0.5,2.9-0.7,4.2-0.7h27.2v8H278c-1.5,0-2.7,0.5-3.6,1.4c-0.9,0.9-1.3,2.1-1.3,3.7   c0,1.5,0.4,2.8,1.3,3.6c0.9,0.9,2,1.3,3.6,1.3h18.4h0.1c0.9,0,1.8,0.1,2.7,0.4c1,0.2,1.9,0.5,2.9,1c1,0.5,1.9,1,2.7,1.7   c0.9,0.7,1.6,1.5,2.3,2.5c0.7,1,1.2,2.1,1.6,3.3C309,41.8,309.2,43.2,309.2,44.8z"></path>		<path fill="#FFFFFF" d="M359.1,53.7c0,0.6-0.1,1.1-0.3,1.6c-0.2,0.5-0.5,0.9-0.9,1.3c-0.4,0.4-0.8,0.6-1.3,0.8   c-0.5,0.2-1,0.3-1.6,0.3h-18c-1.7,0-3.4-0.2-5.2-0.6c-1.7-0.4-3.4-0.9-5.1-1.7s-3.2-1.7-4.6-2.9c-1.4-1.2-2.7-2.6-3.8-4.2   c-1.1-1.6-1.9-3.5-2.5-5.6c-0.6-2.1-0.9-4.4-0.9-7V13.6h8v22.1c0,2.3,0.3,4.2,0.9,5.7c0.6,1.6,1.4,2.9,2.4,3.9c1,1,2,1.9,3.2,2.5   c1.1,0.6,2.2,1,3.3,1.3c1,0.3,1.9,0.5,2.7,0.5c0.8,0.1,1.3,0.1,1.6,0.1h14.1V13.6h8V53.7z"></path>		<path fill="#FFFFFF" d="M410.8,44.8c0,1.6-0.2,3-0.6,4.3c-0.4,1.3-0.9,2.4-1.6,3.3c-0.7,1-1.4,1.8-2.3,2.5   c-0.9,0.7-1.8,1.2-2.7,1.7c-0.9,0.4-1.9,0.7-2.9,1c-1,0.2-1.9,0.3-2.8,0.3h-30.9v-8h30.9c1.5,0,2.7-0.5,3.6-1.4   c0.9-0.9,1.3-2.1,1.3-3.6c0-0.7-0.1-1.4-0.3-2c-0.2-0.6-0.5-1.1-1-1.6c-0.4-0.5-0.9-0.8-1.5-1c-0.6-0.2-1.3-0.4-2-0.4h-18.4   c-1.3,0-2.7-0.2-4.2-0.7c-1.5-0.5-2.9-1.2-4.2-2.2c-1.3-1-2.3-2.4-3.2-4c-0.9-1.7-1.3-3.7-1.3-6.1s0.4-4.4,1.3-6.1   c0.9-1.7,1.9-3,3.2-4c1.3-1,2.7-1.8,4.2-2.2c1.5-0.5,2.9-0.7,4.2-0.7h27.2v8h-27.2c-1.5,0-2.7,0.5-3.6,1.4   c-0.9,0.9-1.3,2.1-1.3,3.7c0,1.5,0.4,2.8,1.3,3.6c0.9,0.9,2,1.3,3.6,1.3h18.4h0.1c0.9,0,1.8,0.1,2.7,0.4c1,0.2,1.9,0.5,2.9,1   c1,0.5,1.9,1,2.7,1.7c0.9,0.7,1.6,1.5,2.3,2.5c0.7,1,1.2,2.1,1.6,3.3C410.6,41.8,410.8,43.2,410.8,44.8z"></path>	</g></g></svg></div>
+        <div class="vs-vel" id="vs-vel"><button type="button" class="vs-vel-btn" id="vs-vel-btn" aria-expanded="false" aria-controls="vs-vel-menu" aria-label="Velocidad ×1">×1</button><ul class="vs-vel-menu" id="vs-vel-menu" aria-label="Velocidad de la animación" hidden><li><button type="button" data-vel="1" aria-pressed="false">×1</button></li><li><button type="button" data-vel="1.5" aria-pressed="false">×1,5</button></li><li><button type="button" data-vel="1.75" aria-pressed="false">×1,75</button></li><li><button type="button" data-vel="2" aria-pressed="false">×2</button></li></ul></div>
         <div class="v40-tarjeta" id="v40-hola" role="dialog" aria-modal="true" aria-labelledby="v40-hola-t" aria-describedby="v40-hola-d" hidden>
           <div class="v40-caja"><div class="v40-logo"><svg role="img" aria-label="Versus" focusable="false" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 268 196" xml:space="preserve"><g>	<polygon fill="#FFFFFF" points="94.6,1 213.7,1 181.3,58.7 169.2,39.8 180,20.7 130.6,20.7 168.7,81.5 131.6,147.8 42,1 65.9,1   130.9,106 145.1,81.3  "></polygon>	<g>		<path fill="#FFFFFF" d="M45,155l-18.7,38c-0.3,0.6-0.7,1.1-1.3,1.4c-0.6,0.4-1.2,0.5-1.9,0.5c-0.7,0-1.3-0.2-1.9-0.5   c-0.6-0.4-1-0.8-1.3-1.4L1.3,155h8l13.9,28.4L37,155H45z"></path>		<path fill="#FFFFFF" d="M84.7,194.4H58.9c-1,0-2.1-0.2-3.2-0.5c-1.2-0.3-2.3-0.9-3.3-1.7c-1-0.8-1.8-1.8-2.5-3.1   c-0.7-1.3-1-2.8-1-4.7v-25.8c0-0.5,0.1-1,0.3-1.4c0.2-0.4,0.4-0.8,0.8-1.2c0.3-0.3,0.7-0.6,1.1-0.8c0.4-0.2,0.9-0.3,1.4-0.3h32.2   v7.1H56v22.2c0,0.9,0.2,1.6,0.7,2.1c0.5,0.5,1.2,0.7,2.2,0.7h25.7V194.4z M81.5,178.3H58.9v-7.2h22.6V178.3z"></path>		<path fill="#FFFFFF" d="M130.9,168.3c0,1.6-0.2,3.1-0.6,4.4c-0.4,1.3-0.9,2.4-1.6,3.4c-0.7,1-1.5,1.8-2.4,2.5   c-0.9,0.7-1.8,1.3-2.8,1.7c-1,0.4-2,0.8-3,1c-1,0.2-1.9,0.3-2.8,0.3l14.9,12.9h-11l-14.9-12.9h-5.1v-7.1h16.2   c0.9-0.1,1.7-0.3,2.5-0.6c0.7-0.3,1.4-0.7,1.9-1.2c0.5-0.5,1-1.1,1.3-1.9c0.3-0.7,0.4-1.6,0.4-2.5v-4.5c0-0.4-0.1-0.7-0.2-0.9   c-0.1-0.2-0.2-0.4-0.4-0.5c-0.2-0.1-0.3-0.2-0.5-0.2c-0.2,0-0.3,0-0.5,0H98.7v32.3h-7.1v-35.8c0-0.5,0.1-1,0.3-1.4   c0.2-0.4,0.4-0.8,0.8-1.2c0.3-0.3,0.7-0.6,1.1-0.8c0.4-0.2,0.9-0.3,1.4-0.3h27.1c1.6,0,2.9,0.3,4,0.9s2,1.3,2.7,2.2   c0.7,0.9,1.2,1.8,1.5,2.8c0.3,1,0.5,2,0.5,2.8V168.3z"></path>		<path fill="#FFFFFF" d="M176,182.8c0,1.4-0.2,2.7-0.5,3.8s-0.8,2.1-1.4,3c-0.6,0.9-1.3,1.6-2.1,2.2c-0.8,0.6-1.6,1.1-2.4,1.5   c-0.8,0.4-1.7,0.7-2.6,0.9c-0.9,0.2-1.7,0.3-2.5,0.3h-27.6v-7.1h27.6c1.4,0,2.4-0.4,3.2-1.2c0.8-0.8,1.1-1.9,1.1-3.2   c0-0.7-0.1-1.3-0.3-1.8c-0.2-0.5-0.5-1-0.9-1.4c-0.4-0.4-0.8-0.7-1.4-0.9c-0.5-0.2-1.1-0.3-1.8-0.3h-16.4c-1.2,0-2.4-0.2-3.7-0.6   c-1.3-0.4-2.6-1.1-3.7-2c-1.1-0.9-2.1-2.1-2.9-3.6c-0.8-1.5-1.1-3.3-1.1-5.4s0.4-4,1.1-5.4c0.8-1.5,1.7-2.7,2.9-3.6   c1.1-0.9,2.4-1.6,3.7-2c1.3-0.4,2.6-0.6,3.7-0.6h24.3v7.1h-24.3c-1.4,0-2.4,0.4-3.2,1.2c-0.8,0.8-1.1,1.9-1.1,3.3   c0,1.4,0.4,2.5,1.1,3.3c0.8,0.8,1.8,1.2,3.2,1.2h16.4h0.1c0.8,0,1.6,0.1,2.4,0.3c0.9,0.2,1.7,0.5,2.6,0.9c0.9,0.4,1.7,0.9,2.4,1.5   c0.8,0.6,1.5,1.4,2,2.2c0.6,0.9,1.1,1.9,1.4,3C175.8,180.2,176,181.4,176,182.8z"></path>		<path fill="#FFFFFF" d="M220.5,190.8c0,0.5-0.1,1-0.3,1.4c-0.2,0.4-0.4,0.8-0.8,1.1c-0.3,0.3-0.7,0.6-1.2,0.8   c-0.4,0.2-0.9,0.3-1.4,0.3h-16.1c-1.5,0-3.1-0.2-4.6-0.5c-1.6-0.3-3.1-0.8-4.5-1.5c-1.5-0.7-2.8-1.6-4.1-2.6   c-1.3-1.1-2.4-2.3-3.4-3.8c-1-1.5-1.7-3.1-2.3-5c-0.5-1.9-0.8-4-0.8-6.3V155h7.1v19.7c0,2,0.3,3.7,0.8,5.1   c0.6,1.4,1.3,2.6,2.1,3.5c0.9,0.9,1.8,1.7,2.8,2.2c1,0.5,2,0.9,2.9,1.2c0.9,0.3,1.7,0.4,2.4,0.5c0.7,0.1,1.2,0.1,1.4,0.1h12.6V155   h7.1V190.8z"></path>		<path fill="#FFFFFF" d="M266.7,182.8c0,1.4-0.2,2.7-0.5,3.8s-0.8,2.1-1.4,3c-0.6,0.9-1.3,1.6-2.1,2.2c-0.8,0.6-1.6,1.1-2.4,1.5   c-0.8,0.4-1.7,0.7-2.6,0.9c-0.9,0.2-1.7,0.3-2.5,0.3h-27.6v-7.1h27.6c1.4,0,2.4-0.4,3.2-1.2c0.8-0.8,1.1-1.9,1.1-3.2   c0-0.7-0.1-1.3-0.3-1.8c-0.2-0.5-0.5-1-0.9-1.4c-0.4-0.4-0.8-0.7-1.4-0.9c-0.5-0.2-1.1-0.3-1.8-0.3h-16.4c-1.2,0-2.4-0.2-3.7-0.6   c-1.3-0.4-2.6-1.1-3.7-2c-1.1-0.9-2.1-2.1-2.9-3.6c-0.8-1.5-1.1-3.3-1.1-5.4s0.4-4,1.1-5.4c0.8-1.5,1.7-2.7,2.9-3.6   c1.1-0.9,2.4-1.6,3.7-2c1.3-0.4,2.6-0.6,3.7-0.6h24.3v7.1h-24.3c-1.4,0-2.4,0.4-3.2,1.2c-0.8,0.8-1.1,1.9-1.1,3.3   c0,1.4,0.4,2.5,1.1,3.3c0.8,0.8,1.8,1.2,3.2,1.2h16.4h0.1c0.8,0,1.6,0.1,2.4,0.3c0.9,0.2,1.7,0.5,2.6,0.9c0.9,0.4,1.7,0.9,2.4,1.5   c0.8,0.6,1.5,1.4,2,2.2c0.6,0.9,1.1,1.9,1.4,3C266.5,180.2,266.7,181.4,266.7,182.8z"></path>	</g></g></svg></div><h2 id="v40-hola-t">Bienvenido a Versus</h2>
             <p id="v40-hola-d">Acabas de adquirir tu silla V40. Aquí te mostramos, paso a paso, cómo armarla.</p>
@@ -939,6 +959,9 @@ window.zoomSolidWorks = function (o) {
   const FONDO = 0x050608, NEON_CELESTE = 0x5cc8ff, NEON_VERDE = 0x3dff8a;
   // cada cuadro, aunque la animación esté quieta: la niebla empieza detrás de lo que se mira (en el celular parado la
   // cámara queda más lejos y la silla no se puede perder en ella) y la barra dice la parada del recorrido
+  // la cuadrícula verde titila CELEBRA_S segundos antes de la tarjeta final (Jon, 19-nov: «cuando se termina de armar,
+  // que dure más, unos dos o tres segundos más, el piso titilando»; antes 1,5 s)
+  const CELEBRA_S = 4.0;
   let inicio = false, esperando = false, celebra = null, fin2 = null, hola = null, adios = null, focoAntes = null;
   // las dos tarjetas (bienvenida y final): diálogos con foco, Escape y botones de 44 px
   function mostrarTarjeta(el) {
@@ -982,20 +1005,20 @@ window.zoomSolidWorks = function (o) {
     // queda en el plano general hasta que se toque la flecha
     if (paso === 0 && enMarcha && TOUR.length && t >= TOUR[0].t0 - 0.05) { enMarcha = false; t = TOUR[0].t0 - 0.05; aplicar(0, t); }
     navegarPintar(paso, t);
-    // la celebración: al terminar el paso 6 la cuadrícula pasa a verde y titila tres veces (1,5 s); con movimiento
+    // la celebración: al terminar el paso 6 la cuadrícula pasa a verde y titila CELEBRA_S (4 s, ocho veces); con movimiento
     // reducido, verde sin titilar; si se vuelve atrás, celeste otra vez
     const fin = paso === PASOS.length - 1 && t >= PASOS[paso].dur - 1e-6;
     if (fin && celebra === null) celebra = ahora || performance.now();
     if (!fin) celebra = null;
-    // el mensaje final, después de la celebración (1,6 s; con movimiento reducido, enseguida)
-    if (celebra !== null && fin2 === null && ((ahora || performance.now()) - celebra) / 1000 > (reducido ? 0.2 : 1.7)) { fin2 = true; mostrarTarjeta(adios); }
+    // el mensaje final, después de la celebración (con movimiento reducido, enseguida)
+    if (celebra !== null && fin2 === null && ((ahora || performance.now()) - celebra) / 1000 > (reducido ? 0.2 : CELEBRA_S + 0.2)) { fin2 = true; mostrarTarjeta(adios); }
     if (celebra === null) { if (fin2) ocultarTarjeta(adios, false); fin2 = null; }
     const col = piso.material.color;
     if (celebra === null) col.set(NEON_CELESTE).multiplyScalar(0.75);   // tenue: brillo suave
     else {
       const e = ((ahora || performance.now()) - celebra) / 1000;
       col.set(NEON_VERDE).multiplyScalar(0.8);
-      if (!reducido && e < 1.5) col.multiplyScalar(0.55 + 0.45 * Math.cos(e * 2 * Math.PI / 0.5));
+      if (!reducido && e < CELEBRA_S) col.multiplyScalar(0.55 + 0.45 * Math.cos(e * 2 * Math.PI / 0.5));
     }
   }
   function realismo(raiz) {
@@ -1631,11 +1654,14 @@ window.zoomSolidWorks = function (o) {
     const lado = function (s) { return function (u) { return Math.sign(u.piv.x) === s; }; };
     const XF = 0.62, ZF = 0.5, ALTO_5 = 1.2;           // afuera de los reposabrazos; por delante de la silla
     // de lado: sube, va por delante de la silla hasta afuera del costado, baja por fuera y entra de afuera hacia adentro
-    function deCostado(u, t0, s, q, giro, dEntra) {
+    // `espera`: se queda puesta ese rato antes de que siga nada (la cámara sigue cerca mientras tanto)
+    function deCostado(u, t0, s, q, giro, dEntra, espera) {
       const xo = s * XF;
-      return recorrido(u, t0, enPiso(u), [{ c: V(u.cPiso.x, ALTO_5, u.cPiso.z), q: q, d: 0.5 }, { c: V(xo, ALTO_5, ZF), q: q, d: 0.7 },
+      const pts = [{ c: V(u.cPiso.x, ALTO_5, u.cPiso.z), q: q, d: 0.5 }, { c: V(xo, ALTO_5, ZF), q: q, d: 0.7 },
         { c: V(xo, u.piv.y, u.piv.z), q: q, d: 0.7 }, { c: V(u.piv.x + s * 0.12, u.piv.y, u.piv.z), q: q, d: 0.5 },
-        { c: u.piv, q: q, d: dEntra || 0.7, giro: giro || 0 }]);
+        { c: u.piv, q: q, d: dEntra || 0.7, giro: giro || 0 }];
+      if (espera) pts.push({ c: u.piv, q: q, d: espera });
+      return recorrido(u, t0, enPiso(u), pts);
     }
     const opLado = function (s) {
       return {
@@ -1664,6 +1690,10 @@ window.zoomSolidWorks = function (o) {
     const L5 = nuevaLlave();
     let tt = 4.6;
     const sub5 = [];
+    // el tapón N termina de entrar con la cámara cerca, se queda un momento y recién ahí la cámara se aleja (Jon, 19-nov:
+    // «se aleja primero la vista antes de mostrar que se pone el tapón; entonces hay que tenerlo ahí, que se ponga el
+    // tapón, y ahí sí nos alejamos»). nFin: cuándo termina de entrar cada tapón; las tomas de abajo salen de ahí
+    const ESPERA_N = 1.2, nFin = [];
     [-1, 1].forEach(function (s, iLado) {   // primero el lado derecho de quien se sienta (x < 0), después el izquierdo
       const M = porTipo.M.filter(lado(s)).sort(function (a, b) { return a.piv.y - b.piv.y; });
       const pro = uni(s < 0 ? "I" : "J"), K = porTipo.K.filter(lado(s))[0], N = porTipo.N.filter(lado(s))[0];
@@ -1676,7 +1706,7 @@ window.zoomSolidWorks = function (o) {
       r5.push(deCostado(pro, tt + 0.2, s, QI)); tt += 0.2 + 3.1;
       r5.push(deCostado(K, tt, s, QI, s * 4, 1.2)); tt += 3.6;   // K entra hacia −s·x (de afuera hacia adentro) y su eje local es +x: horario visto desde la cabeza
       if (iLado === 0) sub5.push({ t0: tt, n: "5.3", corto: "Tapón N", txt: "Por último, tapa el tornillo (K) con el tapón (N), a presión." });
-      r5.push(deCostado(N, tt, s, QI)); tt += 3.6;
+      r5.push(deCostado(N, tt, s, QI, 0, 0.7, ESPERA_N)); nFin.push(tt + 3.1); tt += 3.6 + ESPERA_N;
     });
     r5.unshift(recLlave(L5));
     SUBPASOS[5] = sub5;
@@ -1687,10 +1717,11 @@ window.zoomSolidWorks = function (o) {
         { at: 3.2, mira: V(-0.31, 0.675, -0.23), dir: V(-0.95, 0.3, -0.25), r: 0.2 },
         { at: g5[0].t0 - 0.4, mira: V(-0.33, 0.675, -0.235), dir: V(-0.9, 0.35, 0.45), r: 0.12 },
         { at: g5[1].t1 + 0.2, mira: V(-0.33, 0.66, -0.23), dir: V(-0.95, 0.3, -0.25), r: 0.2 },
-        // de un costado al otro la cámara pasa por delante de la silla: en línea recta cruzaba el espaldar
-        { at: g5[2].t0 - 2.3, mira: V(0, 0.66, -0.2), dir: V(0, 0.35, 1), r: 0.7 },
-        { at: g5[2].t0 - 1.3, mira: V(0.31, 0.66, -0.27), dir: V(0.95, 0.3, -0.25), r: 0.2 },
-        { at: tt - 1.2, mira: V(0, 0.75, -0.1), dir: V(0.55, 0.4, -0.75), r: 0.85 }],
+        // de un costado al otro la cámara pasa por delante de la silla (en línea recta cruzaba el espaldar), pero solo
+        // cuando el tapón del primer lado ya entró; y se aleja al final cuando entró el del segundo lado
+        { at: nFin[0] + 0.6, mira: V(0, 0.66, -0.2), dir: V(0, 0.35, 1), r: 0.7 },
+        { at: nFin[0] + 1.6, mira: V(0.31, 0.66, -0.27), dir: V(0.95, 0.3, -0.25), r: 0.2 },
+        { at: nFin[1] + 0.6, mira: V(0, 0.75, -0.1), dir: V(0.55, 0.4, -0.75), r: 0.85 }],
       etiq: ["A", "M", "I", "J", "K", "N", "O"]
     });
     // 6 · «Ubica los cojines lumbar (Q) y cervical (P) y listo.»
@@ -1735,6 +1766,39 @@ window.zoomSolidWorks = function (o) {
 
   /* ---------- cámara: cada paso trae sus tomas; si la persona toca el modelo, la cámara es suya hasta el próximo paso ---------- */
   let manual = false, toma = 0, vuelo = null;
+  /* ---------- la velocidad: ×1, ×1,5, ×1,75 y ×2 (Jon, 19-nov) ---------- */
+  const VELOCIDADES = [1, 1.5, 1.75, 2], CLAVE_VEL = "versus-velocidad";
+  let VEL = 1;
+  try { const g = Number(localStorage.getItem(CLAVE_VEL)); if (VELOCIDADES.indexOf(g) >= 0) VEL = g; } catch (e) {}
+  (function () {
+    const caja = document.getElementById("vs-vel"); if (!caja) return;
+    const btn = document.getElementById("vs-vel-btn"), menu = document.getElementById("vs-vel-menu");
+    const ops = Array.prototype.slice.call(menu.querySelectorAll("button[data-vel]"));
+    const txt = function (v) { return "×" + String(v).replace(".", ","); };
+    function pintar() {
+      btn.textContent = txt(VEL); btn.setAttribute("aria-label", "Velocidad " + txt(VEL));
+      ops.forEach(function (b) { b.setAttribute("aria-pressed", String(Number(b.dataset.vel) === VEL)); });
+    }
+    function abrir(si, foco) {
+      menu.hidden = !si; btn.setAttribute("aria-expanded", String(si));
+      if (si) { const b = ops.filter(function (x) { return Number(x.dataset.vel) === VEL; })[0] || ops[0]; b.focus({ preventScroll: true }); }
+      else if (foco) btn.focus({ preventScroll: true });
+    }
+    function elegir(v) { VEL = v; try { localStorage.setItem(CLAVE_VEL, String(v)); } catch (e) {} pintar(); }
+    btn.addEventListener("click", function () { abrir(menu.hidden, true); });
+    ops.forEach(function (b) { b.addEventListener("click", function () { elegir(Number(b.dataset.vel)); abrir(false, true); }); });
+    // dentro del menú las flechas mueven entre las velocidades (y no cambian de paso) y Escape lo cierra
+    caja.addEventListener("keydown", function (ev) {
+      const i = ops.indexOf(document.activeElement), n = ops.length;
+      if (ev.key === "Escape" && !menu.hidden) { ev.preventDefault(); ev.stopPropagation(); abrir(false, true); }
+      else if (i >= 0 && (ev.key === "ArrowDown" || ev.key === "ArrowRight")) { ev.preventDefault(); ev.stopPropagation(); ops[(i + 1) % n].focus(); }
+      else if (i >= 0 && (ev.key === "ArrowUp" || ev.key === "ArrowLeft")) { ev.preventDefault(); ev.stopPropagation(); ops[(i + n - 1) % n].focus(); }
+      else if (i >= 0 && (ev.key === "Home" || ev.key === "End")) { ev.preventDefault(); ev.stopPropagation(); ops[ev.key === "Home" ? 0 : n - 1].focus(); }
+    });
+    document.addEventListener("pointerdown", function (ev) { if (!menu.hidden && !caja.contains(ev.target)) abrir(false, false); }, true);
+    caja.addEventListener("focusout", function (ev) { if (!menu.hidden && ev.relatedTarget && !caja.contains(ev.relatedTarget)) abrir(false, false); });
+    pintar();
+  })();
   function distPara(r) {
     // el campo de visión del pedazo libre: con el panel encima, el modelo tiene que caber en lo que queda a la vista
     const L = libre(), tv = Math.tan(THREE.MathUtils.degToRad(camara.fov) / 2);
@@ -1991,12 +2055,12 @@ window.zoomSolidWorks = function (o) {
     const dt = Math.min(0.1, (ahora - (antes || ahora)) / 1000); antes = ahora;
     if (!aLaVista || !PASOS.length) return;
     const p = PASOS[paso];
-    if (enMarcha && t < p.dur) { t = Math.min(p.dur, t + dt); aplicar(paso, t); }
+    if (enMarcha && t < p.dur) { t = Math.min(p.dur, t + dt * VEL); aplicar(paso, t); }
     if (!manual && !reducido) {
       while (toma < p.tomas.length && p.tomas[toma].at <= t) { volarA(p.tomas[toma], false); toma++; }
     }
     if (vuelo) {
-      vuelo.s = Math.min(1, vuelo.s + dt / 0.9); const k = suave(vuelo.s);
+      vuelo.s = Math.min(1, vuelo.s + dt * VEL / 0.9); const k = suave(vuelo.s);
       camara.position.lerpVectors(vuelo.p0, vuelo.p1, k); controles.target.lerpVectors(vuelo.m0, vuelo.m1, k);
       if (vuelo.s >= 1) vuelo = null;
     }
@@ -2092,6 +2156,7 @@ window.zoomSolidWorks = function (o) {
   }
   window.__anim = {
     paso: function () { return paso; },
+    velocidad: function () { return VEL; },
     guia: function (n) { clearInterval(relojGuia); fotograma(n); },   // deja quieto un fotograma de la guía (capturas)
     pantalla: function () { return { en: enPantalla, nativa: !!(document.fullscreenElement || document.webkitFullscreenElement), plegado: marco.classList.contains("plegado") }; },
     estado: function () { return { paso: paso, t: +t.toFixed(2), dur: PASOS.length ? +PASOS[paso].dur.toFixed(2) : 0, fin: PASOS.length ? t >= PASOS[paso].dur : false, manual: manual, cargado: !!PASOS.length, reducido: reducido, unidades: unidades.length }; },
